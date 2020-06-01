@@ -1,8 +1,0 @@
-package com.leadsponge.IO.endPoints;
-
-@Profile("oauth-security")
-@RestController
-@RequestMapping("/tokens")
-public class TokenEndPoints {
-
-}

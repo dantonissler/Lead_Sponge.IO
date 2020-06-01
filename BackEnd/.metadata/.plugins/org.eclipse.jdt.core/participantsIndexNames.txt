@@ -1,7 +1,0 @@
-INDEX VERSION 1.131
-/home/danton/workspace/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/3954511672.index
-/LeadSponge.IO/src/main/java
-/home/danton/workspace/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/1473299160.index
-/LeadSponge.IO/src/main/java
-/home/danton/workspace/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/469127042.index
-/LeadSponge.IO/src/main/java

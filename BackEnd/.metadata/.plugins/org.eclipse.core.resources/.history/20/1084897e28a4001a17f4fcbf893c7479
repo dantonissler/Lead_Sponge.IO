@@ -1,7 +1,0 @@
-package com.leadsponge.IO.security.service;
-
-public interface SecurityService {
-    String findLoggedInLogin();
-
-    void autoLogin(String login, String senha);
-}
