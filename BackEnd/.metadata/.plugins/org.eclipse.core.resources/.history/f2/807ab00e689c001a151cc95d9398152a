@@ -1,0 +1,93 @@
+package com.leadsponge.IO.controllers;
+
+import java.io.Serializable;
+import java.net.URI;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import com.leadsponge.IO.controllers.crudController.CrudController;
+import com.leadsponge.IO.errorValidate.ResourceBadRequestException;
+import com.leadsponge.IO.models.Usuario;
+import com.leadsponge.IO.repository.UsuarioRepositry;
+import com.leadsponge.IO.securitService.SecurityService;
+import com.leadsponge.IO.securitService.UsuarioService;
+
+@RestController
+@RequestMapping("/usuarios")
+class UsuarioController extends CrudController  {
+
+	@Autowired
+	private final UsuarioRepositry repository;
+
+	@Autowired
+	private UsuarioService usuarioService;
+
+	@Autowired
+	private SecurityService securityService;
+
+	UsuarioController(UsuarioRepositry repository, SecurityService securityService, UsuarioService usuarioService) {
+		this.repository = repository;
+		this.securityService = securityService;
+		this.usuarioService = usuarioService;
+	}
+
+	@Override
+	public ResponseEntity<Iterable<?>> listar() {
+		Iterable<Usuario> usuario = repository.findAll();
+		return ResponseEntity.ok(usuario);
+	}
+
+	@PostMapping(value = { "", "/" })
+	ResponseEntity<Serializable> cadastrar(@RequestBody @Valid Usuario usuario) {
+		if (usuario == null) {
+			return ResponseEntity.notFound().build();
+		} else if (!usuario.getConfirmarSenha().equals(usuario.getSenha())) {
+			throw new ResourceBadRequestException("O campo de senha não corresponde com o confirmar senha.");
+		} else if (usuarioService.findByLogin(usuario.getLogin()) != null) {
+			throw new ResourceBadRequestException("Login em uso.");
+		} else {
+			usuarioService.save(usuario);
+			securityService.autoLogin(usuario.getLogin(), usuario.getConfirmarSenha());
+			URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(usuario.getId())
+					.toUri();
+			return ResponseEntity.created(uri).body(usuario);
+		}
+	}
+
+	@Override
+	public ResponseEntity<Usuario> detalhar(@Valid @PathVariable("id") Long id) {
+		return ResponseEntity.ok(repository.findById(id).orElseThrow(() -> notFouldId(id,"o usuario")));
+	}
+
+	@PutMapping(value = { "/{id}", "/{id}/" })
+	ResponseEntity<Usuario> editar(@RequestBody Usuario novoUsuario, @PathVariable Long id) {
+		return ResponseEntity.ok(repository.findById(id).map(usuario -> {
+			usuario.setLogin(novoUsuario.getLogin());
+			usuario.setNomeCompleto(novoUsuario.getNomeCompleto());
+			usuario.setEmail(novoUsuario.getEmail());
+			usuario.setSenha(novoUsuario.getSenha());
+			usuario.setConfirmarSenha(novoUsuario.getConfirmarSenha());
+			return usuarioService.save(usuario);
+		}).orElseThrow(() -> notFouldId(id,"o usuario")));
+	}
+
+	@Override
+	public ResponseEntity<Usuario> deletar(@PathVariable Long id){
+		try {
+			repository.deleteById(id);
+			return ResponseEntity.ok().build();
+		} catch (Exception e) {
+			throw notFouldId(id,"o usuario");
+		}
+	}
+}

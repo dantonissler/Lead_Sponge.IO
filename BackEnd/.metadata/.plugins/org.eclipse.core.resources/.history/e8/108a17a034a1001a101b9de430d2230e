@@ -1,0 +1,13 @@
+package com.leadsponge.IO.resource;
+
+import java.time.LocalDate;
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.leadsponge.IO.models.Cliente;
+import com.leadsponge.IO.repository.Filter.ClienteFilter;
+
+public class ClienteRepositoryQuery {
+	public Page<Cliente> filtrar(ClienteFilter lancamentoFilter, Pageable pageable);
+}

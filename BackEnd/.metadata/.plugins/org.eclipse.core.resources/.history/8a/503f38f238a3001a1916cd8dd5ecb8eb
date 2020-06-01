@@ -1,0 +1,103 @@
+package com.leadsponge.IO.endPoints;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.leadsponge.IO.endPoints.crudEndpoints.CrudController;
+import com.leadsponge.IO.errorValidate.ResourceBadRequestException;
+import com.leadsponge.IO.event.RecursoCriadoEvent;
+import com.leadsponge.IO.models.Usuario;
+import com.leadsponge.IO.repository.UsuarioRepository;
+import com.leadsponge.IO.repository.Filter.UsuarioFilter;
+import com.leadsponge.IO.security.service.SecurityService;
+import com.leadsponge.IO.security.service.UsuarioService;
+
+@RestController
+@CrossOrigin
+@RequestMapping("/usuarios")
+class UsuarioEndPoints extends CrudController {
+
+	@Autowired
+	private UsuarioRepository repository;
+
+	@Autowired
+	private UsuarioService usuarioService;
+
+	@Autowired
+	private SecurityService securityService;
+
+	@Autowired
+	private ApplicationEventPublisher publisher;
+
+	@GetMapping
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_USUARIO') and #oauth2.hasScope('read')")
+	public Page<Usuario> pesquisar(UsuarioFilter usuarioFilter, Pageable pageable) {
+		return repository.filtrar(usuarioFilter, pageable);
+	}
+
+	@PostMapping(value = { "", "/" })
+	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_USUARIO') and #oauth2.hasScope('write')")
+	ResponseEntity<Usuario> cadastrar(@Valid @RequestBody Usuario usuario, HttpServletResponse response) {
+		if (usuario == null) {
+			return ResponseEntity.notFound().build();
+		} else if (!usuario.getConfirmarSenha().equals(usuario.getSenha())) {
+			throw new ResourceBadRequestException("O campo de senha não corresponde com o confirmar senha.");
+		} else if (usuarioService.findByLogin(usuario.getLogin()) != null) {
+			throw new ResourceBadRequestException("Login em uso.");
+		} else {
+			usuarioService.save(usuario);
+			securityService.autoLogin(usuario.getLogin(), usuario.getConfirmarSenha());
+			publisher.publishEvent(new RecursoCriadoEvent(this, response, usuario.getId()));
+			return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
+		}
+	}
+
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_USUARIO') and #oauth2.hasScope('read')")
+	@GetMapping(value = { "/{id}", "/{id}/" })
+	public ResponseEntity<Usuario> detalhar(@Valid @PathVariable("id") Long id) {
+		return ResponseEntity.ok(repository.findById(id).orElseThrow(() -> notFouldId(id, "o usuario")));
+	}
+
+	@PutMapping(value = { "/{id}", "/{id}/" })
+	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_USUARIO') and #oauth2.hasScope('write')")
+	ResponseEntity<Usuario> editar(@RequestBody Usuario novoUsuario, @PathVariable Long id) {
+		return ResponseEntity.ok(repository.findById(id).map(usuario -> {
+			usuario.setLogin(novoUsuario.getLogin());
+			usuario.setNomeCompleto(novoUsuario.getNomeCompleto());
+			usuario.setEmail(novoUsuario.getEmail());
+			usuario.setSenha(novoUsuario.getSenha());
+			usuario.setConfirmarSenha(novoUsuario.getConfirmarSenha());
+			return usuarioService.save(usuario);
+		}).orElseThrow(() -> notFouldId(id, "o usuario")));
+	}
+
+	@DeleteMapping(value = { "/{id}", "/{id}/" })
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@PreAuthorize("hasAuthority('ROLE_REMOVER_USUARIO') and #oauth2.hasScope('write')")
+	public ResponseEntity<Usuario> remover(@PathVariable Long id) {
+		try {
+			repository.deleteById(id);
+			return ResponseEntity.ok().build();
+		} catch (Exception e) {
+			throw notFouldId(id, "o usuario");
+		}
+	}
+}

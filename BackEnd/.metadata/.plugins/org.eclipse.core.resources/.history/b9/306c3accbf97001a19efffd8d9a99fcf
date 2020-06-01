@@ -1,0 +1,105 @@
+package com.leadsponge.IO.security.controllers;
+
+import java.io.Serializable;
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import com.leadsponge.IO.models.Oportunidade;
+import com.leadsponge.IO.security.models.Usuario;
+import com.leadsponge.IO.security.repository.UsuarioRepositry;
+import com.leadsponge.IO.security.service.SecurityService;
+import com.leadsponge.IO.security.service.UsuarioService;
+import com.leadsponge.IO.validate.ResourceNotFoundException;
+
+@RestController
+@RequestMapping("/usuarios")
+class UsuarioController {
+
+	@Autowired
+	private final UsuarioRepositry repository;
+
+	@Autowired
+	private UsuarioService usuarioService;
+
+	@Autowired
+	private SecurityService securityService;
+
+	UsuarioController(UsuarioRepositry repository, SecurityService securityService, UsuarioService usuarioService) {
+		this.repository = repository;
+		this.securityService = securityService;
+		this.usuarioService = usuarioService;
+	}
+
+	@GetMapping(value = { "", "/" })
+	ResponseEntity<Iterable<Usuario>> listar() {
+		Iterable<Usuario> usuario = repository.findAll();
+		return ResponseEntity.ok(usuario);
+	}
+
+	@PostMapping(value = { "", "/" })
+	ResponseEntity<Serializable> cadastrar(@RequestBody @Valid Usuario usuario) throws URISyntaxException {
+		// ja existe o login?
+		//confirmar senha
+		
+		if (usuario == null) {
+			return ResponseEntity.notFound().build();
+		}
+//		else if (!usuario.getConfirmarSenha().equals(usuario.getSenha())) {
+//			return ResponseEntity.badRequest().body(new UsuarioBadRequest());
+//		} else if (usuarioService.findByLogin(usuario.getUsername()) != null) {
+//			return ResponseEntity.badRequest().body(new UsuarioExiste());
+//        } 
+		else {
+			usuarioService.save(usuario);
+			securityService.autoLogin(usuario.getLogin(), usuario.getConfirmarSenha());
+			URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(usuario.getId())
+					.toUri();
+			return ResponseEntity.created(uri).body(usuario);
+		}
+	}
+
+	@GetMapping(value = { "/{id}", "/{id}/" })
+	ResponseEntity<Usuario> detalhar(@Valid @PathVariable("id") Long id) {
+
+		return ResponseEntity.ok(repository.findById(id).orElseThrow(
+				() -> new ResourceNotFoundException("Não foi possivel encontrar o usuario com o id: " + id)));
+	}
+
+	@PutMapping(value = { "/{id}", "/{id}/" })
+	ResponseEntity<Usuario> editar(@RequestBody Usuario novoUsuario, @PathVariable Long id) {
+		return ResponseEntity.ok(repository.findById(id).map(usuario -> {
+			usuario.setLogin(novoUsuario.getLogin());
+			usuario.setNomeCompleto(novoUsuario.getNomeCompleto());
+			usuario.setEmail(novoUsuario.getEmail());
+			usuario.setSenha(novoUsuario.getSenha());
+			usuario.setConfirmarSenha(novoUsuario.getConfirmarSenha());
+			return usuarioService.save(usuario);
+		}).orElseThrow(() -> new ResourceNotFoundException("Não foi possivel encontrar o usuario com o id: " + id)));
+	}
+
+	@DeleteMapping(value = { "/{id}", "/{id}/" })
+	ResponseEntity<Oportunidade> deletar(@Valid @PathVariable Long id) {
+		verificarSeOUsuarioExiste(id);
+		repository.deleteById(id);
+		return ResponseEntity.noContent().build();
+	}
+
+	private void verificarSeOUsuarioExiste(Long id) {
+		if (repository.findById(id) == null)
+			throw new ResourceNotFoundException("Não foi possivel encontrar o usuario com o id: " + id);
+	}
+}

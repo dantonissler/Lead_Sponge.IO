@@ -1,0 +1,21 @@
+package com.leadsponge.IO;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+//@EnableConfigurationProperties(LeadSpongeApiProperty.class)
+public class WebApplication {
+    public static void main(String[] args) throws Exception {
+        SpringApplication.run(WebApplication.class, args);
+	}
+//	private static ApplicationContext APPLICATION_CONTEXT;
+//
+//	public static void main(String[] args) throws Exception {
+//		APPLICATION_CONTEXT = SpringApplication.run(LeadSpongeApiProperty.class, args);
+//	}
+//	
+//	public static <T> T getBean(Class<T> type) {
+//		return APPLICATION_CONTEXT.getBean(type);
+//	}
+}

@@ -1,0 +1,5 @@
+package com.leadsponge.IO.security.util;
+
+public class GeradorSenha {
+
+}

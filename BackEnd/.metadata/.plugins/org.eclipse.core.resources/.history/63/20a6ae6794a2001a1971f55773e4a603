@@ -1,0 +1,12 @@
+ package com.leadsponge.IO.repository;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.leadsponge.IO.models.Usuario;
+
+public interface UsuarioRepository  extends JpaRepository<Usuario, Long>{
+	Usuario findByLogin(String login);
+	public Page<Usuario> findByRoles(String permissaoDescricao, Pageable pageable);
+}

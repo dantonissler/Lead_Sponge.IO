@@ -1,0 +1,5 @@
+package com.leadsponge.IO.data;
+
+public class DataConfiguration {
+
+}

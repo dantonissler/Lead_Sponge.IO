@@ -1,0 +1,26 @@
+spring.jpa.open-in-view=true
+# Hibernate ddl auto (create, create-drop, update)
+#spring.jpa.hibernate.ddl-auto=update
+
+leadsponge.origin-permitida="http://localhost:8080"
+
+leadsponge.seguranca.enable-https=false
+
+leadsponge.mail.host=smtp.gmail.com
+leadsponge.mail.port=587
+leadsponge.mail.username=danton.issler18@gmail.com
+leadsponge.mail.password=sua-senha
+
+spring.jackson.deserialization.fail-on-unknown-properties=true
+spring.jackson.date-format=yyyy-MM-dd
+
+spring.profiles.active=oauth-security
+
+spring.devtools.livereload.enabled=false
+
+# spring.mvc.view.suffix: .jsp
+#spring.messages.basename=validation
+
+#security.oauth2.client.scope=password
+#security.oauth2.client.client-id=danton
+#security.oauth2.client.client-secret=214255kjukii

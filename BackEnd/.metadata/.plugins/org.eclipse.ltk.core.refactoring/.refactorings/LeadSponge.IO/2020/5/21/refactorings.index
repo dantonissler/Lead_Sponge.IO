@@ -1,0 +1,48 @@
+1589738435260	Rename type 'ErrorDetail'
+1589738721821	Rename type 'RetExceptionHandler'
+1589741263426	Delete element
+1589768785844	Delete element
+1589768788705	Delete element
+1589814901157	Rename type 'ImplementsUsuarioService'
+1589819072082	Rename package 'com.leadsponge.IO.validate'
+1589820213140	Delete element
+1589820245358	Move compilation unit
+1589820526940	Move compilation unit
+1589820534231	Move compilation unit
+1589820558265	Move compilation unit
+1589820564676	Move compilation unit
+1589824115535	Move compilation unit
+1589824118470	Move compilation unit
+1589824121841	Move compilation unit
+1589833731209	Delete element
+1589833736285	Delete element
+1589833841106	Rename package 'com.leadsponge.IO.validateErrors'
+1589833912439	Delete element
+1589896992761	Rename package 'com.leadsponge.IO.Controllers'
+1589897003059	Move compilation unit
+1589898181446	Move compilation unit
+1589898195513	Move compilation unit
+1589898205480	Move compilation unit
+1589898214628	Delete element
+1589898223281	Delete element
+1589898270744	Rename package 'com.leadsponge.IO.security.config'
+1589898298312	Rename package 'com.leadsponge.IO.security.repository'
+1589898309149	Move compilation unit
+1589898346757	Move compilation unit
+1589898363516	Rename package 'com.leadsponge.IO.security.service'
+1589898393597	Rename package 'com.leadsponge.IO.security.service.impl'
+1589898407718	Copy package
+1589898444263	Delete element
+1589898473426	Copy package
+1589898484104	Delete element
+1589898492790	Delete element
+1589898522266	Copy package
+1589898545231	Copy package
+1589898553132	Delete element
+1589898591811	Move compilation unit
+1589898599600	Move compilation unit
+1589898608020	Move compilation unit
+1589898616518	Delete element
+1589898753890	Delete element
+1590168317609	Move compilation unit
+1590168327597	Move compilation unit

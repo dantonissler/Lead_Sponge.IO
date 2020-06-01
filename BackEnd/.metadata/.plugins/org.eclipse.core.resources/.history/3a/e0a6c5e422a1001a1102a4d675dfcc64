@@ -1,0 +1,91 @@
+package com.leadsponge.IO.models.metamodels;
+
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.TableGenerator;
+import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.leadsponge.IO.models.Cliente;
+import com.leadsponge.IO.models.Email;
+import com.leadsponge.IO.models.Telefone;
+
+import lombok.Data;
+
+@Entity
+@Data
+@Table(name = "contato")
+@TableGenerator(name = "contato_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "contato", allocationSize = 1, initialValue = 0)
+public class Contato {
+
+	private @Id @Column(name = "id") @GeneratedValue(strategy = GenerationType.TABLE, generator = "contato_id") Long id;
+
+	private @Size(min = 4, max = 50, message = "{nome.size}") String nome;
+
+	private @Size(max = 50, message = "{cargo.size}") String cargo;
+
+	private @ManyToOne @JoinColumn(name = "cliente_id") Cliente cliente;
+
+	private @JsonIgnoreProperties("contato") @OneToMany(mappedBy = "contato", cascade = CascadeType.ALL, fetch = FetchType.LAZY) List<Telefone> telefone;
+
+	private @JsonIgnoreProperties("contato") @OneToMany(mappedBy = "contato", cascade = CascadeType.ALL, fetch = FetchType.LAZY) List<Email> email;
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getCargo() {
+		return cargo;
+	}
+
+	public void setCargo(String cargo) {
+		this.cargo = cargo;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public List<Telefone> getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(List<Telefone> telefone) {
+		this.telefone = telefone;
+	}
+
+	public List<Email> getEmail() {
+		return email;
+	}
+
+	public void setEmail(List<Email> email) {
+		this.email = email;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+}

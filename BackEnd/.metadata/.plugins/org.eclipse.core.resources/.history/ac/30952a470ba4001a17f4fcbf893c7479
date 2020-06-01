@@ -1,0 +1,85 @@
+package com.leadsponge.IO.security.service;
+
+import java.util.HashSet;
+import java.util.Optional;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+import com.leadsponge.IO.errorValidate.ResourceBadRequestException;
+import com.leadsponge.IO.models.Role;
+import com.leadsponge.IO.models.Usuario;
+import com.leadsponge.IO.repository.RoleRepository;
+import com.leadsponge.IO.repository.UsuarioRepository;
+import com.leadsponge.IO.security.service.exception.UsuarioInativaException;
+
+@Service
+public class UsuarioService{
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+    @Autowired
+    private RoleRepository roleRepository;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    public Usuario save(Usuario usuario) {
+    	
+    	if (usuario == null) {
+			return ResponseEntity.notFound().build();
+		} else if (!usuario.getConfirmarPass().equals(usuario.getSenha())) {
+			throw new ResourceBadRequestException("O campo de senha não corresponde com o confirmar senha.");
+		} else if (usuarioService.findByLogin(usuario.getLogin()) != null) {
+			throw new ResourceBadRequestException("Login em uso.");
+    	
+    	
+//    	validarRole(usuario);
+		usuarioAtivo(usuario);
+    	usuario.setPassword(bCryptPasswordEncoder.encode(usuario.getPassword()));
+    	usuario.setRoles(new HashSet<>(roleRepository.findAll()));
+        return usuarioRepository.save(usuario);
+    }
+	
+	public Usuario atualizar(Long id, Usuario usuarioSalvo) {
+		Usuario usuarioSalvo = buscarLancamentoExistente(id);
+		if (!lancamento.getPessoa().equals(usuarioSalvo.getPessoa())) {
+			validarRole(lancamento);
+		}
+		
+		if (StringUtils.isEmpty(lancamento.getAnexo())
+				&& StringUtils.hasText(lancamentoSalvo.getAnexo())) {
+			s3.remover(lancamentoSalvo.getAnexo());
+		} else if (StringUtils.hasText(lancamento.getAnexo())
+				&& !lancamento.getAnexo().equals(lancamentoSalvo.getAnexo())) {
+			s3.substituir(lancamentoSalvo.getAnexo(), lancamento.getAnexo());
+		}
+
+		BeanUtils.copyProperties(lancamento, lancamentoSalvo, "codigo");
+
+		return lancamentoRepository.save(lancamentoSalvo);
+	}
+
+//	private void validarRole(Usuario usuario) {
+//		Role role = null;
+//		if (usuario.getRoles().g != null) {
+//			role = roleRepository.getOne(usuario.getRoles().getId());
+//		}
+//	}
+
+	private Usuario buscarLancamentoExistente(Long id) {
+		Optional<Usuario> usuarioSalvo = usuarioRepository.findById(id);
+		if (!usuarioSalvo.isPresent()) {
+			throw new IllegalArgumentException();
+		}
+		return usuarioSalvo.get();
+	}
+	
+	private void usuarioAtivo(Usuario usuario) {
+		if (usuario == null || usuario.isEnabled()) {
+			throw new UsuarioInativaException();
+		}
+	}
+}

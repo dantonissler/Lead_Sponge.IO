@@ -1,0 +1,5 @@
+package com.leadsponge.IO.mail;
+
+public class Mailer {
+
+}

@@ -1,0 +1,63 @@
+package com.leadsponge.IO.repository.projection;
+
+import com.leadsponge.IO.models.Role;
+
+public class ResumoUsuario {
+
+	private Long id;
+	private String login;
+	private String nomeCompleto;
+	private String email;
+	private Boolean ativo;
+	private Role roles;
+
+	public ResumoUsuario(Long id, String login, String nomeCompleto, String email, Role roles, Boolean ativo) {
+		this.id = id;
+		this.login = login;
+		this.nomeCompleto = nomeCompleto;
+		this.email = email;
+		this.roles = roles;
+		this.ativo = ativo;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getLogin() {
+		return login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	public String getNomeCompleto() {
+		return nomeCompleto;
+	}
+
+	public void setNomeCompleto(String nomeCompleto) {
+		this.nomeCompleto = nomeCompleto;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Boolean isEnabled() {
+		return ativo;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.ativo = enabled;
+	}
+
+}

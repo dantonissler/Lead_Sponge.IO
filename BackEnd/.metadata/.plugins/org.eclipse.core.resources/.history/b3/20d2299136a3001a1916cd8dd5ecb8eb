@@ -1,0 +1,5 @@
+package com.leadsponge.IO.repository.projection;
+
+public class ResumoUsuario {
+
+}

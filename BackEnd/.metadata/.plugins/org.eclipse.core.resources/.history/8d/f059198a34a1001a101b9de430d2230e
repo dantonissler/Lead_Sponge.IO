@@ -1,0 +1,12 @@
+package com.leadsponge.IO.resource;
+
+import java.awt.print.Pageable;
+
+import org.springframework.data.domain.Page;
+
+import com.leadsponge.IO.models.Cliente;
+import com.leadsponge.IO.repository.Filter.ClienteFilter;
+
+public class ClienteRepositoryQuery {
+	public Page<Cliente> filtrar(ClienteFilter lancamentoFilter, Pageable pageable);
+}

@@ -1,0 +1,22 @@
+package com.leadsponge.IO.security;
+import java.util.Collection;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+
+import com.leadsponge.IO.models.Usuario;
+
+public class UsuarioSistema {
+	private static final long serialVersionUID = 1L;
+
+	private Usuario login;
+
+	public UsuarioSistema(Usuario login, Collection<? extends GrantedAuthority> authorities) {
+		super(login.getLogin(), login.getSenha(), authorities);
+		this.login = login;
+	}
+
+	public Usuario getUsuario() {
+		return login;
+	}
+}

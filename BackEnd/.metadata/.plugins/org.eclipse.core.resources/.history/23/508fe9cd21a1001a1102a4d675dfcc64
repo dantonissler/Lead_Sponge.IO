@@ -1,0 +1,12 @@
+package com.leadsponge.IO.models;
+
+import javax.annotation.Generated;
+import javax.persistence.metamodel.SingularAttribute;
+import javax.persistence.metamodel.StaticMetamodel;
+
+@Generated(value = "org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor")
+@StaticMetamodel(Campanha.class)
+public class Campanha_ {
+	public static volatile SingularAttribute<Campanha, Long> id;
+	public static volatile SingularAttribute<Campanha, String> nome;
+}

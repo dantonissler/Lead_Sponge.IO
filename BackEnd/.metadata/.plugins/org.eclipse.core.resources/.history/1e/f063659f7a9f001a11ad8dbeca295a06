@@ -1,0 +1,24 @@
+package com.leadsponge.IO.endPoints.crudController;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+public interface CrudInterface {
+
+	@GetMapping(value = { "", "/" })
+	ResponseEntity<Iterable<?>> listar();
+
+//	@PostMapping(value = { "", "/" })
+//	ResponseEntity<?> cadastrar(@Valid @RequestBody Object object);
+
+	@GetMapping(value = { "/{id}", "/{id}/" })
+	ResponseEntity<?> detalhar(@PathVariable("id") Long id);
+
+//	@PutMapping(value = { "/{id}", "/{id}/" })
+//	ResponseEntity<?> editar(@Valid @RequestBody Object novoObject, @PathVariable Long id);
+
+	@DeleteMapping(value = { "/{id}", "/{id}/" })
+	ResponseEntity<?> deletar(@PathVariable("id") Long id);
+}

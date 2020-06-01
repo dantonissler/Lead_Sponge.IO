@@ -1,0 +1,10 @@
+package com.leadsponge.IO.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.leadsponge.IO.models.Cliente;
+import com.leadsponge.IO.models.metamodels.Contato;
+
+public interface ContatoRepository extends JpaRepository<Contato, Long> {
+	Iterable<Contato> findByCliente(Cliente cliente);
+}

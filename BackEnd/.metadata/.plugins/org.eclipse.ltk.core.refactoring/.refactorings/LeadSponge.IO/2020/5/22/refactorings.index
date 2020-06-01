@@ -1,0 +1,47 @@
+1590501241156	Rename package 'com.leadsponge.IO.securityConfig'
+1590501288144	Rename package 'com.leadsponge.IO.Config'
+1590501336778	Delete element
+1590504649454	Rename package 'com.leadsponge.IO.securitService'
+1590505112690	Rename package 'com.leadsponge.IO.securitService.impl'
+1590510432509	Delete element
+1590511356504	Rename type 'UsuarioRepositry'
+1590515908883	Rename package 'com.leadsponge.IO.controllers'
+1590515931313	Rename package 'com.leadsponge.IO.controllers.crudController'
+1590515959748	Rename package 'com.leadsponge.IO.endPoints.crudController'
+1590515980977	Rename type 'CampanhaController'
+1590515991220	Rename type 'ClienteController'
+1590515998071	Rename type 'ContatoController'
+1590516006612	Rename type 'EmailController'
+1590516013947	Rename type 'OportunidadeController'
+1590516038926	Rename type 'RoleController'
+1590516054614	Rename type 'TelefoneController'
+1590516063396	Rename type 'UsuarioController'
+1590520634929	Copy file
+1590520841350	Delete element
+1590522649298	Delete element
+1590690944090	Delete element
+1590693626617	Copy package
+1590693641977	Copy package
+1590693654456	Delete element
+1590693677861	Copy package
+1590693715052	Delete element
+1590693722614	Delete element
+1590693759999	Delete element
+1590697714948	Move compilation unit
+1590697729515	Move compilation unit
+1590697733429	Move compilation unit
+1590697737451	Move compilation unit
+1590697741197	Move compilation unit
+1590697745172	Move compilation unit
+1590697749258	Move compilation unit
+1590698172880	Move compilation unit
+1590698182795	Move compilation unit
+1590705734267	Encapsulate field 'nome'
+1590708461027	Delete element
+1590861850016	Rename type 'ImplementsUserService'
+1590861864276	Rename type 'ImplementsUserDetailsService'
+1590866078182	Encapsulate field 'nomeCompleto'
+1590875735815	Rename type 'ImplementsUsuarioRepository'
+1590875872153	Rename type 'ImplementsSecurityService'
+1590875896481	Rename type 'ImplementsUsuarioService'
+1590875913550	Rename type 'ImplementsUsuarioDetailsService'

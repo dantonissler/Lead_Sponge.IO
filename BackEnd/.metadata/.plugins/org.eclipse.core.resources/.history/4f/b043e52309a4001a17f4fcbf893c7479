@@ -1,0 +1,9 @@
+package com.leadsponge.IO.security.service;
+
+import com.leadsponge.IO.models.Usuario;
+
+public interface UsuarioService {
+    Usuario save(Usuario usuario);
+
+    Usuario findByLogin(String Login);
+}
