@@ -2,7 +2,6 @@ import { UsuarioCadastrarComponent } from './../../components/usuarios/usuario-c
 import { UsuarioListarComponent } from './../../components/usuarios/usuario-listar/usuario-listar.component';
 import { AuthGuard } from './../../seguranca/auth.guard';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
@@ -11,12 +10,6 @@ const routes: Routes = [
     component: UsuarioListarComponent,
     canActivate: [AuthGuard],
     data: { roles: ['ROLE_PESQUISAR_USUARIO'] }
-  },
-  {
-    path: 'nova',
-    component: UsuarioCadastrarComponent,
-    canActivate: [AuthGuard],
-    data: { roles: ['ROLE_CADASTRAR_USUARIO'] }
   },
   {
     path: ':codigo',

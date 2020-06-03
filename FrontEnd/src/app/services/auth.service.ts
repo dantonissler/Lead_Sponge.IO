@@ -47,7 +47,7 @@ export class AuthService {
       obterNovoAccessToken(): Promise<void> {
         const headers = new HttpHeaders()
             .append('Content-Type', 'application/x-www-form-urlencoded')
-            .append('Authorization', 'Basic YW5ndWxhcjpAbmd1bEByMA==');
+            .append('Authorization', 'Basic ' + btoa('danton:214255kjukii'));
     
         const body = 'grant_type=refresh_token';
     

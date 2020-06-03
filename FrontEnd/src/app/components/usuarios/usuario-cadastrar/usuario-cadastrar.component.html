@@ -1,0 +1,63 @@
+<!-- <div class="container">
+    <form #f="ngForm" autocomplete="off" (ngSubmit)="salvar(f)">
+  
+      <div class="ui-g">
+        <div class="ui-g-12">
+          <h1>Novo Usuario</h1>
+        </div>
+
+        <div class="ui-g-12 ui-fluid">
+            <label>Nome de Usuario</label>
+            <input pInputText type="text" name="username"
+              [(ngModel)]="usuario.username"
+              #nome="ngModel" required minlength="5">
+            <app-message [control]="username" error="required"
+              text="Informe o nome"></app-message>
+            <app-message [control]="username" error="minlength"
+              text="Mínimo de {{ nome.errors?.minlength?.requiredLength }} caracteres"></app-message>
+        </div>
+  
+        <div class="ui-g-12 ui-fluid">
+          <label>Nome Completo</label>
+          <input pInputText type="text" name="nomeCompleto"
+            [(ngModel)]="usuario.nomeCompleto"
+            #nome="ngModel" required minlength="5">
+          <app-message [control]="nomeCompleto" error="required"
+            text="Informe o nome"></app-message>
+          <app-message [control]="nomeCompleto" error="minlength"
+            text="Mínimo de {{ nome.errors?.minlength?.requiredLength }} caracteres"></app-message>
+        </div>
+
+        <div class="ui-g-12 ui-fluid">
+            <label>E-mail</label>
+            <input pInputText type="text" name="email"
+              [(ngModel)]="usuario.email"
+              #nome="ngModel" required minlength="5">
+            <app-message [control]="email" error="required"
+              text="Informe o nome"></app-message>
+            <app-message [control]="email" error="minlength"
+              text="Mínimo de {{ nome.errors?.minlength?.requiredLength }} caracteres"></app-message>
+          </div>
+
+          <div class="ui-g-12 ui-fluid">
+            <label>Senha</label>
+            <input pInputText type="password" name="senha"
+              [(ngModel)]="usuario.senha"
+              #nome="ngModel" required minlength="5">
+            <app-message [control]="senha" error="required"
+              text="Informe o nome"></app-message>
+            <app-message [control]="senha" error="minlength"
+              text="Mínimo de {{ nome.errors?.minlength?.requiredLength }} caracteres"></app-message>
+          </div>
+  
+        
+  
+        <div class="ui-g-12 cadastro-acoes">
+          <button pButton type="submit" label="Salvar" [disabled]="f.invalid"></button>
+          <a routerLink="/pessoas">Voltar para a pesquisa</a>
+        </div>
+      </div>
+  
+    </form>
+  </div>
+   -->

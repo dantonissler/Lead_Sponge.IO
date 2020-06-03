@@ -1,9 +1,9 @@
 import { Role } from './role.models';
 export class Usuario {
     id: number;
-    login: string;
+    username: string;
     nomeCompleto: string;
     email: string;
-    senha: string;
+    enabled: boolean;
     roles: Role;
   }

@@ -1,3 +1,5 @@
+import { UsuarioService } from './../../services/usuario.service';
+import { UsuariosModule } from './../usuarios/usuarios.module';
 import { FooterComponent } from '../../components/core/footer/footer.component';
 import { Title } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
@@ -47,11 +49,13 @@ registerLocaleData(localePt);
     ConfirmDialogModule
   ],
   providers: [
-    /* LancamentoService,
-    PessoaService,
+    /* 
+    LancamentoService,
+    PessoaService
     CategoriaService,
     DashboardService,
     RelatoriosService, */
+    UsuarioService,
     ErrorHandlerService,
     AuthService,
     MoneyHttp,

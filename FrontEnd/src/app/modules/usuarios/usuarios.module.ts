@@ -1,3 +1,5 @@
+import { UsuarioListarComponent } from './../../components/usuarios/usuario-listar/usuario-listar.component';
+import { UsuarioCadastrarComponent } from './../../components/usuarios/usuario-cadastrar/usuario-cadastrar.component';
 import { SharedModule } from './../shared.module';
 import { UsuariosRoutingModule } from './usuarios-routing.module';
 import { FormsModule } from '@angular/forms';
@@ -26,11 +28,13 @@ import { DropdownModule } from 'primeng/dropdown';
     PanelModule,
     DialogModule,
     DropdownModule,
-
     SharedModule,
     UsuariosRoutingModule
   ],
-  declarations: [],
+  declarations: [
+    UsuarioCadastrarComponent,
+    UsuarioListarComponent
+  ],
   exports: []
 })
 export class UsuariosModule { }

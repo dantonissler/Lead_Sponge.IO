@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   { path: 'dashboard', loadChildren: () => import('./modules/dashboard/dashboard.module').then(m => m.DashboardModule)},
+  { path: 'usuarios', loadChildren: () => import('./modules/usuarios/usuarios.module').then(m => m.UsuariosModule) },
 
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: 'nao-autorizado', component: NaoAutorizadoComponent },
