@@ -1,0 +1,30 @@
+<div class="wrapper fadeInDown">
+    <div class="card" id="formContent">
+        <div class="card-header">
+            <h1 class="text-center text-info">Conectar-me</h1>
+            <div class="fadeIn first">
+                <img src="assets/img/flat-faces-icons-circle-man.png" id="icon" alt="User Icon" />
+            </div>
+        </div>
+        <div class="card-body">
+            <form autocomplete="off" #f="ngForm" >
+                <input pInputText type="text" class="fadeIn second" name="usuario" 
+                placeholder="Usuario" ngModel required #usuario>
+                <input pInputText type="password" class="fadeIn third" name="senha" 
+                placeholder="Senha" ngModel required #senha>
+                <div class="checkbox">
+                    <label><input type="checkbox" value=""/> Lembre de min</label>
+                </div>
+                <button  type="submit" label="" [disabled]="!f.valid" 
+                value="Entrar" (click)="login(usuario.value, senha.value); senha.value = '';" 
+                class="fadeIn fourth">
+                    <i class="fas fa-sign-in-alt"></i>
+                    ENTRAR
+                </button>
+            </form>
+        </div>
+        <div class="card-footer" id="formFooter">
+            <a class="underlineHover" href="#">Esqueci minha senha!</a>
+        </div>
+    </div>
+</div>
