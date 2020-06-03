@@ -1,2 +1,73 @@
+# Created by https://www.gitignore.io/api/eclipse
+# Edit at https://www.gitignore.io/?templates=eclipse
 
+### Eclipse ###
 BackEnd/.metadata/
+BackEnd/bin/
+BackEnd/tmp/
+BackEnd/*.tmp
+BackEnd/*.bak
+BackEnd/*.swp
+BackEnd/*~.nib
+BackEnd/local.properties
+BackEnd/.settings/
+BackEnd/.loadpath
+BackEnd/.recommenders
+
+# External tool builders
+BackEnd/.externalToolBuilders/
+
+# Locally stored "Eclipse launch configurations"
+BackEnd/*.launch
+
+# PyDev specific (Python IDE for Eclipse)
+BackEnd/*.pydevproject
+
+# CDT-specific (C/C++ Development Tooling)
+BackEnd/.cproject
+
+# CDT- autotools
+BackEnd/.autotools
+
+# Java annotation processor (APT)
+BackEnd/.factorypath
+
+# PDT-specific (PHP Development Tools)
+BackEnd/.buildpath
+
+# sbteclipse plugin
+BackEnd/.target
+
+# Tern plugin
+BackEnd/.tern-project
+
+# TeXlipse plugin
+BackEnd/.texlipse
+
+# STS (Spring Tool Suite)
+BackEnd/.springBeans
+
+# Code Recommenders
+BackEnd/.recommenders/
+
+# Annotation Processing
+BackEnd/.apt_generated/
+
+# Scala IDE specific (Scala & Java development for Eclipse)
+BackEnd/.cache-main
+BackEnd/.scala_dependencies
+BackEnd/.worksheet
+
+### Eclipse Patch ###
+# Eclipse Core
+BackEnd/.project
+
+# JDT-specific (Eclipse Java Development Tools)
+BackEnd/.classpath
+
+# Annotation Processing
+BackEnd/.apt_generated
+
+BackEnd/.sts4-cache/
+
+# End of https://www.gitignore.io/api/eclipse
