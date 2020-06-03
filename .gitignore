@@ -71,3 +71,95 @@ BackEnd/.apt_generated
 BackEnd/.sts4-cache/
 
 # End of https://www.gitignore.io/api/eclipse
+
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+FrontEnd/dist
+FrontEnd/tmp
+FrontEnd/out-tsc
+# Only exists if Bazel was run
+FrontEnd/bazel-out
+
+# dependencies
+FrontEnd/node_modules
+
+# profiling files
+FrontEnd/chrome-profiler-events*.json
+FrontEnd/speed-measure-plugin*.json
+ 
+# IDEs and editors
+FrontEnd/.idea
+FrontEnd/.project
+FrontEnd/.classpath
+FrontEnd/.c9/
+FrontEnd/*.launch
+FrontEnd/.settings/
+FrontEnd/*.sublime-workspace
+
+# IDE - VSCode
+FrontEnd/.vscode/*
+FrontEnd/!.vscode/settings.json
+FrontEnd/!.vscode/tasks.json
+FrontEnd/!.vscode/launch.json
+FrontEnd/!.vscode/extensions.json
+FrontEnd/.history/*
+
+# misc
+FrontEnd/.sass-cache
+FrontEnd/connect.lock
+FrontEnd/coverage
+FrontEnd/libpeerconnection.log
+FrontEnd/npm-debug.log
+FrontEnd/yarn-error.log
+FrontEnd/testem.log
+FrontEnd/typings
+
+# System Files
+FrontEnd/.DS_Store
+FrontEnd/Thumbs.db
+ 
+FrontEnd/.DS_STORE
+
+FrontEnd/dist/
+FrontEnd/bazel-out
+FrontEnd/integration/bazel/bazel-*
+FrontEnd/*.log
+FrontEnd/node_modules
+
+# Include when developing application packages.
+FrontEnd/pubspec.lock
+FrontEnd/.c9
+FrontEnd/.idea/
+FrontEnd/.devcontainer/*
+FrontEnd/!.devcontainer/README.md
+FrontEnd/!.devcontainer/recommended-devcontainer.json
+FrontEnd/!.devcontainer/recommended-Dockerfile
+FrontEnd/.settings/
+FrontEnd/.vscode/launch.json
+FrontEnd/.vscode/settings.json
+FrontEnd/.vscode/tasks.json
+FrontEnd/*.swo
+FrontEnd/modules/.settings
+FrontEnd/modules/.vscode
+FrontEnd/.vimrc
+FrontEnd/.nvimrc
+
+# Don't check in secret files
+FrontEnd/*secret.js
+
+# Ignore npm/yarn debug log
+FrontEnd/npm-debug.log
+FrontEnd/yarn-error.log
+
+# build-analytics
+FrontEnd/.build-analytics
+
+# rollup-test output
+FrontEnd/modules/rollup-test/dist/
+
+# User specific bazel settings
+FrontEnd/.bazelrc.user
+
+FrontEnd/.notes.md
+FrontEnd/baseline.json
