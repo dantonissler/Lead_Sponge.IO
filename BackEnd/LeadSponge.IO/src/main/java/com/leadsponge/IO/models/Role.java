@@ -11,7 +11,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.Size;
 
 import org.springframework.security.core.GrantedAuthority;
 
@@ -38,7 +37,7 @@ public class Role implements GrantedAuthority {
 
 	private @Id @Column(name = "id") @GeneratedValue(strategy = GenerationType.TABLE, generator = "role_id") Long id;
 
-	private @Column(name = "nome") @Size(min = 4, max = 50, message = "{nome.size}") String nome;
+	private @Column(name = "nome") String nome;
 
 	private @ManyToMany(mappedBy = "roles") @JsonBackReference("roles") Set<Usuario> usuarios;
 

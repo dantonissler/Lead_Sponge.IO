@@ -34,6 +34,7 @@
     "jquery-slim": "^3.0.0",
     "ng2-toasty": "^4.0.3",
     "popper.js": "^1.16.1",
+    "primeflex": "^1.1.1",
     "primeicons": "^4.0.0-rc.2",
     "primeng": "^9.1.0",
     "rxjs": "~6.5.4",

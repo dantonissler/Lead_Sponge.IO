@@ -48,16 +48,6 @@
       "name": "leadsponge.seguranca.enable-https",
       "type": "java.lang.Boolean",
       "sourceType": "com.leadsponge.IO.config.property.LeadSpongeApiProperty$Seguranca"
-    },
-    {
-      "name": "leadsponge.seguranca.enable-https",
-      "type": "java.lang.Boolean",
-      "sourceType": "com.leadsponge.IO.config.property.LeadSpongeApiProperty$Seguranca"
-    },
-    {
-      "name": "leadsponge.seguranca.enable-https",
-      "type": "java.lang.Boolean",
-      "sourceType": "com.leadsponge.IO.config.property.LeadSpongeApiProperty$Seguranca"
     }
   ],
   "hints": []

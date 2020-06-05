@@ -18,13 +18,18 @@ public class UsuarioService {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
+//	@Autowired
+//	private RoleRepository roleRepository;
+	
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	public Usuario save(Usuario usuario) {
 		usuariovalidar(usuario);
+		
 		usuario.setPassword(bCryptPasswordEncoder.encode(usuario.getPassword()));
 //		usuario.setRoles(new HashSet<>(roleRepository.findAll()));
+//		usuario.getRoles().forEach(c -> c.setUsuarios(usuario));
 		usuario.setRoles(new HashSet<>(usuario.getRoles()));
 		return usuarioRepository.save(usuario);
 	}
@@ -35,9 +40,9 @@ public class UsuarioService {
 		return usuarioRepository.save(usuarioSalvo);
 	}
 
-	public void atualizarPropriedadeEnabled(Long id, Boolean ativo) {
+	public void atualizarPropriedadeEnabled(Long id, Boolean enabled) {
 		Usuario usuarioSalva = buscarUsuarioExistente(id);
-		usuarioSalva.setEnabled(ativo);
+		usuarioSalva.setEnabled(enabled);
 		usuarioRepository.save(usuarioSalva);
 	}
 

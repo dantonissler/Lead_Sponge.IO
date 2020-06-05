@@ -1,0 +1,34 @@
+import { UsuarioCadastrarComponent } from '../components/usuario-cadastrar/usuario-cadastrar.component';
+import { UsuarioListarComponent } from '../components/usuario-listar/usuario-listar.component';
+import { AuthGuard } from '../auth.guard';
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+
+const routes: Routes = [
+  {
+    path: '',
+    component: UsuarioListarComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['ROLE_PESQUISAR_USUARIO'] }
+  },
+  {
+    path: 'novo',
+    component: UsuarioCadastrarComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['ROLE_CADASTRAR_USUARIO'] }
+  },
+  {
+    path: ':id',
+    component: UsuarioCadastrarComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['ROLE_CADASTRAR_USUARIO'] }
+  }
+]
+
+@NgModule({
+  imports: [
+    RouterModule.forChild(routes)
+  ],
+  exports: [RouterModule]
+})
+export class UsuariosRoutingModule { }
