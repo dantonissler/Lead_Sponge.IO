@@ -24,7 +24,7 @@ import com.leadsponge.IO.repository.OportunidadeRepository;
 
 @RestController
 @RequestMapping("/oportunidades")
-public class OportunidadeEndPoint extends CrudController {
+class OportunidadeEndPoint extends CrudController {
 
 	@Autowired
 	private final OportunidadeRepository repository;
@@ -71,7 +71,6 @@ public class OportunidadeEndPoint extends CrudController {
 	Oportunidade editar(@RequestBody Oportunidade novoOportunidade, @PathVariable Long id) {
 		return repository.findById(id).map(oportunidade -> {
 			oportunidade.setNome(novoOportunidade.getNome());
-			oportunidade.setFonte(novoOportunidade.getFonte());
 			return repository.save(oportunidade);
 		}).orElseThrow(() -> notFouldId(id, "a oportunidade"));
 	}

@@ -1,7 +1,9 @@
 package com.leadsponge.IO.models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -10,19 +12,30 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.leadsponge.IO.models.audit.UserDateAudit;
+import com.leadsponge.IO.models.view.View;
+
 import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "email")
-@TableGenerator(name = "email_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "email", allocationSize = 1, initialValue = 0)
-public class Email {
+@Table(name = "emails")
+@TableGenerator(name = "email_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "emails", allocationSize = 1, initialValue = 0)
+public class Email extends UserDateAudit {
 
-	private @Id @Column(name = "id") @GeneratedValue(strategy = GenerationType.TABLE, generator = "email_id") Long id;
+	@Id
+	@Column(name = "id")
+	@JsonView(View.Email.class)
+	@GeneratedValue(strategy = GenerationType.TABLE, generator = "email_id")
+	private Long id;
 
-	private @javax.validation.constraints.Email(message = "{email.not.valid}") String email;
+	@javax.validation.constraints.Email(message = "{email.not.valid}")
+	private String email;
 
-	private @ManyToOne @JoinColumn(name = "contato_id") Contato contato;
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "contato_id")
+	private Contato contato;
 
 	public Long getId() {
 		return id;
@@ -47,6 +60,7 @@ public class Email {
 	public void setContato(Contato contato) {
 		this.contato = contato;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

@@ -15,7 +15,7 @@ import com.leadsponge.IO.repository.RoleRepository;
 
 @RestController
 @RequestMapping("/roles")
-public class RoleEndPoint {
+class RoleEndPoint {
 	
 	@Autowired
 	private RoleRepository roleRepository;

@@ -1,9 +1,11 @@
 package com.leadsponge.IO.models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,29 +17,42 @@ import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.leadsponge.IO.models.audit.UserDateAudit;
+import com.leadsponge.IO.models.view.View;
 
 import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "telefone")
-@TableGenerator(name = "telefone_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "telefone", allocationSize = 1, initialValue = 0)
-public class Telefone {
+@Table(name = "telefones")
+@TableGenerator(name = "telefone_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "telefones", allocationSize = 1, initialValue = 0)
+public class Telefone extends UserDateAudit {
 
-	private @Id @Column(name = "id") @GeneratedValue(strategy = GenerationType.TABLE, generator = "telefone_id") Long id;
+	@Id
+	@Column(name = "id")
+	@JsonView(View.Telefone.class)
+	@GeneratedValue(strategy = GenerationType.TABLE, generator = "telefone_id")
+	private Long id;
 
-	private @Size(max = 20, message = "{telefone.size}") String telefone;
+	@Column(name = "numero")
+	@Size(max = 20)
+	private String numero;
 
+	@Column(name = "tipo")
 	@Enumerated(EnumType.STRING)
 	private TipoTelefone tipo;
 
-	private @ManyToOne @JsonBackReference @JoinColumn(name = "contato_id") Contato contato;
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonBackReference("telefone")
+	@JoinColumn(name = "contato_id")
+	private Contato contato;
 
 	@JsonIgnore
-	public boolean isReceita() {
+	public boolean isComercial() {
 		return TipoTelefone.COMERCIAL.equals(tipo);
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -46,12 +61,12 @@ public class Telefone {
 		this.id = id;
 	}
 
-	public String getTelefone() {
-		return telefone;
+	public String getNumero() {
+		return numero;
 	}
 
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
+	public void setNumero(String numero) {
+		this.numero = numero;
 	}
 
 	public TipoTelefone getTipo() {

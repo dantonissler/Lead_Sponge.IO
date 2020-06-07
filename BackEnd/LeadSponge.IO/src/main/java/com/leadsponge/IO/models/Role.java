@@ -14,32 +14,34 @@ import javax.persistence.UniqueConstraint;
 
 import org.springframework.security.core.GrantedAuthority;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "role", uniqueConstraints = { @UniqueConstraint(columnNames = { "nome" }) })
-@TableGenerator(name = "role_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "role", allocationSize = 1, initialValue = 0)
+@Table(name = "roles", uniqueConstraints = { @UniqueConstraint(columnNames = { "nome" }) })
+@TableGenerator(name = "role_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "roles", allocationSize = 1, initialValue = 0)
 public class Role implements GrantedAuthority {
 
 	private static final long serialVersionUID = 1L;
 
-	public Role() {
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.TABLE, generator = "role_id")
+	private Long id;
 
+	@Column(name = "nome")
+	private String nome;
+
+	@ManyToMany(mappedBy = "roles")
+	private Set<Usuario> usuarios;
+
+	public Role() {
 	}
 
 	public Role(String nome) {
 		super();
 		this.nome = nome;
 	}
-
-	private @Id @Column(name = "id") @GeneratedValue(strategy = GenerationType.TABLE, generator = "role_id") Long id;
-
-	private @Column(name = "nome") String nome;
-
-	private @ManyToMany(mappedBy = "roles") @JsonBackReference("roles") Set<Usuario> usuarios;
 
 	public Long getId() {
 		return id;

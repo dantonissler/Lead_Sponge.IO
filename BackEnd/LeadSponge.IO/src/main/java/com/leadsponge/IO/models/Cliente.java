@@ -9,39 +9,57 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.leadsponge.IO.models.audit.UserDateAudit;
+import com.leadsponge.IO.models.view.View;
 
 import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "cliente")
-@TableGenerator(name = "cliente_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "cliente", allocationSize = 1, initialValue = 0)
-public class Cliente {
+@Table(name = "clientes")
+@TableGenerator(name = "cliente_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "clientes", allocationSize = 1, initialValue = 0)
+public class Cliente extends UserDateAudit {
 
-	private @Id @Column(name = "id") @GeneratedValue(strategy = GenerationType.TABLE, generator = "cliente_id") Long id;
+	@Id
+	@Column(name = "id")
+	@JsonView(View.Cliente.class)
+	@GeneratedValue(strategy = GenerationType.TABLE, generator = "cliente_id")
+	private Long id;
+	@Size(min = 4, max = 50)
+	private String nome;
 
-	private @Size(min = 4, max = 50, message = "{nome.size}") String nome;
+	@Size(max = 1000)
+	private String url;
 
-	private @Size(max = 50, message = "{segmento.size}") String segmento;
+	@Size(max = 255)
+	private String resumo;
 
-	private @Size(max = 1000, message = "{url.size}") String url;
+	@JsonIgnoreProperties("cliente")
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Contato> contato;
 
-	private @Size(max = 255, message = "{resumo.size}") String resumo;
+	@JsonIgnoreProperties("cliente")
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Oportunidade> oportunidades;
 
-	private @JsonIgnoreProperties("cliente")
-	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY) 
-	List<Contato> contato;
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "segmento_id")
+	@JsonBackReference("cliente")
+	private Segmento segmento;
 
-	private @JsonIgnoreProperties("cliente")
-	@OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false) 
-	Oportunidade oportunidade;
+	@JsonIgnoreProperties("cliente")
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Tarefa> tarefas;
 
 	public Long getId() {
 		return id;
@@ -53,14 +71,6 @@ public class Cliente {
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-
-	public String getSegmento() {
-		return segmento;
-	}
-
-	public void setSegmento(String segmento) {
-		this.segmento = segmento;
 	}
 
 	public String getUrl() {
@@ -82,6 +92,47 @@ public class Cliente {
 	public void setId(Long id) {
 		this.id = id;
 	}
+
+	public List<Contato> getContato() {
+		return contato;
+	}
+
+	public void setContato(List<Contato> contato) {
+		this.contato = contato;
+	}
+
+	public List<Oportunidade> getOportunidade() {
+		return oportunidades;
+	}
+
+	public void setOportunidade(List<Oportunidade> oportunidades) {
+		this.oportunidades = oportunidades;
+	}
+
+	public List<Oportunidade> getOportunidades() {
+		return oportunidades;
+	}
+
+	public void setOportunidades(List<Oportunidade> oportunidades) {
+		this.oportunidades = oportunidades;
+	}
+
+	public Segmento getSegmento() {
+		return segmento;
+	}
+
+	public void setSegmento(Segmento segmento) {
+		this.segmento = segmento;
+	}
+
+	public List<Tarefa> getTarefas() {
+		return tarefas;
+	}
+
+	public void setTarefas(List<Tarefa> tarefas) {
+		this.tarefas = tarefas;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

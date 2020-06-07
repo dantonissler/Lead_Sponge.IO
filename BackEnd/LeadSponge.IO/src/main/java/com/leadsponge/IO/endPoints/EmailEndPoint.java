@@ -23,7 +23,7 @@ import com.leadsponge.IO.repository.EmailRepository;
 
 @RestController
 @RequestMapping("/emails")
-public class EmailEndPoint extends CrudController {
+class EmailEndPoint extends CrudController {
 	
 	@Autowired
 	private final EmailRepository repository;

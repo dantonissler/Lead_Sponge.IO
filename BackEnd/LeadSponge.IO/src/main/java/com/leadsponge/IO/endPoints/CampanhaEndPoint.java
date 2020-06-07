@@ -24,7 +24,7 @@ import com.leadsponge.IO.repository.CampanhaRepository;
 
 @RestController
 @RequestMapping("/campanhas")
-public class CampanhaEndPoint extends CrudController {
+class CampanhaEndPoint extends CrudController {
 
 	@Autowired
 	private final CampanhaRepository repository;

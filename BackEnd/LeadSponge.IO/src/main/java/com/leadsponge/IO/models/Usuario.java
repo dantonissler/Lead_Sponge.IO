@@ -2,8 +2,10 @@ package com.leadsponge.IO.models;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.persistence.Transient;
@@ -25,32 +28,58 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.leadsponge.IO.models.audit.UserDateAudit;
+import com.leadsponge.IO.models.view.View;
 
 import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "usuario", uniqueConstraints = { @UniqueConstraint(columnNames = { "username" }) })
-@TableGenerator(name = "usuario_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "usuario", allocationSize = 1, initialValue = 0)
-public class Usuario implements UserDetails, Serializable {
+@Table(name = "usuarios", uniqueConstraints = { @UniqueConstraint(columnNames = { "username" }) })
+@TableGenerator(name = "usuario_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "usuarios", allocationSize = 1, initialValue = 0)
+public class Usuario extends UserDateAudit implements UserDetails, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private @Id @Column(name = "id") @GeneratedValue(strategy = GenerationType.TABLE, generator = "usuario_id") Long id;
+	@Id
+	@Column(name = "id")
+	@JsonView(View.Usuario.class)
+	@GeneratedValue(strategy = GenerationType.TABLE, generator = "usuario_id")
+	private Long id;
 
-	private @Column(name = "username", unique = true) @Size(min = 4, max = 32, message = "{login.size}") String username;
+	@Column(name = "username", unique = true)
+	@Size(min = 4, max = 32, message = "{login.size}")
+	private String username;
 
-	private @Column(name = "nome_completo") @Size(min = 4, max = 50, message = "{nome.size}") String nomeCompleto;
+	@Column(name = "nome_completo")
+	@Size(min = 4, max = 50, message = "{nome.size}")
+	private String nomeCompleto;
 
-	private @Column(name = "email") @Email(message = "{email.not.valid}") @NotBlank(message = "{email.not.blank}") String email;
+	@Column(name = "email")
+	@Email(message = "{email.not.valid}")
+	@NotBlank(message = "{email.not.blank}")
+	private String email;
 
-	private @Column(name = "password") @Size(min = 6, max = 150, message = "{senha.size}") String password;
+	@Column(name = "password")
+	@Size(min = 6, max = 150, message = "{senha.size}")
+	private String password;
 
-	private @Transient String confirmarPassword;
+	@Transient
+	private String confirmarPassword;
 
-	private @Column(name = "enabled") boolean enabled;
+	@Column(name = "enabled")
+	private boolean enabled;
 
-	private @JsonBackReference("usuarios") @ManyToMany(fetch = FetchType.EAGER) @JoinTable(name = "roles_usuarios", joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")) Set<Role> roles;
+	@JsonBackReference("usuarios")
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "roles_usuarios", joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+	private Set<Role> roles;
+
+	@JsonIgnoreProperties("usuario")
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Tarefa> tarefas;
 
 	public Long getId() {
 		return id;
@@ -99,10 +128,17 @@ public class Usuario implements UserDetails, Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	
+
 	public boolean getEnabled() {
 		return this.enabled;
+	}
+
+	public List<Tarefa> getTarefas() {
+		return tarefas;
+	}
+
+	public void setTarefas(List<Tarefa> tarefas) {
+		this.tarefas = tarefas;
 	}
 
 	@Override

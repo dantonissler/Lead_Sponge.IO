@@ -6,12 +6,12 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
 @Generated(value = "org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor")
-@StaticMetamodel(Campanha.class)
-public abstract class Campanha_ {
+@StaticMetamodel(Segmento.class)
+public abstract class Segmento_ {
 	public static volatile SingularAttribute<Campanha, Long> id;
 	public static volatile SingularAttribute<Campanha, String> nome;
-	public static volatile ListAttribute<Campanha, Oportunidade> oportunidades;
+	public static volatile ListAttribute<Campanha, Cliente> clientes;
 	public static final String ID = "id";
 	public static final String NOME = "nome";
-	public static final String OPORTUNIDADES = "oportunidades";
+	public static final String CLIENTES = "clientes";
 }

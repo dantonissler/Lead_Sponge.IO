@@ -17,26 +17,38 @@ import javax.persistence.TableGenerator;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.leadsponge.IO.models.audit.UserDateAudit;
 
 import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "contato")
-@TableGenerator(name = "contato_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "contato", allocationSize = 1, initialValue = 0)
-public class Contato {
+@Table(name = "contatos")
+@TableGenerator(name = "contato_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "contatos", allocationSize = 1, initialValue = 0)
+public class Contato extends UserDateAudit {
 
-	private @Id @Column(name = "id") @GeneratedValue(strategy = GenerationType.TABLE, generator = "contato_id") Long id;
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.TABLE, generator = "contato_id")
+	private Long id;
 
-	private @Size(min = 4, max = 50, message = "{nome.size}") String nome;
+	@Size(min = 4, max = 50, message = "{nome.size}")
+	private String nome;
 
-	private @Size(max = 50, message = "{cargo.size}") String cargo;
+	@Size(max = 50, message = "{cargo.size}")
+	private String cargo;
 
-	private @ManyToOne @JoinColumn(name = "cliente_id") Cliente cliente;
+	@ManyToOne
+	@JoinColumn(name = "cliente_id")
+	private Cliente cliente;
 
-	private @JsonIgnoreProperties("contato") @OneToMany(mappedBy = "contato", cascade = CascadeType.ALL, fetch = FetchType.LAZY) List<Telefone> telefone;
+	@OneToMany(mappedBy = "contato", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonIgnoreProperties("contato")
+	private List<Telefone> telefone;
 
-	private @JsonIgnoreProperties("contato") @OneToMany(mappedBy = "contato", cascade = CascadeType.ALL, fetch = FetchType.LAZY) List<Email> email;
+	@OneToMany(mappedBy = "contato", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonIgnoreProperties("contato")
+	private List<Email> email;
 
 	public Long getId() {
 		return id;
@@ -85,7 +97,7 @@ public class Contato {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

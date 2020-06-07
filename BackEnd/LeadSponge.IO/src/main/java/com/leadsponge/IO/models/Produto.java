@@ -1,6 +1,6 @@
 package com.leadsponge.IO.models;
 
-import java.util.List;
+import java.math.BigDecimal;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,9 +9,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -23,22 +25,29 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "campanhas")
-@TableGenerator(name = "campanha_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "campanhas", allocationSize = 1, initialValue = 0)
-public class Campanha extends UserDateAudit {
+@Table(name = "produtos")
+@TableGenerator(name = "produto_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "produtos", allocationSize = 1, initialValue = 0)
+public class Produto extends UserDateAudit {
 
 	@Id
 	@Column(name = "id")
-	@JsonView(View.Campanha.class)
-	@GeneratedValue(strategy = GenerationType.TABLE, generator = "campanha_id")
+	@JsonView(View.Produto.class)
+	@GeneratedValue(strategy = GenerationType.TABLE, generator = "produto_id")
 	private Long id;
 
-	@Size(min = 4, max = 50, message = "{nome.size}")
+	@Size(min = 4, max = 100, message = "{produto.nome.size}")
 	private String nome;
 
-	@JsonIgnoreProperties("campanha")
-	@OneToMany(mappedBy = "campanha", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Oportunidade> oportunidade;
+	@Size(max = 150, message = "{produto.descricao.size}")
+	private String descricao;
+
+	@NotNull
+	private BigDecimal valor;
+
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonIgnoreProperties("produto")
+	@JoinColumn(name = "oportunidade_id")
+	private Oportunidade oportunidade;
 
 	public Long getId() {
 		return id;
@@ -56,11 +65,27 @@ public class Campanha extends UserDateAudit {
 		this.nome = nome;
 	}
 
-	public List<Oportunidade> getOportunidade() {
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public BigDecimal getValor() {
+		return valor;
+	}
+
+	public void setValor(BigDecimal valor) {
+		this.valor = valor;
+	}
+
+	public Oportunidade getOportunidade() {
 		return oportunidade;
 	}
 
-	public void setOportunidade(List<Oportunidade> oportunidade) {
+	public void setOportunidade(Oportunidade oportunidade) {
 		this.oportunidade = oportunidade;
 	}
 
@@ -72,7 +97,7 @@ public class Campanha extends UserDateAudit {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Campanha other = (Campanha) obj;
+		Produto other = (Produto) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

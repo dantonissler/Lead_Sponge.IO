@@ -23,22 +23,22 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "campanhas")
-@TableGenerator(name = "campanha_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "campanhas", allocationSize = 1, initialValue = 0)
-public class Campanha extends UserDateAudit {
+@Table(name = "segmentos")
+@TableGenerator(name = "segmento_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "segmentos", allocationSize = 1, initialValue = 0)
+public class Segmento extends UserDateAudit {
 
 	@Id
 	@Column(name = "id")
-	@JsonView(View.Campanha.class)
-	@GeneratedValue(strategy = GenerationType.TABLE, generator = "campanha_id")
+	@JsonView(View.Segmento.class)
+	@GeneratedValue(strategy = GenerationType.TABLE, generator = "segmento_id")
 	private Long id;
 
-	@Size(min = 4, max = 50, message = "{nome.size}")
+	@Size(min = 4, max = 50)
 	private String nome;
 
-	@JsonIgnoreProperties("campanha")
-	@OneToMany(mappedBy = "campanha", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Oportunidade> oportunidade;
+	@JsonIgnoreProperties("segmento")
+	@OneToMany(mappedBy = "segmento", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Cliente> clientes;
 
 	public Long getId() {
 		return id;
@@ -56,12 +56,12 @@ public class Campanha extends UserDateAudit {
 		this.nome = nome;
 	}
 
-	public List<Oportunidade> getOportunidade() {
-		return oportunidade;
+	public List<Cliente> getClientes() {
+		return clientes;
 	}
 
-	public void setOportunidade(List<Oportunidade> oportunidade) {
-		this.oportunidade = oportunidade;
+	public void setClientes(List<Cliente> clientes) {
+		this.clientes = clientes;
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public class Campanha extends UserDateAudit {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Campanha other = (Campanha) obj;
+		Segmento other = (Segmento) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -80,5 +80,4 @@ public class Campanha extends UserDateAudit {
 			return false;
 		return true;
 	}
-
 }

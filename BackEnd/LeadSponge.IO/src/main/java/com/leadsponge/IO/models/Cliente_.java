@@ -11,5 +11,10 @@ public abstract class Cliente_ {
 	public static volatile SingularAttribute<Cliente, String> nome;
 	public static volatile SingularAttribute<Cliente, String> segmento;
 	public static volatile SingularAttribute<Cliente, String> url;
-	public static volatile SingularAttribute<Cliente, String> resumo;	
+	public static volatile SingularAttribute<Cliente, String> resumo;
+	public static final String ID = "id";
+	public static final String NOME = "nome";
+	public static final String SEGENTO = "segmento";
+	public static final String URL = "url";
+	public static final String RESUMO = "resumo";
 }

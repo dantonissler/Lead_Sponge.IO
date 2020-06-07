@@ -1,19 +1,19 @@
 package com.leadsponge.IO.models;
 
-public enum TipoTelefone {
-	
-	COMERCIAL("Comercial"),
-	RESIDENCIAL("Residencial"),
-	PESSOAL("Pessoal"),
-	FAX("Fax");
+public enum TipoTarefa {
+	EMAIL("E-mail"),
+	REUNIAO("Reunião"),
+	VISITA("Visita"),
+	TAREFA("Tarefa"),
+	ALMOCO("Almoço");
 	
 	private final String descricao;
 	
-	TipoTelefone(String descricao) {
+	TipoTarefa(String descricao) {
 		this.descricao = descricao;
 	}
 	
 	public String getDescricao() {
 		return descricao;
-	}	
+	}
 }

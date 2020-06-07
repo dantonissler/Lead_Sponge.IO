@@ -16,7 +16,7 @@ import com.leadsponge.IO.config.property.LeadSpongeApiProperty;
 @Profile("oauth-security")
 @RestController
 @RequestMapping("/tokens")
-public class TokenEndPoint {
+class TokenEndPoint {
 
 	@Autowired
 	private final LeadSpongeApiProperty leadSpongeApiProperty;

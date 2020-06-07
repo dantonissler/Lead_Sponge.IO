@@ -24,7 +24,7 @@ import com.leadsponge.IO.repository.ClienteRepository;
 
 @RestController
 @RequestMapping("/clientes")
-public class ClienteEndPoint extends CrudController {
+class ClienteEndPoint extends CrudController {
 
 	/* TODO
 	 * Criar o cliente com muitos ou nem um emails e telefones
@@ -77,7 +77,6 @@ public class ClienteEndPoint extends CrudController {
 			cliente.setNome(novoCliente.getNome());
 			cliente.setResumo(novoCliente.getResumo());
 			cliente.setUrl(novoCliente.getUrl());
-			cliente.setSegmento(novoCliente.getSegmento());
 			return repository.save(cliente);
 		}).orElseThrow(() -> notFouldId(id, "o cliente")));
 	}

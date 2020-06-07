@@ -23,7 +23,7 @@ import com.leadsponge.IO.repository.TelefoneRepository;
 
 @RestController
 @RequestMapping("/telefones")
-public class TelefoneEndPoint extends CrudController {
+class TelefoneEndPoint extends CrudController {
 	@Autowired
 	private final TelefoneRepository repository;
 	

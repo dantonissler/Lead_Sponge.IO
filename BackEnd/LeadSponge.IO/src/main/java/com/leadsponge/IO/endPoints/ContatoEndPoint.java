@@ -29,7 +29,7 @@ import com.leadsponge.IO.repository.ContatoRepository;
 @RestController
 @CrossOrigin
 @RequestMapping("/contatos")
-public class ContatoEndPoint extends CrudController {
+class ContatoEndPoint extends CrudController {
 
 	@Autowired
 	private final ContatoRepository repository;
