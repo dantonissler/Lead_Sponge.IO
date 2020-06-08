@@ -42,7 +42,7 @@ class ClienteEndPoint extends CrudController {
 	}
 
 	@GetMapping(value = { "", "/" })
-	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_CLIENTE') and #oauth2.hasScope('read')")
+	@PreAuthorize("hasAuthority('PESQUISAR_CLIENTE') and #oauth2.hasScope('read')")
 	public ResponseEntity<Iterable<?>> listar() {
 		Iterable<Cliente> clientes = repository.findAll();
 		if (clientes == null) {
@@ -53,7 +53,7 @@ class ClienteEndPoint extends CrudController {
 	}
 
 	@PostMapping(value = { "", "/" })
-	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_CLIENTE') and #oauth2.hasScope('write')")
+	@PreAuthorize("hasAuthority('CADASTRAR_CLIENTE') and #oauth2.hasScope('write')")
 	ResponseEntity<Cliente> cadastrar(@Valid @RequestBody Cliente cliente, HttpServletResponse response) {
 		Cliente criarCliente = repository.save(cliente);
 		if (criarCliente == null) {
@@ -65,13 +65,13 @@ class ClienteEndPoint extends CrudController {
 	}
 
 	@GetMapping(value = { "/{id}", "/{id}/" })
-	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_CLIENTE') and #oauth2.hasScope('read')")
+	@PreAuthorize("hasAuthority('PESQUISAR_CLIENTE') and #oauth2.hasScope('read')")
 	public ResponseEntity<Cliente> detalhar(@PathVariable("id") Long id) {
 		return ResponseEntity.ok(repository.findById(id).orElseThrow(() -> notFouldId(id, "o cliente")));
 	}
 
 	@PutMapping(value = { "/{id}", "/{id}/" })
-	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_CLIENTE') and #oauth2.hasScope('write')")
+	@PreAuthorize("hasAuthority('CADASTRAR_CLIENTE') and #oauth2.hasScope('write')")
 	ResponseEntity<Cliente> editar(@Valid @RequestBody Cliente novoCliente, @PathVariable Long id) {
 		return ResponseEntity.ok(repository.findById(id).map(cliente -> {
 			cliente.setNome(novoCliente.getNome());
@@ -82,7 +82,7 @@ class ClienteEndPoint extends CrudController {
 	}
 
 	@DeleteMapping(value = { "/{id}", "/{id}/" })
-	@PreAuthorize("hasAuthority('ROLE_REMOVER_CLIENTE') and #oauth2.hasScope('write')")
+	@PreAuthorize("hasAuthority('REMOVER_CLIENTE') and #oauth2.hasScope('write')")
 	public ResponseEntity<Cliente> remover(@PathVariable Long id) {
 		try {
 			repository.deleteById(id);

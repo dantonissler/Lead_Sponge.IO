@@ -37,7 +37,7 @@ class EmailEndPoint extends CrudController {
 	}
 
 	@GetMapping(value = { "", "/" })
-	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_CLIENTE') and #oauth2.hasScope('read')")
+	@PreAuthorize("hasAuthority('PESQUISAR_CLIENTE') and #oauth2.hasScope('read')")
 	public ResponseEntity<Iterable<?>> listar() {
 		Iterable<Email> email = repository.findAll();
 		if (email == null) {
@@ -48,7 +48,7 @@ class EmailEndPoint extends CrudController {
 	}
 
 	@PostMapping(value = { "", "/" })
-	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_CLIENTE') and #oauth2.hasScope('write')")
+	@PreAuthorize("hasAuthority('CADASTRAR_CLIENTE') and #oauth2.hasScope('write')")
 	ResponseEntity<Email> cadastrar(@Valid @RequestBody Email email, HttpServletResponse response) {
 		Email criarEmail = repository.save(email);
 		if (criarEmail == null) {
@@ -60,13 +60,13 @@ class EmailEndPoint extends CrudController {
 	}
 
 	@GetMapping(value = { "/{id}", "/{id}/" })
-	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_CLIENTE') and #oauth2.hasScope('read')")
+	@PreAuthorize("hasAuthority('PESQUISAR_CLIENTE') and #oauth2.hasScope('read')")
 	public ResponseEntity<Email> detalhar(@PathVariable("id") Long id) {
 		return ResponseEntity.ok(repository.findById(id).orElseThrow(() -> notFouldId(id, "o email")));
 	}
 
 	@DeleteMapping(value = { "/{id}", "/{id}/" })
-	@PreAuthorize("hasAuthority('ROLE_REMOVER_CLIENTE') and #oauth2.hasScope('write')")
+	@PreAuthorize("hasAuthority('REMOVER_CLIENTE') and #oauth2.hasScope('write')")
 	public ResponseEntity<Email> remover(@PathVariable Long id) {
 		try {
 			repository.deleteById(id);

@@ -3,7 +3,6 @@ import { TarefasPesquisaComponent } from './../components/tarefas-pesquisa/taref
 import { AuthGuard } from './../../usuarios/auth.guard';
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 
 
@@ -12,19 +11,19 @@ const routes: Routes = [
     path: '',
     component: TarefasPesquisaComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['ROLE_PESQUISAR_USUARIO'] }
+    data: { roles: ['PESQUISAR_TAREFA'] }
   },
   {
     path: 'novo',
     component: TarefasCadastroComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['ROLE_CADASTRAR_USUARIO'] }
+    data: { roles: ['CADASTRAR_TAREFA'] }
   },
   {
     path: ':id',
     component: TarefasCadastroComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['ROLE_CADASTRAR_USUARIO'] }
+    data: { roles: ['CADASTRAR_TAREFA'] }
   }
 ]
 

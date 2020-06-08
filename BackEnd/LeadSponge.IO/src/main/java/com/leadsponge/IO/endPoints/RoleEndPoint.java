@@ -25,7 +25,7 @@ class RoleEndPoint {
 	}
 	
 	@GetMapping(value = { "", "/" })
-	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_USUARIO') and #oauth2.hasScope('read')")
+	@PreAuthorize("hasAuthority('PESQUISAR_USUARIO') and #oauth2.hasScope('read')")
 	public ResponseEntity<Iterable<?>> listar() {
 		Iterable<Role> role = roleRepository.findAll();
 		if (role == null) {
@@ -36,7 +36,7 @@ class RoleEndPoint {
 	}
 	
 	@GetMapping(value = { "/{id}", "/{id}/" })
-	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_USUARIO') and #oauth2.hasScope('read')")
+	@PreAuthorize("hasAuthority('PESQUISAR_USUARIO') and #oauth2.hasScope('read')")
 	public ResponseEntity<Role> buscarPeloId(@PathVariable Long id) {
 		 Optional<Role> role = roleRepository.findById(id);
 		 return role.isPresent() ? ResponseEntity.ok(role.get()) : ResponseEntity.notFound().build();

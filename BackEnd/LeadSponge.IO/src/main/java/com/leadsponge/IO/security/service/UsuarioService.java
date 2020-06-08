@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.leadsponge.IO.errorValidate.ResourceBadRequestException;
 import com.leadsponge.IO.models.Usuario;
+import com.leadsponge.IO.repository.RoleRepository;
 import com.leadsponge.IO.repository.UsuarioRepository;
 import com.leadsponge.IO.security.service.exception.UsuarioInativaException;
 
@@ -18,8 +19,8 @@ public class UsuarioService {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
-//	@Autowired
-//	private RoleRepository roleRepository;
+	@Autowired
+	private RoleRepository roleRepository;
 	
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -28,9 +29,9 @@ public class UsuarioService {
 		usuariovalidar(usuario);
 		
 		usuario.setPassword(bCryptPasswordEncoder.encode(usuario.getPassword()));
-//		usuario.setRoles(new HashSet<>(roleRepository.findAll()));
+		usuario.setRoles(new HashSet<>(roleRepository.findAll()));
 //		usuario.getRoles().forEach(c -> c.setUsuarios(usuario));
-		usuario.setRoles(new HashSet<>(usuario.getRoles()));
+//		usuario.setRoles(new HashSet<>(usuario.getRoles()));
 		return usuarioRepository.save(usuario);
 	}
 

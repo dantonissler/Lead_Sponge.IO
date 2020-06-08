@@ -16,7 +16,6 @@ import { CampanhasRoutingModule } from './campanhas-routing.module';
     CommonModule,
     
     SharedModule,
-
     CampanhasRoutingModule
   ]
 })

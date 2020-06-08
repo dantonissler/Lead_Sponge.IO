@@ -9,19 +9,19 @@ const routes: Routes = [
     path: '',
     component: FontesPesquisaComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['ROLE_PESQUISAR_FONTE'] }
+    data: { roles: ['PESQUISAR_FONTE'] }
   },
   {
     path: 'novo',
     component: FontesCadastroComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['ROLE_CADASTRAR_FONTE'] }
+    data: { roles: ['CADASTRAR_FONTE'] }
   },
   {
     path: ':id',
     component: FontesCadastroComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['ROLE_CADASTRAR_FONTE'] }
+    data: { roles: ['CADASTRAR_FONTE'] }
   }
 ]
 

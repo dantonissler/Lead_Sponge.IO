@@ -9,19 +9,19 @@ const routes: Routes = [
     path: '',
     component: CampanhasPesquisaComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['ROLE_PESQUISAR_CAMPANHA'] }
+    data: { roles: ['PESQUISAR_CAMPANHA'] }
   },
   {
     path: 'novo',
     component: CampanhasCadastroComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['ROLE_CADASTRAR_CAMPANHA'] }
+    data: { roles: ['CADASTRAR_CAMPANHA'] }
   },
   {
     path: ':id',
     component: CampanhasCadastroComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['ROLE_CADASTRAR_CAMPANHA'] }
+    data: { roles: ['CADASTRAR_CAMPANHA'] }
   }
 ]
 

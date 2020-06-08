@@ -11,19 +11,19 @@ const routes: Routes = [
     path: '',
     component: ContatoPesquisaComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['ROLE_PESQUISAR_CLIENTE'] }
+    data: { roles: ['PESQUISAR_CLIENTE'] }
   },
   {
     path: 'novo',
     component: ContatoCadastroComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['ROLE_CADASTRAR_CLIENTE'] }
+    data: { roles: ['CADASTRAR_CLIENTE'] }
   },
   {
     path: ':id',
     component: ContatoCadastroComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['ROLE_CADASTRAR_CLIENTE'] }
+    data: { roles: ['CADASTRAR_CLIENTE'] }
   }
 ]
 

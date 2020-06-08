@@ -3,26 +3,25 @@ import { ProdutosCadastroComponent } from './../components/produtos-cadastro/pro
 import { AuthGuard } from './../../usuarios/auth.guard';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 const routes: Routes = [
   {
     path: '',
     component: ProdutosPesquisaComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['ROLE_PESQUISAR_USUARIO'] }
+    data: { roles: ['PESQUISAR_PRODUTO'] }
   },
   {
     path: 'novo',
     component: ProdutosCadastroComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['ROLE_CADASTRAR_USUARIO'] }
+    data: { roles: ['CADASTRAR_PRODUTO'] }
   },
   {
     path: ':id',
     component: ProdutosCadastroComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['ROLE_CADASTRAR_USUARIO'] }
+    data: { roles: ['CADASTRAR_PRODUTO'] }
   }
 ]
 

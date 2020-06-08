@@ -38,7 +38,7 @@ class OportunidadeEndPoint extends CrudController {
 	}
 	
 	@GetMapping(value = { "", "/" })
-	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_OPORTUNIDADE') and #oauth2.hasScope('read')")
+	@PreAuthorize("hasAuthority('PESQUISAR_OPORTUNIDADE') and #oauth2.hasScope('read')")
 	public ResponseEntity<Iterable<?>> listar() {
 		Iterable<Oportunidade> oportunidade = repository.findAll();
 		if (oportunidade == null) {
@@ -49,7 +49,7 @@ class OportunidadeEndPoint extends CrudController {
 	}
 
 	@PostMapping(value = { "", "/" })
-	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_OPORTUNIDADE') and #oauth2.hasScope('write')")
+	@PreAuthorize("hasAuthority('CADASTRAR_OPORTUNIDADE') and #oauth2.hasScope('write')")
 	ResponseEntity<Oportunidade> cadastrar(@Valid @RequestBody Oportunidade oportunidade, HttpServletResponse response) {
 		Oportunidade criaroportunidade = repository.save(oportunidade);
 		if (criaroportunidade == null) {
@@ -61,13 +61,13 @@ class OportunidadeEndPoint extends CrudController {
 	}
 
 	@GetMapping(value = { "/{id}", "/{id}/" })
-	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_OPORTUNIDADE') and #oauth2.hasScope('read')")
+	@PreAuthorize("hasAuthority('PESQUISAR_OPORTUNIDADE') and #oauth2.hasScope('read')")
 	public ResponseEntity<Oportunidade> detalhar(@Valid @PathVariable("id") Long id) {
 		return ResponseEntity.ok(repository.findById(id).orElseThrow(() -> notFouldId(id, "a oportunidade")));
 	}
 
 	@PutMapping(value = { "/{id}", "/{id}/" })
-	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_OPORTUNIDADE') and #oauth2.hasScope('write')")
+	@PreAuthorize("hasAuthority('CADASTRAR_OPORTUNIDADE') and #oauth2.hasScope('write')")
 	Oportunidade editar(@RequestBody Oportunidade novoOportunidade, @PathVariable Long id) {
 		return repository.findById(id).map(oportunidade -> {
 			oportunidade.setNome(novoOportunidade.getNome());
@@ -76,7 +76,7 @@ class OportunidadeEndPoint extends CrudController {
 	}
 
 	@DeleteMapping(value = { "/{id}", "/{id}/" })
-	@PreAuthorize("hasAuthority('ROLE_REMOVER_OPORTUNIDADE') and #oauth2.hasScope('write')")
+	@PreAuthorize("hasAuthority('REMOVER_OPORTUNIDADE') and #oauth2.hasScope('write')")
 	public ResponseEntity<Oportunidade> remover(@PathVariable Long id) {
 		try {
 			repository.deleteById(id);

@@ -28,22 +28,23 @@ class CampanhaEndPoint extends CrudController {
 
 	@Autowired
 	private final CampanhaRepository repository;
-	
-	@Autowired
-	private ApplicationEventPublisher publisher;
 
-	CampanhaEndPoint(CampanhaRepository repository) {
+	@Autowired
+	private final ApplicationEventPublisher publisher;
+
+	CampanhaEndPoint(CampanhaRepository repository, ApplicationEventPublisher publisher) {
 		this.repository = repository;
+		this.publisher = publisher;
 	}
 
 	@GetMapping(value = { "", "/" })
-	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_CAMPANHA') and #oauth2.hasScope('read')")
+	@PreAuthorize("hasAuthority('PESQUISAR_CAMPANHA') and #oauth2.hasScope('read')")
 	public ResponseEntity<Iterable<?>> listar() {
 		return ResponseEntity.ok(repository.findAll());
 	}
 
 	@PostMapping(value = { "", "/" })
-	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_CAMPANHA') and #oauth2.hasScope('write')")
+	@PreAuthorize("hasAuthority('CADASTRAR_CAMPANHA') and #oauth2.hasScope('write')")
 	public ResponseEntity<Campanha> cadastrar(@Valid @RequestBody Campanha campanha, HttpServletResponse response) {
 		Campanha criarCliente = repository.save(campanha);
 		if (criarCliente == null) {
@@ -55,13 +56,13 @@ class CampanhaEndPoint extends CrudController {
 	}
 
 	@GetMapping(value = { "/{id}", "/{id}/" })
-	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_CAMPANHA') and #oauth2.hasScope('read')")
+	@PreAuthorize("hasAuthority('PESQUISAR_CAMPANHA') and #oauth2.hasScope('read')")
 	public ResponseEntity<Campanha> detalhar(Long id) {
 		return ResponseEntity.ok(repository.findById(id).orElseThrow(() -> notFouldId(id, "a campanha")));
 	}
 
 	@PutMapping(value = { "/{id}", "/{id}/" })
-	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_CAMPANHA') and #oauth2.hasScope('write')")
+	@PreAuthorize("hasAuthority('CADASTRAR_CAMPANHA') and #oauth2.hasScope('write')")
 	ResponseEntity<Campanha> editar(@Valid @RequestBody Campanha novaCampanha, @PathVariable Long id) {
 		return ResponseEntity.ok(repository.findById(id).map(campanha -> {
 			campanha.setNome(novaCampanha.getNome());
@@ -70,7 +71,7 @@ class CampanhaEndPoint extends CrudController {
 	}
 
 	@DeleteMapping(value = { "/{id}", "/{id}/" })
-	@PreAuthorize("hasAuthority('ROLE_REMOVER_CAMPANHA') and #oauth2.hasScope('write')")
+	@PreAuthorize("hasAuthority('REMOVER_CAMPANHA') and #oauth2.hasScope('write')")
 	public ResponseEntity<Campanha> remover(Long id) {
 		try {
 			repository.deleteById(id);

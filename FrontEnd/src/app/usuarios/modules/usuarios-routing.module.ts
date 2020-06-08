@@ -9,19 +9,19 @@ const routes: Routes = [
     path: '',
     component: UsuarioListarComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['ROLE_PESQUISAR_USUARIO'] }
+    data: { roles: ['PESQUISAR_USUARIO'] }
   },
   {
     path: 'novo',
     component: UsuarioCadastrarComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['ROLE_CADASTRAR_USUARIO'] }
+    data: { roles: ['CADASTRAR_USUARIO'] }
   },
   {
     path: ':id',
     component: UsuarioCadastrarComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['ROLE_CADASTRAR_USUARIO'] }
+    data: { roles: ['CADASTRAR_USUARIO'] }
   }
 ]
 

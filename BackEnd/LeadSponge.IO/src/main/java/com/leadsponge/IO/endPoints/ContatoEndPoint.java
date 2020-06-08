@@ -10,7 +10,6 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +26,6 @@ import com.leadsponge.IO.models.Contato;
 import com.leadsponge.IO.repository.ContatoRepository;
 
 @RestController
-@CrossOrigin
 @RequestMapping("/contatos")
 class ContatoEndPoint extends CrudController {
 
@@ -43,7 +41,7 @@ class ContatoEndPoint extends CrudController {
 	}
 
 	@GetMapping(value = { "", "/" })
-	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_CONTATO') and #oauth2.hasScope('read')")
+	@PreAuthorize("hasAuthority('PESQUISAR_CONTATO') and #oauth2.hasScope('read')")
 	public ResponseEntity<Iterable<?>> listar() {
 		Iterable<Contato> clientes = repository.findAll();
 		if (clientes == null) {
@@ -54,7 +52,7 @@ class ContatoEndPoint extends CrudController {
 	}
 
 	@PostMapping(value = { "", "/" })
-	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_CONTATO') and #oauth2.hasScope('write')")
+	@PreAuthorize("hasAuthority('CADASTRAR_CONTATO') and #oauth2.hasScope('write')")
 	ResponseEntity<Contato> cadastrar(@Valid @RequestBody Contato novoContato , HttpServletResponse response) {
 		Contato criarCliente = repository.save(novoContato);
 		if (criarCliente == null) {
@@ -66,13 +64,13 @@ class ContatoEndPoint extends CrudController {
 	}
 
 	@GetMapping(value = { "/{id}", "/{id}/" })
-	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_CONTATO') and #oauth2.hasScope('read')")
+	@PreAuthorize("hasAuthority('PESQUISAR_CONTATO') and #oauth2.hasScope('read')")
 	public ResponseEntity<Contato> detalhar(@PathVariable("id") Long id) {
 		return ResponseEntity.ok(repository.findById(id).orElseThrow(() -> notFouldId(id, "o contato")));
 	}
 
 	@PutMapping(value = { "/{id}", "/{id}/" })
-	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_CONTATO') and #oauth2.hasScope('write')")
+	@PreAuthorize("hasAuthority('CADASTRAR_CONTATO') and #oauth2.hasScope('write')")
 	ResponseEntity<Contato> editar(@Valid @RequestBody Contato novoContato, @PathVariable Long id)
 			throws URISyntaxException {
 		return ResponseEntity.ok(repository.findById(id).map(contato -> {
@@ -84,7 +82,7 @@ class ContatoEndPoint extends CrudController {
 	}
 
 	@DeleteMapping(value = { "/{id}", "/{id}/" })
-	@PreAuthorize("hasAuthority('ROLE_REMOVER_CONTATO') and #oauth2.hasScope('write')")
+	@PreAuthorize("hasAuthority('REMOVER_CONTATO') and #oauth2.hasScope('write')")
 	public ResponseEntity<Cliente> remover(@PathVariable Long id){
 		try {
 			repository.deleteById(id);

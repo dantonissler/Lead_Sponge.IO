@@ -9,19 +9,19 @@ const routes: Routes = [
     path: '',
     component: OportunidadesPesquisaComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['ROLE_CADASTRAR_OPORTUNIDADE'] }
+    data: { roles: ['CADASTRAR_OPORTUNIDADE'] }
   },
   {
     path: 'novo',
     component: OportunidadesCadastroComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['ROLE_CADASTRAR_OPORTUNIDADE'] }
+    data: { roles: ['CADASTRAR_OPORTUNIDADE'] }
   },
   {
     path: ':id',
     component: OportunidadesCadastroComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['ROLE_CADASTRAR_OPORTUNIDADE'] }
+    data: { roles: ['CADASTRAR_OPORTUNIDADE'] }
   }
 ]
 

@@ -35,7 +35,7 @@ class TelefoneEndPoint extends CrudController {
 	}
 
 	@GetMapping(value = { "", "/" })
-	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_CLIENTE') and #oauth2.hasScope('read')")
+	@PreAuthorize("hasAuthority('PESQUISAR_CLIENTE') and #oauth2.hasScope('read')")
 	public ResponseEntity<Iterable<?>> listar() {
 		Iterable<Telefone> telefone = repository.findAll();
 		if (telefone == null) {
@@ -46,7 +46,7 @@ class TelefoneEndPoint extends CrudController {
 	}
 
 	@PostMapping(value = { "", "/" })
-	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_CLIENTE') and #oauth2.hasScope('write')")
+	@PreAuthorize("hasAuthority('CADASTRAR_CLIENTE') and #oauth2.hasScope('write')")
 	ResponseEntity<Telefone> cadastrar(@Valid @RequestBody Telefone telefone, HttpServletResponse response) {
 		Telefone criartelefone = repository.save(telefone);
 		if (criartelefone == null) {
@@ -58,13 +58,13 @@ class TelefoneEndPoint extends CrudController {
 	}
 
 	@GetMapping(value = { "/{id}", "/{id}/" })
-	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_CLIENTE') and #oauth2.hasScope('read')")
+	@PreAuthorize("hasAuthority('PESQUISAR_CLIENTE') and #oauth2.hasScope('read')")
 	public ResponseEntity<Telefone> detalhar(@PathVariable("id") Long id) {
 		return ResponseEntity.ok(repository.findById(id).orElseThrow(() -> notFouldId(id, "o telefone")));
 	}
 
 	@DeleteMapping(value = { "/{id}", "/{id}/" })
-	@PreAuthorize("hasAuthority('ROLE_REMOVER_CLIENTE') and #oauth2.hasScope('write')")
+	@PreAuthorize("hasAuthority('REMOVER_CLIENTE') and #oauth2.hasScope('write')")
 	public ResponseEntity<Telefone> remover(@PathVariable Long id) {
 		try {
 			repository.deleteById(id);

@@ -43,6 +43,20 @@ public class Usuario extends UserDateAudit implements UserDetails, Serializable 
 
 	private static final long serialVersionUID = 1L;
 
+	public Usuario() {
+	}
+
+	public Usuario(String username, String nomeCompleto, String email, String password, String confirmarPassword,
+			boolean enabled) {
+		super();
+		this.username = username;
+		this.nomeCompleto = nomeCompleto;
+		this.email = email;
+		this.password = password;
+		this.confirmarPassword = confirmarPassword;
+		this.enabled = enabled;
+	}
+
 	@Id
 	@Column(name = "id")
 	@JsonView(View.Usuario.class)

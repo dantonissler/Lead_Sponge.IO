@@ -49,19 +49,19 @@ class UsuarioEndPoint extends CrudController {
 	}
 
 	@GetMapping
-	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_USUARIO') and #oauth2.hasScope('read')")
+	@PreAuthorize("hasAuthority('PESQUISAR_USUARIO') and #oauth2.hasScope('read')")
 	public Page<Usuario> pesquisar(UsuarioFilter usuarioFilter, Pageable pageable) {
 		return repository.filtrar(usuarioFilter, pageable);
 	}
 
 	@GetMapping(params = "resumo")
-	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_USUARIO') and #oauth2.hasScope('read')")
+	@PreAuthorize("hasAuthority('PESQUISAR_USUARIO') and #oauth2.hasScope('read')")
 	public Page<ResumoUsuario> resumir(UsuarioFilter usuarioFilter, Pageable pageable) {
 		return repository.resumir(usuarioFilter, pageable);
 	}
 
 	@PostMapping(value = { "", "/" })
-	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_USUARIO') and #oauth2.hasScope('write')")
+	@PreAuthorize("hasAuthority('CADASTRAR_USUARIO') and #oauth2.hasScope('write')")
 	ResponseEntity<Usuario> cadastrar(@Valid @RequestBody Usuario usuario, HttpServletResponse response) {
 		Usuario usuarioSalvar = usuarioService.save(usuario);
 //		usuarioService.autoLogin(usuario.getUsername(), usuario.getPassword());
@@ -69,14 +69,14 @@ class UsuarioEndPoint extends CrudController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioSalvar);
 	}
 
-	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_USUARIO') and #oauth2.hasScope('read')")
 	@GetMapping(value = { "/{id}", "/{id}/" })
+	@PreAuthorize("hasAuthority('PESQUISAR_USUARIO') and #oauth2.hasScope('read')")
 	public ResponseEntity<Usuario> detalhar(@Valid @PathVariable("id") Long id) {
 		return ResponseEntity.ok(repository.findById(id).orElseThrow(() -> notFouldId(id, "o usuario")));
 	}
 
 	@PutMapping(value = { "/{id}", "/{id}/" })
-	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_USUARIO') and #oauth2.hasScope('write')")
+	@PreAuthorize("hasAuthority('CADASTRAR_USUARIO') and #oauth2.hasScope('write')")
 	ResponseEntity<Usuario> atualizar(@Valid @RequestBody Usuario novoUsuario, @PathVariable Long id, HttpServletResponse response) {
 		try {
 			Usuario usuario = usuarioService.atualizar(id, novoUsuario);
@@ -90,7 +90,7 @@ class UsuarioEndPoint extends CrudController {
 
 	@DeleteMapping(value = { "/{id}", "/{id}/" })
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	@PreAuthorize("hasAuthority('ROLE_REMOVER_USUARIO') and #oauth2.hasScope('write')")
+	@PreAuthorize("hasAuthority('REMOVER_USUARIO') and #oauth2.hasScope('write')")
 	public ResponseEntity<Usuario> remover(@PathVariable Long id) {
 		try {
 			repository.deleteById(id);
@@ -102,7 +102,7 @@ class UsuarioEndPoint extends CrudController {
 
 	@PutMapping("/{id}/ativo")
 	@ResponseStatus(HttpStatus.CREATED)
-	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_USUARIO') and #oauth2.hasScope('write')")
+	@PreAuthorize("hasAuthority('CADASTRAR_USUARIO') and #oauth2.hasScope('write')")
 	public ResponseEntity<Usuario> atualizarPropriedadeEnabled(@PathVariable Long id, @RequestBody Boolean enabled) {
 		usuarioService.atualizarPropriedadeEnabled(id, enabled);
 		return ResponseEntity.status(HttpStatus.CREATED).build();

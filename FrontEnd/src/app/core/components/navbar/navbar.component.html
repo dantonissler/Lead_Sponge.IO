@@ -13,16 +13,31 @@
     </div>
     <ul class="list-unstyled components">
         <li class="navbar-menuitem" routerLinkActive="ativo" (click)="visibleSidebar1 = false"
-          *ngIf="auth.temPermissao('ROLE_USER')"><a routerLink="/dashboard">Dashboard</a></li>
+          *ngIf="auth.temPermissao('USER')"><a routerLink="/dashboard">Dashboard</a>
+        </li>
         <li class="navbar-menuitem" routerLinkActive="ativo" (click)="visibleSidebar1 = false"
-          *ngIf="auth.temPermissao('ROLE_USER')"><a routerLink="/usuarios">Usuarios</a></li>
+          *ngIf="auth.temPermissao('USER')"><a routerLink="/oportunidades">Oportunidades</a>
+        </li>
         <li class="navbar-menuitem" routerLinkActive="ativo" (click)="visibleSidebar1 = false"
-          *ngIf="auth.temPermissao('ROLE_USER')"><a routerLink="/clientes">Cliente</a></li>
+          *ngIf="auth.temPermissao('USER')"><a routerLink="/clientes">Cliente</a>
+        </li>
         <li class="navbar-menuitem" routerLinkActive="ativo" (click)="visibleSidebar1 = false"
-          *ngIf="auth.temPermissao('ROLE_USER')"><a routerLink="/lancamentos">Lançamentos</a></li>
+          *ngIf="auth.temPermissao('USER')"><a routerLink="/tarefas">Tarefas</a>
+        </li>
         <li class="navbar-menuitem" routerLinkActive="ativo" (click)="visibleSidebar1 = false"
-          *ngIf="auth.temPermissao('ROLE_USER')"><a routerLink="/pessoas">Pessoas</a></li>
+          *ngIf="auth.temPermissao('USER')"><a routerLink="/produtos">Produtos</a>
+        </li>
         <li class="navbar-menuitem" routerLinkActive="ativo" (click)="visibleSidebar1 = false"
-          *ngIf="auth.temPermissao('ROLE_USER')"><a routerLink="/relatorios/lancamentos">Relatório</a></li>
+          *ngIf="auth.temPermissao('USER')"><a routerLink="/contatos">Contato</a>
+        </li>
+        <li class="navbar-menuitem" routerLinkActive="ativo" (click)="visibleSidebar1 = false"
+          *ngIf="auth.temPermissao('USER')"><a routerLink="/campanhas">Campanha</a>
+        </li>
+        <li class="navbar-menuitem" routerLinkActive="ativo" (click)="visibleSidebar1 = false"
+          *ngIf="auth.temPermissao('USER')"><a routerLink="/fontes">Fonte</a>
+        </li>
+        <li class="navbar-menuitem" routerLinkActive="ativo" (click)="visibleSidebar1 = false"
+          *ngIf="auth.temPermissao('USER')"><a routerLink="/usuarios">Usuarios</a>
+        </li>
     </ul>
 </p-sidebar>
