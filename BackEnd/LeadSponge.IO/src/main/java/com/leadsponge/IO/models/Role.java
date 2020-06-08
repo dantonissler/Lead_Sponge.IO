@@ -14,6 +14,8 @@ import javax.persistence.UniqueConstraint;
 
 import org.springframework.security.core.GrantedAuthority;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.Data;
 
 @Data
@@ -33,6 +35,7 @@ public class Role implements GrantedAuthority {
 	private String nome;
 
 	@ManyToMany(mappedBy = "roles")
+	@JsonBackReference("roles")
 	private Set<Usuario> usuarios;
 
 	public Role() {

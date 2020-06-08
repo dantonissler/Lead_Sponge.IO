@@ -13,6 +13,7 @@ public abstract class Contato_ {
 	public static volatile SingularAttribute<Contato, String> cargo;
 	public static volatile ListAttribute<Contato, Telefone> telefone;
 	public static volatile ListAttribute<Contato, Email> email;
+	public static volatile SingularAttribute<Contato, Cliente> cliente;
 	public static final String ID = "id";
 	public static final String NOME = "nome";
 	public static final String CARGO = "cargo";

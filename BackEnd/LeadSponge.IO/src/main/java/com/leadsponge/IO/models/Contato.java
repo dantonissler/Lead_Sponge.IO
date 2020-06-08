@@ -38,7 +38,7 @@ public class Contato extends UserDateAudit {
 	@Size(max = 50, message = "{cargo.size}")
 	private String cargo;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
 

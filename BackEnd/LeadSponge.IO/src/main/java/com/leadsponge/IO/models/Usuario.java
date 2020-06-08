@@ -72,13 +72,13 @@ public class Usuario extends UserDateAudit implements UserDetails, Serializable 
 	@Column(name = "enabled")
 	private boolean enabled;
 
-	@JsonBackReference("usuarios")
 	@ManyToMany(fetch = FetchType.EAGER)
+	@JsonBackReference("usuarios")
 	@JoinTable(name = "roles_usuarios", joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	private Set<Role> roles;
 
-	@JsonIgnoreProperties("usuario")
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonIgnoreProperties("usuario")
 	private List<Tarefa> tarefas;
 
 	public Long getId() {

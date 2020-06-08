@@ -52,7 +52,7 @@ public class Tarefa extends UserDateAudit {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "usuario_id")
-	@JsonBackReference("tarefa")
+	@JsonBackReference("tarefas")
 	private Usuario usuario;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

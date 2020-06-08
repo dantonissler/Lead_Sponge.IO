@@ -38,7 +38,7 @@ public class Campanha extends UserDateAudit {
 
 	@JsonIgnoreProperties("campanha")
 	@OneToMany(mappedBy = "campanha", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Oportunidade> oportunidade;
+	private List<Oportunidade> oportunidades;
 
 	public Long getId() {
 		return id;
@@ -57,11 +57,11 @@ public class Campanha extends UserDateAudit {
 	}
 
 	public List<Oportunidade> getOportunidade() {
-		return oportunidade;
+		return oportunidades;
 	}
 
 	public void setOportunidade(List<Oportunidade> oportunidade) {
-		this.oportunidade = oportunidade;
+		this.oportunidades = oportunidade;
 	}
 
 	@Override

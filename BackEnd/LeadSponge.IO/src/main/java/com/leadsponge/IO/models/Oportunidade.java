@@ -45,7 +45,7 @@ public class Oportunidade extends UserDateAudit {
 	@NotNull
 	private int avaliacao;
 
-	@Column(name = "quantidadeProdutos")
+	@Column(name = "qtd_produtos")
 	private int quantidadeProdutos;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

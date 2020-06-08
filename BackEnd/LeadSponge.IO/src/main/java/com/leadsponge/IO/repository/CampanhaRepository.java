@@ -6,5 +6,5 @@ import com.leadsponge.IO.models.Campanha;
 import com.leadsponge.IO.models.Oportunidade;
 
 public interface CampanhaRepository extends JpaRepository<Campanha, Long> {
-	Iterable<Oportunidade> findByOportunidade(Oportunidade contato);
+	Iterable<Oportunidade> findByOportunidades(Oportunidade contato);
 }

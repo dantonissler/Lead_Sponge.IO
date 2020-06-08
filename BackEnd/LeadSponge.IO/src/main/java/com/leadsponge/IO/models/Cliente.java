@@ -46,7 +46,7 @@ public class Cliente extends UserDateAudit {
 
 	@JsonIgnoreProperties("cliente")
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Contato> contato;
+	private List<Contato> contatos;
 
 	@JsonIgnoreProperties("cliente")
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -94,11 +94,11 @@ public class Cliente extends UserDateAudit {
 	}
 
 	public List<Contato> getContato() {
-		return contato;
+		return contatos;
 	}
 
-	public void setContato(List<Contato> contato) {
-		this.contato = contato;
+	public void setContato(List<Contato> contatos) {
+		this.contatos = contatos;
 	}
 
 	public List<Oportunidade> getOportunidade() {
