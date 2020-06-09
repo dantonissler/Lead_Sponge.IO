@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.leadsponge.IO.models.Segmento;
-import com.leadsponge.IO.models.view.View;
+import com.leadsponge.IO.models.View;
+import com.leadsponge.IO.models.segmento.Segmento;
 import com.leadsponge.IO.repository.SegmentoRepository;
 
 @RestController

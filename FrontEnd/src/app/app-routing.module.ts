@@ -6,7 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)},
-  { path: 'oportunidades', loadChildren: () => import('./oportunidades/modules/oportunidades.module').then(m => m.OportunidadesModule) },
+  { path: 'oportunidades', loadChildren: () => import('./negociacoes/modules/negociacoes.module').then(m => m.NegociacoesModule) },
   { path: 'clientes', loadChildren: () => import('./clientes/modules/cliente.module').then(m => m.ClienteModule) },
   { path: 'tarefas', loadChildren: () => import('./tarefas/modules/tarefas.module').then(m => m.TarefasModule) },
   { path: 'produtos', loadChildren: () => import('./produtos/modules/produtos.module').then(m => m.ProdutosModule) },

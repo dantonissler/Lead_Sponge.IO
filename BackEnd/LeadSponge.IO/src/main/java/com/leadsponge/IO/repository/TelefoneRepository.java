@@ -2,9 +2,9 @@ package com.leadsponge.IO.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.leadsponge.IO.models.Contato;
-import com.leadsponge.IO.models.Telefone;
+import com.leadsponge.IO.models.contato.Contato;
+import com.leadsponge.IO.models.telefone.Telefone;
 
 public interface TelefoneRepository extends JpaRepository<Telefone, Long> {
-	Iterable<Telefone> findByContato(Contato contato);
+	Iterable<Telefone> findByContatoTelefone(Contato contato);
 }

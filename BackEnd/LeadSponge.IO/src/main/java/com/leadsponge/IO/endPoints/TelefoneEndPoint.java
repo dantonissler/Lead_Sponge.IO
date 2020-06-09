@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.leadsponge.IO.endPoints.crudEndpoints.CrudController;
 import com.leadsponge.IO.event.RecursoCriadoEvent;
-import com.leadsponge.IO.models.Telefone;
+import com.leadsponge.IO.models.telefone.Telefone;
 import com.leadsponge.IO.repository.TelefoneRepository;
 
 @RestController

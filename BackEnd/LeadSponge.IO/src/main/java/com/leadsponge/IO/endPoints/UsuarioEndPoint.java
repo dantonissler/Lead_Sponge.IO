@@ -22,11 +22,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.leadsponge.IO.endPoints.crudEndpoints.CrudController;
 import com.leadsponge.IO.event.RecursoCriadoEvent;
-import com.leadsponge.IO.models.Usuario;
-import com.leadsponge.IO.repository.UsuarioRepository;
+import com.leadsponge.IO.models.usuario.Usuario;
 import com.leadsponge.IO.repository.Filter.UsuarioFilter;
 import com.leadsponge.IO.repository.projection.ResumoUsuario;
-import com.leadsponge.IO.security.service.UsuarioService;
+import com.leadsponge.IO.repository.usuario.UsuarioRepository;
+import com.leadsponge.IO.services.UsuarioService;
 
 @RestController
 @RequestMapping("/usuarios")

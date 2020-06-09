@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.leadsponge.IO.endPoints.crudEndpoints.CrudController;
 import com.leadsponge.IO.event.RecursoCriadoEvent;
-import com.leadsponge.IO.models.Cliente;
-import com.leadsponge.IO.models.Contato;
+import com.leadsponge.IO.models.cliente.Cliente;
+import com.leadsponge.IO.models.contato.Contato;
 import com.leadsponge.IO.repository.ContatoRepository;
 
 @RestController

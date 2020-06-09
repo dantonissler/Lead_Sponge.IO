@@ -4,10 +4,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.leadsponge.IO.models.Role;
-import com.leadsponge.IO.models.Usuario;
+import com.leadsponge.IO.models.role.Role;
+import com.leadsponge.IO.models.usuario.Usuario;
 import com.leadsponge.IO.repository.RoleRepository;
-import com.leadsponge.IO.security.service.UsuarioService;
+import com.leadsponge.IO.services.UsuarioService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,9 +26,9 @@ class LoadDatabase {
 			repository.save(new Role("REMOVER_CLIENTE"));
 			repository.save(new Role("PESQUISAR_CLIENTE"));
 
-			repository.save(new Role("CADASTRAR_OPORTUNIDADE"));
-			repository.save(new Role("REMOVER_OPORTUNIDADE"));
-			repository.save(new Role("PESQUISAR_OPORTUNIDADE"));
+			repository.save(new Role("CADASTRAR_NEGOCIACAO"));
+			repository.save(new Role("REMOVER_NEGOCIACAO"));
+			repository.save(new Role("PESQUISAR_NEGOCIACAO"));
 
 			repository.save(new Role("CADASTRAR_CAMPANHA"));
 			repository.save(new Role("REMOVER_CAMPANHA"));

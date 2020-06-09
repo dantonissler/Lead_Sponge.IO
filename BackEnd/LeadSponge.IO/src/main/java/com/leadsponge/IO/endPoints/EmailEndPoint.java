@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.leadsponge.IO.endPoints.crudEndpoints.CrudController;
 import com.leadsponge.IO.event.RecursoCriadoEvent;
-import com.leadsponge.IO.models.Email;
+import com.leadsponge.IO.models.email.Email;
 import com.leadsponge.IO.repository.EmailRepository;
 
 @RestController

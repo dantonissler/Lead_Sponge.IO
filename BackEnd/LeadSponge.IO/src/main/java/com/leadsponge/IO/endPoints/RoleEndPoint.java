@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.leadsponge.IO.models.Role;
+import com.leadsponge.IO.models.role.Role;
 import com.leadsponge.IO.repository.RoleRepository;
 
 @RestController

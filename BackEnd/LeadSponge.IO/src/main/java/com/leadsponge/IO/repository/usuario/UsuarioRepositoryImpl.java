@@ -16,8 +16,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.util.StringUtils;
 
-import com.leadsponge.IO.models.Usuario;
-import com.leadsponge.IO.models.Usuario_;
+import com.leadsponge.IO.models.usuario.Usuario;
+import com.leadsponge.IO.models.usuario.Usuario_;
 import com.leadsponge.IO.repository.Filter.UsuarioFilter;
 import com.leadsponge.IO.repository.projection.ResumoUsuario;
 

@@ -2,9 +2,9 @@ package com.leadsponge.IO.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.leadsponge.IO.models.Contato;
-import com.leadsponge.IO.models.Email;
+import com.leadsponge.IO.models.contato.Contato;
+import com.leadsponge.IO.models.email.Email;
 
 public interface EmailRepository extends JpaRepository<Email, Long> {
-	Iterable<Email> findByContato(Contato contato);
+	Iterable<Email> findByContatoEmail(Contato contato);
 }

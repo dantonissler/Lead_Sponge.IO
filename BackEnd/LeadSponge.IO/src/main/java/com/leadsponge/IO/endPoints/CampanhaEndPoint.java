@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.leadsponge.IO.endPoints.crudEndpoints.CrudController;
 import com.leadsponge.IO.event.RecursoCriadoEvent;
-import com.leadsponge.IO.models.Campanha;
+import com.leadsponge.IO.models.campanha.Campanha;
 import com.leadsponge.IO.repository.CampanhaRepository;
 
 @RestController

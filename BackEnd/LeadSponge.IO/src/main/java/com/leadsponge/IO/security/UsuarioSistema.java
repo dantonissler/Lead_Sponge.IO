@@ -5,7 +5,7 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
-import com.leadsponge.IO.models.Usuario;
+import com.leadsponge.IO.models.usuario.Usuario;
 
 public class UsuarioSistema extends User {
 

@@ -42,7 +42,6 @@ export class UsuarioCadastrarComponent implements OnInit {
     this.title.setTitle('Novo usuario');
     
     /* this.carregarRole() TODO : Fazer o cadastro de permição funcionar*/ 
-    
     if (idUsuario) {
       this.carregarUsuario(idUsuario);
     }
@@ -88,10 +87,11 @@ export class UsuarioCadastrarComponent implements OnInit {
   }
 
   atualizarUsuario() {
-    this.usuarioService.atualizar(this.usuario)
+    this.usuarioService.atualizar(this.formulario.value)
       .then(usuario => {
-        this.usuario = usuario;
-        this.messageService.add({ severity: 'success', detail: 'Pessoa alterada com sucesso!' });
+        this.formulario.patchValue(usuario);
+
+        this.messageService.add({ severity: 'success', detail: 'Lançamento alterado com sucesso!' });
         this.atualizarTituloEdicao();
       })
       .catch(erro => this.errorHandler.handle(erro));
@@ -110,17 +110,16 @@ export class UsuarioCadastrarComponent implements OnInit {
       password: [null,[this.validarObrigatoriedade, this.validarTamanhoMinimo(6)]],
       confirmarPassword: [null,[this.validarObrigatoriedade, this.validarTamanhoMinimo(6)]],
       enabled:[],
-      roles: this.formBuilder.group({
+      /* roles: this.formBuilder.group({
         id: [ null, Validators.required ],
         name: []
-      }),
+      }), */
     }, {validator: this.validarConfirmaPassword });
   }
 
   validarConfirmaPassword(formGroup: FormGroup) {
     let password = formGroup.get('password').value;
     let confirmarPassword  = formGroup.get('confirmarPassword').value;
-    console.log(password,confirmarPassword);
     return password === confirmarPassword ? null : { passwordNotMatch: true };
   }
 
