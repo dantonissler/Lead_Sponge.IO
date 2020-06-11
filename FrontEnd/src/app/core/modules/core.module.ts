@@ -1,3 +1,7 @@
+import { ConfiguracoesComponent } from '../../configuracoes/components/configuracoes/configuracoes.component';
+import { FontesService } from './../../fonteNegociacao/services/fontes.service';
+import { EstagioNegociacaoService } from './../../estagioNegociacao/services/estagio-negociacao.service';
+import { CampanhasService } from './../../campanhas/services/campanhas.service';
 import { UsuarioService } from '../../usuarios/services/usuario.service';
 import { DashboardService } from '../../dashboard/dashboard.service';
 import { FooterComponent } from '../components/footer/footer.component';
@@ -20,6 +24,7 @@ import { NavbarComponent } from '../components/navbar/navbar.component';
 import {MenubarModule} from 'primeng/menubar';
 import {SidebarModule} from 'primeng/sidebar';
 import {SlideMenuModule} from 'primeng/slidemenu';
+import { SegmentosService } from 'src/app/segmentos/services/segmentos.service';
 
 registerLocaleData(localePt);
 
@@ -51,9 +56,12 @@ registerLocaleData(localePt);
     LancamentoService,
     PessoaService
     CategoriaService,
-
     RelatoriosService, */
     DashboardService,
+    CampanhasService,
+    EstagioNegociacaoService,
+    FontesService,
+    SegmentosService,
     UsuarioService,
     ErrorHandlerService,
     AuthService,

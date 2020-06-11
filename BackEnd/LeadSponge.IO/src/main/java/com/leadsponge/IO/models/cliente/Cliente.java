@@ -63,7 +63,7 @@ public class Cliente extends UserDateAudit {
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "segmento_id")
 	@JsonBackReference("clienteSegmento")
-	private Segmento segmento;
+	private Segmento segmentoCliente;
 
 	public Long getId() {
 		return id;
@@ -122,11 +122,11 @@ public class Cliente extends UserDateAudit {
 	}
 
 	public Segmento getSegmento() {
-		return segmento;
+		return segmentoCliente;
 	}
 
-	public void setSegmento(Segmento segmento) {
-		this.segmento = segmento;
+	public void setSegmento(Segmento segmentoCliente) {
+		this.segmentoCliente = segmentoCliente;
 	}
 
 	@Override

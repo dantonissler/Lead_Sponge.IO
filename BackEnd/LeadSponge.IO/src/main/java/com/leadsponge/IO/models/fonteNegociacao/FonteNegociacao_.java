@@ -11,9 +11,9 @@ import com.leadsponge.IO.models.negociacao.Negociacao;
 public abstract class FonteNegociacao_ {
 	public static volatile SingularAttribute<FonteNegociacao, Long> id;
 	public static volatile SingularAttribute<FonteNegociacao, String> nome;
-	public static volatile SingularAttribute<FonteNegociacao, Negociacao> negociacao;
+	public static volatile SingularAttribute<FonteNegociacao, Negociacao> negociacaoFonteNegociacao;
 	public static final String ID = "id";
 	public static final String NOME = "nome";
-	public static final String NEGOCIACAO = "negociacao";
+	public static final String NEGOCIACAO = "negociacaoFonteNegociacao";
 
 }

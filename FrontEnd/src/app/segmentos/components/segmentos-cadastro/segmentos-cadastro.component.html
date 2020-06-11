@@ -1,0 +1,26 @@
+<div class="container">
+    <form [formGroup]="formulario" autocomplete="off" (ngSubmit)="salvar()">
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <h1>{{ editando ? 'Edição de' : 'Novo' }} Segmeto</h1>
+            </div>
+            <div class="ui-g-12 ui-fluid">
+                <label>Nome <span style="color: crimson;">*</span></label>
+                <input pInputText placeholder="Nome  *" type="text" name="nome" formControlName="nome">
+                <app-message [control]="formulario.get('nome')" error="obrigatoriedade" text="Informe o um nome.">
+                </app-message>
+                <app-message [control]="formulario.get('nome')" error="tamanhoMinimo"
+                    text="Mínimo de {{ formulario.get('nome').errors?.tamanhoMinimo?.tamanho }} caracteres.">
+                </app-message>
+            </div>
+            <div class="ui-g-12 cadastro-acoes">
+                <button pButton value="submit" type="submit" label="Salvar" [disabled]="formulario.invalid"
+                    style="padding-left:10;"></button>
+                <button pButton value="Limpar" type="button" label="Limpar" class="ui-button-info" (click)="limpar()"
+                    style="padding-left:10;"></button>
+                <button pButton value="Pesquisar" type="button" label="Pesquisar" class="ui-button-info"
+                    Clabel="Pesquisa" routerLink="/segmetos" style="padding-left:10;"></button>
+            </div>
+        </div>
+    </form>
+</div>

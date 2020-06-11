@@ -17,7 +17,6 @@ export class UsuarioListarComponent implements OnInit {
   usuarios = [];
   @ViewChild('tabela', { static: true }) grid;
 
-  
   constructor(
     private usuarioService: UsuarioService,
     private errorHandler: ErrorHandlerService,
@@ -28,7 +27,6 @@ export class UsuarioListarComponent implements OnInit {
 
   ngOnInit() {
     this.title.setTitle('Pesquisa de usuarios');
-    console.log(this.usuarioService.listarTodas());
   }
   pesquisar(pagina = 0) {
     this.filtro.pagina = pagina;

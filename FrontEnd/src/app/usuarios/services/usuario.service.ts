@@ -69,7 +69,6 @@ export class UsuarioService {
   }
 
   atualizar(usuario: Usuario): Promise<Usuario> {
-    console.log(usuario);
     return this.http.put<Usuario>(`${this.usuariosUrl}/${usuario.id}`, usuario)
       .toPromise();
   }

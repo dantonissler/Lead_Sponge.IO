@@ -61,6 +61,7 @@ class UsuarioEndPoint extends CrudController {
 	}
 
 	@PostMapping(value = { "", "/" })
+	@ResponseStatus(HttpStatus.CREATED)
 	@PreAuthorize("hasAuthority('CADASTRAR_USUARIO') and #oauth2.hasScope('write')")
 	ResponseEntity<Usuario> cadastrar(@Valid @RequestBody Usuario usuario, HttpServletResponse response) {
 		Usuario usuarioSalvar = usuarioService.save(usuario);
@@ -76,6 +77,7 @@ class UsuarioEndPoint extends CrudController {
 	}
 
 	@PutMapping(value = { "/{id}", "/{id}/" })
+	@ResponseStatus(HttpStatus.CREATED)
 	@PreAuthorize("hasAuthority('CADASTRAR_USUARIO') and #oauth2.hasScope('write')")
 	ResponseEntity<Usuario> atualizar(@Valid @RequestBody Usuario novoUsuario, @PathVariable Long id, HttpServletResponse response) {
 		try {
@@ -89,7 +91,7 @@ class UsuarioEndPoint extends CrudController {
 	}
 
 	@DeleteMapping(value = { "/{id}", "/{id}/" })
-	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@ResponseStatus(HttpStatus.OK)
 	@PreAuthorize("hasAuthority('REMOVER_USUARIO') and #oauth2.hasScope('write')")
 	public ResponseEntity<Usuario> remover(@PathVariable Long id) {
 		try {

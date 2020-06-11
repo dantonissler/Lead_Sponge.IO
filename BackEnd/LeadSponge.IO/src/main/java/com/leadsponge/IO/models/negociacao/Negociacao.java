@@ -6,6 +6,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,6 +22,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.leadsponge.IO.models.View;
 import com.leadsponge.IO.models.audit.UserDateAudit;
@@ -52,6 +55,10 @@ public class Negociacao extends UserDateAudit {
 	@Column(name = "avaliacao")
 	@NotNull
 	private Integer avaliacao;
+
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	private StatusNegociacao estatus;
 
 	@Column(name = "valor_total")
 	private BigDecimal valorTotal;
@@ -196,6 +203,19 @@ public class Negociacao extends UserDateAudit {
 
 	public void setTarefaNegociacao(Tarefa tarefaNegociacao) {
 		this.tarefaNegociacao = tarefaNegociacao;
+	}
+
+	@JsonIgnore
+	public boolean isReceita() {
+		return StatusNegociacao.ANDAMENTO.equals(estatus);
+	}
+
+	public StatusNegociacao getEstatus() {
+		return estatus;
+	}
+
+	public void setEstatus(StatusNegociacao estatus) {
+		this.estatus = estatus;
 	}
 
 	@Override

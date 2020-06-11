@@ -1,0 +1,60 @@
+<div class="container">
+    <div class="ui-g">
+        <form autocomplete="off" (ngSubmit)="pesquisar()">
+            <div class="ui-g-12">
+                <h1>Segmento</h1>
+            </div>
+            <div class="ui-g-12 ui-fluid">
+                <label>Nome</label>
+                <input pInputText type="text" name="nome" [(ngModel)]="filtro.nome">
+            </div>
+            <div class="ui-g-12">
+                <button pButton type="submit" label="Pesquisar"></button>
+            </div>
+        </form>
+    </div>
+    <div class="ui-g">
+        <div class="ui-g-12">
+            <p-table [value]="segmentos" [responsive]="true" [paginator]="true"
+                [rows]="filtro.itensPorPagina" [lazy]="true" [totalRecords]="totalRegistros" 
+                (onLazyLoad)="aoMudarPagina($event)" #tabela>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Nome</th>
+                        <th>Criado Por</th>
+                        <th>Alterado Por</th>
+                        <th>Criado em</th>
+                        <th>Alterado em </th>
+                        <th class="col-acoes-header"></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-segmento>
+                    <tr>
+                        <td>{{ segmento.nome }}</td>
+                        <td>{{ segmento.createdByUser }}</td>
+                        <td>{{ segmento.modifiedByUser }}</td>
+                        <td class="col-data">{{ segmento.createdAt | date:'dd/MM/yyyy HH:mm' }}</td>
+                        <td class="col-data">{{ segmento.updatedAt | date:'dd/MM/yyyy HH:mm' }}</td>
+                        <td class="col-acoes">
+                            <button pButton icon="fas fa-pencil-alt" pTooltip="Editar" tooltipPosition="top"
+                                [routerLink]="['/segmentos', segmento.id]"></button>
+                            <button pButton icon="fas fa-trash" pTooltip="Excluir" tooltipPosition="top"
+                                (click)="confirmarExclusao(segmento)"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="5">
+                            Nenhuma segmento encontrada
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        <div class="ui-g-12">
+            <button pButton label="Nova Segmento" routerLink="/segmentos/novo"></button>
+        </div>
+    </div>
+</div>

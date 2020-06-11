@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { ConfirmationService, MessageService, LazyLoadEvent } from 'primeng/api';
+import { ErrorHandlerService } from './../../../core/error-handler.service';
+import { CampanhaFiltro, CampanhasService } from './../../services/campanhas.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-campanhas-pesquisa',
@@ -7,9 +11,59 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CampanhasPesquisaComponent implements OnInit {
 
-  constructor() { }
+  totalRegistros = 0;
+  filtro = new CampanhaFiltro();
+  campanhas = [];
+  @ViewChild('tabela', { static: true }) grid;
 
-  ngOnInit(): void {
+  constructor(
+    private campanhasService: CampanhasService,
+    private errorHandler: ErrorHandlerService,
+    private confirmation: ConfirmationService,
+    private messageService: MessageService,
+    private title: Title
+  ) { }
+
+  ngOnInit( ): void {
+    this.title.setTitle('Pesquisa de Campanhas');
   }
 
+  pesquisar(pagina = 0) {
+    this.filtro.pagina = pagina;
+    this.campanhasService.pesquisar(this.filtro)
+      .then(resultado => {
+        this.totalRegistros = resultado.total;
+        this.campanhas = resultado.campanhas;
+      })
+      .catch(erro => this.errorHandler.handle(erro));
+  }
+
+  aoMudarPagina(event: LazyLoadEvent) {
+    const pagina = event.first / event.rows;
+    this.pesquisar(pagina);
+  }
+
+  confirmarExclusao(campanha: any) {
+    this.confirmation.confirm({
+      message: 'Tem certeza que deseja excluir?',
+      accept: () => {
+        this.excluir(campanha);
+      }
+    });
+  }
+
+  excluir(campanha: any) {
+    this.campanhasService.excluir(campanha.id)
+      .then(() => {
+        if (this.grid.first === 0) {
+          this.pesquisar();
+        } else {
+          this.grid.first = 0;
+          this.pesquisar();
+        }
+
+        this.messageService.add({ severity: 'success', detail: 'Campanha excluída com sucesso!' });
+      })
+      .catch(erro => this.errorHandler.handle(erro));
+  }
 }

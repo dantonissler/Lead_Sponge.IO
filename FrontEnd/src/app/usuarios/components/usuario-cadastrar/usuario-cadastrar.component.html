@@ -4,75 +4,70 @@
       <div class="ui-g-12">
         <h1>{{ editando ? 'Edição de' : 'Novo' }} Usuario</h1>
       </div>
-
       <div class="p-col-12">
-        <p-checkbox name="enabled" label="Usuario ativo" formControlName="enabled" binary="false"
-          [(ngModel)]="checked"></p-checkbox>
+        <p-checkbox name="enabled" label="Usuario ativo" formControlName="enabled" binary="false" [(ngModel)]="checked">
+        </p-checkbox>
       </div>
-
       <div class="ui-g-12 ui-fluid">
-        <label>Nome de Usuario  <span style="color: crimson;">*</span></label>
+        <label>Nome de Usuario <span style="color: crimson;">*</span></label>
         <input pInputText placeholder="Nome de Usuario *" type="text" name="username" formControlName="username">
-        <app-message [control]="formulario.get('username')" error="obrigatoriedade"
-          text="Informe um nome de usuario."></app-message>
+        <app-message [control]="formulario.get('username')" error="obrigatoriedade" text="Informe um nome de usuario.">
+        </app-message>
         <app-message [control]="formulario.get('username')" error="tamanhoMinimo"
           text="Mínimo de {{ formulario.get('username').errors?.tamanhoMinimo?.tamanho }} caracteres."></app-message>
       </div>
-
       <div class="ui-g-12 ui-fluid">
         <label>Nome Completo <span style="color: crimson;">*</span></label>
         <input pInputText placeholder="Nome Completo *" type="text" name="nomeCompleto" formControlName="nomeCompleto">
-        <app-message [control]="formulario.get('nomeCompleto')" error="obrigatoriedade"
-          text="Informe o um nome."></app-message>
+        <app-message [control]="formulario.get('nomeCompleto')" error="obrigatoriedade" text="Informe o um nome.">
+        </app-message>
         <app-message [control]="formulario.get('nomeCompleto')" error="tamanhoMinimo"
-          text="Mínimo de {{ formulario.get('nomeCompleto').errors?.tamanhoMinimo?.tamanho }} caracteres."></app-message>
+          text="Mínimo de {{ formulario.get('nomeCompleto').errors?.tamanhoMinimo?.tamanho }} caracteres.">
+        </app-message>
       </div>
-
       <div class="ui-g-12 ui-fluid">
         <label>E-mail <span style="color: crimson;">*</span></label>
         <input pInputText placeholder="E-mail *" type="text" name="email" formControlName="email">
-        <app-message [control]="formulario.get('email')" error="obrigatoriedade"
-          text="Informe um E-mail."></app-message>
-        <app-message [control]="formulario.get('email')" error="email"
-          text="Por gentileza insira um E-mail valido."></app-message>
+        <app-message [control]="formulario.get('email')" error="obrigatoriedade" text="Informe um E-mail.">
+        </app-message>
+        <app-message [control]="formulario.get('email')" error="email" text="Por gentileza insira um E-mail valido.">
+        </app-message>
       </div>
-
       <div class="ui-g-12 ui-fluid">
         <label>Senha <span style="color: crimson;">*</span></label>
         <input pInputText placeholder="Senha *" type="password" name="password" formControlName="password">
-        <app-message [control]="formulario.get('password')" error="validarObrigatoriedade"
-          text="Informe a senha"></app-message>
+        <app-message [control]="formulario.get('password')" error="validarObrigatoriedade" text="Informe a senha">
+        </app-message>
         <app-message [control]="formulario.get('password')" error="tamanhoMinimo"
-          text="Mínimo de {{ formulario.get('password').errors?.validarTamanhoMinimo?.tamanho }} caracteres"></app-message>
+          text="Mínimo de {{ formulario.get('password').errors?.validarTamanhoMinimo?.tamanho }} caracteres">
+        </app-message>
       </div>
-
       <div class="ui-g-12 ui-fluid">
         <label>Confirmar Senha <span style="color: crimson;">*</span></label>
-        <input pInputText placeholder="Confirmar Senha *" type="password" name="confirmarPassword" 
-        formControlName="confirmarPassword">
+        <input pInputText placeholder="Confirmar Senha *" type="password" name="confirmarPassword"
+          formControlName="confirmarPassword">
         <app-message [control]="formulario.get('confirmarPassword')" error="validarObrigatoriedade"
           text="Informe a confirmação da senha"></app-message>
         <app-message [control]="formulario.get('confirmarPassword')" error="tamanhoMinimo"
-          text="Mínimo de {{ formulario.get('confirmarPassword').errors?.validarTamanhoMinimo?.tamanho }} caracteres"></app-message>
-          <app-message [control]="formulario" error="passwordNotMatch"
+          text="Mínimo de {{ formulario.get('confirmarPassword').errors?.validarTamanhoMinimo?.tamanho }} caracteres">
+        </app-message>
+        <app-message [control]="formulario" error="passwordNotMatch"
           text="O campo senha não conhecide com o confirmar senhas"></app-message>
-          <!-- <app-message [control]="formulario.get('confirmarPassword')" error="formulario.errors?.validarConfirmaPassword"
+        <!-- <app-message [control]="formulario.get('confirmarPassword')" error="formulario.errors?.validarConfirmaPassword"
           text="O campo senha não confere com o confirmar senhas"></app-message> -->
       </div>
-
       <!-- <div class="ui-g-12 ui-md-12 ui-fluid" formGroupName="roles">
         <label>Roles</label>
         <p-multiSelect name="id" [options]="roles" defaultLabel="Selecione"
           [filter]="true"
           formControlName="id"></p-multiSelect>
       </div> -->
-
       <div class="ui-g-12 cadastro-acoes">
         <button pButton value="submit" type="submit" label="Salvar" [disabled]="formulario.invalid"
           style="padding-left:10;"></button>
-        <button pButton value="Limpar" type="button" label="Limpar" class="ui-button-info"(click)="limpar()"
-        style="padding-left:10;"></button>
-        <button pButton value="Pesquisar" type="button" label="Pesquisar" class="ui-button-info"Clabel="Pesquisa"
+        <button pButton value="Limpar" type="button" label="Limpar" class="ui-button-info" (click)="limpar()"
+          style="padding-left:10;"></button>
+        <button pButton value="Pesquisar" type="button" label="Pesquisar" class="ui-button-info" Clabel="Pesquisa"
           routerLink="/usuarios" style="padding-left:10;"></button>
       </div>
     </div>

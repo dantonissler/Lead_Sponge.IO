@@ -1,3 +1,4 @@
+import { MotivoPerdaRoutingModule } from './motivoPerda/modules/motivo-perda-routing.module';
 import { PaginaNaoEncontradaComponent } from './core/components/pagina-nao-encontrada.component';
 import { NaoAutorizadoComponent } from './core/components/nao-autorizado.component';
 
@@ -12,9 +13,14 @@ const routes: Routes = [
   { path: 'produtos', loadChildren: () => import('./produtos/modules/produtos.module').then(m => m.ProdutosModule) },
   { path: 'contatos', loadChildren: () => import('./contatos/modules/contatos.module').then(m => m.ContatoModule) },
   { path: 'campanhas', loadChildren: () => import('./campanhas/modules/campanhas.module').then(m => m.CampanhasModule) },
-  { path: 'fontes', loadChildren: () => import('./fontes/modules/fontes.module').then(m => m.FontesModule) },
+  { path: 'estagios', loadChildren: () => import('./estagioNegociacao/modules/estagio-negociacao.module').then(m => m.EstagioNegociacaoModule) },
+  { path: 'segmentos', loadChildren: () => import('./segmentos/modules/segmentos.module').then(m => m.SegmentosModule) },
+  { path: 'fontes', loadChildren: () => import('./fonteNegociacao/modules/fontes.module').then(m => m.FontesModule) },
   { path: 'usuarios', loadChildren: () => import('./usuarios/modules/usuarios.module').then(m => m.UsuariosModule) },
+  { path: 'configuracoes', loadChildren: () => import('./configuracoes/modules/configuracoes.module').then(m => m.ConfiguracoesModule) },
+  { path: 'motivoperda', loadChildren: () => import('./motivoPerda/modules/motivo-perda.module').then(m => m.MotivoPerdaModule) },
 
+  
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: 'nao-autorizado', component: NaoAutorizadoComponent },
   { path: 'pagina-nao-encontrada', component: PaginaNaoEncontradaComponent },

@@ -41,6 +41,15 @@ public class FonteNegociacao extends UserDateAudit {
 	@JoinColumn(name = "negociacao_id")
 	private Negociacao negociacaoFonteNegociacao;
 
+	public FonteNegociacao() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public FonteNegociacao(String nome) {
+		super();
+		this.nome = nome;
+	}
+
 	public Long getId() {
 		return id;
 	}

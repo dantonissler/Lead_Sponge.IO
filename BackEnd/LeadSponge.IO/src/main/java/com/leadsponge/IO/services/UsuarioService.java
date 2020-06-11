@@ -18,10 +18,10 @@ import com.leadsponge.IO.security.exception.UsuarioInativaException;
 public class UsuarioService {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
-	
+
 	@Autowired
 	private RoleRepository roleRepository;
-	
+
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -46,13 +46,6 @@ public class UsuarioService {
 		usuarioSalva.setEnabled(enabled);
 		usuarioRepository.save(usuarioSalva);
 	}
-
-//	private void validarRole(Usuario usuario) {
-//		Role role = null;
-//		if (usuario.getAuthorities().g != null) {
-//			role = roleRepository.getOne(usuario.getAuthorities());
-//		}
-//	}
 
 	private Usuario buscarUsuarioExistente(Long id) {
 		Optional<Usuario> usuarioSalvo = usuarioRepository.findById(id);

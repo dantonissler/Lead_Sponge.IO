@@ -1,0 +1,34 @@
+<div class="container">
+    <header>
+        <h1>Configurações</h1>
+    </header>
+    <ul class="list-unstyled components">
+        <li class="menusection">
+            Ajustes da sua conta
+        </li>
+        <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="auth.temPermissao('PESQUISAR_CONTATO')">
+            <a routerLink="/contatos">Contato</a>
+        </li>
+        <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="auth.temPermissao('PESQUISAR_FONTE')">
+            <a routerLink="/fontes">Fonte</a>
+        </li>
+        <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="auth.temPermissao('PESQUISAR_SEGMENTO')">
+            <a routerLink="/segmentos">Segmento</a>
+        </li>
+        <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="auth.temPermissao('PESQUISAR_CAMPANHA')">
+            <a routerLink="/campanhas">Campanha</a>
+        </li>
+        <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="auth.temPermissao('PESQUISAR_ESTAGIO')">
+            <a routerLink="/estagios">Estagio do Funil de Vendas</a>
+        </li>
+        <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="auth.temPermissao('PESQUISAR_MOTIVO')">
+            <a routerLink="/motivoperda">Motivo de Perda</a>
+        </li>
+        <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="auth.temPermissao('PESQUISAR_PRODUTO')">
+            <a routerLink="/produtos">Produtos</a>
+        </li>
+        <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="auth.temPermissao('PESQUISAR_USUARIO')">
+            <a routerLink="/usuarios">Usuarios</a>
+        </li>
+    </ul>
+</div>

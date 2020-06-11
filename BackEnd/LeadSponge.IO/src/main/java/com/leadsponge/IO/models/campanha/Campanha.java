@@ -41,6 +41,15 @@ public class Campanha extends UserDateAudit {
 	@OneToMany(mappedBy = "campanhaNegociacoes", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Negociacao> negociacoesCampanha;
 
+	public Campanha() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public Campanha(String nome) {
+		super();
+		this.nome = nome;
+	}
+
 	public Long getId() {
 		return id;
 	}

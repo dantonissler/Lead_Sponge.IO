@@ -1,5 +1,6 @@
 package com.leadsponge.IO.models.segmento;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -14,7 +15,6 @@ import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.leadsponge.IO.models.View;
 import com.leadsponge.IO.models.audit.UserDateAudit;
@@ -37,9 +37,8 @@ public class Segmento extends UserDateAudit {
 	@Size(min = 4, max = 50)
 	private String nome;
 
-	@JsonIgnoreProperties("segmento")
-	@OneToMany(mappedBy = "segmento", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Cliente> clientes;
+	@OneToMany(mappedBy = "segmentoCliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Cliente> clienteSegmento = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -58,11 +57,11 @@ public class Segmento extends UserDateAudit {
 	}
 
 	public List<Cliente> getClientes() {
-		return clientes;
+		return clienteSegmento;
 	}
 
 	public void setClientes(List<Cliente> clientes) {
-		this.clientes = clientes;
+		this.clienteSegmento = clientes;
 	}
 
 	@Override

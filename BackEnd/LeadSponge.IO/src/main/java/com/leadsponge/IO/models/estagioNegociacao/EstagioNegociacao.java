@@ -35,11 +35,21 @@ public class EstagioNegociacao extends UserDateAudit {
 	private String nome;
 
 	@Column(name = "apelido")
-	@Size(min = 2, max = 10)
+	@Size(min = 1, max = 10)
 	private String apelido;
 
 	@OneToOne(mappedBy = "estagioNegociacaoNegociacao", cascade = CascadeType.ALL)
 	private Negociacao negociacaoEstagioNegociacao;
+
+	public EstagioNegociacao() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public EstagioNegociacao(String nome, String apelido) {
+		super();
+		this.nome = nome;
+		this.apelido = apelido;
+	}
 
 	public Long getId() {
 		return id;
@@ -58,7 +68,7 @@ public class EstagioNegociacao extends UserDateAudit {
 	}
 
 	public String getApelido() {
-		return apelido;
+		return apelido.toUpperCase();
 	}
 
 	public void setApelido(String apelido) {

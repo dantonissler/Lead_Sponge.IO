@@ -1,43 +1,25 @@
 <p-menubar [model]="items">
-    <div>
-        <button #btn type="button" pButton iconPos="right" icon="pi pi-caret-down" 
-        (click)="menu.toggle($event)" label=" {{ auth.jwtPayload?.nome }} "></button>
-        <p-slideMenu #menu [model]="users" [popup]="true" [viewportHeight]="260" ></p-slideMenu>
-        <button pButton label="Sair" icon="pi pi-power-off" style="margin-left:.25em" (click)="logout()"></button>
-    </div>
+  <button #btn type="button" pButton iconPos="right" icon="pi pi-caret-down" (click)="menu.toggle($event)"
+    label=" {{ auth.jwtPayload?.nome }} "></button>
+  <p-slideMenu #menu [model]="users" [popup]="true" [menuWidth]="175">
+  </p-slideMenu>
 </p-menubar>
-
-<p-sidebar [(visible)]="visibleSidebar1" [baseZIndex]="10000" id="sidebar">
-    <div class="sidebar-header">
-        <h2 style="font-weight:normal">Lead Sponge</h2>
-    </div>
-    <ul class="list-unstyled components">
-        <li class="navbar-menuitem" routerLinkActive="ativo" (click)="visibleSidebar1 = false"
-          *ngIf="auth.temPermissao('USER')"><a routerLink="/dashboard">Dashboard</a>
-        </li>
-        <li class="navbar-menuitem" routerLinkActive="ativo" (click)="visibleSidebar1 = false"
-          *ngIf="auth.temPermissao('USER')"><a routerLink="/oportunidades">Oportunidades</a>
-        </li>
-        <li class="navbar-menuitem" routerLinkActive="ativo" (click)="visibleSidebar1 = false"
-          *ngIf="auth.temPermissao('USER')"><a routerLink="/clientes">Cliente</a>
-        </li>
-        <li class="navbar-menuitem" routerLinkActive="ativo" (click)="visibleSidebar1 = false"
-          *ngIf="auth.temPermissao('USER')"><a routerLink="/tarefas">Tarefas</a>
-        </li>
-        <li class="navbar-menuitem" routerLinkActive="ativo" (click)="visibleSidebar1 = false"
-          *ngIf="auth.temPermissao('USER')"><a routerLink="/produtos">Produtos</a>
-        </li>
-        <li class="navbar-menuitem" routerLinkActive="ativo" (click)="visibleSidebar1 = false"
-          *ngIf="auth.temPermissao('USER')"><a routerLink="/contatos">Contato</a>
-        </li>
-        <li class="navbar-menuitem" routerLinkActive="ativo" (click)="visibleSidebar1 = false"
-          *ngIf="auth.temPermissao('USER')"><a routerLink="/campanhas">Campanha</a>
-        </li>
-        <li class="navbar-menuitem" routerLinkActive="ativo" (click)="visibleSidebar1 = false"
-          *ngIf="auth.temPermissao('USER')"><a routerLink="/fontes">Fonte</a>
-        </li>
-        <li class="navbar-menuitem" routerLinkActive="ativo" (click)="visibleSidebar1 = false"
-          *ngIf="auth.temPermissao('USER')"><a routerLink="/usuarios">Usuarios</a>
-        </li>
-    </ul>
+<p-sidebar [(visible)]="visibleSidebar1" [baseZIndex]="10000" id="sidebar" [style]="{padding:'0px'}">
+  <div class="sidebar-header">
+    <h2 style="font-weight:normal">Lead Sponge</h2>
+  </div>
+  <ul class="list-unstyled components">
+    <li class="navbar-menuitem" routerLinkActive="ativo" (click)="visibleSidebar1 = false"
+      *ngIf="auth.temPermissao('USER')"><a routerLink="/dashboard">Dashboard</a>
+    </li>
+    <li class="navbar-menuitem" routerLinkActive="ativo" (click)="visibleSidebar1 = false"
+      *ngIf="auth.temPermissao('PESQUISAR_NEGOCIACAO')"><a routerLink="/negociacoes">Negociações</a>
+    </li>
+    <li class="navbar-menuitem" routerLinkActive="ativo" (click)="visibleSidebar1 = false"
+      *ngIf="auth.temPermissao('PESQUISAR_CLIENTE')"><a routerLink="/clientes">Cliente</a>
+    </li>
+    <li class="navbar-menuitem" routerLinkActive="ativo" (click)="visibleSidebar1 = false"
+      *ngIf="auth.temPermissao('PESQUISAR_TAREFA')"><a routerLink="/tarefas">Tarefas</a>
+    </li>
+  </ul>
 </p-sidebar>

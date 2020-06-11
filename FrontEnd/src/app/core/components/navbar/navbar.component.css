@@ -1,5 +1,5 @@
-.ui-sidebar div{
-    width: 100%;
+body .ui-sidebar{
+    padding: 0px;
 }
 
 p {
@@ -109,11 +109,7 @@ a[data-toggle="collapse"] {
     transform: translateY(-50%);
 }
 
-ul ul a {
-    font-size: 0.9em !important;
-    padding-left: 30px !important;
-    background: #6d7fcc;
-}
+
 
 ul.CTAs {
     padding: 20px;
@@ -125,11 +121,6 @@ ul.CTAs a {
     display: block;
     border-radius: 5px;
     margin-bottom: 5px;
-}
-
-a.article, a.article:hover {
-    background: #6d7fcc !important;
-    color: #fff !important;
 }
 
 
@@ -210,5 +201,4 @@ a.article, a.article:hover {
     #sidebarCollapse.active span:last-of-type {
         transform: rotate(-45deg) translate(1px, -1px);
     }
-
 }

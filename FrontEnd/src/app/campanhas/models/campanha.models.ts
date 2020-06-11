@@ -1,6 +1,8 @@
-export class Negociacoes {
+export class Campanha {
     id: number;
     nome: string;
-    cargo: string;
-    negociacoes = new Negociacoes();
+    createdAt: Date;
+    updatedAt: Date;
+    createdByUser: string;
+    modifiedByUser: string;
 }

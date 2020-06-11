@@ -42,6 +42,9 @@ public class View {
 	}
 
 	public static interface HistEstagioNegociacao {
-
+		
+	}
+	public static interface MotivoPerda{
+		
 	}
 }
