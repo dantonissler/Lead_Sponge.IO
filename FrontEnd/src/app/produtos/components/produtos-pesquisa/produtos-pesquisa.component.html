@@ -1,1 +1,62 @@
-<p>produtos-pesquisa works!</p>
+<div class="container">
+    <div class="ui-g">
+        <form autocomplete="off" (ngSubmit)="pesquisar()">
+            <div class="ui-g-12">
+                <h1>Motivo da Perda</h1>
+            </div>
+            <div class="ui-g-12 ui-fluid">
+                <label>Nome</label>
+                <input pInputText type="text" name="nome" [(ngModel)]="filtro.nome">
+            </div>
+            <div class="ui-g-12">
+                <button pButton type="submit" label="Pesquisar"></button>
+            </div>
+        </form>
+    </div>
+    <div class="ui-g">
+        <div class="ui-g-12">
+            <p-table [value]="produtos" [responsive]="true" [paginator]="true" [rows]="filtro.itensPorPagina"
+                [lazy]="true" [totalRecords]="totalRegistros" (onLazyLoad)="aoMudarPagina($event)" #tabela>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Nome</th>
+                        <th>Descriacao</th>
+                        <th>Valor</th>
+                        <th>Criado Por</th>
+                        <th>Alterado Por</th>
+                        <th>Criado em</th>
+                        <th>Alterado em </th>
+                        <th class="col-acoes-header"></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-produto>
+                    <tr>
+                        <td>{{ produto.nome }}</td>
+                        <td>{{ produto.descricao }}</td>
+                        <td>{{ produto.valor }}</td>
+                        <td>{{ produto.createdByUser }}</td>
+                        <td>{{ produto.modifiedByUser }}</td>
+                        <td class="col-data">{{ produto.createdAt | date:'dd/MM/yyyy HH:mm' }}</td>
+                        <td class="col-data">{{ produto.updatedAt | date:'dd/MM/yyyy HH:mm' }}</td>
+                        <td class="col-acoes">
+                            <button pButton icon="fas fa-pencil-alt" pTooltip="Editar" tooltipPosition="top"
+                                [routerLink]="['/produtos', produto.id]"></button>
+                            <button pButton icon="fas fa-trash" pTooltip="Excluir" tooltipPosition="top"
+                                (click)="confirmarExclusao(produto)"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="8">
+                            Nenhum produto encontrado
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        <div class="ui-g-12">
+            <button pButton label="Novo Produto" routerLink="/produtos/novo"></button>
+        </div>
+    </div>
+</div>

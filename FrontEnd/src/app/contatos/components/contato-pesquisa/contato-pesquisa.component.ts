@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { ConfirmationService, MessageService, LazyLoadEvent } from 'primeng/api';
+import { ErrorHandlerService } from './../../../core/error-handler.service';
+import { ContatoFiltro, ContatoService } from './../../services/contato.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-contato-pesquisa',
@@ -7,9 +11,59 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ContatoPesquisaComponent implements OnInit {
 
-  constructor() { }
+  totalRegistros = 0;
+  filtro = new ContatoFiltro();
+  contatos = [];
+  @ViewChild('tabela', { static: true }) grid;
 
-  ngOnInit(): void {
+  constructor(
+    private contatoService: ContatoService,
+    private errorHandler: ErrorHandlerService,
+    private confirmation: ConfirmationService,
+    private messageService: MessageService,
+    private title: Title
+  ) { }
+
+  ngOnInit( ): void {
+    this.title.setTitle('Pesquisa de Contatos');
+  }
+
+  pesquisar(pagina = 0) {
+    this.filtro.pagina = pagina;
+    this.contatoService.pesquisar(this.filtro)
+      .then(resultado => {
+        this.totalRegistros = resultado.total;
+        this.contatos = resultado.contatos;
+      })
+      .catch(erro => this.errorHandler.handle(erro));
+  }
+
+  aoMudarPagina(event: LazyLoadEvent) {
+    const pagina = event.first / event.rows;
+    this.pesquisar(pagina);
+  }
+
+  confirmarExclusao(contatos: any) {
+    this.confirmation.confirm({
+      message: 'Tem certeza que deseja excluir?',
+      accept: () => {
+        this.excluir(contatos);
+      }
+    });
+  }
+
+  excluir(contatos: any) {
+    this.contatoService.excluir(contatos.id)
+      .then(() => {
+        if (this.grid.first === 0) {
+          this.pesquisar();
+        } else {
+          this.grid.first = 0;
+          this.pesquisar();
+        }
+        this.messageService.add({ severity: 'success', detail: 'Contato excluída com sucesso!' });
+      })
+      .catch(erro => this.errorHandler.handle(erro));
   }
 
 }

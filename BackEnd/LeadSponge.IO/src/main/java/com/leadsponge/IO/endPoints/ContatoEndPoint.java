@@ -1,12 +1,12 @@
 package com.leadsponge.IO.endPoints;
 
-import java.net.URISyntaxException;
-
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,13 +17,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.leadsponge.IO.endPoints.crudEndpoints.CrudController;
 import com.leadsponge.IO.event.RecursoCriadoEvent;
-import com.leadsponge.IO.models.cliente.Cliente;
 import com.leadsponge.IO.models.contato.Contato;
-import com.leadsponge.IO.repository.ContatoRepository;
+import com.leadsponge.IO.repository.Filter.ContatoFilter;
+import com.leadsponge.IO.repository.contato.ContatoRepository;
+import com.leadsponge.IO.services.ContatoService;
 
 @RestController
 @RequestMapping("/contatos")
@@ -33,62 +35,61 @@ class ContatoEndPoint extends CrudController {
 	private final ContatoRepository repository;
 	
 	@Autowired
+	private final ContatoService contatoService;
+	
+	@Autowired
 	private final ApplicationEventPublisher publisher;
 	
-	public ContatoEndPoint(ContatoRepository repository, ApplicationEventPublisher publisher) {
+	public ContatoEndPoint(ContatoRepository repository, ContatoService contatoService, 
+			ApplicationEventPublisher publisher) {
 		this.publisher = publisher;
 		this.repository = repository;
+		this.contatoService = contatoService;
 	}
 
 	@GetMapping(value = { "", "/" })
+	@ResponseStatus(HttpStatus.OK)
 	@PreAuthorize("hasAuthority('PESQUISAR_CONTATO') and #oauth2.hasScope('read')")
-	public ResponseEntity<Iterable<?>> listar() {
-		Iterable<Contato> clientes = repository.findAll();
-		if (clientes == null) {
-			return ResponseEntity.notFound().build();
-		} else {
-			return ResponseEntity.ok(clientes);
-		}
+	public Page<Contato> pesquisar(ContatoFilter contatoFilter, Pageable pageable) {
+		return repository.filtrar(contatoFilter, pageable);
 	}
-
+	
 	@PostMapping(value = { "", "/" })
 	@PreAuthorize("hasAuthority('CADASTRAR_CONTATO') and #oauth2.hasScope('write')")
-	ResponseEntity<Contato> cadastrar(@Valid @RequestBody Contato novoContato , HttpServletResponse response) {
-		Contato criarCliente = repository.save(novoContato);
-		if (criarCliente == null) {
-			return ResponseEntity.notFound().build();
-		} else {
-			publisher.publishEvent(new RecursoCriadoEvent(this, response, criarCliente.getId()));
-			return ResponseEntity.status(HttpStatus.CREATED).body(criarCliente);
-		}
+	public ResponseEntity<Contato> cadastrar(@Valid @RequestBody Contato contato, HttpServletResponse response) {
+		Contato criarCliente = contatoService.salvar(contato);
+		publisher.publishEvent(new RecursoCriadoEvent(this, response, criarCliente.getId()));
+		return ResponseEntity.status(HttpStatus.CREATED).body(criarCliente);
 	}
 
-	@GetMapping(value = { "/{id}", "/{id}/" })
-	@PreAuthorize("hasAuthority('PESQUISAR_CONTATO') and #oauth2.hasScope('read')")
-	public ResponseEntity<Contato> detalhar(@PathVariable("id") Long id) {
-		return ResponseEntity.ok(repository.findById(id).orElseThrow(() -> notFouldId(id, "o contato")));
-	}
 
 	@PutMapping(value = { "/{id}", "/{id}/" })
 	@PreAuthorize("hasAuthority('CADASTRAR_CONTATO') and #oauth2.hasScope('write')")
-	ResponseEntity<Contato> editar(@Valid @RequestBody Contato novoContato, @PathVariable Long id)
-			throws URISyntaxException {
-		return ResponseEntity.ok(repository.findById(id).map(contato -> {
-			contato.setNome(novoContato.getNome());
-			contato.setCargo(novoContato.getCargo());
-			contato.setCliente(novoContato.getCliente());
-			return repository.save(contato);
-		}).orElseThrow(() -> notFouldId(id, "o contato")));
+	ResponseEntity<Contato> atualizar(@Valid @RequestBody Contato contato, @PathVariable Long id,
+			HttpServletResponse response) {
+		try {
+			Contato novaContato = contatoService.atualizar(id, contato);
+			publisher.publishEvent(new RecursoCriadoEvent(this, response, novaContato.getId()));
+			return ResponseEntity.status(HttpStatus.CREATED).body(novaContato);
+		} catch (IllegalArgumentException e) {
+			throw notFouldId(id, "o contato");
+		}
 	}
 
 	@DeleteMapping(value = { "/{id}", "/{id}/" })
 	@PreAuthorize("hasAuthority('REMOVER_CONTATO') and #oauth2.hasScope('write')")
-	public ResponseEntity<Cliente> remover(@PathVariable Long id){
+	public ResponseEntity<Contato> remover(@PathVariable Long id) {
 		try {
 			repository.deleteById(id);
-			return ResponseEntity.noContent().build();
+			return ResponseEntity.ok().build();
 		} catch (Exception e) {
 			throw notFouldId(id, "o contato");
 		}
+	}
+	
+	@GetMapping(value = { "/{id}", "/{id}/" })
+	@PreAuthorize("hasAuthority('PESQUISAR_CAMPANHA') and #oauth2.hasScope('read')")
+	public ResponseEntity<Contato> detalhar(@Valid @PathVariable("id") Long id) {
+		return ResponseEntity.ok(repository.findById(id).orElseThrow(() -> notFouldId(id, "o contato")));
 	}
 }

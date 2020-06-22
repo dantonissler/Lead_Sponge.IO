@@ -1,1 +1,50 @@
-<p>contato-cadastro-email works!</p>
+<div class="ui-g">
+    <div class="ui-g-12">
+        <button pButton label="Novo" icon="fa fa-plus" type="button" class="ui-button-secondary"
+            (click)="prepararNovoEmail()"></button>
+    </div>
+    <div class="ui-g-12">
+        <p-table [value]="emails" [responsive]="true">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Email</th>
+                    <th class="col-acoes-header"></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-email let-rowIndex="rowIndex">
+                <tr>
+                    <td>{{ email.email }}</td>
+                    <td class="col-acoes">
+                        <button pButton icon="fas fa-pencil-alt" type="button" pTooltip="Editar" tooltipPosition="top"
+                            (click)="prepararEdicaoEmail(email, rowIndex)"></button>
+
+                        <button pButton icon="fa fa-trash" type="button" pTooltip="Excluir" tooltipPosition="top"
+                            (click)="removerEmail(rowIndex)"></button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="2">
+                        Nenhum email cadastrado
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+<p-dialog [header]="editando ? 'Edição Email' : 'Novo Email'" [(visible)]="exbindoFormularioEmail" modal="modal"
+    *ngIf="email">
+    <form #frmEmail="ngForm" (ngSubmit)="confirmarEmail(frmEmail)">
+        <div class="ui-g-12 ui-fluid">
+            <div class="ui-inputgroup">
+                <span class="ui-inputgroup-addon"><i class="fas fa-envelope" style="line-height: 1.25;"></i></span>
+                <input pInputText placeholder="E-mail *" type="email" name="email" 
+                [(ngModel)]="email.email" >
+            </div>
+        </div>
+        <div class="ui-g-12">
+            <button pButton type="submit" label="Confirmar" [disabled]="frmEmail.invalid"></button>
+        </div>
+    </form>
+</p-dialog>

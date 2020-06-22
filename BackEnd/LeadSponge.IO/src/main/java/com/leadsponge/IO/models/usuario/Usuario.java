@@ -173,6 +173,7 @@ public class Usuario extends UserDateAudit implements UserDetails, Serializable 
 	}
 
 	@Override
+	@JsonIgnore
 	public String getPassword() {
 		return this.password;
 	}

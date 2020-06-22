@@ -1,18 +1,9 @@
 package com.leadsponge.IO.endPoints;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.leadsponge.IO.endPoints.crudEndpoints.CrudController;
-import com.leadsponge.IO.models.cliente.Cliente;
-import com.leadsponge.IO.repository.cliente.ClienteRepository;
 
 @RestController
 @RequestMapping("/clientes")
@@ -22,28 +13,28 @@ class ClienteEndPoint extends CrudController {
 	 * Criar o cliente com muitos ou nem um emails e telefones
 	 */
 	
-	@Autowired
-	private final ClienteRepository repository;
-	
-	@Autowired
-	private ApplicationEventPublisher publisher;
-
-	ClienteEndPoint(ClienteRepository repository, ApplicationEventPublisher publisher) {
-		this.repository = repository;
-		this.publisher = publisher;
-	}
-
-	@GetMapping(value = { "", "/" })
-	@PreAuthorize("hasAuthority('PESQUISAR_CLIENTE') and #oauth2.hasScope('read')")
-	public ResponseEntity<Iterable<?>> listar() {
-		Iterable<Cliente> clientes = repository.findAll();
-		if (clientes == null) {
-			return ResponseEntity.notFound().build();
-		} else {
-			return ResponseEntity.ok(clientes);
-		}
-	}
-
+//	@Autowired
+//	private final ClienteRepository repository;
+//	
+//	@Autowired
+//	private ApplicationEventPublisher publisher;
+//
+//	ClienteEndPoint(ClienteRepository repository, ApplicationEventPublisher publisher) {
+//		this.repository = repository;
+//		this.publisher = publisher;
+//	}
+//
+//	@GetMapping(value = { "", "/" })
+//	@PreAuthorize("hasAuthority('PESQUISAR_CLIENTE') and #oauth2.hasScope('read')")
+//	public ResponseEntity<Iterable<?>> listar() {
+//		Iterable<Cliente> clientes = repository.findAll();
+//		if (clientes == null) {
+//			return ResponseEntity.notFound().build();
+//		} else {
+//			return ResponseEntity.ok(clientes);
+//		}
+//	}
+//
 //	@PostMapping(value = { "", "/" })
 //	@PreAuthorize("hasAuthority('CADASTRAR_CLIENTE') and #oauth2.hasScope('write')")
 //	ResponseEntity<Cliente> cadastrar(@Valid @RequestBody Cliente cliente, HttpServletResponse response) {
@@ -55,13 +46,13 @@ class ClienteEndPoint extends CrudController {
 //			return ResponseEntity.status(HttpStatus.CREATED).body(criarCliente);
 //		}
 //	}
-
-	@GetMapping(value = { "/{id}", "/{id}/" })
-	@PreAuthorize("hasAuthority('PESQUISAR_CLIENTE') and #oauth2.hasScope('read')")
-	public ResponseEntity<Cliente> detalhar(@PathVariable("id") Long id) {
-		return ResponseEntity.ok(repository.findById(id).orElseThrow(() -> notFouldId(id, "o cliente")));
-	}
-
+//
+//	@GetMapping(value = { "/{id}", "/{id}/" })
+//	@PreAuthorize("hasAuthority('PESQUISAR_CLIENTE') and #oauth2.hasScope('read')")
+//	public ResponseEntity<Cliente> detalhar(@PathVariable("id") Long id) {
+//		return ResponseEntity.ok(repository.findById(id).orElseThrow(() -> notFouldId(id, "o cliente")));
+//	}
+//
 //	@PutMapping(value = { "/{id}", "/{id}/" })
 //	@PreAuthorize("hasAuthority('CADASTRAR_CLIENTE') and #oauth2.hasScope('write')")
 //	ResponseEntity<Cliente> editar(@Valid @RequestBody Cliente novoCliente, @PathVariable Long id) {
@@ -72,15 +63,15 @@ class ClienteEndPoint extends CrudController {
 //			return repository.save(cliente);
 //		}).orElseThrow(() -> notFouldId(id, "o cliente")));
 //	}
-
-	@DeleteMapping(value = { "/{id}", "/{id}/" })
-	@PreAuthorize("hasAuthority('REMOVER_CLIENTE') and #oauth2.hasScope('write')")
-	public ResponseEntity<Cliente> remover(@PathVariable Long id) {
-		try {
-			repository.deleteById(id);
-			return ResponseEntity.noContent().build();
-		} catch (Exception e) {
-			throw notFouldId(id, "o cliente");
-		}
-	}
+//
+//	@DeleteMapping(value = { "/{id}", "/{id}/" })
+//	@PreAuthorize("hasAuthority('REMOVER_CLIENTE') and #oauth2.hasScope('write')")
+//	public ResponseEntity<Cliente> remover(@PathVariable Long id) {
+//		try {
+//			repository.deleteById(id);
+//			return ResponseEntity.noContent().build();
+//		} catch (Exception e) {
+//			throw notFouldId(id, "o cliente");
+//		}
+//	}
 }

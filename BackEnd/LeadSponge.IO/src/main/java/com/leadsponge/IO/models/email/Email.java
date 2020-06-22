@@ -1,9 +1,7 @@
 package com.leadsponge.IO.models.email;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,7 +10,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.leadsponge.IO.models.View;
 import com.leadsponge.IO.models.audit.UserDateAudit;
@@ -35,10 +32,9 @@ public class Email extends UserDateAudit {
 	@javax.validation.constraints.Email(message = "{email.not.valid}")
 	private String email;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "contato_id")
-	@JsonBackReference("emailContato")
-	private Contato contatoEmail;
+	private Contato contato;
 
 	public Long getId() {
 		return id;
@@ -57,11 +53,11 @@ public class Email extends UserDateAudit {
 	}
 
 	public Contato getContato() {
-		return contatoEmail;
+		return contato;
 	}
 
 	public void setContato(Contato contato) {
-		this.contatoEmail = contato;
+		this.contato = contato;
 	}
 
 	@Override

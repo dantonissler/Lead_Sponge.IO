@@ -19,9 +19,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class UsuarioCadastrarComponent implements OnInit {
 
+  showConfPass: boolean = false;
+  iconConf: string = 'pi pi-eye';
+  showPass: boolean = false;
+  icon: string = 'pi pi-eye';
   formulario: FormGroup;
   checked: boolean = true;
   usuario = new Usuario();
+  
   roles = [];
 
   constructor(
@@ -47,7 +52,6 @@ export class UsuarioCadastrarComponent implements OnInit {
     }
   }
   
-
   get editando() {
     return Boolean(this.formulario.get('id').value);
   }
@@ -139,5 +143,21 @@ export class UsuarioCadastrarComponent implements OnInit {
       this.lancamento = new Usuario();
     }.bind(this), 1);
     this.router.navigate(['/usuarios/novo']);
+  }
+  esconderSenha(){
+    this.showPass = !this.showPass;
+    if (this.showPass == true) {
+      this.icon ='pi pi-eye-slash';
+    }else{
+      this.icon ='pi pi-eye';
+    }
+  }
+  esconderConfSenha(){
+    this.showConfPass = !this.showConfPass;
+    if (this.showConfPass == true) {
+      this.iconConf ='pi pi-eye-slash';
+    }else{
+      this.iconConf ='pi pi-eye';
+    }
   }
 }

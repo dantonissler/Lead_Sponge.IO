@@ -1,1 +1,58 @@
-<p>contato-pesquisa works!</p>
+<div class="container">
+    <div class="ui-g">
+        <form autocomplete="off" (ngSubmit)="pesquisar()">
+            <div class="ui-g-12">
+                <h1>Contatos</h1>
+            </div>
+            <div class="ui-g-12 ui-fluid">
+                <label>Nome</label>
+                <input pInputText type="text" name="nome" [(ngModel)]="filtro.nome">
+            </div>
+            <div class="ui-g-12">
+                <button pButton type="submit" label="Pesquisar"></button>
+            </div>
+        </form>
+    </div>
+    <div class="ui-g">
+        <div class="ui-g-12">
+            <p-table [value]="contatos" [responsive]="true" [paginator]="true" [rows]="filtro.itensPorPagina"
+                [lazy]="true" [totalRecords]="totalRegistros" (onLazyLoad)="aoMudarPagina($event)" #tabela>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Nome</th>
+                        <th>Cargo</th>
+                        <th>Alterado Por</th>
+                        <th>Alterado em </th>
+                        <th class="col-acoes-header"></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-contato>
+                    <tr>
+                        <td>{{ contato.nome }}</td>
+                        <td>{{ contato.cargo }}</td>
+                        <td>{{ contato.modifiedByUser }}</td>
+                        <td class="col-data">{{ contato.updatedAt | date:'dd/MM/yyyy HH:mm' }}</td>
+                        <td class="col-acoes">
+                            <button pButton icon="fas fa-pencil-alt" pTooltip="Editar" tooltipPosition="top"
+                                [routerLink]="['/contatos', contato.id]"></button>
+                            <button pButton icon="fas fa-trash" pTooltip="Excluir" tooltipPosition="top"
+                                (click)="confirmarExclusao(contato)"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="5">
+                            Nenhuma contato encontrada
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        
+        <div class="ui-g-12">
+            <button pButton label="Novo Contato" routerLink="/contatos/novo"></button>
+        </div>
+    </div>
+</div>

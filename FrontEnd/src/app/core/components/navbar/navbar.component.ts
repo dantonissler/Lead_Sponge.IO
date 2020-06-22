@@ -60,7 +60,7 @@ export class NavbarComponent implements OnInit {
         {separator:true},
         {
             label: 'Sair',
-            icon: 'pi pi-fw pi-times',
+            icon: 'pi pi-sign-out',
             command: (onclick)=> {this.logout()}
         }];
     this.items = [

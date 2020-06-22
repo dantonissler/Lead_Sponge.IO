@@ -87,6 +87,7 @@ export class CampanhasCadastroComponent implements OnInit {
       nome: [null, [ this.validarObrigatoriedade, this.validarTamanhoMinimo(4) ]],
     });
   }
+  
   validarObrigatoriedade(input: FormControl) {
     return (input.value ? null : { obrigatoriedade: true });
   }

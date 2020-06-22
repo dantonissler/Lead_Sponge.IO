@@ -1,7 +1,7 @@
+import { MotivoPerdaFiltro, MotivoPerdaService } from './../../services/motivo-perda.service';
 import { Title } from '@angular/platform-browser';
 import { ErrorHandlerService } from './../../../core/error-handler.service';
 import { MessageService, ConfirmationService, LazyLoadEvent } from 'primeng/api';
-import { MotivoPerdaService, MotivoPerdaFiltro } from './../../services/motivo-perda.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 
 @Component({

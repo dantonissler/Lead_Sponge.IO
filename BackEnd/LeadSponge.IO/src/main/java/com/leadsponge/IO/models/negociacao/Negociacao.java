@@ -31,6 +31,7 @@ import com.leadsponge.IO.models.cliente.Cliente;
 import com.leadsponge.IO.models.estagioNegociacao.EstagioNegociacao;
 import com.leadsponge.IO.models.fonteNegociacao.FonteNegociacao;
 import com.leadsponge.IO.models.historicoEstagioNegociacao.HistEstagioNegociacao;
+import com.leadsponge.IO.models.motivoPerda.MotivoPerda;
 import com.leadsponge.IO.models.negociacaoProduto.NegociacaoProduto;
 import com.leadsponge.IO.models.tarefa.Tarefa;
 
@@ -88,6 +89,11 @@ public class Negociacao extends UserDateAudit {
 	@JoinColumn(name = "fonte_negociacao_id")
 	@JsonBackReference("negociacaoFonteNegociacao")
 	private FonteNegociacao fonteNegociacaoNegociacao;
+
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "motivo_perda_negociacao_id")
+	@JsonBackReference("negociacaoMotivoPerda")
+	private MotivoPerda motivoPerdaNegociacao;
 
 	@OneToOne(mappedBy = "negociacaoProdutoNegociacao", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //	@JsonManagedReference("negociacaoProdutoNegociacao")

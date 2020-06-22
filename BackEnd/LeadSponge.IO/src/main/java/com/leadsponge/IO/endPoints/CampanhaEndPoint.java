@@ -71,7 +71,7 @@ class CampanhaEndPoint extends CrudController {
 			publisher.publishEvent(new RecursoCriadoEvent(this, response, novaCampanha.getId()));
 			return ResponseEntity.status(HttpStatus.CREATED).body(novaCampanha);
 		} catch (IllegalArgumentException e) {
-			throw notFouldId(id, "o usuario");
+			throw notFouldId(id, "a campanha");
 		}
 	}
 

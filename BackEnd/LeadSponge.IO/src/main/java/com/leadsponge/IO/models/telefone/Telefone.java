@@ -1,11 +1,9 @@
 package com.leadsponge.IO.models.telefone;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,7 +13,6 @@ import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.leadsponge.IO.models.View;
@@ -44,10 +41,9 @@ public class Telefone extends UserDateAudit {
 	@Enumerated(EnumType.STRING)
 	private TipoTelefone tipo;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JsonBackReference("telefoneContato")
+	@ManyToOne
 	@JoinColumn(name = "contato_id")
-	private Contato contatoTelefone;
+	private Contato contato;
 
 	@JsonIgnore
 	public boolean isComercial() {
@@ -79,11 +75,11 @@ public class Telefone extends UserDateAudit {
 	}
 
 	public Contato getContato() {
-		return contatoTelefone;
+		return contato;
 	}
 
-	public void setContato(Contato contatoTelefone) {
-		this.contatoTelefone = contatoTelefone;
+	public void setContato(Contato contato) {
+		this.contato = contato;
 	}
 
 	@Override

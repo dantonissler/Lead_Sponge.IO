@@ -4,21 +4,26 @@
       <div class="ui-g-12">
         <h1>{{ editando ? 'Edição de' : 'Novo' }} Usuario</h1>
       </div>
-      <div class="p-col-12">
-        <p-checkbox name="enabled" label="Usuario ativo" formControlName="enabled" binary="false" [(ngModel)]="checked">
-        </p-checkbox>
+      <div class="ui-g-12 ui-fluid">
+        <h3 class="first">Usuario ativo</h3>
+        <p-inputSwitch name="enabled" formControlName="enabled" binary="false" [(ngModel)]="checked"></p-inputSwitch>
       </div>
       <div class="ui-g-12 ui-fluid">
-        <label>Nome de Usuario <span style="color: crimson;">*</span></label>
-        <input pInputText placeholder="Nome de Usuario *" type="text" name="username" formControlName="username">
+        <div class="ui-inputgroup">
+          <span class="ui-inputgroup-addon"><i class="fas fa-user" style="line-height: 1.25;"></i></span>
+          <input pInputText placeholder="Nome de Usuario *" type="text" name="username" formControlName="username">
+        </div>
         <app-message [control]="formulario.get('username')" error="obrigatoriedade" text="Informe um nome de usuario.">
         </app-message>
         <app-message [control]="formulario.get('username')" error="tamanhoMinimo"
           text="Mínimo de {{ formulario.get('username').errors?.tamanhoMinimo?.tamanho }} caracteres."></app-message>
       </div>
       <div class="ui-g-12 ui-fluid">
-        <label>Nome Completo <span style="color: crimson;">*</span></label>
-        <input pInputText placeholder="Nome Completo *" type="text" name="nomeCompleto" formControlName="nomeCompleto">
+        <div class="ui-inputgroup">
+          <span class="ui-inputgroup-addon"><i class="fas fa-user" style="line-height: 1.25;"></i></span>
+          <input pInputText placeholder="Nome Completo *" type="text" name="nomeCompleto"
+            formControlName="nomeCompleto">
+        </div>
         <app-message [control]="formulario.get('nomeCompleto')" error="obrigatoriedade" text="Informe o um nome.">
         </app-message>
         <app-message [control]="formulario.get('nomeCompleto')" error="tamanhoMinimo"
@@ -26,30 +31,42 @@
         </app-message>
       </div>
       <div class="ui-g-12 ui-fluid">
-        <label>E-mail <span style="color: crimson;">*</span></label>
-        <input pInputText placeholder="E-mail *" type="text" name="email" formControlName="email">
+        <div class="ui-inputgroup">
+          <span class="ui-inputgroup-addon"><i class="fas fa-envelope" style="line-height: 1.25;"></i></span>
+          <input pInputText placeholder="E-mail *" type="text" name="email" formControlName="email">
+        </div>
         <app-message [control]="formulario.get('email')" error="obrigatoriedade" text="Informe um E-mail.">
         </app-message>
         <app-message [control]="formulario.get('email')" error="email" text="Por gentileza insira um E-mail valido.">
         </app-message>
       </div>
-      <div class="ui-g-12 ui-fluid">
-        <label>Senha <span style="color: crimson;">*</span></label>
-        <input pInputText placeholder="Senha *" type="password" name="password" formControlName="password">
+      <div class="ui-g-6 ui-fluid">
+        <div class="ui-inputgroup">
+          <span class="ui-inputgroup-addon"><i class="fas fa-key" style="line-height: 1.25;"></i></span>
+          <input type="password" pPassword promptLabel="Por favor digite uma senha" weakLabel="Fraca"
+            mediumLabel="Media" strongLabel="Forte" placeholder="Senha *" name="password" formControlName="password"
+            [showPassword]="showPass">
+          <button pButton type="button" icon="{{icon}}" class="ui-button-warn" binary="false"
+            (click)="esconderSenha()"></button>
+        </div>
         <app-message [control]="formulario.get('password')" error="validarObrigatoriedade" text="Informe a senha">
         </app-message>
         <app-message [control]="formulario.get('password')" error="tamanhoMinimo"
-          text="Mínimo de {{ formulario.get('password').errors?.validarTamanhoMinimo?.tamanho }} caracteres">
+          text="Mínimo de {{ formulario.get('password').errors?.tamanhoMinimo?.tamanho }} caracteres">
         </app-message>
       </div>
-      <div class="ui-g-12 ui-fluid">
-        <label>Confirmar Senha <span style="color: crimson;">*</span></label>
-        <input pInputText placeholder="Confirmar Senha *" type="password" name="confirmarPassword"
-          formControlName="confirmarPassword">
+      <div class="ui-g-6 ui-fluid">
+        <div class="ui-inputgroup">
+          <span class="ui-inputgroup-addon"><i class="fas fa-key" style="line-height: 1.25;"></i></span>
+          <input type="password" pPassword placeholder="Confirmar Senha *" name="confirmarPassword"
+            formControlName="confirmarPassword" [showPassword]="showConfPass" value="{{ editando ? '' : '' }}">
+          <button pButton type="button" icon="{{iconConf}}" class="ui-button-warn" binary="false"
+            (click)="esconderConfSenha()"></button>
+        </div>
         <app-message [control]="formulario.get('confirmarPassword')" error="validarObrigatoriedade"
           text="Informe a confirmação da senha"></app-message>
         <app-message [control]="formulario.get('confirmarPassword')" error="tamanhoMinimo"
-          text="Mínimo de {{ formulario.get('confirmarPassword').errors?.validarTamanhoMinimo?.tamanho }} caracteres">
+          text="Mínimo de {{ formulario.get('confirmarPassword').errors?.tamanhoMinimo?.tamanho }} caracteres">
         </app-message>
         <app-message [control]="formulario" error="passwordNotMatch"
           text="O campo senha não conhecide com o confirmar senhas"></app-message>

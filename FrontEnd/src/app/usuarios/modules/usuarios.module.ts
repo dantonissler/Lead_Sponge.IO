@@ -1,3 +1,4 @@
+import { PasswordModule } from 'primeng/password';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { SharedModule } from '../../core/modules/shared.module';
 import { UsuarioListarComponent } from '../components/usuario-listar/usuario-listar.component';
@@ -6,6 +7,7 @@ import { UsuariosRoutingModule } from './usuarios-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {InputSwitchModule} from 'primeng/inputswitch';
 
 import { InputMaskModule } from 'primeng/inputmask';
 import { TableModule } from 'primeng/table';
@@ -33,6 +35,8 @@ import {CheckboxModule} from 'primeng/checkbox';
     DialogModule,
     DropdownModule,
     MultiSelectModule,
+    PasswordModule,
+    InputSwitchModule,
 
     SharedModule,
     UsuariosRoutingModule

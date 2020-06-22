@@ -15,9 +15,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
+import javax.validation.Valid;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.leadsponge.IO.models.audit.UserDateAudit;
 import com.leadsponge.IO.models.cliente.Cliente;
 import com.leadsponge.IO.models.email.Email;
@@ -47,16 +49,22 @@ public class Contato extends UserDateAudit {
 	@JsonBackReference("contatosCliente")
 	private Cliente clienteContato;
 
-	@OneToMany(mappedBy = "contatoTelefone", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//	@JsonManagedReference("contatoTelefone")
-	private List<Telefone> telefoneContato = new ArrayList<>();
+	@JsonIgnoreProperties("contato")
+	@Valid
+	@OneToMany(mappedBy = "contato", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Telefone> telefone;
 
-	@OneToMany(mappedBy = "contatoEmail", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//	@JsonManagedReference("contatoEmail")
-	private List<Email> emailContato = new ArrayList<>();
+	@JsonIgnoreProperties("contato")
+	@Valid
+	@OneToMany(mappedBy = "contato", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Email> email = new ArrayList<>();
 
 	public Long getId() {
 		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getNome() {
@@ -75,32 +83,28 @@ public class Contato extends UserDateAudit {
 		this.cargo = cargo;
 	}
 
-	public Cliente getCliente() {
+	public Cliente getClienteContato() {
 		return clienteContato;
 	}
 
-	public void setCliente(Cliente clienteContato) {
+	public void setClienteContato(Cliente clienteContato) {
 		this.clienteContato = clienteContato;
 	}
 
 	public List<Telefone> getTelefone() {
-		return telefoneContato;
+		return telefone;
 	}
 
-	public void setTelefone(List<Telefone> telefoneContato) {
-		this.telefoneContato = telefoneContato;
+	public void setTelefone(List<Telefone> telefone) {
+		this.telefone = telefone;
 	}
 
 	public List<Email> getEmail() {
-		return emailContato;
+		return email;
 	}
 
-	public void setEmail(List<Email> emailContato) {
-		this.emailContato = emailContato;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
+	public void setEmail(List<Email> email) {
+		this.email = email;
 	}
 
 	@Override

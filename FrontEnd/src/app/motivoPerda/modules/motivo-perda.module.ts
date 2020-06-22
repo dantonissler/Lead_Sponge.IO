@@ -37,7 +37,6 @@ import { MotivoPerdaCadastroComponent } from '../components/motivo-perda-cadastr
     PanelModule,
     DialogModule,
     DropdownModule,
-    MultiSelectModule,
     
     SharedModule,
     MotivoPerdaRoutingModule

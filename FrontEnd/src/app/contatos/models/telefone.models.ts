@@ -1,7 +1,11 @@
-import { Contato } from './contato.models';
 export class Telefone {
     id: number;
-    telefone: string;
-    tipoTelefone = 'COMERCIAL';
-    contato = new Array<Contato>();
+    numero: string;
+    tipo = 'COMERCIAL';
+
+    constructor(id?: number,numero?: string,tipo?: string) {
+        this.id = id;
+        this.numero = numero;
+        this.tipo = tipo;
+    }
 }

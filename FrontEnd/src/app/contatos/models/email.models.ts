@@ -1,6 +1,9 @@
-import { Contato } from './contato.models';
 export class Email {
     id: number;
-    nome: string;
-    contato = new Array<Contato>();
+    email: string;
+    
+    constructor(id?: number,email?: string) {
+        this.id = id;
+        this.email = email;
+    }
 }
