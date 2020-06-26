@@ -6,9 +6,6 @@
         <li class="menusection">
             Ajustes da sua conta
         </li>
-        <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="auth.temPermissao('PESQUISAR_CONTATO')">
-            <a routerLink="/contatos">Contato</a>
-        </li>
         <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="auth.temPermissao('PESQUISAR_FONTE')">
             <a routerLink="/fontes">Fonte</a>
         </li>

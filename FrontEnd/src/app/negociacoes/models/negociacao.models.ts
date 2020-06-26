@@ -1,5 +1,5 @@
 import { Cliente } from '../../clientes/models/cliente.models';
-export class negociacao{
+export class Negociacao{
     id: number;
     nome: string;
     cargo: string;

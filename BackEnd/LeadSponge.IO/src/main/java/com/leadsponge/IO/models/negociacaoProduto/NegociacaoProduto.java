@@ -1,9 +1,7 @@
 package com.leadsponge.IO.models.negociacaoProduto;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,7 +11,6 @@ import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.leadsponge.IO.models.View;
 import com.leadsponge.IO.models.audit.UserDateAudit;
@@ -38,15 +35,13 @@ public class NegociacaoProduto extends UserDateAudit {
 	@Column(name = "quantidade_produtos")
 	private Integer quantidadeProdutos;
 
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToOne
 	@JoinColumn(name = "produto_id")
-	@JsonBackReference("negociacaoProdutoP")
-	private Produto produtoNegociacaoProduto;
+	private Produto produto;
 
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToOne
 	@JoinColumn(name = "negociacao_id")
-	@JsonBackReference("negociacaoProdutoN")
-	private Negociacao negociacaoProdutoNegociacao;
+	private Negociacao negociacao;
 
 	public Long getId() {
 		return id;
@@ -64,20 +59,20 @@ public class NegociacaoProduto extends UserDateAudit {
 		this.quantidadeProdutos = quantidadeProdutos;
 	}
 
-	public Produto getProdutoNegociacaoProduto() {
-		return produtoNegociacaoProduto;
+	public Produto getProduto() {
+		return produto;
 	}
 
-	public void setProdutoNegociacaoProduto(Produto produtoNegociacaoProduto) {
-		this.produtoNegociacaoProduto = produtoNegociacaoProduto;
+	public void setProduto(Produto produto) {
+		this.produto = produto;
 	}
 
-	public Negociacao getNegociacaoProdutoNegociacao() {
-		return negociacaoProdutoNegociacao;
+	public Negociacao getNegociacao() {
+		return negociacao;
 	}
 
-	public void setNegociacaoProdutoNegociacao(Negociacao negociacaoProdutoNegociacao) {
-		this.negociacaoProdutoNegociacao = negociacaoProdutoNegociacao;
+	public void setNegociacao(Negociacao negociacao) {
+		this.negociacao = negociacao;
 	}
 
 	@Override

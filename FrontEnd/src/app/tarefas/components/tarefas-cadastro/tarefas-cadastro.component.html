@@ -1,1 +1,54 @@
-<p>tarefas-cadastro works!</p>
+<div class="container">
+    <form [formGroup]="formulario" autocomplete="off" (ngSubmit)="salvar()">
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <h1>{{ editando ? 'Edição de' : 'Novo' }} Tarefa</h1>
+            </div>
+            <div class="ui-g-12 ui-fluid" >
+                <label>Selecione um tipo <span style="color: crimson;">*</span></label>
+                <p-selectButton name="tipo" [options]="tipos"
+                formControlName="tipo"></p-selectButton>
+            </div>
+            <div class="ui-g-12 ui-fluid">
+                <label>Assunto <span style="color: crimson;">*</span></label>
+                <input pInputText placeholder="Assunto  *" type="text" name="assunto" formControlName="assunto">
+                <app-message [control]="formulario.get('assunto')" error="obrigatoriedade"
+                    text="Informe o uma descrição.">
+                </app-message>
+                <app-message [control]="formulario.get('assunto')" error="tamanhoMinimo"
+                    text="Mínimo de {{ formulario.get('assunto').errors?.tamanhoMinimo?.tamanho }} caracteres.">
+                </app-message>
+            </div>
+            <div class="ui-g-12 ui-fluid">
+                <label>Descrição </label>
+                <input pInputText placeholder="Descrição" type="text" name="descricao" formControlName="descricao">
+            </div>
+            <div class="ui-g-12 ui-fluid">
+                <label>Marcar Horario</label>
+                <p-calendar name="horaMarcada" dateFormat="dd/mm/yy" 
+                    [showIcon]="true" [showTime]="true" formControlName="horaMarcada">
+                </p-calendar>
+                <app-message [control]="formulario.get('horaMarcada')" error="required"
+                    text="Informe uma data e hora"></app-message>
+            </div>
+            <div class="ui-g-12 ui-md-6 ui-fluid" formGroupName="cliente">
+                <label>Cliente <span style="color: crimson;">*</span></label>
+                <p-dropdown name="cliente" [options]="cliente" placeholder="Selecione" [filter]="true"
+                    formControlName="id"></p-dropdown>
+            </div>
+            <div class="ui-g-12 ui-md-6 ui-fluid" formGroupName="usuario">
+                <label>Usuario <span style="color: crimson;">*</span></label>
+                <p-dropdown name="usuario" [options]="usuario" placeholder="Selecione" [filter]="true"
+                    formControlName="id"></p-dropdown>
+            </div>
+            <div class="ui-g-12 cadastro-acoes">
+                <button pButton value="submit" type="submit" label="Salvar" [disabled]="formulario.invalid"
+                    style="padding-left:10;"></button>
+                <button pButton value="Limpar" type="button" label="Limpar" class="ui-button-info" (click)="limpar()"
+                    style="padding-left:10;"></button>
+                <button pButton value="Pesquisar" type="button" label="Pesquisar" class="ui-button-info"
+                    Clabel="Pesquisa" routerLink="/tarefas" style="padding-left:10;"></button>
+            </div>
+        </div>
+    </form>
+</div>

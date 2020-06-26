@@ -13,10 +13,9 @@ import { EstagioNegociacaoService } from '../../services/estagio-negociacao.serv
   styleUrls: ['./estagio-negociacao-cadastro.component.css']
 })
 export class EstagioNegociacaoCadastroComponent implements OnInit {
-
   formulario: FormGroup;
   estagios = new Estagio();
-  
+
   constructor(
     private estagioService: EstagioNegociacaoService,
     private messageService: MessageService,
@@ -30,13 +29,12 @@ export class EstagioNegociacaoCadastroComponent implements OnInit {
   ngOnInit(): void {
     this.configurarFormulario();
     const idEstagio = this.route.snapshot.params['id'];
-
     this.title.setTitle('Novo Estagio');
-    
     if (idEstagio) {
       this.carregarEstagio(idEstagio);
     }
   }
+
   get editando() {
     return Boolean(this.formulario.get('id').value);
   }
@@ -49,6 +47,7 @@ export class EstagioNegociacaoCadastroComponent implements OnInit {
       })
       .catch(erro => this.errorHandler.handle(erro));
   }
+
   salvar() {
     if (this.editando) {
       this.atualizarEstagio();
@@ -56,6 +55,7 @@ export class EstagioNegociacaoCadastroComponent implements OnInit {
       this.adicionarEstagio();
     }
   }
+
   adicionarEstagio() {
     this.estagioService.adicionar(this.formulario.value)
       .then(estagioAdicionado => {
@@ -70,7 +70,7 @@ export class EstagioNegociacaoCadastroComponent implements OnInit {
       .then(estagio => {
         this.formulario.patchValue(estagio);
 
-        this.messageService.add({ severity: 'success', detail: 'Lançamento alterado com sucesso!' });
+        this.messageService.add({ severity: 'success', detail: 'Estagio alterado com sucesso!' });
         this.atualizarTituloEdicao();
       })
       .catch(erro => this.errorHandler.handle(erro));
@@ -82,14 +82,16 @@ export class EstagioNegociacaoCadastroComponent implements OnInit {
 
   configurarFormulario() {
     this.formulario = this.formBuilder.group({
-      id:[],
-      nome: [null, [ this.validarObrigatoriedade, this.validarTamanhoMinimo(4) ]],
-      apelido: [null, [ this.validarObrigatoriedade, this.validarTamanhoMinimo(1) ]],
+      id: [],
+      nome: [null, [this.validarObrigatoriedade, this.validarTamanhoMinimo(4)]],
+      apelido: [null, [this.validarObrigatoriedade, this.validarTamanhoMinimo(1)]],
     });
   }
+
   validarObrigatoriedade(input: FormControl) {
     return (input.value ? null : { obrigatoriedade: true });
   }
+
   validarTamanhoMinimo(valor: number) {
     return (input: FormControl) => {
       return (!input.value || input.value.length >= valor) ? null : { tamanhoMinimo: { tamanho: valor } };
@@ -98,10 +100,9 @@ export class EstagioNegociacaoCadastroComponent implements OnInit {
 
   limpar() {
     this.formulario.reset();
-    setTimeout(function() {
+    setTimeout(function () {
       this.lancamento = new Estagio();
     }.bind(this), 1);
     this.router.navigate(['/estagios/novo']);
   }
-
 }

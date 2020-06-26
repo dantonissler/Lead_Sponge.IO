@@ -12,8 +12,8 @@ import com.leadsponge.IO.models.cliente.Cliente;
 public abstract class Segmento_ {
 	public static volatile SingularAttribute<Segmento, Long> id;
 	public static volatile SingularAttribute<Segmento, String> nome;
-	public static volatile ListAttribute<Segmento, Cliente> clienteSegmento;
+	public static volatile ListAttribute<Segmento, Cliente> clientes;
 	public static final String ID = "id";
 	public static final String NOME = "nome";
-	public static final String CLIENTES = "clienteSegmento";
+	public static final String CLIENTES = "clientes";
 }

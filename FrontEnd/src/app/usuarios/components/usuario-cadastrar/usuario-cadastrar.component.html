@@ -73,12 +73,11 @@
         <!-- <app-message [control]="formulario.get('confirmarPassword')" error="formulario.errors?.validarConfirmaPassword"
           text="O campo senha não confere com o confirmar senhas"></app-message> -->
       </div>
-      <!-- <div class="ui-g-12 ui-md-12 ui-fluid" formGroupName="roles">
+      <div class="ui-g-12 ui-md-12 ui-fluid">
         <label>Roles</label>
-        <p-multiSelect name="id" [options]="roles" defaultLabel="Selecione"
-          [filter]="true"
-          formControlName="id"></p-multiSelect>
-      </div> -->
+        <p-multiSelect name="roles" [options]="roles" defaultLabel="Selecione"
+          optionLabel="nome" formControlName="roles"></p-multiSelect>
+      </div>
       <div class="ui-g-12 cadastro-acoes">
         <button pButton value="submit" type="submit" label="Salvar" [disabled]="formulario.invalid"
           style="padding-left:10;"></button>

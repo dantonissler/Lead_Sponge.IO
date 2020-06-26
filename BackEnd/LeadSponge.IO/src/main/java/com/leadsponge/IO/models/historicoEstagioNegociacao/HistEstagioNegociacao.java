@@ -2,10 +2,8 @@ package com.leadsponge.IO.models.historicoEstagioNegociacao;
 
 import java.time.LocalDate;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,7 +13,6 @@ import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.leadsponge.IO.models.View;
 import com.leadsponge.IO.models.audit.UserDateAudit;
@@ -46,10 +43,9 @@ public class HistEstagioNegociacao extends UserDateAudit {
 	@Column(name = "data_venda")
 	private LocalDate dataVenda;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "negociacao_id")
-	@JsonBackReference("histEstagioNegociacaoNegociacao")
-	private Negociacao negociacaoHistEstagioNegociacao;
+	private Negociacao negociacao;
 
 	public Long getId() {
 		return id;
@@ -84,11 +80,11 @@ public class HistEstagioNegociacao extends UserDateAudit {
 	}
 
 	public Negociacao getNegociacao() {
-		return negociacaoHistEstagioNegociacao;
+		return negociacao;
 	}
 
-	public void setNegociacao(Negociacao negociacaoHistEstagioNegociacao) {
-		this.negociacaoHistEstagioNegociacao = negociacaoHistEstagioNegociacao;
+	public void setNegociacao(Negociacao negociacao) {
+		this.negociacao = negociacao;
 	}
 
 }

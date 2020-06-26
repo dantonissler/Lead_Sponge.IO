@@ -17,8 +17,7 @@
                     <td>{{ telefone.numero }}</td>
                     <td>{{ telefone.tipo === 'RESIDENCIAL' ? 'Residencial' : 
                         telefone.tipo === 'COMERCIAL'? 'Comercial' : 
-                        telefone.tipo === 'PESSOAL'? 'Pessoal' : 
-                        telefone.tipo === 'PESSOAL'? 'Fax' : 'não informado' }}</td>
+                        telefone.tipo === 'PESSOAL'? 'Pessoal' : 'Fax' }}</td>
                     <td class="col-acoes">
                         <button pButton icon="fas fa-pencil-alt" type="button" pTooltip="Editar" tooltipPosition="top"
                             (click)="prepararEdicaoTelefone(telefone, rowIndex)"></button>
@@ -43,19 +42,19 @@
     modal="modal" *ngIf="telefone">
     <form #frmTelefone="ngForm" (ngSubmit)="confirmarTelefone(frmTelefone)">
         <div class="ui-g-12 ui-fluid">
+            <label>Tipo telefone</label>
             <p-dropdown [options]="tipos" [(ngModel)]="telefone" name="tipo"
-                placeholder="Selecione *" optionLabel="label"></p-dropdown>
+                placeholder="selecione" optionLabel="label"></p-dropdown>
         </div>
         <div class="ui-g-12 ui-fluid">
             <div class="ui-inputgroup">
-                <span class="ui-inputgroup-addon"><i class="fas fa-phone" style="line-height: 1.25;"></i></span>
-                <p-inputMask  placeholder="Telefone *" [(ngModel)]="telefone.numero" 
-                    name="numero" mask="(99) 99999-999?9" #numero="ngModel" required minlength="14"></p-inputMask>
+                <span class="ui-inputgroup-addon"><i class="fas fa-phone" 
+                    style="line-height: 1.25;"></i></span>
+                <p-inputMask name="numero" placeholder="Telefone *" 
+                    [(ngModel)]="telefone.numero" mask="(99) 99999-999?9"></p-inputMask>
             </div>
-            <app-message [control]="numero" error="required" 
-                text="Informe um numero"></app-message>
         </div>
-        <div class="ui-g-12" style="padding-top:130px ;">
+        <div class="ui-g-12">
             <button pButton type="submit" label="Confirmar" [disabled]="frmTelefone.invalid"></button>
         </div>
     </form>

@@ -61,6 +61,7 @@ public class Role implements GrantedAuthority {
 	}
 
 	@Override
+	@JsonIgnore
 	public String getAuthority() {
 		return this.nome;
 	}
@@ -73,7 +74,6 @@ public class Role implements GrantedAuthority {
 		this.usuarios = usuarios;
 	}
 
-	@JsonIgnore
 	public String getNome() {
 		return nome;
 	}

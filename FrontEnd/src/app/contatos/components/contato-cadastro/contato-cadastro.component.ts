@@ -53,7 +53,6 @@ export class ContatoCadastroComponent implements OnInit {
   }
 
   salvar(form) {
-    console.log(form);
     if (this.editando) {
       this.atualizarContato(form);
     } else {

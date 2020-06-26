@@ -16,7 +16,10 @@
       *ngIf="auth.temPermissao('PESQUISAR_NEGOCIACAO')"><a routerLink="/negociacoes">Negociações</a>
     </li>
     <li class="navbar-menuitem" routerLinkActive="ativo" (click)="visibleSidebar1 = false"
-      *ngIf="auth.temPermissao('PESQUISAR_CLIENTE')"><a routerLink="/clientes">Cliente</a>
+      *ngIf="auth.temPermissao('PESQUISAR_CLIENTE')"><a routerLink="/clientes">Empresa/Cliente</a>
+    </li>
+    <li class="navbar-menuitem" routerLinkActive="ativo" (click)="visibleSidebar1 = false"
+      *ngIf="auth.temPermissao('PESQUISAR_CONTATO')"><a routerLink="/contatos">Contato</a>
     </li>
     <li class="navbar-menuitem" routerLinkActive="ativo" (click)="visibleSidebar1 = false"
       *ngIf="auth.temPermissao('PESQUISAR_TAREFA')"><a routerLink="/tarefas">Tarefas</a>

@@ -17,16 +17,16 @@ public abstract class Cliente_ {
 	public static volatile SingularAttribute<Cliente, String> nome;
 	public static volatile SingularAttribute<Cliente, String> url;
 	public static volatile SingularAttribute<Cliente, String> resumo;
-	public static volatile ListAttribute<Cliente, Negociacao> negociacoesCliente;
-	public static volatile ListAttribute<Cliente, Contato> contatosCliente;
-	public static volatile SingularAttribute<Cliente, Segmento> segmentoCliente;
-	public static volatile ListAttribute<Cliente, Tarefa> tarefasCliente;
+	public static volatile ListAttribute<Cliente, Negociacao> negociacoes;
+	public static volatile ListAttribute<Cliente, Contato> contato;
+	public static volatile SingularAttribute<Cliente, Segmento> segmento;
+	public static volatile ListAttribute<Cliente, Tarefa> tarefas;
 	public static final String ID = "id";
 	public static final String NOME = "nome";
 	public static final String URL = "url";
 	public static final String RESUMO = "resumo";
 	public static final String NEGOCIACOES = "negociacoes";
-	public static final String CONTATO = "contato";
-	public static final String SEGENTO = "segmento";
+	public static final String CONTATO = "contatos";
+	public static final String SEGENTO = "segmentos";
 	public static final String TAREFAS = "tarefas";
 }

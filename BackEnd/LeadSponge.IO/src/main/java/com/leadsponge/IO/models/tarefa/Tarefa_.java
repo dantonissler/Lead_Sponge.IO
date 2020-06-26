@@ -18,9 +18,9 @@ public abstract class Tarefa_ {
 	public static volatile SingularAttribute<Tarefa, String> descricao;
 	public static volatile SingularAttribute<Tarefa, LocalDateTime> horaMarcada;
 	public static volatile SingularAttribute<Tarefa, TipoTarefa> tipo;
-	public static volatile SingularAttribute<Tarefa, Usuario> usuarioTarefa;
-	public static volatile SingularAttribute<Tarefa, Cliente> clienteTarefa;
-	public static volatile SingularAttribute<Tarefa, Negociacao> negociacaoTarefa;
+	public static volatile SingularAttribute<Tarefa, Usuario> usuario;
+	public static volatile SingularAttribute<Tarefa, Cliente> cliente;
+	public static volatile SingularAttribute<Tarefa, Negociacao> negociacao;
 	public static final String ID = "id";
 	public static final String ASSUNTO = "assunto";
 	public static final String DESCRICAO = "descricao";

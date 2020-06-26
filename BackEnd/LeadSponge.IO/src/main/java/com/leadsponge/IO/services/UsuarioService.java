@@ -10,17 +10,14 @@ import org.springframework.stereotype.Service;
 
 import com.leadsponge.IO.errorValidate.ResourceBadRequestException;
 import com.leadsponge.IO.models.usuario.Usuario;
-import com.leadsponge.IO.repository.RoleRepository;
 import com.leadsponge.IO.repository.usuario.UsuarioRepository;
 import com.leadsponge.IO.security.exception.UsuarioInativaException;
 
 @Service
 public class UsuarioService {
+	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
-
-	@Autowired
-	private RoleRepository roleRepository;
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -28,16 +25,18 @@ public class UsuarioService {
 	public Usuario save(Usuario usuario) {
 		usuariovalidar(usuario);
 		usuario.setPassword(bCryptPasswordEncoder.encode(usuario.getPassword()));
-		usuario.setRoles(new HashSet<>(roleRepository.findAll()));
-//		usuario.getRoles().forEach(c -> c.setUsuarios(usuario));
-//		usuario.setRoles(new HashSet<>(usuario.getRoles()));
+//		usuario.setRoles(new HashSet<>(roleRepository.findAll()));
+		usuario.setRoles(new HashSet<>(usuario.getRoles()));
 		return usuarioRepository.save(usuario);
 	}
 
 	public Usuario atualizar(Long id, Usuario usuario) {
 		Usuario usuarioSalvo = buscarUsuarioExistente(id);
-		BeanUtils.copyProperties(usuario, usuarioSalvo, "id");
-		usuarioSalvo.setPassword(bCryptPasswordEncoder.encode(usuarioSalvo.getPassword()));
+		usuario.setPassword(bCryptPasswordEncoder.encode(usuario.getPassword()));
+		usuarioSalvo.getRoles().clear();
+		usuarioSalvo.getRoles().addAll(usuario.getRoles());
+		usuarioSalvo.setRoles(new HashSet<>(usuarioSalvo.getRoles()));
+		BeanUtils.copyProperties(usuario, usuarioSalvo, "id", "roles");
 		return usuarioRepository.save(usuarioSalvo);
 	}
 
@@ -59,6 +58,7 @@ public class UsuarioService {
 		if (usuario == null) {
 			throw new UsuarioInativaException();
 		}
+		
 		if (!usuario.getConfirmarPassword().equals(usuario.getPassword())) {
 			throw new ResourceBadRequestException("O campo de senha não corresponde com o confirmar senha.");
 		}

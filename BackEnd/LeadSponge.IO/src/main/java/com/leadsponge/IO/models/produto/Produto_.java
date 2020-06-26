@@ -15,10 +15,10 @@ public abstract class Produto_ {
 	public static volatile SingularAttribute<Produto, String> nome;
 	public static volatile SingularAttribute<Produto, String> descricao;
 	public static volatile SingularAttribute<Produto, BigDecimal> valor;
-	public static volatile SingularAttribute<Produto, NegociacaoProduto> negociacaoProdutoP;
+	public static volatile SingularAttribute<Produto, NegociacaoProduto> negociacaoProduto;
 	public static final String ID = "id";
 	public static final String NOME = "nome";
 	public static final String DESCRICAO = "descricao";
 	public static final String VALOR = "valor";
-	public static final String NEGOCIACAO_PRODUTO = "negociacaoProdutoP";
+	public static final String NEGOCIACAO_PRODUTO = "negociacaoProduto";
 }

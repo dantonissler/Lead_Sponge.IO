@@ -18,11 +18,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.leadsponge.IO.models.View;
 import com.leadsponge.IO.models.audit.UserDateAudit;
@@ -59,7 +60,7 @@ public class Negociacao extends UserDateAudit {
 
 	@NotNull
 	@Enumerated(EnumType.STRING)
-	private StatusNegociacao estatus;
+	private EstatusNegociacao estatus;
 
 	@Column(name = "valor_total")
 	private BigDecimal valorTotal;
@@ -70,42 +71,40 @@ public class Negociacao extends UserDateAudit {
 	@Column(name = "valor_unico")
 	private BigDecimal valorUnico;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "campanha_id")
-	@JsonBackReference("negociacoesCampanha")
-	private Campanha campanhaNegociacoes;
+	private Campanha campanha;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "cliente_id")
-	@JsonBackReference("negociacoesCliente")
-	private Cliente clienteNegociacao;
+	private Cliente cliente;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "estagio_negociacao_id")
-	@JsonBackReference("negociacaoEstagioNegociacao")
-	private EstagioNegociacao estagioNegociacaoNegociacao;
+	private EstagioNegociacao estagioNegociacao;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "fonte_negociacao_id")
-	@JsonBackReference("negociacaoFonteNegociacao")
-	private FonteNegociacao fonteNegociacaoNegociacao;
+	private FonteNegociacao fonteNegociacao;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "motivo_perda_negociacao_id")
-	@JsonBackReference("negociacaoMotivoPerda")
-	private MotivoPerda motivoPerdaNegociacao;
+	private MotivoPerda motivoPerda;
 
-	@OneToOne(mappedBy = "negociacaoProdutoNegociacao", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//	@JsonManagedReference("negociacaoProdutoNegociacao")
-	private NegociacaoProduto negociacaoProdutoN;
+	@OneToOne(mappedBy = "negociacao", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonIgnoreProperties("negociacao")
+	@Valid
+	private NegociacaoProduto negociacaoProduto;
 
-	@OneToMany(mappedBy = "negociacaoHistEstagioNegociacao", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//	@JsonManagedReference("negociacaoHistEstagioNegociacao")
-	private List<HistEstagioNegociacao> histEstagioNegociacaoNegociacao;
+	@OneToMany(mappedBy = "negociacao", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonIgnoreProperties("negociacao")
+	@Valid
+	private List<HistEstagioNegociacao> histEstagioNegociacoes;
 
-	@OneToOne(mappedBy = "negociacaoTarefa", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//	@JsonManagedReference(value = "negociacaoTarefa")
-	private Tarefa tarefaNegociacao;
+	@OneToOne(mappedBy = "negociacao", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonIgnoreProperties("negociacao")
+	@Valid
+	private Tarefa tarefa;
 
 	public Long getId() {
 		return id;
@@ -155,72 +154,80 @@ public class Negociacao extends UserDateAudit {
 		this.valorUnico = valorUnico;
 	}
 
-	public Campanha getCampanhaNegociacoes() {
-		return campanhaNegociacoes;
+	public Cliente getCliente() {
+		return cliente;
 	}
 
-	public void setCampanhaNegociacoes(Campanha campanhaNegociacoes) {
-		this.campanhaNegociacoes = campanhaNegociacoes;
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 
-	public Cliente getClienteNegociacao() {
-		return clienteNegociacao;
+	public Campanha getCampanha() {
+		return campanha;
 	}
 
-	public void setClienteNegociacao(Cliente clienteNegociacao) {
-		this.clienteNegociacao = clienteNegociacao;
+	public void setCampanha(Campanha campanha) {
+		this.campanha = campanha;
 	}
 
-	public EstagioNegociacao getEstagioNegociacaoNegociacao() {
-		return estagioNegociacaoNegociacao;
+	public EstagioNegociacao getEstagioNegociacao() {
+		return estagioNegociacao;
 	}
 
-	public void setEstagioNegociacaoNegociacao(EstagioNegociacao estagioNegociacaoNegociacao) {
-		this.estagioNegociacaoNegociacao = estagioNegociacaoNegociacao;
+	public void setEstagioNegociacao(EstagioNegociacao estagioNegociacao) {
+		this.estagioNegociacao = estagioNegociacao;
 	}
 
-	public FonteNegociacao getFonteNegociacaoNegociacao() {
-		return fonteNegociacaoNegociacao;
+	public FonteNegociacao getFonteNegociacao() {
+		return fonteNegociacao;
 	}
 
-	public void setFonteNegociacaoNegociacao(FonteNegociacao fonteNegociacaoNegociacao) {
-		this.fonteNegociacaoNegociacao = fonteNegociacaoNegociacao;
+	public void setFonteNegociacao(FonteNegociacao fonteNegociacao) {
+		this.fonteNegociacao = fonteNegociacao;
 	}
 
-	public NegociacaoProduto getNegociacaoProdutoN() {
-		return negociacaoProdutoN;
+	public MotivoPerda getMotivoPerda() {
+		return motivoPerda;
 	}
 
-	public void setNegociacaoProdutoN(NegociacaoProduto negociacaoProdutoN) {
-		this.negociacaoProdutoN = negociacaoProdutoN;
+	public void setMotivoPerda(MotivoPerda motivoPerda) {
+		this.motivoPerda = motivoPerda;
 	}
 
-	public List<HistEstagioNegociacao> getHistEstagioNegociacaoNegociacao() {
-		return histEstagioNegociacaoNegociacao;
+	public NegociacaoProduto getNegociacaoProduto() {
+		return negociacaoProduto;
 	}
 
-	public void setHistEstagioNegociacaoNegociacao(List<HistEstagioNegociacao> histEstagioNegociacaoNegociacao) {
-		this.histEstagioNegociacaoNegociacao = histEstagioNegociacaoNegociacao;
+	public void setNegociacaoProduto(NegociacaoProduto negociacaoProduto) {
+		this.negociacaoProduto = negociacaoProduto;
 	}
 
-	public Tarefa getTarefaNegociacao() {
-		return tarefaNegociacao;
+	public List<HistEstagioNegociacao> getHistEstagioNegociacoes() {
+		return histEstagioNegociacoes;
 	}
 
-	public void setTarefaNegociacao(Tarefa tarefaNegociacao) {
-		this.tarefaNegociacao = tarefaNegociacao;
+	public void setHistEstagioNegociacoes(List<HistEstagioNegociacao> histEstagioNegociacoes) {
+		this.histEstagioNegociacoes = histEstagioNegociacoes;
+	}
+
+	public Tarefa getTarefa() {
+		return tarefa;
+	}
+
+	public void setTarefa(Tarefa tarefa) {
+		this.tarefa = tarefa;
 	}
 
 	@JsonIgnore
 	public boolean isReceita() {
-		return StatusNegociacao.ANDAMENTO.equals(estatus);
+		return EstatusNegociacao.ANDAMENTO.equals(estatus);
 	}
 
-	public StatusNegociacao getEstatus() {
+	public EstatusNegociacao getEstatus() {
 		return estatus;
 	}
 
-	public void setEstatus(StatusNegociacao estatus) {
+	public void setEstatus(EstatusNegociacao estatus) {
 		this.estatus = estatus;
 	}
 

@@ -1,6 +1,6 @@
 package com.leadsponge.IO.models.negociacao;
 
-public enum StatusNegociacao {
+public enum EstatusNegociacao {
 	ANDAMENTO("Em andamento"),
 	VENDIDO("Vendas"),
 	PERDIDA("Negociação Perdidas"),
@@ -8,7 +8,7 @@ public enum StatusNegociacao {
 	
 	private final String estatus;
 	
-	StatusNegociacao(String estatus) {
+	EstatusNegociacao(String estatus) {
 		this.estatus = estatus;
 	}
 	

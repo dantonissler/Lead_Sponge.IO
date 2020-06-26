@@ -1,9 +1,7 @@
 package com.leadsponge.IO.models.fonteNegociacao;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,7 +11,6 @@ import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.leadsponge.IO.models.View;
 import com.leadsponge.IO.models.audit.UserDateAudit;
@@ -36,10 +33,9 @@ public class FonteNegociacao extends UserDateAudit {
 	@Size(min = 4, max = 50)
 	private String nome;
 
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JsonBackReference("fonteNegociacaoNegociacao")
+	@OneToOne
 	@JoinColumn(name = "negociacao_id")
-	private Negociacao negociacaoFonteNegociacao;
+	private Negociacao negociacao;
 
 	public FonteNegociacao() {
 		// TODO Auto-generated constructor stub
@@ -66,12 +62,12 @@ public class FonteNegociacao extends UserDateAudit {
 		this.nome = nome;
 	}
 
-	public Negociacao getNegociacoes() {
-		return negociacaoFonteNegociacao;
+	public Negociacao getNegociacao() {
+		return negociacao;
 	}
 
-	public void setNegociacoes(Negociacao negociacaoFonteNegociacao) {
-		this.negociacaoFonteNegociacao = negociacaoFonteNegociacao;
+	public void setNegociacao(Negociacao negociacao) {
+		this.negociacao = negociacao;
 	}
 
 	@Override

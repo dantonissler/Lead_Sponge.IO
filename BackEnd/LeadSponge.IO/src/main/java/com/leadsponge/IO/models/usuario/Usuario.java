@@ -1,7 +1,6 @@
 package com.leadsponge.IO.models.usuario;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -20,6 +19,7 @@ import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -49,7 +49,7 @@ public class Usuario extends UserDateAudit implements UserDetails, Serializable 
 	}
 
 	public Usuario(String username, String nomeCompleto, String email, String password, String confirmarPassword,
-			boolean enabled) {
+			boolean enabled, Set<Role> roles) {
 		super();
 		this.username = username;
 		this.nomeCompleto = nomeCompleto;
@@ -57,6 +57,7 @@ public class Usuario extends UserDateAudit implements UserDetails, Serializable 
 		this.password = password;
 		this.confirmarPassword = confirmarPassword;
 		this.enabled = enabled;
+		this.roles = roles;
 	}
 
 	@Id
@@ -93,9 +94,10 @@ public class Usuario extends UserDateAudit implements UserDetails, Serializable 
 	@JoinTable(name = "roles_usuarios", joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	private Set<Role> roles;
 
-	@OneToMany(mappedBy = "usuarioTarefa", fetch = FetchType.EAGER)
-//	@JsonManagedReference("usuarioTarefa")
-	private List<Tarefa> tarefaUsuario  = new ArrayList<>();
+	@JsonIgnoreProperties("usuario")
+	@Valid
+	@OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
+	private List<Tarefa> tarefas;
 
 	public Long getId() {
 		return id;
@@ -105,12 +107,12 @@ public class Usuario extends UserDateAudit implements UserDetails, Serializable 
 		this.id = id;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getNomeCompleto() {
@@ -121,13 +123,20 @@ public class Usuario extends UserDateAudit implements UserDetails, Serializable 
 		this.nomeCompleto = nomeCompleto;
 	}
 
-	@JsonIgnore
-	public Set<Role> getRoles() {
-		return roles;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getConfirmarPassword() {
@@ -138,64 +147,52 @@ public class Usuario extends UserDateAudit implements UserDetails, Serializable 
 		this.confirmarPassword = confirmarPassword;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public boolean getEnabled() {
-		return this.enabled;
-	}
-
-	public List<Tarefa> getTarefas() {
-		return tarefaUsuario;
-	}
-
-	public void setTarefas(List<Tarefa> tarefaUsuario) {
-		this.tarefaUsuario = tarefaUsuario;
-	}
-
-	@Override
 	public boolean isEnabled() {
-		return this.enabled;
+		return enabled;
 	}
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
 
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+
+	public List<Tarefa> getTarefas() {
+		return tarefas;
+	}
+
+	public void setTarefas(List<Tarefa> tarefas) {
+		this.tarefas = tarefas;
+	}
+
 	@Override
+	@JsonIgnore
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return (Collection<? extends GrantedAuthority>) this.roles;
 	}
 
 	@Override
 	@JsonIgnore
-	public String getPassword() {
-		return this.password;
-	}
-
-	@Override
-	public String getUsername() {
-		return this.username;
-	}
-
-	@Override
 	public boolean isAccountNonExpired() {
 		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
+	@JsonIgnore
 	public boolean isAccountNonLocked() {
 		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
+	@JsonIgnore
 	public boolean isCredentialsNonExpired() {
 		// TODO Auto-generated method stub
 		return true;

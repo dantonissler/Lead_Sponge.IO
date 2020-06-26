@@ -43,9 +43,8 @@ public class Produto extends UserDateAudit {
 	@NotNull
 	private BigDecimal valor;
 
-	@OneToOne(mappedBy = "produtoNegociacaoProduto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//	@JsonManagedReference("produtoNegociacaoProduto")
-	private NegociacaoProduto negociacaoProdutoP;
+	@OneToOne(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private NegociacaoProduto negociacaoProduto;
 
 	public Long getId() {
 		return id;
@@ -80,11 +79,11 @@ public class Produto extends UserDateAudit {
 	}
 
 	public NegociacaoProduto getNegociacaoProduto() {
-		return negociacaoProdutoP;
+		return negociacaoProduto;
 	}
 
-	public void setNegociacaoProduto(NegociacaoProduto negociacaoProdutoP) {
-		this.negociacaoProdutoP = negociacaoProdutoP;
+	public void setNegociacaoProduto(NegociacaoProduto negociacaoProduto) {
+		this.negociacaoProduto = negociacaoProduto;
 	}
 
 	@Override

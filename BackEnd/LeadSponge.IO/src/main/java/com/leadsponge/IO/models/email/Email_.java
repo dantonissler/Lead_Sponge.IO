@@ -11,8 +11,8 @@ import com.leadsponge.IO.models.contato.Contato;
 public abstract class Email_ {
 	public static volatile SingularAttribute<Email, Long> id;
 	public static volatile SingularAttribute<Email, String> email;
-	public static volatile SingularAttribute<Email, Contato> contatoEmail;
+	public static volatile SingularAttribute<Email, Contato> contato;
 	public static final String ID = "id";
 	public static final String EMAIL = "email";
-	public static final String CONTATO = "contatoEmail";
+	public static final String CONTATO = "contato";
 }

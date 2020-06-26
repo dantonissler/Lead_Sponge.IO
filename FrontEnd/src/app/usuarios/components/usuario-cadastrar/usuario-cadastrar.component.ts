@@ -1,4 +1,3 @@
-import { MultiSelectModule } from 'primeng/multiselect';
 import { UsuarioService } from '../../services/usuario.service';
 import { RoleService } from '../../services/role.service';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -15,7 +14,6 @@ import { ActivatedRoute, Router } from '@angular/router';
   selector: 'app-usuario-cadastrar',
   templateUrl: './usuario-cadastrar.component.html',
   styleUrls: ['./usuario-cadastrar.component.css'],
-  providers: [MessageService]
 })
 export class UsuarioCadastrarComponent implements OnInit {
 
@@ -38,15 +36,13 @@ export class UsuarioCadastrarComponent implements OnInit {
     private router: Router,
     private title: Title,
     private formBuilder: FormBuilder
-  ) {  }
+  ) { }
 
   ngOnInit() {
     this.configurarFormulario();
     const idUsuario = this.route.snapshot.params['id'];
-
     this.title.setTitle('Novo usuario');
-    
-    /* this.carregarRole() TODO : Fazer o cadastro de permição funcionar*/ 
+    this.carregarRole() 
     if (idUsuario) {
       this.carregarUsuario(idUsuario);
     }
@@ -59,6 +55,8 @@ export class UsuarioCadastrarComponent implements OnInit {
   carregarUsuario(id: number) {
     this.usuarioService.buscarPorCodigo(id)
       .then(usuario => {
+        usuario.password = '';
+        usuario.confirmarPassword = '';
         this.formulario.patchValue(usuario);
         this.atualizarTituloEdicao();
       })
@@ -68,7 +66,7 @@ export class UsuarioCadastrarComponent implements OnInit {
   carregarRole() {
     this.roleService.listarTodas()
     .then(roles => {
-      this.roles = roles.map(c => ({ label: c.nome, value: c.id }));
+      this.roles = roles.map(c => ({ nome: c.nome, id: c.id }));
     })
     .catch(erro => this.errorHandler.handle(erro));
   }
@@ -94,15 +92,15 @@ export class UsuarioCadastrarComponent implements OnInit {
     this.usuarioService.atualizar(this.formulario.value)
       .then(usuario => {
         this.formulario.patchValue(usuario);
-
-        this.messageService.add({ severity: 'success', detail: 'Lançamento alterado com sucesso!' });
         this.atualizarTituloEdicao();
+        this.messageService.add({ severity: 'success', detail: 'Usuario alterado com sucesso!' });
+        this.carregarUsuario(usuario.id);
       })
       .catch(erro => this.errorHandler.handle(erro));
   }
 
   atualizarTituloEdicao() {
-    this.title.setTitle(`Edição de usuario: ${this.usuario.nomeCompleto}`);
+    this.title.setTitle(`Edição de usuario: ${this.formulario.get('nomeCompleto').value}`);
   }
 
   configurarFormulario() {
@@ -114,10 +112,7 @@ export class UsuarioCadastrarComponent implements OnInit {
       password: [null,[this.validarObrigatoriedade, this.validarTamanhoMinimo(6)]],
       confirmarPassword: [null,[this.validarObrigatoriedade, this.validarTamanhoMinimo(6)]],
       enabled:[],
-      /* roles: this.formBuilder.group({
-        id: [ null, Validators.required ],
-        name: []
-      }), */
+      roles:[],
     }, {validator: this.validarConfirmaPassword });
   }
 

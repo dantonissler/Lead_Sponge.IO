@@ -1,5 +1,7 @@
 package com.leadsponge.IO.data;
 
+import java.util.HashSet;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,12 +11,14 @@ import com.leadsponge.IO.models.estagioNegociacao.EstagioNegociacao;
 import com.leadsponge.IO.models.fonteNegociacao.FonteNegociacao;
 import com.leadsponge.IO.models.motivoPerda.MotivoPerda;
 import com.leadsponge.IO.models.role.Role;
+import com.leadsponge.IO.models.segmento.Segmento;
 import com.leadsponge.IO.models.usuario.Usuario;
 import com.leadsponge.IO.repository.RoleRepository;
 import com.leadsponge.IO.services.CampanhaService;
 import com.leadsponge.IO.services.EstagioNegociacaoService;
 import com.leadsponge.IO.services.FonteNegociacaoService;
 import com.leadsponge.IO.services.MotivoPerdaService;
+import com.leadsponge.IO.services.SegmentoService;
 import com.leadsponge.IO.services.UsuarioService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -75,10 +79,11 @@ class LoadDatabase {
 	}
 
 	@Bean
-	CommandLineRunner initTableUsuario(UsuarioService repository) {
+	CommandLineRunner initTableUsuario(UsuarioService repository, RoleRepository roleRepository) {
 		return args -> {
 			repository.save(
-					new Usuario("danton", "Danton Issler Rodrigues", "danton@danton.com", "214255", "214255", true));
+					new Usuario("danton", "Danton Issler Rodrigues", "danton@danton.com", "214255", 
+						"214255", true, new HashSet<>(roleRepository.findAll())));
 		};
 	}
 
@@ -129,6 +134,41 @@ class LoadDatabase {
 			repository.save(new MotivoPerda("Outros"));
 			repository.save(new MotivoPerda("Preço"));
 			
+		};
+	}
+	
+	@Bean
+	CommandLineRunner initTableSegmento(SegmentoService repository) {
+		return args -> {
+			repository.save(new Segmento("Advocacia"));
+			repository.save(new Segmento("Agropecuária"));
+			repository.save(new Segmento("Arquitetura"));
+			repository.save(new Segmento("Bancos"));
+			repository.save(new Segmento("Blogs e Sites Pessoais"));
+			repository.save(new Segmento("Clinicas / Saúde"));
+			repository.save(new Segmento("Concessionárias de Veículos"));
+			repository.save(new Segmento("Contabilidade"));
+			repository.save(new Segmento("Demolição e terraplanagem"));
+			repository.save(new Segmento("Distribuidoras / Atacadistas"));
+			repository.save(new Segmento("Engenharia"));
+			repository.save(new Segmento("Esoterismo"));
+			repository.save(new Segmento("Eventos e Entretenimento"));
+			repository.save(new Segmento("Fotografia"));
+			repository.save(new Segmento("Gráfica"));
+			repository.save(new Segmento("Indústria"));
+			repository.save(new Segmento("Instituições Religiosas"));
+			repository.save(new Segmento("Músicos e Bandas"));
+			repository.save(new Segmento("Pessoa física"));
+			repository.save(new Segmento("Pet Shop"));
+			repository.save(new Segmento("Poder público"));
+			repository.save(new Segmento("Publicidade"));
+			repository.save(new Segmento("Serviços"));
+			repository.save(new Segmento("Shoppings e Feiras Comerciais"));
+			repository.save(new Segmento("Sindicato Patronal"));
+			repository.save(new Segmento("Tecnologia"));
+			repository.save(new Segmento("Telefonia"));
+			repository.save(new Segmento("Terceiro Setor"));
+			repository.save(new Segmento("Turismo"));
 		};
 	}
 }

@@ -12,8 +12,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
+import javax.validation.Valid;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.leadsponge.IO.models.View;
 import com.leadsponge.IO.models.audit.UserDateAudit;
@@ -37,8 +39,10 @@ public class MotivoPerda extends UserDateAudit {
 	@Column(name = "nome")
 	private String nome;
 	
-	@OneToMany(mappedBy = "motivoPerdaNegociacao", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Negociacao> negociacaoMotivoPerda;
+	@JsonIgnoreProperties("motivoPerda")
+	@Valid
+	@OneToMany(mappedBy = "motivoPerda", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Negociacao> negociacoes;
 
 	public MotivoPerda() {
 		// TODO Auto-generated constructor stub
@@ -64,5 +68,14 @@ public class MotivoPerda extends UserDateAudit {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
+	public List<Negociacao> getNegociacoes() {
+		return negociacoes;
+	}
+
+	public void setNegociacoes(List<Negociacao> negociacoes) {
+		this.negociacoes = negociacoes;
+	}
+	
 
 }

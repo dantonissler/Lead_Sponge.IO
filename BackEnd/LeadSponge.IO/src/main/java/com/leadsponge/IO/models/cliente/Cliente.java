@@ -1,12 +1,10 @@
 package com.leadsponge.IO.models.cliente;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,9 +13,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
+import javax.validation.Valid;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.leadsponge.IO.models.View;
 import com.leadsponge.IO.models.audit.UserDateAudit;
@@ -48,22 +47,24 @@ public class Cliente extends UserDateAudit {
 	@Size(max = 255)
 	private String resumo;
 
-//	@JsonManagedReference("clienteContato")
-	@OneToMany(mappedBy = "clienteContato", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Contato> contatosCliente = new ArrayList<>();
+	@JsonIgnoreProperties("cliente")
+	@Valid
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+	private List<Contato> contato;
 
-//	@JsonManagedReference("clienteTarefa")
-	@OneToMany(mappedBy = "clienteTarefa", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Tarefa> tarefasCliente = new ArrayList<>();
+	@JsonIgnoreProperties("cliente")
+	@Valid
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+	private List<Tarefa> tarefas;
 
-//	@JsonManagedReference("clienteNegociacao")
-	@OneToMany(mappedBy = "clienteNegociacao", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Negociacao> negociacoesCliente = new ArrayList<>();
+	@JsonIgnoreProperties("cliente")
+	@Valid
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+	private List<Negociacao> negociacoes;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "segmento_id")
-	@JsonBackReference("clienteSegmento")
-	private Segmento segmentoCliente;
+	private Segmento segmento;
 
 	public Long getId() {
 		return id;
@@ -97,36 +98,36 @@ public class Cliente extends UserDateAudit {
 		this.resumo = resumo;
 	}
 
-	public List<Contato> getContatos() {
-		return contatosCliente;
+	public List<Contato> getContato() {
+		return contato;
 	}
 
-	public void setContatos(List<Contato> contatosCliente) {
-		this.contatosCliente = contatosCliente;
+	public void setContato(List<Contato> contato) {
+		this.contato = contato;
 	}
 
-	public List<Tarefa> getTarefasCliente() {
-		return tarefasCliente;
+	public List<Tarefa> getTarefas() {
+		return tarefas;
 	}
 
-	public void setTarefasCliente(List<Tarefa> tarefasCliente) {
-		this.tarefasCliente = tarefasCliente;
+	public void setTarefas(List<Tarefa> tarefas) {
+		this.tarefas = tarefas;
 	}
 
-	public List<Negociacao> getNegociacoesCliente() {
-		return negociacoesCliente;
+	public List<Negociacao> getNegociacoes() {
+		return negociacoes;
 	}
 
-	public void setNegociacoesCliente(List<Negociacao> negociacoesCliente) {
-		this.negociacoesCliente = negociacoesCliente;
+	public void setNegociacoes(List<Negociacao> negociacoes) {
+		this.negociacoes = negociacoes;
 	}
 
 	public Segmento getSegmento() {
-		return segmentoCliente;
+		return segmento;
 	}
 
-	public void setSegmento(Segmento segmentoCliente) {
-		this.segmentoCliente = segmentoCliente;
+	public void setSegmento(Segmento segmento) {
+		this.segmento = segmento;
 	}
 
 	@Override

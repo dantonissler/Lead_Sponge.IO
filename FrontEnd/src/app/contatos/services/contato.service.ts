@@ -60,7 +60,6 @@ export class ContatoService {
   }
 
   atualizar(contato: Contato): Promise<Contato> {
-    console.log(contato);
     return this.http.put<Contato>(`${this.contatoUrl}/${contato.id}`, contato)
       .toPromise();
   }

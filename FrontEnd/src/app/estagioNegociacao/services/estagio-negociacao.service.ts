@@ -14,8 +14,6 @@ export class EstagioFiltro {
   providedIn: 'root'
 })
 export class EstagioNegociacaoService {
-
-  
   estagioUrl: string;
 
   constructor(private http: MoneyHttp) {

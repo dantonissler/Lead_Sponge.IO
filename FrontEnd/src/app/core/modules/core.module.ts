@@ -1,4 +1,3 @@
-import { ConfiguracoesComponent } from '../../configuracoes/components/configuracoes/configuracoes.component';
 import { FontesService } from './../../fonteNegociacao/services/fontes.service';
 import { EstagioNegociacaoService } from './../../estagioNegociacao/services/estagio-negociacao.service';
 import { CampanhasService } from './../../campanhas/services/campanhas.service';

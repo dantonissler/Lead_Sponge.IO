@@ -18,7 +18,7 @@ public abstract class Usuario_ {
 	public static volatile SingularAttribute<Usuario, String> email;
 	public static volatile SingularAttribute<Usuario, Boolean> enabled;
 	public static volatile SetAttribute<Usuario, Role> roles;
-	public static volatile ListAttribute<Usuario, Tarefa> tarefaUsuario;
+	public static volatile ListAttribute<Usuario, Tarefa> tarefas;
 	public static volatile SingularAttribute<Usuario, String> password;
 	public static final String ID = "id";
 	public static final String USERNAME = "username";
@@ -26,6 +26,6 @@ public abstract class Usuario_ {
 	public static final String EMAIL = "email";
 	public static final String ENABLED = "enabled";
 	public static final String ROLES = "roles";
-	public static final String TAREFAS = "tarefaUsuario";
+	public static final String TAREFAS = "tarefas";
 	public static final String PASSWORD = "password";
 }

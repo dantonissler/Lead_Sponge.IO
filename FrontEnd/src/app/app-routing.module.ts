@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: 'segmentos', loadChildren: () => import('./segmentos/modules/segmentos.module').then(m => m.SegmentosModule) },
   { path: 'fontes', loadChildren: () => import('./fonteNegociacao/modules/fontes.module').then(m => m.FontesModule) },
   { path: 'usuarios', loadChildren: () => import('./usuarios/modules/usuarios.module').then(m => m.UsuariosModule) },
-  { path: 'configuracoes', loadChildren: () => import('./configuracoes/modules/configuracoes.module').then(m => m.ConfiguracoesModule) },
+  { path: 'configuracoes', loadChildren: () => import('./core/modules/configuracoes.module').then(m => m.ConfiguracoesModule) },
   { path: 'motivoperda', loadChildren: () => import('./motivoPerda/modules/motivo-perda.module').then(m => m.MotivoPerdaModule) },
 
   

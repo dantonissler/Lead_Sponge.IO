@@ -38,8 +38,8 @@ public class EstagioNegociacao extends UserDateAudit {
 	@Size(min = 1, max = 10)
 	private String apelido;
 
-	@OneToOne(mappedBy = "estagioNegociacaoNegociacao", cascade = CascadeType.ALL)
-	private Negociacao negociacaoEstagioNegociacao;
+	@OneToOne(mappedBy = "estagioNegociacao", cascade = CascadeType.ALL)
+	private Negociacao negociacao;
 
 	public EstagioNegociacao() {
 		// TODO Auto-generated constructor stub
@@ -75,12 +75,12 @@ public class EstagioNegociacao extends UserDateAudit {
 		this.apelido = apelido;
 	}
 
-	public Negociacao getNegociacoes() {
-		return negociacaoEstagioNegociacao;
+	public Negociacao getNegociacao() {
+		return negociacao;
 	}
 
-	public void setNegociacoes(Negociacao negociacaoEstagioNegociacao) {
-		this.negociacaoEstagioNegociacao = negociacaoEstagioNegociacao;
+	public void setNegociacao(Negociacao negociacao) {
+		this.negociacao = negociacao;
 	}
 
 	@Override

@@ -70,7 +70,7 @@ export class SegmentosCadastroComponent implements OnInit {
       .then(segmento => {
         this.formulario.patchValue(segmento);
 
-        this.messageService.add({ severity: 'success', detail: 'Lançamento alterado com sucesso!' });
+        this.messageService.add({ severity: 'success', detail: 'Segmento alterado com sucesso!' });
         this.atualizarTituloEdicao();
       })
       .catch(erro => this.errorHandler.handle(erro));
@@ -98,7 +98,7 @@ export class SegmentosCadastroComponent implements OnInit {
   limpar() {
     this.formulario.reset();
     setTimeout(function() {
-      this.lancamento = new Segmento();
+      this.segmento = new Segmento();
     }.bind(this), 1);
     this.router.navigate(['/segmentos/novo']);
   }

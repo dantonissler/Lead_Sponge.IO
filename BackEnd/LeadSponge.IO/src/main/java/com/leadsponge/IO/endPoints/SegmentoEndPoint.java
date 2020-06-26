@@ -46,7 +46,7 @@ class SegmentoEndPoint extends CrudController {
 		this.publisher = publisher;
 		this.segmentoService = segmentoService;
 	}
-
+	
 	@GetMapping(value = { "", "/" })
 	@ResponseStatus(HttpStatus.OK)
 	@PreAuthorize("hasAuthority('PESQUISAR_SEGMENTO') and #oauth2.hasScope('read')")

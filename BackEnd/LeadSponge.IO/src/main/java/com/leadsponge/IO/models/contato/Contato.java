@@ -1,12 +1,10 @@
 package com.leadsponge.IO.models.contato;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,7 +16,6 @@ import javax.persistence.TableGenerator;
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.leadsponge.IO.models.audit.UserDateAudit;
 import com.leadsponge.IO.models.cliente.Cliente;
@@ -44,10 +41,9 @@ public class Contato extends UserDateAudit {
 	@Size(max = 50, message = "{cargo.size}")
 	private String cargo;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "cliente_id")
-	@JsonBackReference("contatosCliente")
-	private Cliente clienteContato;
+	private Cliente cliente;
 
 	@JsonIgnoreProperties("contato")
 	@Valid
@@ -57,7 +53,7 @@ public class Contato extends UserDateAudit {
 	@JsonIgnoreProperties("contato")
 	@Valid
 	@OneToMany(mappedBy = "contato", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Email> email = new ArrayList<>();
+	private List<Email> email;
 
 	public Long getId() {
 		return id;
@@ -83,12 +79,12 @@ public class Contato extends UserDateAudit {
 		this.cargo = cargo;
 	}
 
-	public Cliente getClienteContato() {
-		return clienteContato;
+	public Cliente getCliente() {
+		return cliente;
 	}
 
-	public void setClienteContato(Cliente clienteContato) {
-		this.clienteContato = clienteContato;
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 
 	public List<Telefone> getTelefone() {

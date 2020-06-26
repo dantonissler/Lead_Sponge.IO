@@ -15,18 +15,18 @@ public class CampanhaService {
 
 	@Autowired
 	private CampanhaRepository campanhaRepository;
-	
+
 	public Campanha save(Campanha campanha) {
 		campanhavalidar(campanha);
 		return campanhaRepository.save(campanha);
 	}
-	
+
 	public Campanha atualizar(Long id, Campanha campanha) {
 		Campanha campanhaSalvo = buscarCampanhaExistente(id);
 		BeanUtils.copyProperties(campanha, campanhaSalvo, "id");
 		return campanhaRepository.save(campanhaSalvo);
 	}
-	
+
 	private Campanha buscarCampanhaExistente(Long id) {
 		Optional<Campanha> campanhaSalvo = campanhaRepository.findById(id);
 		if (!campanhaSalvo.isPresent()) {
@@ -34,11 +34,10 @@ public class CampanhaService {
 		}
 		return campanhaSalvo.get();
 	}
-	
+
 	private void campanhavalidar(Campanha campanha) {
 		if (campanha == null) {
 			throw new UsuarioInativaException();
 		}
 	}
-
 }

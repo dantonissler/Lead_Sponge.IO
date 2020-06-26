@@ -70,7 +70,11 @@ export class UsuarioService {
 
   atualizar(usuario: Usuario): Promise<Usuario> {
     return this.http.put<Usuario>(`${this.usuariosUrl}/${usuario.id}`, usuario)
-      .toPromise();
+      .toPromise()
+      .then(response => {
+        const usuarioAlterado = response;
+        return usuarioAlterado;
+      });
   }
 
   buscarPorCodigo(id: number): Promise<Usuario> {
