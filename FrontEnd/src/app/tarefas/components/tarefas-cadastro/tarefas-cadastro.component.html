@@ -4,10 +4,9 @@
             <div class="ui-g-12">
                 <h1>{{ editando ? 'Edição de' : 'Novo' }} Tarefa</h1>
             </div>
-            <div class="ui-g-12 ui-fluid" >
+            <div class="ui-g-12 ui-fluid">
                 <label>Selecione um tipo <span style="color: crimson;">*</span></label>
-                <p-selectButton name="tipo" [options]="tipos"
-                formControlName="tipo"></p-selectButton>
+                <p-selectButton name="tipo" [options]="tipos" formControlName="tipo"></p-selectButton>
             </div>
             <div class="ui-g-12 ui-fluid">
                 <label>Assunto <span style="color: crimson;">*</span></label>
@@ -21,15 +20,15 @@
             </div>
             <div class="ui-g-12 ui-fluid">
                 <label>Descrição </label>
-                <input pInputText placeholder="Descrição" type="text" name="descricao" formControlName="descricao">
+                <textarea pInputTextarea rows="3" placeholder="Descrição" name="descricao"
+                    formControlName="descricao"></textarea>
             </div>
             <div class="ui-g-12 ui-fluid">
                 <label>Marcar Horario</label>
-                <p-calendar name="horaMarcada" dateFormat="dd/mm/yy" 
-                    [showIcon]="true" [showTime]="true" formControlName="horaMarcada">
+                <p-calendar name="horaMarcada" [showIcon]="true" [showTime]="true" formControlName="horaMarcada">
                 </p-calendar>
-                <app-message [control]="formulario.get('horaMarcada')" error="required"
-                    text="Informe uma data e hora"></app-message>
+                <app-message [control]="formulario.get('horaMarcada')" error="required" text="Informe uma data e hora">
+                </app-message>
             </div>
             <div class="ui-g-12 ui-md-6 ui-fluid" formGroupName="cliente">
                 <label>Cliente <span style="color: crimson;">*</span></label>

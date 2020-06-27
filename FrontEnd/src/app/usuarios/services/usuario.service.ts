@@ -37,7 +37,7 @@ export class UsuarioService {
     if (filtro.nomeCompleto) {
       params = params.append('nomeCompleto', filtro.nomeCompleto);
     }
-    return this.http.get<any>(`${this.usuariosUrl}`, { params })
+    return this.http.get<any>(`${this.usuariosUrl}?resumo`, { params })
       .toPromise()
       .then(response => {
         const usuarios = response.content;

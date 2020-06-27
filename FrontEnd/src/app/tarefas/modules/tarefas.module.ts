@@ -1,4 +1,4 @@
-import { InputMaskModule } from 'primeng/inputmask';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { DropdownModule } from 'primeng/dropdown';
 import { TableModule } from 'primeng/table';
@@ -31,6 +31,7 @@ import { CalendarModule } from 'primeng/calendar';
     DropdownModule,
     SelectButtonModule,
     CalendarModule,
+    InputTextareaModule,
     
     SharedModule,
     TarefasRoutingModule

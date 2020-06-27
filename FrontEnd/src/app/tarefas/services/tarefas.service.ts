@@ -1,9 +1,9 @@
 import { Tarefa } from './../models/tarefa.models';
-import { Estagio } from './../../estagioNegociacao/models/estagio-negociacao.models';
 import { HttpParams } from '@angular/common/http';
 import { environment } from './../../../environments/environment';
 import { MoneyHttp } from './../../usuarios/money-http';
 import { Injectable } from '@angular/core';
+import * as moment from 'moment';
 
 export class TarefaFiltro {
   assunto: string;
@@ -37,7 +37,7 @@ export class TarefasService {
     if (filtro.assunto) {
       params = params.append('nome', filtro.assunto);
     }
-    return this.http.get<any>(`${this.tarefaUrl}`, { params })
+    return this.http.get<any>(`${this.tarefaUrl}?resumo`, { params })
       .toPromise()
       .then(response => {
         const tarefas = response.content;
@@ -62,24 +62,33 @@ export class TarefasService {
 
   atualizar(tarefa: Tarefa): Promise<Tarefa> {
     return this.http.put<Tarefa>(`${this.tarefaUrl}/${tarefa.id}`, tarefa)
-      .toPromise();
+      .toPromise()
+      .then(response => {
+        const tarefaAlterada = response;
+
+        this.converterStringsParaDatas([tarefaAlterada]);
+
+        return tarefaAlterada;
+      });
   }
 
   buscarPorCodigo(id: number): Promise<Tarefa> {
     return this.http.get<Tarefa>(`${this.tarefaUrl}/${id}`)
-      .toPromise();
+      .toPromise()
+      .then(response => {
+        const tarefaAlterada = response;
+
+        this.converterStringsParaDatas([tarefaAlterada]);
+
+        return tarefaAlterada;
+      });
   }
 
-/*   private converterStringsParaDatas(lancamentos: Tarefa[]) {
-    for (const lancamento of lancamentos) {
-      lancamento.dataVencimento = moment(lancamento.dataVencimento,
-        'YYYY-MM-DD').toDate();
-
-      if (lancamento.dataPagamento) {
-        lancamento.dataPagamento = moment(lancamento.dataPagamento,
-          'YYYY-MM-DD').toDate();
-      }
+  private converterStringsParaDatas(tarefas: Tarefa[]) {
+    for (const tarefa of tarefas) {
+      tarefa.horaMarcada = moment(tarefa.horaMarcada,
+        'YYYY-MM-DD HH:mm').toDate();
     }
-  } */
+  }
 
 }

@@ -60,6 +60,7 @@ export class TarefasCadastroComponent implements OnInit {
   carregarTarefa(id: number) {
     this.tarefasService.buscarPorCodigo(id)
       .then(tarefa => {
+        /* console.log(tarefa.horaMarcada); */
         this.formulario.patchValue(tarefa);
         this.atualizarTituloEdicao();
       })

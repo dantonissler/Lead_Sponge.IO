@@ -24,6 +24,7 @@ import com.leadsponge.IO.endPoints.crudEndpoints.CrudController;
 import com.leadsponge.IO.event.RecursoCriadoEvent;
 import com.leadsponge.IO.models.tarefa.Tarefa;
 import com.leadsponge.IO.repository.Filter.TarefaFilter;
+import com.leadsponge.IO.repository.projection.ResumoTarefa;
 import com.leadsponge.IO.repository.tarefa.TarefaRepository;
 import com.leadsponge.IO.services.TarefaService;
 
@@ -51,6 +52,12 @@ class TarefaEndPoint extends CrudController {
 	@PreAuthorize("hasAuthority('PESQUISAR_TAREFA') and #oauth2.hasScope('read')")
 	Page<Tarefa> pesquisar(TarefaFilter tarefaFilter, Pageable pageable) {
 		return repository.filtrar(tarefaFilter, pageable);
+	}
+	
+	@GetMapping(params = "resumo")
+	@PreAuthorize("hasAuthority('PESQUISAR_TAREFA') and #oauth2.hasScope('read')")
+	public Page<ResumoTarefa> resumir(TarefaFilter tarefaFilter, Pageable pageable) {
+		return repository.resumir(tarefaFilter, pageable);
 	}
 
 	@PostMapping(value = { "", "/" })

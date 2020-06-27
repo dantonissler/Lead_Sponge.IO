@@ -21,7 +21,6 @@
                 <ng-template pTemplate="header">
                     <tr>
                         <th>Assunto</th>
-                        <th>Descricao</th>
                         <th>Hora Marcada</th>
                         <th>Tipo</th>
                         <th>Responsavel</th>
@@ -32,11 +31,10 @@
                 <ng-template pTemplate="body" let-tarefa>
                     <tr>
                         <td>{{ tarefa.assunto }}</td>
-                        <td>{{ tarefa.descricao }}</td>
                         <td class="col-data">{{ tarefa.horaMarcada | date:'dd/MM/yyyy HH:mm' }}</td>
                         <td>{{ tarefa.tipo }}</td>
-                        <td>{{ tarefa.usuario.nomeCompleto }}</td>
-                        <td>{{ tarefa.cliente.nome }}</td>
+                        <td>{{ tarefa.usuario }}</td>
+                        <td>{{ tarefa.cliente }}</td>
                         <td class="col-acoes">
                             <button pButton icon="fas fa-pencil-alt" pTooltip="Editar" tooltipPosition="top"
                                 [routerLink]="['/tarefas', tarefa.id]"></button>

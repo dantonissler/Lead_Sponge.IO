@@ -1,4 +1,3 @@
-import { MotivoPerdaRoutingModule } from './motivoPerda/modules/motivo-perda-routing.module';
 import { PaginaNaoEncontradaComponent } from './core/components/pagina-nao-encontrada.component';
 import { NaoAutorizadoComponent } from './core/components/nao-autorizado.component';
 
@@ -19,6 +18,7 @@ const routes: Routes = [
   { path: 'usuarios', loadChildren: () => import('./usuarios/modules/usuarios.module').then(m => m.UsuariosModule) },
   { path: 'configuracoes', loadChildren: () => import('./core/modules/configuracoes.module').then(m => m.ConfiguracoesModule) },
   { path: 'motivoperda', loadChildren: () => import('./motivoPerda/modules/motivo-perda.module').then(m => m.MotivoPerdaModule) },
+  { path: 'negociacoes', loadChildren: () => import('./negociacoes/modules/negociacoes.module').then(m => m.NegociacoesModule) },
 
   
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
