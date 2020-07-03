@@ -1,3 +1,4 @@
+import { NegociacoesService } from './../services/negociacoes.service';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
 import { DialogModule } from 'primeng/dialog';
@@ -15,12 +16,21 @@ import { SharedModule } from '../../core/modules/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {RatingModule} from 'primeng/rating';
+import {StepsModule} from 'primeng/steps';
+import { HttpClientModule } from '@angular/common/http';
+import {ContextMenuModule} from 'primeng/contextmenu';
+import {ToastModule} from 'primeng/toast';
+import {ProgressBarModule} from 'primeng/progressbar';
+
 
 @NgModule({
   declarations: [
     NegociacoesCadastroComponent,
     NegociacoesPesquisaComponent
   ],
+  bootstrap: [ NegociacoesPesquisaComponent ],
+  providers: [NegociacoesService],
   imports: [
     CommonModule,
     FormsModule,
@@ -36,6 +46,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     DialogModule,
     DropdownModule,
     MultiSelectModule,
+    RatingModule,
+    StepsModule,
+    
+		ContextMenuModule,
+		ToastModule,
+    ProgressBarModule,
+    HttpClientModule,
 
     SharedModule,
     NegociacoesRoutingModule

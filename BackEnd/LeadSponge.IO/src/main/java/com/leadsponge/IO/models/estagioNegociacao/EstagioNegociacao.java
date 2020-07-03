@@ -1,16 +1,21 @@
 package com.leadsponge.IO.models.estagioNegociacao;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.leadsponge.IO.models.View;
 import com.leadsponge.IO.models.audit.UserDateAudit;
@@ -31,15 +36,19 @@ public class EstagioNegociacao extends UserDateAudit {
 	private Long id;
 
 	@Column(name = "nome")
+	@NotNull
 	@Size(min = 4, max = 50)
 	private String nome;
 
 	@Column(name = "apelido")
-	@Size(min = 1, max = 10)
+	@NotNull
+	@Size(max = 10)
 	private String apelido;
 
-	@OneToOne(mappedBy = "estagioNegociacao", cascade = CascadeType.ALL)
-	private Negociacao negociacao;
+	@JsonIgnoreProperties("estagio")
+	@Valid
+	@OneToMany(mappedBy = "estagio", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Negociacao> negociacoes;
 
 	public EstagioNegociacao() {
 		// TODO Auto-generated constructor stub
@@ -67,20 +76,12 @@ public class EstagioNegociacao extends UserDateAudit {
 		this.nome = nome;
 	}
 
-	public String getApelido() {
-		return apelido.toUpperCase();
+	public List<Negociacao> getNegociacoes() {
+		return negociacoes;
 	}
 
-	public void setApelido(String apelido) {
-		this.apelido = apelido;
-	}
-
-	public Negociacao getNegociacao() {
-		return negociacao;
-	}
-
-	public void setNegociacao(Negociacao negociacao) {
-		this.negociacao = negociacao;
+	public void setNegociacoes(List<Negociacao> negociacoes) {
+		this.negociacoes = negociacoes;
 	}
 
 	@Override

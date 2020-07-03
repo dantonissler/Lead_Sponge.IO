@@ -1,1 +1,77 @@
-<p>oportunidades-pesquisa works!</p>
+<div class="container">
+    <div class="ui-g">
+        <form autocomplete="off" (ngSubmit)="pesquisar()">
+            <div class="ui-g-12">
+                <h1>Negociações</h1>
+            </div>
+            <div class="ui-g-12 ui-fluid">
+                <label>Nome</label>
+                <input pInputText type="text" name="nome" [(ngModel)]="filtro.nome">
+            </div>
+            <div class="ui-g-12">
+                <button pButton type="submit" label="Pesquisar"></button>
+            </div>
+        </form>
+    </div>
+    <div class="ui-g">
+        <div class="ui-g-12">
+            <p-table #dt [value]="negociacoes" styleClass="ui-table-customers" [rowHover]="true"
+                [rows]="filtro.itensPorPagina" [showCurrentPageReport]="true" [paginator]="true"
+                currentPageReportTemplate="Showing &#123;first&#125; to &#123;last&#125; of &#123;totalRecords&#125; entries"
+                [responsive]="true" [lazy]="true" [totalRecords]="totalRegistros" (onLazyLoad)="aoMudarPagina($event)">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th pSortableColumn="name">Nome <p-sortIcon field="name"></p-sortIcon>
+                        </th>
+                        <th>Qualificação</th>
+                        <th>Funil de vendas</th>
+                        <th>Valores</th>
+                        <th class="col-acoes-header"></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-negociacao>
+                    <tr class="ui-selectable-row">
+                        <td>
+                            <p-tableCheckbox [value]="negociacao"></p-tableCheckbox>
+                        </td>
+                        <td>
+                            <span class="ui-column-title">Nome</span>
+                            {{ negociacao.nome }}</td>
+                        <td>
+                            <p-rating [(ngModel)]="negociacao.avaliacao" (click)="alternarAvaliacao(negociacao)"
+                                [cancel]="false"></p-rating>
+                        </td>
+                        <td>
+                            <p-steps [model]="items" styleClass="steps-custom" [(activeIndex)]="activeIndex"
+                                [readonly]="false"></p-steps>
+                            <!-- <p-rating [(ngModel)]="negociacao.estagio.id" [cancel]="false"
+                                iconOnClass="pi pi-circle-on" iconOffClass="pi pi-circle-off"></p-rating> -->
+                        </td>
+                        <td></td>
+                        <td class="col-acoes">
+                            <button pButton icon="fas fa-pencil-alt" pTooltip="Editar" tooltipPosition="top"
+                                [routerLink]="['/negociacoes', negociacao.id]"></button>
+                            <button pButton icon="fas fa-trash" pTooltip="Excluir" tooltipPosition="top"
+                                (click)="confirmarExclusao(negociacao)"></button>
+                            <button pButton icon="fas fa-running" pTooltip="Excluir" tooltipPosition="top"
+                                (click)="confirmarExclusao(negociacao)"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="5">
+                            Nenhum negociação encontrada
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        <div class="ui-g-12">
+            <button pButton label="Nova negociação" routerLink="/negociacoes/novo"></button>
+        </div>
+    </div>
+</div>

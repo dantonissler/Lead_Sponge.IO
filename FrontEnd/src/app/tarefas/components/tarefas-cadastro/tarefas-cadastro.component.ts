@@ -1,3 +1,4 @@
+import { NegociacoesService } from './../../../negociacoes/services/negociacoes.service';
 import { UsuarioService } from './../../../usuarios/services/usuario.service';
 import { ClienteService } from './../../../clientes/services/cliente.service';
 import { Title } from '@angular/platform-browser';
@@ -26,13 +27,15 @@ export class TarefasCadastroComponent implements OnInit {
 
   formulario: FormGroup;
   tarefas = new Tarefa();
-  usuario = [];
   cliente = [];
+  usuario = [];
+  negociacao = [];
 
   constructor(
     private tarefasService: TarefasService,
     private clienteService: ClienteService,
     private usuarioService: UsuarioService,
+    private negociacoesService: NegociacoesService,
     private messageService: MessageService,
     private errorHandler: ErrorHandlerService,
     private route: ActivatedRoute,
@@ -85,6 +88,16 @@ export class TarefasCadastroComponent implements OnInit {
       .catch(erro => this.errorHandler.handle(erro));
   }
 
+  carregarNegociacao() {
+    this.negociacoesService.listarTodas()
+      .then(negociaccao => {
+        this.negociacao = negociaccao
+          .map(p => ({ label: p.nome, value: p.id }));
+      })
+      .catch(erro => this.errorHandler.handle(erro));
+  }
+
+
   salvar() {
     if (this.editando) {
       this.atualizarTarefa();
@@ -130,6 +143,10 @@ export class TarefasCadastroComponent implements OnInit {
       usuario: this.formBuilder.group({
         id: [null, Validators.required],
         nomeCompleto: []
+      }),
+      negociacao: this.formBuilder.group({
+        id: [null, Validators.required],
+        nome: []
       }),
     });
   }

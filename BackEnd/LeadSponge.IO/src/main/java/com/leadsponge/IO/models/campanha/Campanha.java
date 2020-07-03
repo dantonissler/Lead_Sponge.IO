@@ -39,7 +39,7 @@ public class Campanha extends UserDateAudit {
 
 	@JsonIgnoreProperties("campanha")
 	@Valid
-	@OneToMany(mappedBy = "campanha", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "campanha", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Negociacao> negociacoes;
 
 	public Campanha() {

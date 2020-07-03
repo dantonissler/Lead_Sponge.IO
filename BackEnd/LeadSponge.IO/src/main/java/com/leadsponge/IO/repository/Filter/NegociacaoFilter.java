@@ -1,10 +1,10 @@
 package com.leadsponge.IO.repository.Filter;
 
-public class ProdutoFilter {
+public class NegociacaoFilter {
 
 	private String nome;
 
-	public ProdutoFilter(String nome) {
+	public NegociacaoFilter(String nome) {
 		this.nome = nome;
 	}
 

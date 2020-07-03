@@ -1,9 +1,9 @@
 package com.leadsponge.IO.models.negociacao;
 
 public enum EstatusNegociacao {
-	ANDAMENTO("Em andamento"),
-	VENDIDO("Vendas"),
-	PERDIDA("Negociação Perdidas"),
+	EMDAMENTO("Em andamento"),
+	VENDIDO("Vendido"),
+	PERDIDA("Perdida"),
 	PAUSADO("Pausado");
 	
 	private final String estatus;

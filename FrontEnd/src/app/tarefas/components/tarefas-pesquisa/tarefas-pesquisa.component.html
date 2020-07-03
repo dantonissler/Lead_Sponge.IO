@@ -32,7 +32,11 @@
                     <tr>
                         <td>{{ tarefa.assunto }}</td>
                         <td class="col-data">{{ tarefa.horaMarcada | date:'dd/MM/yyyy HH:mm' }}</td>
-                        <td>{{ tarefa.tipo }}</td>
+                        <td>{{ tarefa.tipo === 'EMAIL' ? 'E-mail' : 
+                            tarefa.tipo === 'REUNIAO'? 'Reunião' : 
+                            tarefa.tipo === 'VISITA'? 'Visita' :
+                            tarefa.tipo === 'TAREFA'? 'Tarefa' :
+                            tarefa.tipo === 'ALMOCO'? 'Almoço' : ' ' }}</td>
                         <td>{{ tarefa.usuario }}</td>
                         <td>{{ tarefa.cliente }}</td>
                         <td class="col-acoes">
@@ -46,7 +50,7 @@
 
                 <ng-template pTemplate="emptymessage">
                     <tr>
-                        <td colspan="7">
+                        <td colspan="6">
                             Nenhuma tarefa encontrada
                         </td>
                     </tr>

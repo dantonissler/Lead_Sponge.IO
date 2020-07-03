@@ -49,19 +49,20 @@ public class Cliente extends UserDateAudit {
 
 	@JsonIgnoreProperties("cliente")
 	@Valid
-	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Contato> contato;
 
 	@JsonIgnoreProperties("cliente")
 	@Valid
-	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Tarefa> tarefas;
 
 	@JsonIgnoreProperties("cliente")
 	@Valid
-	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Negociacao> negociacoes;
 
+	@JsonIgnoreProperties("clientes")
 	@ManyToOne
 	@JoinColumn(name = "segmento_id")
 	private Segmento segmento;

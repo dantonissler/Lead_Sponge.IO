@@ -50,13 +50,13 @@ class MotivoPerdaEndPoint extends CrudController {
 	@GetMapping(value = { "", "/" })
 	@ResponseStatus(HttpStatus.OK)
 	@PreAuthorize("hasAuthority('PESQUISAR_CAMPANHA') and #oauth2.hasScope('read')")
-	public Page<MotivoPerda> pesquisar(MotivoPerdaFilter motivoPerdaFilter, Pageable pageable) {
+	Page<MotivoPerda> pesquisar(MotivoPerdaFilter motivoPerdaFilter, Pageable pageable) {
 		return repository.filtrar(motivoPerdaFilter, pageable);
 	}
 
 	@PostMapping(value = { "", "/" })
 	@PreAuthorize("hasAuthority('CADASTRAR_CAMPANHA') and #oauth2.hasScope('write')")
-	public ResponseEntity<MotivoPerda> cadastrar(@Valid @RequestBody MotivoPerda motivoPerda, HttpServletResponse response) {
+	ResponseEntity<MotivoPerda> cadastrar(@Valid @RequestBody MotivoPerda motivoPerda, HttpServletResponse response) {
 		MotivoPerda criarMotivoPerda = motivoPerdaService.save(motivoPerda);
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, criarMotivoPerda.getId()));
 		return ResponseEntity.status(HttpStatus.CREATED).body(criarMotivoPerda);
@@ -77,7 +77,7 @@ class MotivoPerdaEndPoint extends CrudController {
 
 	@DeleteMapping(value = { "/{id}", "/{id}/" })
 	@PreAuthorize("hasAuthority('REMOVER_CAMPANHA') and #oauth2.hasScope('write')")
-	public ResponseEntity<MotivoPerda> remover(@PathVariable Long id) {
+	ResponseEntity<MotivoPerda> remover(@PathVariable Long id) {
 		try {
 			repository.deleteById(id);
 			return ResponseEntity.ok().build();
@@ -88,7 +88,7 @@ class MotivoPerdaEndPoint extends CrudController {
 
 	@GetMapping(value = { "/{id}", "/{id}/" })
 	@PreAuthorize("hasAuthority('PESQUISAR_CAMPANHA') and #oauth2.hasScope('read')")
-	public ResponseEntity<MotivoPerda> detalhar(@Valid @PathVariable("id") Long id) {
+	ResponseEntity<MotivoPerda> detalhar(@Valid @PathVariable("id") Long id) {
 		return ResponseEntity.ok(repository.findById(id).orElseThrow(() -> notFouldId(id, "o motivo da perda")));
 	}
 }

@@ -1,5 +1,5 @@
 import { Negociacao } from './../models/negociacao.models';
-import { HttpParams } from '@angular/common/http';
+import { HttpParams, HttpHeaders } from '@angular/common/http';
 import { MoneyHttp } from './../../usuarios/money-http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
@@ -19,8 +19,9 @@ export class NegociacoesService {
   negociacaoUrl: string;
 
   constructor(private http: MoneyHttp) {
-    this.negociacaoUrl = `${environment.apiUrl}/negociaoes`;
+    this.negociacaoUrl = `${environment.apiUrl}/negociacoes`;
   }
+
   listarTodas(): Promise<any> {
     return this.http.get<any>(this.negociacaoUrl)
       .toPromise()
@@ -40,11 +41,12 @@ export class NegociacoesService {
     return this.http.get<any>(`${this.negociacaoUrl}`, { params })
       .toPromise()
       .then(response => {
-        const negociacoes = response.content;
+        const negociacoes = response;
         const resultado = {
           negociacoes,
           total: response.totalElements
         };
+        /* console.log(negociacoes); */
         return resultado;
       })
   }
@@ -68,5 +70,13 @@ export class NegociacoesService {
   buscarPorCodigo(id: number): Promise<Negociacao> {
     return this.http.get<Negociacao>(`${this.negociacaoUrl}/${id}`)
       .toPromise();
+  }
+
+  mudarAvaliacao(id: number, avaliacao: number): Promise<void> {
+    const headers = new HttpHeaders()
+        .append('Content-Type', 'application/json');
+    return this.http.put(`${this.negociacaoUrl}/${id}/avaliacao`, avaliacao, { headers })
+      .toPromise()
+      .then(() => null);
   }
 }

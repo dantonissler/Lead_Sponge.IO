@@ -1,6 +1,6 @@
 package com.leadsponge.IO.models.historicoEstagioNegociacao;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +13,7 @@ import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.leadsponge.IO.models.View;
 import com.leadsponge.IO.models.audit.UserDateAudit;
@@ -34,14 +35,17 @@ public class HistEstagioNegociacao extends UserDateAudit {
 
 	@NotNull
 	@Column(name = "data_inicio")
-	private LocalDate dataInicio;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+	private Date dataInicio;
 
 	@NotNull
 	@Column(name = "data_mudanca")
-	private LocalDate dataMudanca;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+	private Date dataMudanca;
 
 	@Column(name = "data_venda")
-	private LocalDate dataVenda;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+	private Date dataVenda;
 
 	@ManyToOne
 	@JoinColumn(name = "negociacao_id")
@@ -55,27 +59,27 @@ public class HistEstagioNegociacao extends UserDateAudit {
 		this.id = id;
 	}
 
-	public LocalDate getDataInicio() {
+	public Date getDataInicio() {
 		return dataInicio;
 	}
 
-	public void setDataInicio(LocalDate dataInicio) {
+	public void setDataInicio(Date dataInicio) {
 		this.dataInicio = dataInicio;
 	}
 
-	public LocalDate getDataMudanca() {
+	public Date getDataMudanca() {
 		return dataMudanca;
 	}
 
-	public void setDataMudanca(LocalDate dataMudanca) {
+	public void setDataMudanca(Date dataMudanca) {
 		this.dataMudanca = dataMudanca;
 	}
 
-	public LocalDate getDataVenda() {
+	public Date getDataVenda() {
 		return dataVenda;
 	}
 
-	public void setDataVenda(LocalDate dataVenda) {
+	public void setDataVenda(Date dataVenda) {
 		this.dataVenda = dataVenda;
 	}
 

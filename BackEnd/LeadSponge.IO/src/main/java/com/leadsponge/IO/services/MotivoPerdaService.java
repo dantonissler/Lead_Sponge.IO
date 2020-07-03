@@ -12,6 +12,7 @@ import com.leadsponge.IO.security.exception.UsuarioInativaException;
 
 @Service
 public class MotivoPerdaService {
+	
 	@Autowired
 	private MotivoPerdaRepository segmentoRepository;
 	

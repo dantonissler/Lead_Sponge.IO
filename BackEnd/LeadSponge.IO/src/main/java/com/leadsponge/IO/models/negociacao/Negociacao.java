@@ -72,22 +72,31 @@ public class Negociacao extends UserDateAudit {
 	private BigDecimal valorUnico;
 
 	@ManyToOne
+	@JsonIgnoreProperties("negociacoes")
+	@NotNull
 	@JoinColumn(name = "campanha_id")
 	private Campanha campanha;
 
 	@ManyToOne
+	@JsonIgnoreProperties("negociacoes")
+	@NotNull
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "estagio_negociacao_id")
-	private EstagioNegociacao estagioNegociacao;
+	@ManyToOne
+	@JsonIgnoreProperties("negociacoes")
+	@NotNull
+	@JoinColumn(name = "estagio_id")
+	private EstagioNegociacao estagio;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "fonte_negociacao_id")
-	private FonteNegociacao fonteNegociacao;
+	@ManyToOne
+	@JsonIgnoreProperties("negociacoes")
+	@NotNull
+	@JoinColumn(name = "fonte_id")
+	private FonteNegociacao fonte;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne
+	@JsonIgnoreProperties("negociacoes")
 	@JoinColumn(name = "motivo_perda_negociacao_id")
 	private MotivoPerda motivoPerda;
 
@@ -170,20 +179,20 @@ public class Negociacao extends UserDateAudit {
 		this.campanha = campanha;
 	}
 
-	public EstagioNegociacao getEstagioNegociacao() {
-		return estagioNegociacao;
+	public EstagioNegociacao getEstagio() {
+		return estagio;
 	}
 
-	public void setEstagioNegociacao(EstagioNegociacao estagioNegociacao) {
-		this.estagioNegociacao = estagioNegociacao;
+	public void setEstagio(EstagioNegociacao estagio) {
+		this.estagio = estagio;
 	}
 
-	public FonteNegociacao getFonteNegociacao() {
-		return fonteNegociacao;
+	public FonteNegociacao getFonte() {
+		return fonte;
 	}
 
-	public void setFonteNegociacao(FonteNegociacao fonteNegociacao) {
-		this.fonteNegociacao = fonteNegociacao;
+	public void setFonte(FonteNegociacao fonte) {
+		this.fonte = fonte;
 	}
 
 	public MotivoPerda getMotivoPerda() {
@@ -220,7 +229,7 @@ public class Negociacao extends UserDateAudit {
 
 	@JsonIgnore
 	public boolean isReceita() {
-		return EstatusNegociacao.ANDAMENTO.equals(estatus);
+		return EstatusNegociacao.EMDAMENTO.equals(estatus);
 	}
 
 	public EstatusNegociacao getEstatus() {

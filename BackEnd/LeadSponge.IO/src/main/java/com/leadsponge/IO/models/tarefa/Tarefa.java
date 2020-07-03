@@ -57,7 +57,6 @@ public class Tarefa extends UserDateAudit {
 	@Enumerated(EnumType.STRING)
 	private TipoTarefa tipo;
 
-
 	@JsonIgnoreProperties("tarefas")
 	@NotNull
 	@ManyToOne
@@ -71,6 +70,7 @@ public class Tarefa extends UserDateAudit {
 	private Cliente cliente;
 
 	@JsonIgnoreProperties("tarefa")
+	@NotNull
 	@OneToOne
 	@JoinColumn(name = "negociacao_id")
 	private Negociacao negociacao;
