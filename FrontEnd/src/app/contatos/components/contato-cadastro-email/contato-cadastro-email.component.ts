@@ -4,7 +4,7 @@ import { Component, OnInit, Input } from '@angular/core';
 @Component({
   selector: 'app-contato-cadastro-email',
   templateUrl: './contato-cadastro-email.component.html',
-  styleUrls: ['./contato-cadastro-email.component.css']
+  styleUrls: ['./contato-cadastro-email.component.scss']
 })
 export class ContatoCadastroEmailComponent implements OnInit {
 

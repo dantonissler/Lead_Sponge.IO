@@ -10,7 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-fonteNegociacao-cadastro',
   templateUrl: './fonteNegociacao-cadastro.component.html',
-  styleUrls: ['./fonteNegociacao-cadastro.component.css']
+  styleUrls: ['./fonteNegociacao-cadastro.component.scss']
 })
 export class FontesCadastroComponent implements OnInit {
 

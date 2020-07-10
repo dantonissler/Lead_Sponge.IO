@@ -1,43 +1,80 @@
 <div class="container">
     <div class="ui-g">
-        <form autocomplete="off" (ngSubmit)="pesquisar()">
-            <div class="ui-g-12">
-                <h1>Motivo da Perda</h1>
-            </div>
-            <div class="ui-g-12 ui-fluid">
-                <label>Nome</label>
-                <input pInputText type="text" name="nome" [(ngModel)]="filtro.nome">
-            </div>
-            <div class="ui-g-12">
-                <button pButton type="submit" label="Pesquisar"></button>
-            </div>
-        </form>
-    </div>
-    <div class="ui-g">
         <div class="ui-g-12">
             <p-table [value]="produtos" [responsive]="true" [paginator]="true" [rows]="filtro.itensPorPagina"
-                [lazy]="true" [totalRecords]="totalRegistros" (onLazyLoad)="aoMudarPagina($event)" #tabela>
+                [lazy]="true" [totalRecords]="totalRegistros" (onLazyLoad)="aoMudarPagina($event)" #tabela
+                styleClass="ui-table-customers" [loading]="loading" [rowHover]="true">
+                <ng-template pTemplate="caption">
+                    <h1>Produtos ou Serviços</h1>
+                    <div class="ui-table-globalfilter-container">
+                        <button pButton label="Novo" routerLink="/produtos/novo" iconPos="right"
+                            icon="fa fa-plus"></button>
+                    </div>
+                </ng-template>
                 <ng-template pTemplate="header">
                     <tr>
+                        <th></th>
                         <th>Nome</th>
-                        <th>Descriacao</th>
+                        <th>Descriação</th>
                         <th>Valor</th>
-                        <th>Criado Por</th>
                         <th>Alterado Por</th>
-                        <th>Criado em</th>
                         <th>Alterado em </th>
+                        <th>Visibilidade</th>
                         <th class="col-acoes-header"></th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th>
+                            <input pInputText type="text" [(ngModel)]="filtro.nome"
+                                (input)="tabela.filter($event.target.value, 'nome', 'startsWith')"
+                                placeholder="Pesquisar" class="ui-column-filter" style="width: 140px;">
+                        </th>
+                        <th>
+                            <input pInputText type="text" [(ngModel)]="filtro.descricao"
+                                (input)="tabela.filter($event.target.value, 'descricao', 'startsWith')"
+                                placeholder="Pesquisar" class="ui-column-filter" style="width: 140px;">
+                        </th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-produto>
-                    <tr>
-                        <td>{{ produto.nome }}</td>
-                        <td>{{ produto.descricao }}</td>
-                        <td>{{ produto.valor }}</td>
-                        <td>{{ produto.createdByUser }}</td>
-                        <td>{{ produto.modifiedByUser }}</td>
-                        <td class="col-data">{{ produto.createdAt | date:'dd/MM/yyyy HH:mm' }}</td>
-                        <td class="col-data">{{ produto.updatedAt | date:'dd/MM/yyyy HH:mm' }}</td>
+                    <tr class="ui-selectable-row">
+                        <td>
+                            <p-tableCheckbox [value]="produto"></p-tableCheckbox>
+                        </td>
+                        <td>
+                            <span class="ui-column-title">Nome</span>
+                            {{ produto.nome }}
+                        </td>
+                        <td>
+                            <span class="ui-column-title">Descrição</span>
+                            {{ produto.descricao }}
+                        </td>
+                        <td>
+                            <span class="ui-column-title">Valor</span>
+                            {{ produto.valor }}
+                        </td>
+                        <td>
+                            <span class="ui-column-title">Modificado Por</span>
+                            {{ produto.modifiedByUser }}
+                        </td>
+                        <td class="col-data">
+                            <span class="ui-column-title">Modificado Em</span>
+                            {{ produto.updatedAt | date:'dd/MM/yyyy HH:mm' }}
+                        </td>
+                        <td>
+                            <span class="ui-column-title">Estatus</span>
+                            <p-inputSwitch [(ngModel)]="produto.visibilidade"tooltipPosition="top"
+                                pTooltip="{{produto.visibilidade ? 'Desativar' : 'Ativar'}}"
+                                (click)="alternarVisibilidade(produto)">
+                            </p-inputSwitch>
+                        </td>
                         <td class="col-acoes">
                             <button pButton icon="fas fa-pencil-alt" pTooltip="Editar" tooltipPosition="top"
                                 [routerLink]="['/produtos', produto.id]"></button>
@@ -48,15 +85,12 @@
                 </ng-template>
                 <ng-template pTemplate="emptymessage">
                     <tr>
-                        <td colspan="8">
+                        <td colspan="7">
                             Nenhum produto encontrado
                         </td>
                     </tr>
                 </ng-template>
             </p-table>
-        </div>
-        <div class="ui-g-12">
-            <button pButton label="Novo Produto" routerLink="/produtos/novo"></button>
         </div>
     </div>
 </div>

@@ -1,41 +1,62 @@
 <div class="container">
     <div class="ui-g">
-        <form autocomplete="off" (ngSubmit)="pesquisar()">
-            <div class="ui-g-12">
-                <h1>Estagios</h1>
-            </div>
-            <div class="ui-g-12 ui-fluid">
-                <label>Nome</label>
-                <input pInputText type="text" name="nome" [(ngModel)]="filtro.nome">
-            </div>
-            <div class="ui-g-12">
-                <button pButton type="submit" label="Pesquisar"></button>
-            </div>
-        </form>
-    </div>
-    <div class="ui-g">
         <div class="ui-g-12">
             <p-table [value]="estagios" [responsive]="true" [paginator]="true" [rows]="filtro.itensPorPagina"
-                [lazy]="true" [totalRecords]="totalRegistros" (onLazyLoad)="aoMudarPagina($event)" #tabela>
+                [lazy]="true" [totalRecords]="totalRegistros" (onLazyLoad)="aoMudarPagina($event)" #tabela
+                styleClass="ui-table-customers" [loading]="loading" [rowHover]="true">
+                <ng-template pTemplate="caption">
+                    <h1>Estagios</h1>
+                    <div class="ui-table-globalfilter-container">
+                        <button pButton label="Novo" routerLink="/estagios/novo" iconPos="right"
+                        icon="fa fa-plus"></button>
+                    </div>
+                </ng-template>
                 <ng-template pTemplate="header">
                     <tr>
+                        <th></th>
                         <th>Nome</th>
                         <th>Apelido</th>
-                        <th>Criado Por</th>
+                        <th>Posição</th>
                         <th>Alterado Por</th>
-                        <th>Criado em</th>
                         <th>Alterado em </th>
                         <th class="col-acoes-header"></th>
                     </tr>
+                    <tr>
+                        <th>
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th>
+                            <input pInputText type="text" [(ngModel)]="filtro.nome"
+                                (input)="tabela.filter($event.target.value, 'nome', 'startsWith')"
+                                placeholder="Pesquisar" class="ui-column-filter" style="width: 140px;">
+                        </th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-estagio>
-                    <tr>
-                        <td>{{ estagio.nome }}</td>
-                        <td>{{ estagio.apelido }}</td>
-                        <td>{{ estagio.createdByUser }}</td>
-                        <td>{{ estagio.modifiedByUser }}</td>
-                        <td class="col-data">{{ estagio.createdAt | date:'dd/MM/yyyy HH:mm' }}</td>
-                        <td class="col-data">{{ estagio.updatedAt | date:'dd/MM/yyyy HH:mm' }}</td>
+                    <tr class="ui-selectable-row">
+                        <td>
+                            <p-tableCheckbox [value]="estagio"></p-tableCheckbox>
+                        </td>
+                        <td>
+                            <span class="ui-column-title">Nome</span>
+                            {{ estagio.nome }}</td>
+                        <td>
+                            <span class="ui-column-title">Apelido</span>
+                            {{ estagio.apelido }}</td>
+                        <td>
+                            <span class="ui-column-title">Posição</span>
+                            {{ estagio.posicao }}</td>
+                        <td>
+                            <span class="ui-column-title">Alterado Por</span>
+                            {{ estagio.modifiedByUser }}</td>
+                        <td class="col-data">
+                            <span class="ui-column-title">Criado Em</span>
+                            {{ estagio.updatedAt | date:'dd/MM/yyyy HH:mm' }}</td>
                         <td class="col-acoes">
                             <button pButton icon="fas fa-pencil-alt" pTooltip="Editar" tooltipPosition="top"
                                 [routerLink]="['/estagios', estagio.id]"></button>
@@ -46,15 +67,12 @@
                 </ng-template>
                 <ng-template pTemplate="emptymessage">
                     <tr>
-                        <td colspan="5">
+                        <td colspan="8">
                             Nenhum estagio encontrada
                         </td>
                     </tr>
                 </ng-template>
             </p-table>
-        </div>
-        <div class="ui-g-12">
-            <button pButton label="Novo Estagio" routerLink="/estagios/novo"></button>
         </div>
     </div>
 </div>

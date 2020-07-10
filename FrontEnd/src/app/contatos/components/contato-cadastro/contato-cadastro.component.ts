@@ -4,20 +4,16 @@ import { MessageService } from 'primeng/api';
 import { ContatoService } from './../../services/contato.service';
 import { Contato } from './../../models/contato.models';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-contato-cadastro',
   templateUrl: './contato-cadastro.component.html',
-  styleUrls: ['./contato-cadastro.component.css']
+  styleUrls: ['./contato-cadastro.component.scss']
 })
 export class ContatoCadastroComponent implements OnInit {
 
   contato = new Contato();
-  estados: any[];
-  cidades: any[];
-  estadoSelecionado: number;
 
   constructor(
     private contatoService: ContatoService,

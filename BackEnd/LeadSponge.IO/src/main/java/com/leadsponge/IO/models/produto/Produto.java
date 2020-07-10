@@ -43,6 +43,9 @@ public class Produto extends UserDateAudit {
 	@NotNull
 	private BigDecimal valor;
 
+	@NotNull
+	private Boolean visibilidade;
+
 	@OneToOne(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private NegociacaoProduto negociacaoProduto;
 
@@ -76,6 +79,14 @@ public class Produto extends UserDateAudit {
 
 	public void setValor(BigDecimal valor) {
 		this.valor = valor;
+	}
+
+	public Boolean getVisibilidade() {
+		return visibilidade;
+	}
+
+	public void setVisibilidade(Boolean visibilidade) {
+		this.visibilidade = visibilidade;
 	}
 
 	public NegociacaoProduto getNegociacaoProduto() {

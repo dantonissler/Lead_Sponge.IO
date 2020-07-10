@@ -2,7 +2,6 @@ package com.leadsponge.IO.models.campanha;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -37,18 +36,21 @@ public class Campanha extends UserDateAudit {
 	@Size(min = 4, max = 50, message = "{nome.size}")
 	private String nome;
 
+	private String descricao;
+
 	@JsonIgnoreProperties("campanha")
 	@Valid
-	@OneToMany(mappedBy = "campanha", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "campanha")
 	private List<Negociacao> negociacoes;
 
 	public Campanha() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Campanha(String nome) {
+	public Campanha(String nome, String descricao) {
 		super();
 		this.nome = nome;
+		this.descricao = descricao;
 	}
 
 	public Long getId() {
@@ -65,6 +67,14 @@ public class Campanha extends UserDateAudit {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
 	public List<Negociacao> getNegociacoes() {

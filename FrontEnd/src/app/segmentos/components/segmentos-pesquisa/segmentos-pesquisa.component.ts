@@ -8,13 +8,14 @@ import { SegmentoFiltro } from '../../services/segmentos.service';
 @Component({
   selector: 'app-segmentos-pesquisa',
   templateUrl: './segmentos-pesquisa.component.html',
-  styleUrls: ['./segmentos-pesquisa.component.css']
+  styleUrls: ['./segmentos-pesquisa.component.scss']
 })
 export class SegmentosPesquisaComponent implements OnInit {
 
   totalRegistros = 0;
   filtro = new SegmentoFiltro();
   segmentos = [];
+  loading: boolean = true;
   @ViewChild('tabela', { static: true }) grid;
 
   constructor(
@@ -35,6 +36,7 @@ export class SegmentosPesquisaComponent implements OnInit {
       .then(resultado => {
         this.totalRegistros = resultado.total;
         this.segmentos = resultado.segmentos;
+        this.loading = false;
       })
       .catch(erro => this.errorHandler.handle(erro));
   }

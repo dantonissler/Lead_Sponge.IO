@@ -1,23 +1,28 @@
 <div class="ui-g">
     <div class="ui-g-12">
-        <button pButton label="Novo" icon="fa fa-plus" type="button" class="ui-button-secondary"
+        <button pButton label="Novo" iconPos="right" icon="fa fa-plus" type="button" class="ui-button-secondary"
             (click)="prepararNovoEmail()"></button>
     </div>
     <div class="ui-g-12">
-        <p-table [value]="emails" [responsive]="true">
+        <p-table [value]="emails" [responsive]="true" styleClass="ui-table-customers">
             <ng-template pTemplate="header">
                 <tr>
+                    <th>
+                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                    </th>
                     <th>Email</th>
                     <th class="col-acoes-header"></th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-email let-rowIndex="rowIndex">
-                <tr>
+                <tr class="ui-selectable-row">
+                    <td>
+                        <p-tableCheckbox [value]="email"></p-tableCheckbox>
+                    </td>
                     <td>{{ email.email }}</td>
                     <td class="col-acoes">
                         <button pButton icon="fas fa-pencil-alt" type="button" pTooltip="Editar" tooltipPosition="top"
                             (click)="prepararEdicaoEmail(email, rowIndex)"></button>
-
                         <button pButton icon="fa fa-trash" type="button" pTooltip="Excluir" tooltipPosition="top"
                             (click)="removerEmail(rowIndex)"></button>
                     </td>
@@ -39,8 +44,10 @@
         <div class="ui-g-12 ui-fluid">
             <div class="ui-inputgroup">
                 <span class="ui-inputgroup-addon"><i class="fas fa-envelope" style="line-height: 1.25;"></i></span>
-                <input pInputText placeholder="E-mail *" type="email" name="email" 
-                [(ngModel)]="email.email" >
+                <span class="ui-float-label">
+                    <input pInputText type="email" name="email" [(ngModel)]="email.email">
+                    <label for="float-input">E-mail <span style="color: crimson;">*</span></label>
+                </span>
             </div>
         </div>
         <div class="ui-g-12">

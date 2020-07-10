@@ -10,7 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-segmentos-cadastro',
   templateUrl: './segmentos-cadastro.component.html',
-  styleUrls: ['./segmentos-cadastro.component.css']
+  styleUrls: ['./segmentos-cadastro.component.scss']
 })
 export class SegmentosCadastroComponent implements OnInit {
 

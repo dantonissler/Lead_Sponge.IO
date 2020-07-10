@@ -10,7 +10,7 @@ import { EstagioNegociacaoService } from '../../services/estagio-negociacao.serv
 @Component({
   selector: 'app-estagio-negociacao-cadastro',
   templateUrl: './estagio-negociacao-cadastro.component.html',
-  styleUrls: ['./estagio-negociacao-cadastro.component.css']
+  styleUrls: ['./estagio-negociacao-cadastro.component.scss']
 })
 export class EstagioNegociacaoCadastroComponent implements OnInit {
   formulario: FormGroup;
@@ -84,7 +84,8 @@ export class EstagioNegociacaoCadastroComponent implements OnInit {
     this.formulario = this.formBuilder.group({
       id: [],
       nome: [null, [this.validarObrigatoriedade, this.validarTamanhoMinimo(4)]],
-      apelido: [null, [this.validarObrigatoriedade, this.validarTamanhoMinimo(1)]],
+      apelido: [null, [this.validarObrigatoriedade]],
+      posicao: [null, [this.validarObrigatoriedade]],
     });
   }
 

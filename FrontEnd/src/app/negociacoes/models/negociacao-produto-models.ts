@@ -1,4 +1,3 @@
-import { Negociacao } from './negociacao.models';
 import { Produto } from './../../produtos/models/produto.models';
 
 export class NegociacaoProduto{

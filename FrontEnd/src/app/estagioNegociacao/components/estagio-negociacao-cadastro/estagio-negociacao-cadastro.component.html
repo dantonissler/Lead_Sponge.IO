@@ -5,8 +5,10 @@
                 <h1>{{ editando ? 'Edição de' : 'Novo' }} Estagio</h1>
             </div>
             <div class="ui-g-12 ui-fluid">
-                <label>Nome <span style="color: crimson;">*</span></label>
-                <input pInputText placeholder="Nome  *" type="text" name="nome" formControlName="nome">
+                <span class="ui-float-label">
+                    <input pInputText type="text" name="nome" formControlName="nome">
+                    <label for="float-input">Nome <span style="color: crimson;">*</span></label>
+                </span>
                 <app-message [control]="formulario.get('nome')" error="obrigatoriedade" text="Informe o um nome.">
                 </app-message>
                 <app-message [control]="formulario.get('nome')" error="tamanhoMinimo"
@@ -14,12 +16,22 @@
                 </app-message>
             </div>
             <div class="ui-g-12 ui-fluid">
-                <label>Apelido<span style="color: crimson;">*</span></label>
-                <input pInputText placeholder="Apelido  *" type="text" name="apelido" formControlName="apelido">
+                <span class="ui-float-label">
+                    <input pInputText  type="text" name="apelido" formControlName="apelido">
+                    <label for="float-input">Apelido <span style="color: crimson;">*</span></label>
+                </span>
                 <app-message [control]="formulario.get('apelido')" error="obrigatoriedade" text="Informe o um apelido.">
                 </app-message>
                 <app-message [control]="formulario.get('apelido')" error="tamanhoMinimo"
                     text="Mínimo de {{ formulario.get('apelido').errors?.tamanhoMinimo?.tamanho }} caracteres.">
+                </app-message>
+            </div>
+            <div class="ui-g-12 ui-fluid">
+                <span class="ui-float-label">
+                    <input pInputText  type="text" name="posicao" formControlName="posicao">
+                    <label for="float-input">posicao <span style="color: crimson;">*</span></label>
+                </span>
+                <app-message [control]="formulario.get('posicao')" error="obrigatoriedade" text="Informe o um apelido.">
                 </app-message>
             </div>
             <div class="ui-g-12 cadastro-acoes">

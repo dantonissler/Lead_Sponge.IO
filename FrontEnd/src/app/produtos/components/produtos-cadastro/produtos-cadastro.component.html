@@ -2,39 +2,43 @@
     <form [formGroup]="formulario" autocomplete="off">
         <div class="ui-g">
             <div class="ui-g-12">
-                <h1>{{ editando ? 'Edição do' : 'Novo' }} Produto</h1>
+                <h1>{{ editando ? 'Edição do' : 'Novo' }} Produto ou Serviço</h1>
+            </div>
+            <div class="ui-g-12">
+                <p-inputSwitch name="visibilidade" formControlName="visibilidade" binary="false" [(ngModel)]="checked"
+                pTooltip="{{checked === true ? 'Desativar' : 'Ativar'}} produto">
+                </p-inputSwitch>
             </div>
             <div class="ui-g-12 ui-fluid">
-                <label>Nome  <span style="color: crimson;">*</span></label>
-                <input pInputText placeholder="Nome  *" type="text" name="nome"
-                    formControlName="nome">
-                <app-message [control]="formulario.get('nome')" error="obrigatoriedade"
-                    text="Informe o um nome."></app-message>
-                <app-message [control]="formulario.get('nome')" error="tamanhoMinimo"
-                    text="Mínimo de {{ formulario.get('nome').errors?.tamanhoMinimo?.tamanho }} caracteres.">
-                </app-message>
+                <span class="ui-float-label">
+                    <input pInputText type="text" name="nome" formControlName="nome">
+                    <app-message [control]="formulario.get('nome')" error="obrigatoriedade" text="Informe o um nome.">
+                    </app-message>
+                    <app-message [control]="formulario.get('nome')" error="tamanhoMinimo"
+                        text="Mínimo de {{ formulario.get('nome').errors?.tamanhoMinimo?.tamanho }} caracteres.">
+                    </app-message>
+                    <label for="float-input">Nome</label>
+                </span>
             </div>
             <div class="ui-g-12 ui-fluid">
-                <label>Descrição</label>
-                <input pInputText placeholder="Descrição" type="text" name="descricao"
-                    formControlName="descricao">
+                <span class="ui-float-label">
+                    <textarea pInputTextarea rows="3" name="descricao" formControlName="descricao"></textarea>
+                    <label for="float-input">Descrição</label>
+                </span>
             </div>
             <div class="p-col-12 ui-fluid">
-                <label>Valor <span style="color: crimson;">*</span></label>
-                <p-inputNumber  formControlName="valor" [(ngModel)]="valorInicial"
-                    [showButtons]="true" buttonLayout="horizontal" spinnerMode="horizontal" 
-                    [step]="0.25" decrementButtonClass="ui-button-danger" 
-                    incrementButtonClass="ui-button-success" incrementButtonIcon="pi pi-plus" 
-                    decrementButtonIcon="pi pi-minus" mode="currency" currency="USD">
+                <p-inputNumber formControlName="valor" [(ngModel)]="valorInicial" [showButtons]="true"
+                    buttonLayout="horizontal" spinnerMode="horizontal" [step]="0.25"
+                    decrementButtonClass="ui-button-danger" incrementButtonClass="ui-button-success"
+                    incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" mode="currency" currency="USD">
                 </p-inputNumber>
-                
             </div>
 
             <div class="ui-g-12 cadastro-acoes">
-                <button pButton value="submit" type="submit" label="Salvar"  (click)="salvar()" 
+                <button pButton value="submit" type="submit" label="Salvar" (click)="salvar()"
                     [disabled]="formulario.invalid" style="padding-left:10;"></button>
-                <button pButton value="Limpar" type="button" label="Limpar" class="ui-button-info"
-                    (click)="limpar()" style="padding-left:10;"></button>
+                <button pButton value="Limpar" type="button" label="Limpar" class="ui-button-info" (click)="limpar()"
+                    style="padding-left:10;"></button>
                 <button pButton value="Pesquisar" type="button" label="Pesquisar" class="ui-button-info"
                     Clabel="Pesquisa" routerLink="/produtos" style="padding-left:10;"></button>
             </div>

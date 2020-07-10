@@ -7,13 +7,14 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 @Component({
   selector: 'app-fonteNegociacao-pesquisa',
   templateUrl: './fonteNegociacao-pesquisa.component.html',
-  styleUrls: ['./fonteNegociacao-pesquisa.component.css']
+  styleUrls: ['./fonteNegociacao-pesquisa.component.scss']
 })
 export class FontesPesquisaComponent implements OnInit {
 
   totalRegistros = 0;
   filtro = new FonteFiltro();
   fontes = [];
+  loading: boolean = true;
   @ViewChild('tabela', { static: true }) grid;
 
   constructor(
@@ -34,6 +35,7 @@ export class FontesPesquisaComponent implements OnInit {
       .then(resultado => {
         this.totalRegistros = resultado.total;
         this.fontes = resultado.fontes;
+        this.loading = false;
       })
       .catch(erro => this.errorHandler.handle(erro));
   }

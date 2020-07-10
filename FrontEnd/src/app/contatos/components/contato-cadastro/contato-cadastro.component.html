@@ -5,19 +5,21 @@
                 <h1>{{ editando ? 'Edição de' : 'Novo' }} Contato</h1>
             </div>
             <div class="ui-g-12 ui-fluid">
-                <label>Nome <span style="color: crimson;">*</span></label>
-                <input pInputText placeholder="Nome  *" type="text" name="nome" 
-                    [(ngModel)]="contato.nome" #nome="ngModel" required minlength="5">
-                <app-message [control]="nome" error="required" 
-                    text="Informe o nome"></app-message>
+                <span class="ui-float-label">
+                    <input pInputText type="text" name="nome" [(ngModel)]="contato.nome" #nome="ngModel" required
+                        minlength="5">
+                    <label for="float-input">Nome <span style="color: crimson;">*</span></label>
+                </span>
+                <app-message [control]="nome" error="required" text="Informe o nome"></app-message>
                 <app-message [control]="nome" error="minlength"
                     text="Mínimo de {{ nome.errors?.minlength?.requiredLength }} caracteres">
                 </app-message>
             </div>
             <div class="ui-g-12 ui-fluid">
-                <label>Cargo</label>
-                <input pInputText placeholder="Cargo" type="text" name="cargo"
-                [(ngModel)]="contato.cargo" #cargo="ngModel">
+                <span class="ui-float-label">
+                    <input pInputText type="text" name="cargo" [(ngModel)]="contato.cargo" #cargo="ngModel">
+                    <label for="float-input">Cargo</label>
+                </span>
             </div>
             <div class="ui-g-6">
                 <p-panel header="Telefones">
@@ -30,10 +32,10 @@
                 </p-panel>
             </div>
             <div class="ui-g-12 cadastro-acoes">
-                <button pButton value="submit" type="submit" label="Salvar" [disabled]="f.invalid" 
+                <button pButton value="submit" type="submit" label="Salvar" [disabled]="f.invalid"
                     style="padding-left:10;"></button>
-                <button pButton value="Limpar" type="button" label="Limpar" 
-                    class="ui-button-info" (click)="limpar(f)" style="padding-left:10;"></button>
+                <button pButton value="Limpar" type="button" label="Limpar" class="ui-button-info" (click)="limpar(f)"
+                    style="padding-left:10;"></button>
                 <button pButton value="Pesquisar" type="button" label="Pesquisar" class="ui-button-info"
                     Clabel="Pesquisa" routerLink="/contatos" style="padding-left:10;"></button>
             </div>

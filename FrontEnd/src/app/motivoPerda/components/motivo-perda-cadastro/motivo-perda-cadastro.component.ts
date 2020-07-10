@@ -10,7 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-motivo-perda-cadastro',
   templateUrl: './motivo-perda-cadastro.component.html',
-  styleUrls: ['./motivo-perda-cadastro.component.css']
+  styleUrls: ['./motivo-perda-cadastro.component.scss']
 })
 export class MotivoPerdaCadastroComponent implements OnInit {
 

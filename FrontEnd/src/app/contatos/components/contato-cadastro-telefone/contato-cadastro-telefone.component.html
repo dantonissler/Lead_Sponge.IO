@@ -1,27 +1,38 @@
 <div class="ui-g">
     <div class="ui-g-12">
-        <button pButton label="Novo" icon="fa fa-plus" type="button" class="ui-button-secondary"
+        <button pButton label="Novo" iconPos="right" icon="fa fa-plus" type="button" class="ui-button-secondary"
             (click)="prepararNovoTelefone()"></button>
     </div>
     <div class="ui-g-12">
-        <p-table [value]="telefones" [responsive]="true">
+        <p-table [value]="telefones" [responsive]="true" styleClass="ui-table-customers">
             <ng-template pTemplate="header">
                 <tr>
+                    <th>
+                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                    </th>
                     <th>Numero</th>
                     <th>Tipo</th>
                     <th class="col-acoes-header"></th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-telefone let-rowIndex="rowIndex">
-                <tr>
-                    <td>{{ telefone.numero }}</td>
-                    <td>{{ telefone.tipo === 'RESIDENCIAL' ? 'Residencial' : 
+                <tr class="ui-selectable-row">
+                    <td>
+                        <p-tableCheckbox [value]="telefone"></p-tableCheckbox>
+                    </td>
+                    <td>
+                        <span class="ui-column-title">Numero</span>
+                        {{ telefone.numero }}
+                    </td>
+                    <td>
+                        <span class="ui-column-title">Tipo</span>
+                        {{ telefone.tipo === 'RESIDENCIAL' ? 'Residencial' : 
                         telefone.tipo === 'COMERCIAL'? 'Comercial' : 
-                        telefone.tipo === 'PESSOAL'? 'Pessoal' : 'Fax' }}</td>
+                        telefone.tipo === 'PESSOAL'? 'Pessoal' : 'Fax' }}
+                    </td>
                     <td class="col-acoes">
                         <button pButton icon="fas fa-pencil-alt" type="button" pTooltip="Editar" tooltipPosition="top"
                             (click)="prepararEdicaoTelefone(telefone, rowIndex)"></button>
-
                         <button pButton icon="fa fa-trash" type="button" pTooltip="Excluir" tooltipPosition="top"
                             (click)="removerTelefone(rowIndex)"></button>
                     </td>
@@ -29,7 +40,7 @@
             </ng-template>
             <ng-template pTemplate="emptymessage">
                 <tr>
-                    <td colspan="3">
+                    <td colspan="4">
                         Nenhum telefone cadastrado
                     </td>
                 </tr>
@@ -37,21 +48,21 @@
         </p-table>
     </div>
 </div>
-
 <p-dialog [header]="editando ? 'Edição de Telefone' : 'Novo Telefone'" [(visible)]="exbindoFormularioTelefone"
     modal="modal" *ngIf="telefone">
     <form #frmTelefone="ngForm" (ngSubmit)="confirmarTelefone(frmTelefone)">
         <div class="ui-g-12 ui-fluid">
             <label>Tipo telefone</label>
-            <p-dropdown [options]="tipos" [(ngModel)]="telefone" name="tipo"
-                placeholder="selecione" optionLabel="label"></p-dropdown>
+            <p-dropdown [options]="tipos" [(ngModel)]="telefone" name="tipo" placeholder="selecione"
+                optionLabel="label"></p-dropdown>
         </div>
         <div class="ui-g-12 ui-fluid">
             <div class="ui-inputgroup">
-                <span class="ui-inputgroup-addon"><i class="fas fa-phone" 
-                    style="line-height: 1.25;"></i></span>
-                <p-inputMask name="numero" placeholder="Telefone *" 
-                    [(ngModel)]="telefone.numero" mask="(99) 99999-999?9"></p-inputMask>
+                <span class="ui-inputgroup-addon"><i class="fas fa-phone" style="line-height: 1.25;"></i></span>
+                <span class="ui-float-label">
+                    <p-inputMask name="numero" [(ngModel)]="telefone.numero" mask="(99) 99999-999?9"></p-inputMask>
+                    <label for="float-input">Telefone <span style="color: crimson;">*</span></label>
+                </span>
             </div>
         </div>
         <div class="ui-g-12">

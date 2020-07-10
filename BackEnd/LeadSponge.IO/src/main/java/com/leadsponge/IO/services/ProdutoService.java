@@ -20,6 +20,11 @@ public class ProdutoService {
 		produtoValidar(produto);
 		return produtoRepository.save(produto);
 	}
+	public void atualizarPropriedadeVisibilidade(Long id, Boolean visibilidade) {
+		Produto produtoSalva = buscarProdutoExistente(id);
+		produtoSalva.setVisibilidade(visibilidade);
+		produtoRepository.save(produtoSalva);
+	}
 
 	public Produto atualizar(Long id, Produto produto) {
 		Produto fonteProduto = buscarProdutoExistente(id);

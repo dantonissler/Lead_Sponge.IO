@@ -5,23 +5,32 @@
                 <h1>{{ editando ? 'Edição de' : 'Nova' }} Empresa/Cliente</h1>
             </div>
             <div class="ui-g-12 ui-fluid">
-                <input pInputText placeholder="Nome da empresa ou cliente (pessoa física)*" type="text" name="nome" formControlName="nome">
-                <app-message [control]="formulario.get('nome')" error="obrigatoriedade" text="Informe o um nome para o cliente.">
+                <span class="ui-float-label">
+                    <input pInputText type="text" name="nome" formControlName="nome">
+                    <label for="float-input">Nome da empresa ou cliente (pessoa física) <span style="color: crimson;">*</span></label>
+                </span>
+                <app-message [control]="formulario.get('nome')" error="obrigatoriedade"
+                    text="Informe o um nome para o cliente.">
                 </app-message>
                 <app-message [control]="formulario.get('nome')" error="tamanhoMinimo"
                     text="Mínimo de {{ formulario.get('nome').errors?.tamanhoMinimo?.tamanho }} caracteres.">
                 </app-message>
             </div>
             <div class="ui-g-12 ui-md-12 ui-fluid" formGroupName="segmento">
-                <p-dropdown name="segmento" [options]="segmentos" placeholder="Selecione um Segmento"
-                    [filter]="true" formControlName="id"
-                    [virtualScroll]="true" [itemSize]="10"></p-dropdown>
+                <p-dropdown name="segmento" [options]="segmentos" placeholder="Selecione um Segmento" [filter]="true"
+                    formControlName="id" [virtualScroll]="true" [itemSize]="10"></p-dropdown>
             </div>
             <div class="ui-g-12 ui-fluid">
-                <input pInputText placeholder="url" type="text" name="url" formControlName="url">
+                <span class="ui-float-label">
+                    <input pInputText type="text" name="url" formControlName="url">
+                    <label for="float-input">Url</label>
+                </span>
             </div>
             <div class="ui-g-12 ui-fluid">
-                <input pInputText placeholder="Resumo" type="text" name="resumo" formControlName="resumo">
+                <span class="ui-float-label">
+                    <input pInputText type="text" name="resumo" formControlName="resumo">
+                    <label for="float-input">Resumo</label>
+                </span>
             </div>
             <div class="ui-g-12 cadastro-acoes">
                 <button pButton value="submit" type="submit" label="Salvar" [disabled]="formulario.invalid"

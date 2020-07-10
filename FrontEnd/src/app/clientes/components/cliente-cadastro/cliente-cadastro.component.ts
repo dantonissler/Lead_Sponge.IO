@@ -11,7 +11,7 @@ import { SegmentosService } from 'src/app/segmentos/services/segmentos.service';
 @Component({
   selector: 'app-cliente-cadastro',
   templateUrl: './cliente-cadastro.component.html',
-  styleUrls: ['./cliente-cadastro.component.css']
+  styleUrls: ['./cliente-cadastro.component.scss']
 })
 export class ClienteCadastroComponent implements OnInit {
 

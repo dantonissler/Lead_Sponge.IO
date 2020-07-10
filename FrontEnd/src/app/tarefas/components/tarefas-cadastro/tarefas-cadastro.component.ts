@@ -13,7 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-tarefas-cadastro',
   templateUrl: './tarefas-cadastro.component.html',
-  styleUrls: ['./tarefas-cadastro.component.css']
+  styleUrls: ['./tarefas-cadastro.component.scss']
 })
 export class TarefasCadastroComponent implements OnInit {
 

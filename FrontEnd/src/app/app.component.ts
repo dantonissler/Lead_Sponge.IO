@@ -4,13 +4,19 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
   
   constructor(private router: Router) {}
 
   exibindoLogin() {
-    return this.router.url !== '/login';
+    if(this.router.url === '/login'){
+      return false;
+    }
+    if(this.router.url === '/pagina-nao-encontrada'){
+      return false;
+    }
+    return true;
   }
 }

@@ -10,13 +10,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-produtos-cadastro',
   templateUrl: './produtos-cadastro.component.html',
-  styleUrls: ['./produtos-cadastro.component.css']
+  styleUrls: ['./produtos-cadastro.component.scss']
 })
 export class ProdutosCadastroComponent implements OnInit {
 
   valorInicial: number = 0.00;
   formulario: FormGroup;
   produtos = new Produto();
+  checked: boolean = true;
   
   constructor(
     private produtosService: ProdutosService,
@@ -87,6 +88,7 @@ export class ProdutosCadastroComponent implements OnInit {
       nome: [null, [ this.validarObrigatoriedade, this.validarTamanhoMinimo(4) ]],
       descricao: [],
       valor: [null, [ this.validarObrigatoriedade]],
+      visibilidade:[]
     });
   }
   validarObrigatoriedade(input: FormControl) {

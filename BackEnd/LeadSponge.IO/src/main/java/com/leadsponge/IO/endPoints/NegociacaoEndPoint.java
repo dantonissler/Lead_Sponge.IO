@@ -5,6 +5,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,8 +22,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.leadsponge.IO.endPoints.crudEndpoints.CrudController;
 import com.leadsponge.IO.event.RecursoCriadoEvent;
+import com.leadsponge.IO.models.estagioNegociacao.EstagioNegociacao;
+import com.leadsponge.IO.models.negociacao.EstatusNegociacao;
 import com.leadsponge.IO.models.negociacao.Negociacao;
-import com.leadsponge.IO.models.usuario.Usuario;
+import com.leadsponge.IO.repository.Filter.NegociacaoFilter;
 import com.leadsponge.IO.repository.negociacao.NegociacaoRepository;
 import com.leadsponge.IO.services.NegociacaoService;
 
@@ -44,16 +48,12 @@ class NegociacaoEndPoint extends CrudController {
 		this.repository = repository;
 		this.negociacaoService = negociacaoService;
 	}
-
+	
 	@GetMapping(value = { "", "/" })
+	@ResponseStatus(HttpStatus.OK)
 	@PreAuthorize("hasAuthority('PESQUISAR_NEGOCIACAO') and #oauth2.hasScope('read')")
-	ResponseEntity<Iterable<?>> listar() {
-		Iterable<Negociacao> negociacao = repository.findAll();
-		if (negociacao == null) {
-			return ResponseEntity.notFound().build();
-		} else {
-			return ResponseEntity.ok(negociacao);
-		}
+	Page<Negociacao> pesquisar(NegociacaoFilter negociacaoFilter, Pageable pageable) {
+		return repository.filtrar(negociacaoFilter, pageable);
 	}
 
 	@PostMapping(value = { "", "/" })
@@ -93,12 +93,31 @@ class NegociacaoEndPoint extends CrudController {
 			throw notFouldId(id, "a negociacao");
 		}
 	}
-	
+
 	@PutMapping("/{id}/avaliacao")
 	@ResponseStatus(HttpStatus.CREATED)
-	@PreAuthorize("hasAuthority('CADASTRAR_USUARIO') and #oauth2.hasScope('write')")
-	public ResponseEntity<Negociacao> atualizarPropriedadeEnabled(@PathVariable Long id, @RequestBody Integer avaliacao) {
+	@PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
+	ResponseEntity<Negociacao> atualizarPropriedadeEnabled(@PathVariable Long id,
+			@RequestBody Integer avaliacao) {
 		negociacaoService.atualizarPropriedadeAvaliacao(id, avaliacao);
+		return ResponseEntity.status(HttpStatus.CREATED).build();
+	}
+	
+	@PutMapping("/{id}/estagio")
+	@ResponseStatus(HttpStatus.CREATED)
+	@PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
+	ResponseEntity<Negociacao> atualizarPropriedadeEstagio(@PathVariable Long id,
+			@RequestBody EstagioNegociacao estagio) {
+		negociacaoService.atualizarPropriedadeEstagio(id, estagio);
+		return ResponseEntity.status(HttpStatus.CREATED).build();
+	}
+	
+	@PutMapping("/{id}/estatus")
+	@ResponseStatus(HttpStatus.CREATED)
+	@PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
+	ResponseEntity<Negociacao> atualizarPropriedadeEstatus(@PathVariable Long id,
+			@RequestBody EstatusNegociacao estatus) {
+		negociacaoService.atualizarPropriedadeEstatus(id, estatus);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 }

@@ -7,13 +7,14 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 @Component({
   selector: 'app-produtos-pesquisa',
   templateUrl: './produtos-pesquisa.component.html',
-  styleUrls: ['./produtos-pesquisa.component.css']
+  styleUrls: ['./produtos-pesquisa.component.scss']
 })
 export class ProdutosPesquisaComponent implements OnInit {
 
   totalRegistros = 0;
   filtro = new ProdutoFiltro();
   produtos = [];
+  loading: boolean = true;
   @ViewChild('tabela', { static: true }) grid;
 
   constructor(
@@ -34,6 +35,7 @@ export class ProdutosPesquisaComponent implements OnInit {
       .then(resultado => {
         this.totalRegistros = resultado.total;
         this.produtos = resultado.produtos;
+        this.loading = false;
       })
       .catch(erro => this.errorHandler.handle(erro));
   }
@@ -62,6 +64,16 @@ export class ProdutosPesquisaComponent implements OnInit {
           this.pesquisar();
         }
         this.messageService.add({ severity: 'success', detail: 'Motivo da perda excluída com sucesso!' });
+      })
+      .catch(erro => this.errorHandler.handle(erro));
+  }
+  alternarVisibilidade(produto: any): void {
+    const novoVis = produto.visibilidade;
+    this.produtosService.mudarVisibilidade(produto.id, novoVis)
+      .then(() => {
+        const acao = novoVis ? 'ativado' : 'desativado';
+        produto.visibilidade = novoVis;
+        this.messageService.add({ severity: 'success', detail: `Produto ${acao} com sucesso!` });
       })
       .catch(erro => this.errorHandler.handle(erro));
   }

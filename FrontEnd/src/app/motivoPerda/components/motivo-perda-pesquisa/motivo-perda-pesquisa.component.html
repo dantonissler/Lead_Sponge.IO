@@ -1,39 +1,67 @@
 <div class="container">
     <div class="ui-g">
-        <form autocomplete="off" (ngSubmit)="pesquisar()">
-            <div class="ui-g-12">
-                <h1>Motivo da Perda</h1>
-            </div>
-            <div class="ui-g-12 ui-fluid">
-                <label>Nome</label>
-                <input pInputText type="text" name="nome" [(ngModel)]="filtro.nome">
-            </div>
-            <div class="ui-g-12">
-                <button pButton type="submit" label="Pesquisar"></button>
-            </div>
-        </form>
-    </div>
-    <div class="ui-g">
         <div class="ui-g-12">
             <p-table [value]="motivoPerdas" [responsive]="true" [paginator]="true" [rows]="filtro.itensPorPagina"
-                [lazy]="true" [totalRecords]="totalRegistros" (onLazyLoad)="aoMudarPagina($event)" #tabela>
+                [lazy]="true" [totalRecords]="totalRegistros" (onLazyLoad)="aoMudarPagina($event)" #tabela
+                styleClass="ui-table-customers" [loading]="loading" [rowHover]="true">
+                <ng-template pTemplate="caption">
+                    <h1>Motivo da Perda</h1>
+                    <div class="ui-table-globalfilter-container">
+                        <button pButton label="Novo" routerLink="/motivoperda/novo" iconPos="right"
+                        icon="fa fa-plus"></button>
+                    </div>
+                </ng-template>
                 <ng-template pTemplate="header">
                     <tr>
+                        <th></th>
                         <th>Nome</th>
                         <th>Criado Por</th>
                         <th>Alterado Por</th>
-                        <th>Criado em</th>
-                        <th>Alterado em </th>
+                        <th>Criado Em</th>
+                        <th>Alterado Em </th>
                         <th class="col-acoes-header"></th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th>
+                            <input pInputText type="text" [(ngModel)]="filtro.nome"
+                                (input)="tabela.filter($event.target.value, 'nome', 'startsWith')"
+                                placeholder="Pesquisar" class="ui-column-filter" style="width: 160px;">
+                        </th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-motivoPerda>
-                    <tr>
-                        <td>{{ motivoPerda.nome }}</td>
-                        <td>{{ motivoPerda.createdByUser }}</td>
-                        <td>{{ motivoPerda.modifiedByUser }}</td>
-                        <td class="col-data">{{ motivoPerda.createdAt | date:'dd/MM/yyyy HH:mm' }}</td>
-                        <td class="col-data">{{ motivoPerda.updatedAt | date:'dd/MM/yyyy HH:mm' }}</td>
+                    <tr class="ui-selectable-row">
+                        <td>
+                            <p-tableCheckbox [value]="motivoPerda"></p-tableCheckbox>
+                        </td>
+                        <td>
+                            <span class="ui-column-title">Nome</span>
+                            {{ motivoPerda.nome }}
+                        </td>
+                        <td>
+                            <span class="ui-column-title">Criado Por</span>
+                            {{ motivoPerda.createdByUser }}
+                        </td>
+                        <td>
+                            <span class="ui-column-title">Alterado Por</span>
+                            {{ motivoPerda.modifiedByUser }}
+                        </td>
+                        <td class="col-data">
+                            <span class="ui-column-title">Criado Em</span>
+                            {{ motivoPerda.createdAt | date:'dd/MM/yyyy HH:mm' }}
+                        </td>
+                        <td class="col-data">
+                            <span class="ui-column-title">Alterado Em</span>
+                            {{ motivoPerda.updatedAt | date:'dd/MM/yyyy HH:mm' }}
+                        </td>
                         <td class="col-acoes">
                             <button pButton icon="fas fa-pencil-alt" pTooltip="Editar" tooltipPosition="top"
                                 [routerLink]="['/motivoperda', motivoPerda.id]"></button>
@@ -44,15 +72,12 @@
                 </ng-template>
                 <ng-template pTemplate="emptymessage">
                     <tr>
-                        <td colspan="5">
+                        <td colspan="7">
                             Nenhum motivo encontrado
                         </td>
                     </tr>
                 </ng-template>
             </p-table>
-        </div>
-        <div class="ui-g-12">
-            <button pButton label="Novo motivo" routerLink="/motivoperda/novo"></button>
         </div>
     </div>
 </div>

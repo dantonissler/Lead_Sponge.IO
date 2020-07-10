@@ -10,7 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-campanhas-cadastro',
   templateUrl: './campanhas-cadastro.component.html',
-  styleUrls: ['./campanhas-cadastro.component.css']
+  styleUrls: ['./campanhas-cadastro.component.scss']
 })
 export class CampanhasCadastroComponent implements OnInit {
 
@@ -85,6 +85,7 @@ export class CampanhasCadastroComponent implements OnInit {
     this.formulario = this.formBuilder.group({
       id:[],
       nome: [null, [ this.validarObrigatoriedade, this.validarTamanhoMinimo(4) ]],
+      descricao: [],
     });
   }
   

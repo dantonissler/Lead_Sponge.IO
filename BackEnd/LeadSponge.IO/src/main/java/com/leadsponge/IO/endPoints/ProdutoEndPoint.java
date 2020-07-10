@@ -92,4 +92,12 @@ class ProdutoEndPoint extends CrudController {
 	public ResponseEntity<Produto> detalhar(@Valid @PathVariable("id") Long id) {
 		return ResponseEntity.ok(repository.findById(id).orElseThrow(() -> notFouldId(id, "o produto")));
 	}
+	
+	@PutMapping("/{id}/vasivel")
+	@ResponseStatus(HttpStatus.CREATED)
+	@PreAuthorize("hasAuthority('CADASTRAR_USUARIO') and #oauth2.hasScope('write')")
+	public ResponseEntity<Produto> atualizarPropriedadeVisibilidade(@PathVariable Long id, @RequestBody Boolean visibilidade) {
+		produtoService.atualizarPropriedadeVisibilidade(id, visibilidade);
+		return ResponseEntity.status(HttpStatus.CREATED).build();
+	}
 }

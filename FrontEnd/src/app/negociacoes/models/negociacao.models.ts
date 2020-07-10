@@ -1,6 +1,5 @@
 import { Estagio } from './../../estagioNegociacao/models/estagio-negociacao.models';
 import { Fonte } from './../../fonteNegociacao/models/fonte.models';
-import { Tarefa } from './../../tarefas/models/tarefa.models';
 import { Campanha } from './../../campanhas/models/campanha.models';
 import { Perda } from './../../motivoPerda/models/motivo-perda.models';
 import { Cliente } from '../../clientes/models/cliente.models';
@@ -19,7 +18,7 @@ export class Negociacao{
     cliente = new Cliente();
     campanha = new Campanha();
     fonteNegociacao = new Fonte();
-    estagioNegociacao = new Estagio();
+    estagio = new Estagio();
     negociacaoProduto = new NegociacaoProduto();
     histEstagioNegociacoes = new HistEstagioNegociacao();
 }

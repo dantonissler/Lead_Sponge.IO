@@ -7,13 +7,14 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 @Component({
   selector: 'app-motivo-perda-pesquisa',
   templateUrl: './motivo-perda-pesquisa.component.html',
-  styleUrls: ['./motivo-perda-pesquisa.component.css']
+  styleUrls: ['./motivo-perda-pesquisa.component.scss']
 })
 export class MotivoPerdaPesquisaComponent implements OnInit {
 
   totalRegistros = 0;
   filtro = new MotivoPerdaFiltro();
   motivoPerdas = [];
+  loading: boolean = true;
   @ViewChild('tabela', { static: true }) grid;
 
   constructor(
@@ -34,6 +35,7 @@ export class MotivoPerdaPesquisaComponent implements OnInit {
       .then(resultado => {
         this.totalRegistros = resultado.total;
         this.motivoPerdas = resultado.motivoPerdas;
+        this.loading = false;
       })
       .catch(erro => this.errorHandler.handle(erro));
   }

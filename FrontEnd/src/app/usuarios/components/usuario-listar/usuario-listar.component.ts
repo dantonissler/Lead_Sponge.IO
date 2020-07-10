@@ -8,13 +8,14 @@ import { UsuarioFiltro } from '../../services/usuario.service';
 @Component({
   selector: 'app-usuario-listar',
   templateUrl: './usuario-listar.component.html',
-  styleUrls: ['./usuario-listar.component.css']
+  styleUrls: ['./usuario-listar.component.scss']
 })
 export class UsuarioListarComponent implements OnInit {
 
   totalRegistros = 0;
   filtro = new UsuarioFiltro();
   usuarios = [];
+  loading: boolean = true;
   @ViewChild('tabela', { static: true }) grid;
 
   constructor(
@@ -35,6 +36,7 @@ export class UsuarioListarComponent implements OnInit {
       .then(resultado => {
         this.totalRegistros = resultado.total;
         this.usuarios = resultado.usuarios;
+        this.loading = false;
       })
       .catch(erro => this.errorHandler.handle(erro));
   }
@@ -68,11 +70,10 @@ export class UsuarioListarComponent implements OnInit {
   }
 
   alternarStatus(usuario: any): void {
-    const novoStatus = !usuario.enabled;
+    const novoStatus = usuario.enabled;
     this.usuarioService.mudarStatus(usuario.id, novoStatus)
       .then(() => {
         const acao = novoStatus ? 'ativada' : 'desativada';
-
         usuario.enabled = novoStatus;
         this.messageService.add({ severity: 'success', detail: `Usuario ${acao} com sucesso!` });
       })

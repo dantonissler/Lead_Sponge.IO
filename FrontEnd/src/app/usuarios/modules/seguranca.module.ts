@@ -11,9 +11,6 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 
-
-
-
 export function tokenGetter() {
   return localStorage.getItem('token');
 }

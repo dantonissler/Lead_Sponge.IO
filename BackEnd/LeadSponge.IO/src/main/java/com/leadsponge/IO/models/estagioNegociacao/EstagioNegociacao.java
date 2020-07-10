@@ -45,6 +45,10 @@ public class EstagioNegociacao extends UserDateAudit {
 	@Size(max = 10)
 	private String apelido;
 
+	@Column(name = "posicao")
+	@NotNull
+	private Integer posicao;
+
 	@JsonIgnoreProperties("estagio")
 	@Valid
 	@OneToMany(mappedBy = "estagio", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -54,10 +58,11 @@ public class EstagioNegociacao extends UserDateAudit {
 		// TODO Auto-generated constructor stub
 	}
 
-	public EstagioNegociacao(String nome, String apelido) {
+	public EstagioNegociacao(String nome, String apelido, Integer posicao) {
 		super();
 		this.nome = nome;
 		this.apelido = apelido;
+		this.posicao = posicao;
 	}
 
 	public Long getId() {
@@ -74,6 +79,22 @@ public class EstagioNegociacao extends UserDateAudit {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public String getApelido() {
+		return apelido;
+	}
+
+	public Integer getPosicao() {
+		return posicao;
+	}
+
+	public void setPosicao(Integer posicao) {
+		this.posicao = posicao;
+	}
+
+	public void setApelido(String apelido) {
+		this.apelido = apelido;
 	}
 
 	public List<Negociacao> getNegociacoes() {

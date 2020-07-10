@@ -1,6 +1,6 @@
 package com.leadsponge.IO.models.historicoEstagioNegociacao;
 
-import java.util.Date;
+import java.time.Instant;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,18 +34,17 @@ public class HistEstagioNegociacao extends UserDateAudit {
 	private Long id;
 
 	@NotNull
-	@Column(name = "data_inicio")
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-	private Date dataInicio;
+	@Column(name = "id_estagio")
+	private String idEstagio;
+	
+	@NotNull
+	@Column(name = "apelido")
+	private String apelido;
 
 	@NotNull
 	@Column(name = "data_mudanca")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-	private Date dataMudanca;
-
-	@Column(name = "data_venda")
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-	private Date dataVenda;
+	private Instant dataMudanca;
 
 	@ManyToOne
 	@JoinColumn(name = "negociacao_id")
@@ -59,28 +58,12 @@ public class HistEstagioNegociacao extends UserDateAudit {
 		this.id = id;
 	}
 
-	public Date getDataInicio() {
-		return dataInicio;
-	}
-
-	public void setDataInicio(Date dataInicio) {
-		this.dataInicio = dataInicio;
-	}
-
-	public Date getDataMudanca() {
+	public Instant getDataMudanca() {
 		return dataMudanca;
 	}
 
-	public void setDataMudanca(Date dataMudanca) {
-		this.dataMudanca = dataMudanca;
-	}
-
-	public Date getDataVenda() {
-		return dataVenda;
-	}
-
-	public void setDataVenda(Date dataVenda) {
-		this.dataVenda = dataVenda;
+	public void setDataMudanca() {
+		this.dataMudanca = getUpdatedAt();
 	}
 
 	public Negociacao getNegociacao() {

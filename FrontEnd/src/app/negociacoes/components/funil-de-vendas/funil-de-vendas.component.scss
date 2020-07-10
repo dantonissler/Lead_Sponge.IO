@@ -1,0 +1,23 @@
+@media (max-width: 40em) {
+  .ui-steps .ui-steps-item .ui-steps-title {
+      display: block;
+  }
+}
+.ui-steps .ui-steps-item {
+    width: auto;
+}
+.ui-steps .ui-steps-item .ui-menuitem-link {
+    padding: 0.45em;
+}
+body .ui-steps .ui-steps-item .ui-menuitem-link .ui-steps-number {
+    position: initial;
+}
+body .ui-steps .ui-steps-item .ui-menuitem-link {
+    height: 40px;
+}
+body .ui-steps .ui-steps-item .ui-menuitem-link .ui-steps-title {
+    margin-top: 15px;
+}
+body .ui-steps:before {
+    top:45%;
+}

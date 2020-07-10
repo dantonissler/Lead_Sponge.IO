@@ -8,6 +8,8 @@ import { Injectable } from '@angular/core';
 
 export class UsuarioFiltro {
     nomeCompleto: string;
+    username: string;
+    email: string;
     pagina = 0;
     itensPorPagina = 5;
 }
@@ -36,6 +38,11 @@ export class UsuarioService {
     });
     if (filtro.nomeCompleto) {
       params = params.append('nomeCompleto', filtro.nomeCompleto);
+    } else if (filtro.username) {
+      params = params.append('username', filtro.username);
+    }
+    else if (filtro.email) {
+      params = params.append('email', filtro.email);
     }
     return this.http.get<any>(`${this.usuariosUrl}?resumo`, { params })
       .toPromise()

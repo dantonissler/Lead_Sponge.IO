@@ -1,11 +1,12 @@
 import { Produto } from './../models/produto.models';
-import { HttpParams } from '@angular/common/http';
+import { HttpParams, HttpHeaders } from '@angular/common/http';
 import { MoneyHttp } from './../../usuarios/money-http';
 import { environment } from './../../../environments/environment';
 import { Injectable } from '@angular/core';
 
 export class ProdutoFiltro {
   nome: string;
+  descricao: string;
   pagina = 0;
   itensPorPagina = 5;
 }
@@ -36,6 +37,9 @@ export class ProdutosService {
     });
     if (filtro.nome) {
       params = params.append('nome', filtro.nome);
+    }
+    if (filtro.descricao) {
+      params = params.append('descricao', filtro.descricao);
     }
     return this.http.get<any>(`${this.produtoUrl}`, { params })
       .toPromise()
@@ -69,5 +73,14 @@ export class ProdutosService {
   buscarPorCodigo(id: number): Promise<Produto> {
     return this.http.get<Produto>(`${this.produtoUrl}/${id}`)
       .toPromise();
+  }
+
+  mudarVisibilidade(id: number, visibilidade: boolean): Promise<void> {
+    console.log(visibilidade);
+    const headers = new HttpHeaders()
+        .append('Content-Type', 'application/json');
+    return this.http.put(`${this.produtoUrl}/${id}/vasivel`, visibilidade, { headers })
+      .toPromise()
+      .then(() => null);
   }
 }

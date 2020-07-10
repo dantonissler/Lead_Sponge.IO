@@ -1,3 +1,5 @@
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { InputSwitchModule } from 'primeng/inputswitch';
 import { InputMaskModule } from 'primeng/inputmask';
 import { PanelModule } from 'primeng/panel';
 import { DialogModule } from 'primeng/dialog';
@@ -36,6 +38,8 @@ import {InputNumberModule} from 'primeng/inputnumber';
     DialogModule,
     DropdownModule,
     InputNumberModule,
+    InputSwitchModule,
+    InputTextareaModule,
     
     SharedModule,
     ProdutosRoutingModule

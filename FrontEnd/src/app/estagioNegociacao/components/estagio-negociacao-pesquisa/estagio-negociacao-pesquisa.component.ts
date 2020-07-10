@@ -9,13 +9,14 @@ import { EstagioNegociacaoService } from '../../services/estagio-negociacao.serv
 @Component({
   selector: 'app-estagio-negociacao-pesquisa',
   templateUrl: './estagio-negociacao-pesquisa.component.html',
-  styleUrls: ['./estagio-negociacao-pesquisa.component.css']
+  styleUrls: ['./estagio-negociacao-pesquisa.component.scss']
 })
 export class EstagioNegociacaoPesquisaComponent implements OnInit {
 
   totalRegistros = 0;
   filtro = new EstagioFiltro();
   estagios = [];
+  loading: boolean = true;
   @ViewChild('tabela', { static: true }) grid;
   
   constructor(
@@ -36,6 +37,7 @@ export class EstagioNegociacaoPesquisaComponent implements OnInit {
       .then(resultado => {
         this.totalRegistros = resultado.total;
         this.estagios = resultado.estagios;
+        this.loading = false;
       })
       .catch(erro => this.errorHandler.handle(erro));
   }

@@ -5,17 +5,18 @@
                 <h1>{{ editando ? 'Edição de' : 'Novo' }} Negociação</h1>
             </div>
             <div class="ui-g-12 ui-fluid">
-                <label>Nome <span style="color: crimson;">*</span></label>
-                <input pInputText placeholder="Nome  *" type="text" name="nome" formControlName="nome">
-                <app-message [control]="formulario.get('nome')" error="obrigatoriedade"
-                    text="Informe o uma descrição.">
+                <span class="ui-float-label">
+                    <input pInputText type="text" name="nome" formControlName="nome">
+                    <label for="float-input">Nome <span style="color: crimson;">*</span></label>
+                </span>
+                <app-message [control]="formulario.get('nome')" error="obrigatoriedade" text="Informe o uma descrição.">
                 </app-message>
                 <app-message [control]="formulario.get('nome')" error="tamanhoMinimo"
                     text="Mínimo de {{ formulario.get('nome').errors?.tamanhoMinimo?.tamanho }} caracteres.">
                 </app-message>
             </div>
             <div class="ui-g-12 ui-md-4 ui-fluid" formGroupName="cliente">
-                <label>Cliente <span style="color: crimson;">*</span></label>
+                <label>Empresa/Cliente <span style="color: crimson;">*</span></label>
                 <p-dropdown name="cliente" [options]="cliente" placeholder="Selecione" [filter]="true"
                     formControlName="id"></p-dropdown>
             </div>
@@ -26,8 +27,8 @@
             </div>
             <div class="ui-g-12 ui-md-4 ui-fluid" formGroupName="fonte">
                 <label>Fonte <span style="color: crimson;">*</span></label>
-                <p-dropdown name="fonte" [options]="fonte" placeholder="Selecione" [filter]="true"
-                    formControlName="id"></p-dropdown>
+                <p-dropdown name="fonte" [options]="fonte" placeholder="Selecione" [filter]="true" formControlName="id">
+                </p-dropdown>
             </div>
             <div class="ui-g-12 cadastro-acoes">
                 <button pButton value="submit" type="submit" label="Salvar" [disabled]="formulario.invalid"

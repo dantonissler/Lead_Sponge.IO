@@ -1,11 +1,10 @@
-import { FormControl } from '@angular/forms';
 import { Telefone } from './../../models/telefone.models';
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-contato-cadastro-telefone',
   templateUrl: './contato-cadastro-telefone.component.html',
-  styleUrls: ['./contato-cadastro-telefone.component.css']
+  styleUrls: ['./contato-cadastro-telefone.component.scss']
 })
 export class ContatoCadastroTelefoneComponent implements OnInit {
 

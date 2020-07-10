@@ -7,13 +7,14 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 @Component({
   selector: 'app-cliente-pesquisa',
   templateUrl: './cliente-pesquisa.component.html',
-  styleUrls: ['./cliente-pesquisa.component.css']
+  styleUrls: ['./cliente-pesquisa.component.scss']
 })
 export class ClientePesquisaComponent implements OnInit {
 
   totalRegistros = 0;
   filtro = new ClienteFiltro();
   clientes = [];
+  loading: boolean = true;
   @ViewChild('tabela', { static: true }) grid;
 
   constructor(
@@ -34,6 +35,7 @@ export class ClientePesquisaComponent implements OnInit {
       .then(resultado => {
         this.totalRegistros = resultado.total;
         this.clientes = resultado.clientes;
+        this.loading = false;
       })
       .catch(erro => this.errorHandler.handle(erro));
   }

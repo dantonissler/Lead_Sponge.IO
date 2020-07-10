@@ -1,4 +1,5 @@
-import { NegociacoesService } from './../services/negociacoes.service';
+import { StepsExtendedModule } from '../components/funil-de-vendas/p-steps-extended';
+import { FunilDeVendasComponent } from './../components/funil-de-vendas/funil-de-vendas.component';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
 import { DialogModule } from 'primeng/dialog';
@@ -23,14 +24,12 @@ import {ContextMenuModule} from 'primeng/contextmenu';
 import {ToastModule} from 'primeng/toast';
 import {ProgressBarModule} from 'primeng/progressbar';
 
-
 @NgModule({
   declarations: [
     NegociacoesCadastroComponent,
-    NegociacoesPesquisaComponent
+    NegociacoesPesquisaComponent,
+    FunilDeVendasComponent,
   ],
-  bootstrap: [ NegociacoesPesquisaComponent ],
-  providers: [NegociacoesService],
   imports: [
     CommonModule,
     FormsModule,
@@ -53,6 +52,7 @@ import {ProgressBarModule} from 'primeng/progressbar';
 		ToastModule,
     ProgressBarModule,
     HttpClientModule,
+    StepsExtendedModule,
 
     SharedModule,
     NegociacoesRoutingModule

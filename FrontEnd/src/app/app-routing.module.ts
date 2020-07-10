@@ -1,3 +1,4 @@
+import { LoginFormComponent } from './usuarios/components/login-form/login-form.component';
 import { PaginaNaoEncontradaComponent } from './core/components/pagina-nao-encontrada.component';
 import { NaoAutorizadoComponent } from './core/components/nao-autorizado.component';
 
@@ -20,13 +21,12 @@ const routes: Routes = [
   { path: 'motivoperda', loadChildren: () => import('./motivoPerda/modules/motivo-perda.module').then(m => m.MotivoPerdaModule) },
   { path: 'negociacoes', loadChildren: () => import('./negociacoes/modules/negociacoes.module').then(m => m.NegociacoesModule) },
 
-  
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: 'nao-autorizado', component: NaoAutorizadoComponent },
   { path: 'pagina-nao-encontrada', component: PaginaNaoEncontradaComponent },
-  /* { path: '**', redirectTo: 'pagina-nao-encontrada' } */
+  { path: 'login', component: LoginFormComponent },
+  { path: '**', redirectTo: 'pagina-nao-encontrada' }
 ];
-
 
 @NgModule({
   imports: [

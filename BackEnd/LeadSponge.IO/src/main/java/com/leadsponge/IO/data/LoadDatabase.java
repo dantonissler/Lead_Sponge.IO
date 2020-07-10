@@ -90,7 +90,7 @@ class LoadDatabase {
 	@Bean
 	CommandLineRunner initTableCampanha(CampanhaService repository) {
 		return args -> {
-			repository.save(new Campanha("Sem Campanha"));
+			repository.save(new Campanha("Sem Campanha", ""));
 		};
 	}
 
@@ -114,13 +114,11 @@ class LoadDatabase {
 	@Bean
 	CommandLineRunner initTableEstagio(EstagioNegociacaoService repository) {
 		return args -> {
-			repository.save(new EstagioNegociacao("Sem contato", "SC"));
-			repository.save(new EstagioNegociacao("Contrato Feito", "CF"));
-			repository.save(new EstagioNegociacao("Identificação de Interece", "IDI"));
-			repository.save(new EstagioNegociacao("Apresentação", "A"));
-			repository.save(new EstagioNegociacao("Proposta Enviada", "SC"));
-			repository.save(new EstagioNegociacao("Vendido", "SC"));
-			repository.save(new EstagioNegociacao("Perdido", "SC"));
+			repository.save(new EstagioNegociacao("Sem contato", "SC",1));
+			repository.save(new EstagioNegociacao("Contrato Feito", "CF",2));
+			repository.save(new EstagioNegociacao("Identificação de Interece", "IDI",3));
+			repository.save(new EstagioNegociacao("Apresentação", "A",4));
+			repository.save(new EstagioNegociacao("Proposta Enviada", "PE",5));
 		};
 	}
 	
