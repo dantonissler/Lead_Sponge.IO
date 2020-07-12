@@ -1,96 +1,93 @@
-<div class="container">
-    <div class="ui-g">
-        <div class="ui-g-12">
-            <p-table [value]="produtos" [responsive]="true" [paginator]="true" [rows]="filtro.itensPorPagina"
-                [lazy]="true" [totalRecords]="totalRegistros" (onLazyLoad)="aoMudarPagina($event)" #tabela
-                styleClass="ui-table-customers" [loading]="loading" [rowHover]="true">
-                <ng-template pTemplate="caption">
-                    <h1>Produtos ou Serviços</h1>
-                    <div class="ui-table-globalfilter-container">
-                        <button pButton label="Novo" routerLink="/produtos/novo" iconPos="right"
-                            icon="fa fa-plus"></button>
-                    </div>
-                </ng-template>
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th></th>
-                        <th>Nome</th>
-                        <th>Descriação</th>
-                        <th>Valor</th>
-                        <th>Alterado Por</th>
-                        <th>Alterado em </th>
-                        <th>Visibilidade</th>
-                        <th class="col-acoes-header"></th>
-                    </tr>
-                    <tr>
-                        <th>
-                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                        </th>
-                        <th>
-                            <input pInputText type="text" [(ngModel)]="filtro.nome"
-                                (input)="tabela.filter($event.target.value, 'nome', 'startsWith')"
-                                placeholder="Pesquisar" class="ui-column-filter" style="width: 140px;">
-                        </th>
-                        <th>
-                            <input pInputText type="text" [(ngModel)]="filtro.descricao"
-                                (input)="tabela.filter($event.target.value, 'descricao', 'startsWith')"
-                                placeholder="Pesquisar" class="ui-column-filter" style="width: 140px;">
-                        </th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-produto>
-                    <tr class="ui-selectable-row">
-                        <td>
-                            <p-tableCheckbox [value]="produto"></p-tableCheckbox>
-                        </td>
-                        <td>
-                            <span class="ui-column-title">Nome</span>
-                            {{ produto.nome }}
-                        </td>
-                        <td>
-                            <span class="ui-column-title">Descrição</span>
-                            {{ produto.descricao }}
-                        </td>
-                        <td>
-                            <span class="ui-column-title">Valor</span>
-                            {{ produto.valor }}
-                        </td>
-                        <td>
-                            <span class="ui-column-title">Modificado Por</span>
-                            {{ produto.modifiedByUser }}
-                        </td>
-                        <td class="col-data">
-                            <span class="ui-column-title">Modificado Em</span>
-                            {{ produto.updatedAt | date:'dd/MM/yyyy HH:mm' }}
-                        </td>
-                        <td>
-                            <span class="ui-column-title">Estatus</span>
-                            <p-inputSwitch [(ngModel)]="produto.visibilidade"tooltipPosition="top"
-                                pTooltip="{{produto.visibilidade ? 'Desativar' : 'Ativar'}}"
-                                (click)="alternarVisibilidade(produto)">
-                            </p-inputSwitch>
-                        </td>
-                        <td class="col-acoes">
-                            <button pButton icon="fas fa-pencil-alt" pTooltip="Editar" tooltipPosition="top"
-                                [routerLink]="['/produtos', produto.id]"></button>
-                            <button pButton icon="fas fa-trash" pTooltip="Excluir" tooltipPosition="top"
-                                (click)="confirmarExclusao(produto)"></button>
-                        </td>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="emptymessage">
-                    <tr>
-                        <td colspan="7">
-                            Nenhum produto encontrado
-                        </td>
-                    </tr>
-                </ng-template>
-            </p-table>
-        </div>
-    </div>
+<div class="table">
+    <p-table [value]="produtos" [responsive]="true" [paginator]="true" [rows]="filtro.itensPorPagina" [lazy]="true"
+        [totalRecords]="totalRegistros" (onLazyLoad)="aoMudarPagina($event)" #tabela styleClass="ui-table-customers"
+        [loading]="loading" [rowHover]="true">
+        <ng-template pTemplate="caption">
+            <button pButton icon="fas fa-arrow-left fa-2x" pTooltip="Voltar" tooltipPosition="top"
+                (click)="backClicked()" class="ui-button-rounded ui-button-secondary"></button>
+            <h1>Produtos ou Serviços</h1>
+            <div class="ui-table-globalfilter-container">
+                <button pButton label="Novo" routerLink="/produtos/novo" iconPos="right" icon="fa fa-plus"></button>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th></th>
+                <th>Nome</th>
+                <th>Descriação</th>
+                <th>Valor</th>
+                <th>Alterado Por</th>
+                <th>Alterado em </th>
+                <th>Visibilidade</th>
+                <th class="col-acoes-header"></th>
+            </tr>
+            <tr>
+                <th>
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th>
+                    <input pInputText type="text" [(ngModel)]="filtro.nome"
+                        (input)="tabela.filter($event.target.value, 'nome', 'startsWith')" placeholder="Pesquisar"
+                        class="ui-column-filter" style="width: 140px;">
+                </th>
+                <th>
+                    <input pInputText type="text" [(ngModel)]="filtro.descricao"
+                        (input)="tabela.filter($event.target.value, 'descricao', 'startsWith')" placeholder="Pesquisar"
+                        class="ui-column-filter" style="width: 140px;">
+                </th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-produto>
+            <tr class="ui-selectable-row">
+                <td>
+                    <p-tableCheckbox [value]="produto"></p-tableCheckbox>
+                </td>
+                <td>
+                    <span class="ui-column-title">Nome</span>
+                    {{ produto.nome }}
+                </td>
+                <td>
+                    <span class="ui-column-title">Descrição</span>
+                    {{ produto.descricao }}
+                </td>
+                <td>
+                    <span class="ui-column-title">Valor</span>
+                    {{ produto.valor }}
+                </td>
+                <td>
+                    <span class="ui-column-title">Modificado Por</span>
+                    {{ produto.modifiedByUser }}
+                </td>
+                <td class="col-data">
+                    <span class="ui-column-title">Modificado Em</span>
+                    {{ produto.updatedAt | date:'dd/MM/yyyy HH:mm' }}
+                </td>
+                <td>
+                    <span class="ui-column-title">Estatus</span>
+                    <p-inputSwitch [(ngModel)]="produto.visibilidade" tooltipPosition="top"
+                        pTooltip="{{produto.visibilidade ? 'Desativar' : 'Ativar'}}"
+                        (click)="alternarVisibilidade(produto)">
+                    </p-inputSwitch>
+                </td>
+                <td class="col-acoes">
+                    <button pButton icon="fas fa-pencil-alt" pTooltip="Editar" tooltipPosition="top"
+                        [routerLink]="['/produtos', produto.id]"></button>
+                    <button pButton icon="fas fa-trash" pTooltip="Excluir" tooltipPosition="top"
+                        (click)="confirmarExclusao(produto)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="8">
+                    Nenhum produto encontrado
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
 </div>

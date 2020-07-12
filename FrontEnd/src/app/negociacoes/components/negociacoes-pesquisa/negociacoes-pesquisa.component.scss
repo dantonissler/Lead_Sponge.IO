@@ -1,0 +1,10 @@
+a {
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bolder;
+    color: rgb(10, 17, 22);
+    &:hover{
+        color: #51575c;
+        transition: all 0.3s;
+    }
+}

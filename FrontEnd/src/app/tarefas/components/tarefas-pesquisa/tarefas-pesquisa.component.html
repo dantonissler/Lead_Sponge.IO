@@ -1,88 +1,83 @@
-<div class="container">
-    <div class="ui-g">
-        <div class="ui-g-12">
-            <p-table [value]="tarefas" [responsive]="true" [paginator]="true" [rows]="filtro.itensPorPagina"
-                [lazy]="true" [totalRecords]="totalRegistros" (onLazyLoad)="aoMudarPagina($event)" #tabela
-                styleClass="ui-table-customers" [loading]="loading" [rowHover]="true">
-                <ng-template pTemplate="caption">
-                    <h1>Tarefa</h1>
-                    <div class="ui-table-globalfilter-container">
-                        <button pButton label="Nova" routerLink="/tarefas/novo" iconPos="right"
-                            icon="fa fa-plus"></button>
-                    </div>
-                </ng-template>
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th></th>
-                        <th>Assunto</th>
-                        <th>Hora Marcada</th>
-                        <th>Tipo</th>
-                        <th>Responsavel</th>
-                        <th>Cliente</th>
-                        <th class="col-acoes-header"></th>
-                    </tr>
-                    <tr>
-                        <th>
-                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                        </th>
-                        <th>
-                            <input pInputText type="text" [(ngModel)]="filtro.assunto"
-                                (input)="tabela.filter($event.target.value, 'assunto', 'startsWith')"
-                                placeholder="Pesquisar" class="ui-column-filter" style="width: 140px;">
-                        </th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-tarefa>
-                    <tr class="ui-selectable-row">
-                        <td>
-                            <p-tableCheckbox [value]="tarefa"></p-tableCheckbox>
-                        </td>
-                        <td>
-                            <span class="ui-column-title">Assunto</span>
-                            {{ tarefa.assunto }}
-                        </td>
-                        <td class="col-data">
-                            <span class="ui-column-title">Hora Marcada</span>
-                            {{ tarefa.horaMarcada | date:'dd/MM/yyyy HH:mm' }}
-                        </td>
-                        <td>
-                            <span class="ui-column-title">Tipo</span>
-                            {{ tarefa.tipo === 'EMAIL' ? 'E-mail' : 
+<div class="table">
+    <p-table [value]="tarefas" [responsive]="true" [paginator]="true" [rows]="filtro.itensPorPagina" [lazy]="true"
+        [totalRecords]="totalRegistros" (onLazyLoad)="aoMudarPagina($event)" #tabela styleClass="ui-table-customers"
+        [loading]="loading" [rowHover]="true">
+        <ng-template pTemplate="caption">
+            <h1>Tarefa</h1>
+            <div class="ui-table-globalfilter-container">
+                <button pButton label="Nova" routerLink="/tarefas/novo" iconPos="right" icon="fa fa-plus"></button>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th></th>
+                <th>Assunto</th>
+                <th>Hora Marcada</th>
+                <th>Tipo</th>
+                <th>Responsavel</th>
+                <th>Cliente</th>
+                <th class="col-acoes-header"></th>
+            </tr>
+            <tr>
+                <th>
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th>
+                    <input pInputText type="text" [(ngModel)]="filtro.assunto"
+                        (input)="tabela.filter($event.target.value, 'assunto', 'startsWith')" placeholder="Pesquisar"
+                        class="ui-column-filter" style="width: 140px;">
+                </th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-tarefa>
+            <tr class="ui-selectable-row">
+                <td>
+                    <p-tableCheckbox [value]="tarefa"></p-tableCheckbox>
+                </td>
+                <td>
+                    <span class="ui-column-title">Assunto</span>
+                    {{ tarefa.assunto }}
+                </td>
+                <td class="col-data">
+                    <span class="ui-column-title">Hora Marcada</span>
+                    {{ tarefa.horaMarcada | date:'dd/MM/yyyy HH:mm' }}
+                </td>
+                <td>
+                    <span class="ui-column-title">Tipo</span>
+                    {{ tarefa.tipo === 'EMAIL' ? 'E-mail' : 
                             tarefa.tipo === 'REUNIAO'? 'Reunião' : 
                             tarefa.tipo === 'VISITA'? 'Visita' :
                             tarefa.tipo === 'TAREFA'? 'Tarefa' :
                             tarefa.tipo === 'ALMOCO'? 'Almoço' : ' ' }}
-                        </td>
-                        <td>
-                            <span class="ui-column-title">Responsavel</span>
-                            {{ tarefa.usuario }}
-                        </td>
-                        <td>
-                            <span class="ui-column-title">Cliente</span>
-                            {{ tarefa.cliente.nome }}
-                        </td>
-                        <td class="col-acoes">
-                            <button pButton icon="fas fa-pencil-alt" pTooltip="Editar" tooltipPosition="top"
-                                [routerLink]="['/tarefas', tarefa.id]"></button>
-                            <button pButton icon="fas fa-trash" pTooltip="Excluir" tooltipPosition="top"
-                                (click)="confirmarExclusao(tarefa)"></button>
-                        </td>
-                    </tr>
-                </ng-template>
+                </td>
+                <td>
+                    <span class="ui-column-title">Responsavel</span>
+                    {{ tarefa.usuario }}
+                </td>
+                <td>
+                    <span class="ui-column-title">Cliente</span>
+                    {{ tarefa.cliente.nome }}
+                </td>
+                <td class="col-acoes">
+                    <button pButton icon="fas fa-pencil-alt" pTooltip="Editar" tooltipPosition="top"
+                        [routerLink]="['/tarefas', tarefa.id]"></button>
+                    <button pButton icon="fas fa-trash" pTooltip="Excluir" tooltipPosition="top"
+                        (click)="confirmarExclusao(tarefa)"></button>
+                </td>
+            </tr>
+        </ng-template>
 
-                <ng-template pTemplate="emptymessage">
-                    <tr>
-                        <td colspan="7">
-                            Nenhuma tarefa encontrada
-                        </td>
-                    </tr>
-                </ng-template>
-            </p-table>
-        </div>
-    </div>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="7">
+                    Nenhuma tarefa encontrada
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
 </div>

@@ -1,10 +1,10 @@
-import { Estagio } from './../../../estagioNegociacao/models/estagio-negociacao.models';
+import { NegociacoesService } from './../../services/negociacoes.service';
 import { Negociacao } from './../../models/negociacao.models';
 import { ErrorHandlerService } from './../../../core/error-handler.service';
 import { EstagioNegociacaoService } from './../../../estagioNegociacao/services/estagio-negociacao.service';
 import { MenuItem } from 'primeng/api/menuitem';
 import { MessageService } from 'primeng/api';
-import { Component, OnInit, ViewEncapsulation, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 
 @Component({
     selector: 'app-funil-de-vendas',
@@ -15,20 +15,28 @@ import { Component, OnInit, ViewEncapsulation, Input, EventEmitter, Output } fro
 })
 export class FunilDeVendasComponent implements OnInit {
 
-    @Input() estagio: Estagio;
-    @Output() respostaEstagio: EventEmitter<any> = new EventEmitter();
+    /*
+    * TODO : Estudar uma forma de colocar o metodo "alterarFunil" dentro da 
+    * class NegociacoesPesquisaComponent,por que não está aparecendo a mensagem 
+    * e a alteração esta sendo feita pelo id e não pela possição conforme o planejado.
+    */
+
+    @Input() negociacao: Negociacao;
     items: MenuItem[];
     activeIndex: number = 0;
 
     constructor(
+        private negociacoesService: NegociacoesService,
         private estagioNegociacaoService: EstagioNegociacaoService,
+        private messageService: MessageService,
         private errorHandler: ErrorHandlerService,
     ) { }
 
     ngOnInit() {
-        this.activeIndex = this.estagio.posicao - 1;
+        this.activeIndex = this.negociacao.estagio.id - 1;
         this.carregarFunilDeVendas();
     }
+
 
     carregarFunilDeVendas() {
         this.estagioNegociacaoService.listarTodas()
@@ -38,7 +46,15 @@ export class FunilDeVendasComponent implements OnInit {
             .catch(erro => this.errorHandler.handle(erro));
     }
 
-    alterarFunil(estagio: any){
-        console.log(this.respostaEstagio.emit(estagio));
+    alterarFunil(negociacao: any): void {
+        const novoVis = negociacao.estagio;
+        novoVis.id = this.activeIndex+1;
+        this.negociacoesService.mudarEstagio(negociacao.id, novoVis)
+            .then(() => {
+                const acao = novoVis.nome;
+                negociacao.estagio = novoVis;
+                this.messageService.add({ severity: 'success', detail: `estagio alterado para ${acao} com sucesso!` });
+            })
+            .catch(erro => this.errorHandler.handle(erro));
     }
 }

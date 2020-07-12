@@ -3,7 +3,6 @@ import { CampanhasService } from './../../../campanhas/services/campanhas.servic
 import { Title } from '@angular/platform-browser';
 import { ErrorHandlerService } from './../../../core/error-handler.service';
 import { MessageService } from 'primeng/api';
-import { UsuarioService } from './../../../usuarios/services/usuario.service';
 import { ClienteService } from './../../../clientes/services/cliente.service';
 import { NegociacoesService } from './../../services/negociacoes.service';
 import { Component, OnInit } from '@angular/core';

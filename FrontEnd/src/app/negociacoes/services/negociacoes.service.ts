@@ -23,6 +23,12 @@ export class NegociacoesService {
         this.negociacaoUrl = `${environment.apiUrl}/negociacoes`;
     }
 
+    detalhar(id: number): Promise<any> {
+        return this.http.get<any>(`${this.negociacaoUrl}/${id}`)
+            .toPromise()
+            .then(response => response.content);
+    }
+
     listarTodas(): Promise<any> {
         return this.http.get<any>(this.negociacaoUrl)
             .toPromise()

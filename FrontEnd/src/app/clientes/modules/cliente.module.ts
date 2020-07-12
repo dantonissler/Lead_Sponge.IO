@@ -1,3 +1,4 @@
+import { ClienteDetalhaComponent } from './../components/cliente-detalha/cliente-detalha.component';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
@@ -22,7 +23,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     ClienteCadastroComponent,
-    ClientePesquisaComponent
+    ClientePesquisaComponent,
+    ClienteDetalhaComponent
   ],
   imports: [
     CommonModule,

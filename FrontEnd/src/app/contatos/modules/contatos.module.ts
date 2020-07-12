@@ -19,8 +19,6 @@ import { ContatoCadastroEmailComponent } from '../components/contato-cadastro-em
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SelectButtonModule } from 'primeng/selectbutton';
 
-
-
 @NgModule({
   declarations: [
     ContatoCadastroComponent,

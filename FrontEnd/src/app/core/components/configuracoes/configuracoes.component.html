@@ -1,4 +1,4 @@
-<div class="container">
+<div class="table">
     <header>
         <h1>Configurações</h1>
     </header>
@@ -26,6 +26,14 @@
         </li>
         <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="auth.temPermissao('PESQUISAR_USUARIO')">
             <a routerLink="/usuarios">Usuarios</a>
+        </li>
+    </ul>
+    <ul class="list-unstyled components">
+        <li class="menusection">
+            Acompanhamento e aprovação de administradores
+        </li>
+        <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="auth.temPermissao('PESQUISAR_FONTE')">
+            <a routerLink="/lixeira">Lixeira</a>
         </li>
     </ul>
 </div>

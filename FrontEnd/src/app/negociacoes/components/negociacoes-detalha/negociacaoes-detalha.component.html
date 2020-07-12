@@ -1,0 +1,67 @@
+<button pButton icon="fas fa-arrow-left fa-2x" pTooltip="Voltar" tooltipPosition="top" (click)="backClicked()"
+    class="ui-button-rounded ui-button-secondary"></button>
+<p>nome</p>
+<p>Empresa/Cliente</p>
+<p-tabMenu [model]="items" [activeItem]="activeItem">
+    <ng-template pTemplate="item" let-item let-i="index">
+        <div class="ui-tabmenu">
+            <div style="position: relative; text-align: center; min-width: 10em;">
+                <div class="ui-menuitem-text">
+                    {{item.label}}
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-tabMenu>
+<p-table #dt [value]="negociacoes">
+    <ng-template pTemplate="header">
+        <tr>
+            <th class="col-funil-header">Funil de vendas</th>
+            <th>Qualificação</th>
+            <th>Valores</th>
+            <th>Data de criação</th>
+            <th>Data de fechamento</th>
+            <th class="col-acoes-header"></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-negociacao>
+        <tr class="ui-selectable-row">
+            <td class="col-funil">
+                <div class="ui-inputgroup">
+                    <span class="ui-column-title">Funil de vendas</span>
+                    <app-funil-de-vendas [negociacao]="negociacao"></app-funil-de-vendas>
+                </div>
+            </td>
+            <td>
+                <div class="ui-inputgroup">
+                    <span class="ui-column-title">Qualificação</span>
+                    <p-rating [(ngModel)]="negociacao.avaliacao" (click)="alternarAvaliacao(negociacao)"
+                        [cancel]="false"></p-rating>
+                </div>
+            </td>
+            <td>
+                <div class="ui-inputgroup">
+                    <span class="ui-column-title">Valores</span>
+                    <ul>
+                        <li> {{negociacao.valorMensa == null ? 'R$ 0,00' : negociacao.valorMensa}}</li>
+                        <li>{{negociacao.valorUnico == null ? 'R$ 0,00' : negociacao.valorUnico}}</li>
+                    </ul>
+                </div>
+            </td>
+            <td></td>
+            <td></td>
+            <td class="col-acoes">
+                <button pButton icon="fas fa-pencil-alt" pTooltip="Editar" tooltipPosition="top"
+                    [routerLink]="['/negociacoes', negociacao.id]" class="ui-button-rounded"></button>
+                <button pButton icon="fas fa-trash" pTooltip="Excluir" tooltipPosition="top"
+                    (click)="confirmarExclusao(negociacao)" class="ui-button-rounded ui-button-danger"></button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+<div style="padding: 0.5em;">
+    <app-historico *ngIf="activeIndex === 0"></app-historico>
+    <app-tarefas *ngIf="activeIndex === 1"></app-tarefas>
+    <app-contatos *ngIf="activeIndex === 2"></app-contatos>
+    <app-produtos *ngIf="activeIndex === 3"></app-produtos>
+</div>

@@ -20,6 +20,7 @@ const routes: Routes = [
   { path: 'configuracoes', loadChildren: () => import('./core/modules/configuracoes.module').then(m => m.ConfiguracoesModule) },
   { path: 'motivoperda', loadChildren: () => import('./motivoPerda/modules/motivo-perda.module').then(m => m.MotivoPerdaModule) },
   { path: 'negociacoes', loadChildren: () => import('./negociacoes/modules/negociacoes.module').then(m => m.NegociacoesModule) },
+  { path: 'lixeira', loadChildren: () => import('./core/lixeira/modules/lixeira.module').then(m => m.LixeiraModule) },
 
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: 'nao-autorizado', component: NaoAutorizadoComponent },

@@ -1,83 +1,93 @@
-<div class="container">
-    <div class="ui-g">
-        <div class="ui-g-12">
-            <p-table #dt [value]="negociacoes" [(selection)]="selectedNegociacao" dataKey="id" [loading]="loading"
-                styleClass="ui-table-customers" [rowHover]="true" [rows]="filtro.itensPorPagina"
-                [showCurrentPageReport]="true" [paginator]="true"
-                currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas" [responsive]="true"
-                [lazy]="true" [totalRecords]="totalRegistros" (onLazyLoad)="aoMudarPagina($event)">
-                <ng-template pTemplate="caption">
-                    <h1>Negociações</h1>
-                    <div class="ui-table-globalfilter-container">
-                        <button pButton label="Nova" routerLink="/negociacoes/novo" iconPos="right"
-                            icon="fa fa-plus"></button>
+<div class="table">
+    <p-table #dt [value]="negociacoes" [(selection)]="selectedNegociacao" dataKey="id" [loading]="loading"
+        styleClass="ui-table-customers" [rowHover]="true" [rows]="filtro.itensPorPagina" [showCurrentPageReport]="true"
+        [paginator]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
+        [responsive]="true" [lazy]="true" [totalRecords]="totalRegistros" (onLazyLoad)="aoMudarPagina($event)">
+        <ng-template pTemplate="caption">
+            <h1>Negociações</h1>
+            <div class="ui-table-globalfilter-container">
+                <button pButton label="Nova" routerLink="/negociacoes/novo" iconPos="right" icon="fa fa-plus"></button>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th></th>
+                <th>Nome</th>
+                <th>Qualificação</th>
+                <th class="col-funil-header">Funil de vendas</th>
+                <th>Valores</th>
+                <th class="col-acoes-header"></th>
+            </tr>
+            <tr>
+                <th>
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th>
+                    <input pInputText type="text" [(ngModel)]="filtro.nome"
+                        (input)="dt.filter($event.target.value, 'nome', 'startsWith')" placeholder="Pesquisar por nome"
+                        class="ui-column-filter">
+                </th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-negociacao>
+            <tr class="ui-selectable-row">
+                <td>
+                    <p-tableCheckbox [value]="negociacao"></p-tableCheckbox>
+                </td>
+                <td>
+                    <div class="ui-inputgroup">
+                        <span class="ui-column-title">Nome</span>
+                        <a icon="fas fa-pencil-alt" pTooltip="{{negociacao.nome}}" tooltipPosition="top"
+                            [routerLink]="['/negociacoes/detalhar', negociacao.id]">{{negociacao.nome}}</a>
                     </div>
-                </ng-template>
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th></th>
-                        <th>Nome</th>
-                        <th>Qualificação</th>
-                        <th class="col-funil-header">Funil de vendas</th>
-                        <th>Valores</th>
-                        <th class="col-acoes-header"></th>
-                    </tr>
-                    <tr>
-                        <th>
-                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                        </th>
-                        <th>
-                            <input pInputText type="text" [(ngModel)]="filtro.nome"
-                                (input)="dt.filter($event.target.value, 'nome', 'startsWith')"
-                                placeholder="Pesquisar por nome" class="ui-column-filter">
-                        </th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-negociacao>
-                    <tr class="ui-selectable-row">
-                        <td>
-                            <p-tableCheckbox [value]="negociacao"></p-tableCheckbox>
-                        </td>
-                        <td>
-                            <span class="ui-column-title">Nome</span>
-                            {{negociacao.nome}}</td>
-                        <td>
-                            <span class="ui-column-title">Qualificação</span>
-                            <p-rating [(ngModel)]="negociacao.avaliacao" (click)="alternarAvaliacao(negociacao)"
-                                [cancel]="false"></p-rating>
-                        </td>
-                        <td class="col-funil">
-                            <span class="ui-column-title">Funil de vendas</span>
-                            <app-funil-de-vendas [estagio]="negociacao.estagio">
-                            </app-funil-de-vendas>
-                        </td>
-                        <td>
-                            <span class="ui-column-title">Valores</span>
-                            <ul>
-                                <li> {{negociacao.valorMensa == null ? 'R$ 0,00' : negociacao.valorMensa}}</li>
-                                <li>{{negociacao.valorUnico == null ? 'R$ 0,00' : negociacao.valorUnico}}</li>
-                            </ul>
-                        </td>
-                        <td class="col-acoes">
-                            <button pButton icon="fas fa-pencil-alt" pTooltip="Editar" tooltipPosition="top"
-                                [routerLink]="['/negociacoes', negociacao.id]"></button>
-                            <button pButton icon="fas fa-trash" pTooltip="Excluir" tooltipPosition="top"
-                                (click)="confirmarExclusao(negociacao)"></button>
-                        </td>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="emptymessage">
-                    <tr>
-                        <td colspan="6" style="text-align:left">
-                            Nenhum negociação encontrada
-                        </td>
-                    </tr>
-                </ng-template>
-            </p-table>
-        </div>
-    </div>
+                    <div class="ui-inputgroup">
+                        <span class="ui-column-title">Empresa/Cliente</span>
+                        <a icon="fas fa-pencil-alt" pTooltip="{{negociacao.cliente.nome}}" tooltipPosition="top"
+                            [routerLink]="['/clientes/detalhar', negociacao.cliente.id]">{{negociacao.cliente.nome}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div class="ui-inputgroup">
+                        <span class="ui-column-title">Qualificação</span>
+                        <p-rating [(ngModel)]="negociacao.avaliacao" (click)="alternarAvaliacao(negociacao)"
+                            [cancel]="false"></p-rating>
+                    </div>
+                </td>
+                <td class="col-funil">
+                    <div class="ui-inputgroup">
+                        <span class="ui-column-title">Funil de vendas</span>
+                        <app-funil-de-vendas [negociacao]="negociacao"></app-funil-de-vendas>
+                    </div>
+                </td>
+                <td>
+
+                    <div class="ui-inputgroup">
+                        <span class="ui-column-title">Valores</span>
+                        <ul>
+                            <li> {{negociacao.valorMensa == null ? 'R$ 0,00' : negociacao.valorMensa}}</li>
+                            <li>{{negociacao.valorUnico == null ? 'R$ 0,00' : negociacao.valorUnico}}</li>
+                        </ul>
+                    </div>
+
+                </td>
+                <td class="col-acoes">
+                    <button pButton icon="fas fa-pencil-alt" pTooltip="Editar" tooltipPosition="top"
+                        [routerLink]="['/negociacoes', negociacao.id]" class="ui-button-rounded"></button>
+                    <button pButton icon="fas fa-trash" pTooltip="Excluir" tooltipPosition="top"
+                        (click)="confirmarExclusao(negociacao)" class="ui-button-rounded ui-button-danger"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="6" style="text-align:left">
+                    Nenhum negociação encontrada
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
 </div>

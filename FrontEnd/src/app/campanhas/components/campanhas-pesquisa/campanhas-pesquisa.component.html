@@ -1,85 +1,82 @@
-<div class="container">
-    <div class="ui-g">
-        <div class="ui-g-12">
-            <p-table [value]="campanhas" [responsive]="true" [paginator]="true" [rows]="filtro.itensPorPagina"
-                [lazy]="true" [totalRecords]="totalRegistros" (onLazyLoad)="aoMudarPagina($event)" #tabela
-                styleClass="ui-table-customers" [loading]="loading" [rowHover]="true">
-                <ng-template pTemplate="caption">
-                    <h1>Campanhas</h1>
-                    <div class="ui-table-globalfilter-container">
-                        <button pButton label="Nova" routerLink="/campanhas/novo"iconPos="right"
-                        icon="fa fa-plus"></button>
-                    </div>
-                </ng-template>
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th></th>
-                        <th>Nome</th>
-                        <th>Criado Por</th>
-                        <th>Alterado Por</th>
-                        <th>Criado em</th>
-                        <th>Alterado em </th>
-                        <th class="col-acoes-header"></th>
-                    </tr>
-                    <tr>
-                        <th>
-                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                        </th>
-                        <th>
-                            <input pInputText type="text" [(ngModel)]="filtro.nome"
-                                (input)="tabela.filter($event.target.value, 'nome', 'startsWith')"
-                                placeholder="Pesquisar pelo nome" class="ui-column-filter" style="width: 160px;">
-                        </th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-campanha>
-                    <tr class="ui-selectable-row">
-                        <td>
-                            <p-tableCheckbox [value]="campanha"></p-tableCheckbox>
-                        </td>
-                        <td>
-                            <span class="ui-column-title">UserName</span>
-                            {{ campanha.nome }}
-                        </td>
-                        <td>
-                            <span class="ui-column-title">Criado Por</span>
-                            {{ campanha.createdByUser }}
-                        </td>
-                        <td>
-                            <span class="ui-column-title">Alterado Por</span>
-                            {{ campanha.modifiedByUser }}
-                        </td>
-                        <td class="col-data">
-                            <span class="ui-column-title">Criado em</span>
-                            {{ campanha.createdAt | date:'dd/MM/yyyy HH:mm' }}
-                        </td>
-                        <td class="col-data">
-                            <span class="ui-column-title">Alterado em</span>
-                            {{ campanha.updatedAt | date:'dd/MM/yyyy HH:mm' }}
-                        </td>
-                        <td class="col-acoes">
-                            <button pButton icon="fas fa-pencil-alt" pTooltip="Editar" tooltipPosition="top"
-                                [routerLink]="['/campanhas', campanha.id]"></button>
+<div class="table">
+    <p-table [value]="campanhas" [responsive]="true" [paginator]="true" [rows]="filtro.itensPorPagina" [lazy]="true"
+        [totalRecords]="totalRegistros" (onLazyLoad)="aoMudarPagina($event)" #tabela styleClass="ui-table-customers"
+        [loading]="loading" [rowHover]="true">
+        <ng-template pTemplate="caption">
+            <button pButton icon="fas fa-arrow-left fa-2x" pTooltip="Voltar" tooltipPosition="top"
+                (click)="backClicked()" class="ui-button-rounded ui-button-secondary"></button>
+            <h1> Campanhas</h1>
+            <div class="ui-table-globalfilter-container">
+                <button pButton label="Nova" routerLink="/campanhas/novo" iconPos="right" icon="fa fa-plus"></button>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th></th>
+                <th>Nome</th>
+                <th>Criado Por</th>
+                <th>Alterado Por</th>
+                <th>Criado em</th>
+                <th>Alterado em </th>
+                <th class="col-acoes-header"></th>
+            </tr>
+            <tr>
+                <th>
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th>
+                    <input pInputText type="text" [(ngModel)]="filtro.nome"
+                        (input)="tabela.filter($event.target.value, 'nome', 'startsWith')"
+                        placeholder="Pesquisar pelo nome" class="ui-column-filter" style="width: 160px;">
+                </th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-campanha>
+            <tr class="ui-selectable-row">
+                <td>
+                    <p-tableCheckbox [value]="campanha"></p-tableCheckbox>
+                </td>
+                <td>
+                    <span class="ui-column-title">UserName</span>
+                    {{ campanha.nome }}
+                </td>
+                <td>
+                    <span class="ui-column-title">Criado Por</span>
+                    {{ campanha.createdByUser }}
+                </td>
+                <td>
+                    <span class="ui-column-title">Alterado Por</span>
+                    {{ campanha.modifiedByUser }}
+                </td>
+                <td class="col-data">
+                    <span class="ui-column-title">Criado em</span>
+                    {{ campanha.createdAt | date:'dd/MM/yyyy HH:mm' }}
+                </td>
+                <td class="col-data">
+                    <span class="ui-column-title">Alterado em</span>
+                    {{ campanha.updatedAt | date:'dd/MM/yyyy HH:mm' }}
+                </td>
+                <td class="col-acoes">
+                    <button pButton icon="fas fa-pencil-alt" pTooltip="Editar" tooltipPosition="top"
+                        [routerLink]="['/campanhas', campanha.id]"></button>
 
-                            <button pButton icon="fas fa-trash" pTooltip="Excluir" tooltipPosition="top"
-                                (click)="confirmarExclusao(campanha)"></button>
-                        </td>
-                    </tr>
-                </ng-template>
+                    <button pButton icon="fas fa-trash" pTooltip="Excluir" tooltipPosition="top"
+                        (click)="confirmarExclusao(campanha)"></button>
+                </td>
+            </tr>
+        </ng-template>
 
-                <ng-template pTemplate="emptymessage">
-                    <tr>
-                        <td colspan="7">
-                            Nenhuma campanha encontrada
-                        </td>
-                    </tr>
-                </ng-template>
-            </p-table>
-        </div>
-    </div>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="7">
+                    Nenhuma campanha encontrada
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
 </div>

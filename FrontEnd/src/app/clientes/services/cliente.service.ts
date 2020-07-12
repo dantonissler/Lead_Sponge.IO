@@ -20,6 +20,12 @@ export class ClienteService {
     this.clienteUrl = `${environment.apiUrl}/clientes`;
   }
 
+  detalhar(id: number): Promise<any> {
+    return this.http.get<any>(`${this.clienteUrl}/${id}`)
+        .toPromise()
+        .then(response => response.content);
+}
+
   listarTodas(): Promise<any> {
     return this.http.get<any>(this.clienteUrl)
       .toPromise()

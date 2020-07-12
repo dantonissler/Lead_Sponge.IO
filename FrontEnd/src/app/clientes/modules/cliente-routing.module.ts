@@ -1,3 +1,4 @@
+import { ClienteDetalhaComponent } from './../components/cliente-detalha/cliente-detalha.component';
 import { ClienteCadastroComponent } from './../components/cliente-cadastro/cliente-cadastro.component';
 import { AuthGuard } from './../../usuarios/auth.guard';
 import { ClientePesquisaComponent } from './../components/cliente-pesquisa/cliente-pesquisa.component';
@@ -22,6 +23,12 @@ const routes: Routes = [
     component: ClienteCadastroComponent,
     canActivate: [AuthGuard],
     data: { roles: ['CADASTRAR_CLIENTE'] }
+  },
+  {
+    path: 'detalhar/:id',
+    component: ClienteDetalhaComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['PESQUISAR_CLIENTE'] }
   }
 ];
 

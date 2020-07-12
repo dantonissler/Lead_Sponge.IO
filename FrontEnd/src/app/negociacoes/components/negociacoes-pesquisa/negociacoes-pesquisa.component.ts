@@ -28,7 +28,7 @@ export class NegociacoesPesquisaComponent implements OnInit {
         private errorHandler: ErrorHandlerService,
         private confirmation: ConfirmationService,
         private messageService: MessageService,
-        private title: Title
+        private title: Title,
     ) { }
 
     ngOnInit(): void {
@@ -84,16 +84,4 @@ export class NegociacoesPesquisaComponent implements OnInit {
             })
             .catch(erro => this.errorHandler.handle(erro));
     }
-/*     alterarFunil(negociacao: any): void {
-        const novoVis = negociacao.estagio;
-        novoVis.id = this.activeIndex;
-        console.log(novoVis.id);
-        this.negociacoesService.mudarEstagio(negociacao.id, novoVis)
-            .then(() => {
-                const acao = novoVis.nome;
-                negociacao.estagio = novoVis;
-                this.messageService.add({ severity: 'success', detail: `estagio alterado para ${acao} com sucesso!` });
-            })
-            .catch(erro => this.errorHandler.handle(erro));
-    } */
 }

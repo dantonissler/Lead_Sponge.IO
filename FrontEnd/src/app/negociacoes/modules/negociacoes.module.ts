@@ -1,3 +1,7 @@
+import { TarefasComponent } from './../components/negociacoes-detalha/tarefas/tarefas.component';
+import { ProdutosComponent } from './../components/negociacoes-detalha/produtos/produtos.component';
+import { HistoricoComponent } from './../components/negociacoes-detalha/historico/historico.component';
+import { ContatosComponent } from './../components/negociacoes-detalha/contatos/contatos.component';
 import { StepsExtendedModule } from '../components/funil-de-vendas/p-steps-extended';
 import { FunilDeVendasComponent } from './../components/funil-de-vendas/funil-de-vendas.component';
 import { MultiSelectModule } from 'primeng/multiselect';
@@ -23,12 +27,19 @@ import { HttpClientModule } from '@angular/common/http';
 import {ContextMenuModule} from 'primeng/contextmenu';
 import {ToastModule} from 'primeng/toast';
 import {ProgressBarModule} from 'primeng/progressbar';
+import {TabMenuModule} from 'primeng/tabmenu';
+import { NegociacaoesDetalhaComponent } from '../components/negociacoes-detalha/negociacaoes-detalha.component';
 
 @NgModule({
   declarations: [
     NegociacoesCadastroComponent,
     NegociacoesPesquisaComponent,
     FunilDeVendasComponent,
+    NegociacaoesDetalhaComponent,
+    ContatosComponent,
+    HistoricoComponent,
+    ProdutosComponent,
+    TarefasComponent
   ],
   imports: [
     CommonModule,
@@ -47,7 +58,7 @@ import {ProgressBarModule} from 'primeng/progressbar';
     MultiSelectModule,
     RatingModule,
     StepsModule,
-    
+    TabMenuModule,
 		ContextMenuModule,
 		ToastModule,
     ProgressBarModule,
