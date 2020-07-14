@@ -1,13 +1,14 @@
 <div class="container">
     <form [formGroup]="formulario" autocomplete="off" (ngSubmit)="salvar()">
-        <div class="ui-g">
+        <div class="ui-fluid p-formgrid p-grid">
             <div class="ui-g-12">
                 <h1>{{ editando ? 'Edição de' : 'Nova' }} Empresa/Cliente</h1>
             </div>
-            <div class="ui-g-12 ui-fluid">
+            <div class="p-field p-col-12 p-md-12">
                 <span class="ui-float-label">
                     <input pInputText type="text" name="nome" formControlName="nome">
-                    <label for="float-input">Nome da empresa ou cliente (pessoa física) <span style="color: crimson;">*</span></label>
+                    <label for="float-input">Nome da empresa ou cliente (pessoa física) <span
+                            style="color: crimson;">*</span></label>
                 </span>
                 <app-message [control]="formulario.get('nome')" error="obrigatoriedade"
                     text="Informe o um nome para o cliente.">
@@ -16,30 +17,71 @@
                     text="Mínimo de {{ formulario.get('nome').errors?.tamanhoMinimo?.tamanho }} caracteres.">
                 </app-message>
             </div>
-            <div class="ui-g-12 ui-md-12 ui-fluid" formGroupName="segmento">
+            <div class="p-field p-col-12 p-md-12" formGroupName="segmento">
                 <p-dropdown name="segmento" [options]="segmentos" placeholder="Selecione um Segmento" [filter]="true"
                     formControlName="id" [virtualScroll]="true" [itemSize]="10"></p-dropdown>
             </div>
-            <div class="ui-g-12 ui-fluid">
+            <div class="p-field p-col-12 p-md-12">
                 <span class="ui-float-label">
                     <input pInputText type="text" name="url" formControlName="url">
                     <label for="float-input">Url</label>
                 </span>
             </div>
-            <div class="ui-g-12 ui-fluid">
+            <div class="p-field p-col-12 p-md-12">
                 <span class="ui-float-label">
                     <input pInputText type="text" name="resumo" formControlName="resumo">
                     <label for="float-input">Resumo</label>
                 </span>
             </div>
-            <div class="ui-g-12 cadastro-acoes">
-                <button pButton value="submit" type="submit" label="Salvar" [disabled]="formulario.invalid"
-                    style="padding-left:10;"></button>
-                <button pButton value="Limpar" type="button" label="Limpar" class="ui-button-info" (click)="limpar()"
-                    style="padding-left:10;"></button>
-                <button pButton value="Pesquisar" type="button" label="Pesquisar" class="ui-button-info"
-                    Clabel="Pesquisa" routerLink="/clientes" style="padding-left:10;"></button>
+            <div class="p-field p-col">
+                <p-panel header="Contatos">
+                    <div formArrayName="contato">
+                        <div *ngFor="let contat of contatoFormGroup.controls; let i = index;">
+                            <div [formGroupName]="i" class="ui-fluid p-formgrid p-grid">
+                                <div class="p-field p-col">
+                                    <span class="ui-float-label">
+                                        <input pInputText type="text" formControlName="nome">
+                                        <label for="float-input">Nome <span style="color: crimson;">*</span></label>
+                                    </span>
+                                    <app-message [control]="getContatosFormGroup(i).get('nome')" error="obrigatoriedade"
+                                        text="Informe o um nome para o contato.">
+                                    </app-message>
+                                    <app-message [control]="getContatosFormGroup(i).get('nome')" error="tamanhoMinimo"
+                                        text="Mínimo de {{ getContatosFormGroup(i).get('nome').errors?.tamanhoMinimo?.tamanho }} caracteres.">
+                                    </app-message>
+                                </div>
+                                <div class="p-field p-col">
+                                    <span class="ui-float-label">
+                                        <input pInputText type="text" formControlName="cargo">
+                                        <label for="float-input">Cargo</label>
+                                    </span>
+                                </div>
+                                <div class="p-field p-col-1">
+                                    <button pButton type="button" icon="fas fa-trash" pTooltip="Remover contato"
+                                        tooltipPosition="top" (click)="removerContato(i)"
+                                        class="ui-button-rounded ui-button-danger"></button>
+                                </div>
+                            </div>
+                            <p>adicionar telefone</p>
+                            <p>adicionar email</p>
+                        </div>
+                        <div class="p-field p-col-12 p-md-12">
+                            <button pButton type="button" icon="fas fa-plus" pTooltip="Adicionar contato"
+                                tooltipPosition="top" class="ui-button-rounded" (click)="adicionarContato()"></button>
+                        </div>
+                    </div>
+                </p-panel>
+
             </div>
         </div>
+        <div class="p-col-12 p-md-12 cadastro-acoes">
+            <button pButton value="submit" type="submit" label="Salvar" [disabled]="formulario.invalid"
+                style="padding-left:10;"></button>
+            <button pButton value="Limpar" type="button" label="Limpar" class="ui-button-info" (click)="limpar()"
+                style="padding-left:10;"></button>
+            <button pButton value="Pesquisar" type="button" label="Pesquisar" class="ui-button-info" Clabel="Pesquisa"
+                routerLink="/clientes" style="padding-left:10;"></button>
+        </div>
+
     </form>
 </div>

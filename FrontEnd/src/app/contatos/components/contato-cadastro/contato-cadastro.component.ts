@@ -1,3 +1,4 @@
+import { Cliente } from './../../../clientes/models/cliente.models';
 import { Title } from '@angular/platform-browser';
 import { ErrorHandlerService } from './../../../core/error-handler.service';
 import { MessageService } from 'primeng/api';
@@ -7,86 +8,91 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-contato-cadastro',
-  templateUrl: './contato-cadastro.component.html',
-  styleUrls: ['./contato-cadastro.component.scss']
+    selector: 'app-contato-cadastro',
+    templateUrl: './contato-cadastro.component.html',
+    styleUrls: ['./contato-cadastro.component.scss']
 })
 export class ContatoCadastroComponent implements OnInit {
 
-  contato = new Contato();
+    contato = new Contato();
+    clientes: any[];
+    clienteSelecionado: number;
 
-  constructor(
-    private contatoService: ContatoService,
-    private messageService: MessageService,
-    private errorHandler: ErrorHandlerService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private title: Title
-  ) { }
+    constructor(
+        private contatoService: ContatoService,
+        private messageService: MessageService,
+        private errorHandler: ErrorHandlerService,
+        private route: ActivatedRoute,
+        private router: Router,
+        private title: Title
+    ) { }
 
-  ngOnInit() {
-    const idContato = this.route.snapshot.params['id'];
-
-    this.title.setTitle('Nova Contato');
-
-    if (idContato) {
-      this.carregarContato(idContato);
+    ngOnInit() {
+        const idContato = this.route.snapshot.params['id'];
+        this.carregarClientes();
+        this.title.setTitle('Nova Contato');
+        if (idContato) {
+            this.carregarContato(idContato);
+        }
     }
-  }
 
-  get editando() {
-    return Boolean(this.contato.id)
-  }
-
-  carregarContato(id: number) {
-    this.contatoService.buscarPorId(id)
-      .then(contato => {
-        this.contato = contato;
-
-        this.atualizarTituloEdicao();
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  salvar(form) {
-    if (this.editando) {
-      this.atualizarContato(form);
-    } else {
-      this.adicionarContato(form);
+    get editando() {
+        return Boolean(this.contato.id)
     }
-  }
 
-  adicionarContato(form) {
-    this.contatoService.adicionar(this.contato)
-      .then(contatoAdicionada => {
-        this.messageService.add({ severity: 'success', detail: 'contato adicionada com sucesso!' });
-        this.router.navigate(['/contatos', contatoAdicionada.id]);
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
+    carregarContato(id: number) {
+        this.contatoService.buscarPorId(id)
+            .then(contato => {
+                this.contato = contato;
+                console.log(contato)
+                this.atualizarTituloEdicao();
+            })
+            .catch(erro => this.errorHandler.handle(erro));
+    }
 
-  atualizarContato(form) {
-    this.contatoService.atualizar(this.contato)
-      .then(contato => {
-        this.contato = contato;
+    carregarClientes() {
+        this.contatoService.listarCliente().then(lista => {
+            this.clientes = lista.map(uf => ({ label: uf.nome, value: uf.id }));
+        })
+            .catch(erro => this.errorHandler.handle(erro));
+    }
 
-        this.messageService.add({ severity: 'success', detail: 'Contato alterada com sucesso!' });
-        this.atualizarTituloEdicao();
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
+    salvar(form) {
+        if (this.editando) {
+            this.atualizarContato(form);
+        } else {
+            this.adicionarContato(form);
+        }
+    }
 
-  limpar(form) {
-    form.reset();
+    adicionarContato(form) {
+        this.contatoService.adicionar(this.contato)
+            .then(contatoAdicionada => {
+                this.messageService.add({ severity: 'success', detail: 'contato adicionada com sucesso!' });
+                this.router.navigate(['/contatos', contatoAdicionada.id]);
+            })
+            .catch(erro => this.errorHandler.handle(erro));
+    }
 
-    setTimeout(function() {
-      this.contato = new Contato();
-    }.bind(this), 1);
+    atualizarContato(form) {
+        this.contatoService.atualizar(this.contato)
+            .then(contato => {
+                this.contato = contato;
+                this.messageService.add({ severity: 'success', detail: 'Contato alterada com sucesso!' });
+                this.atualizarTituloEdicao();
+            })
+            .catch(erro => this.errorHandler.handle(erro));
+    }
 
-    this.router.navigate(['/contatos/novo']);
-  }
+    limpar(form) {
+        form.reset();
+        setTimeout(function () {
+            this.contato = new Contato();
+        }.bind(this), 1);
+        this.router.navigate(['/contatos/novo']);
+    }
 
-  atualizarTituloEdicao() {
-    this.title.setTitle(`Edição de contato: ${this.contato.nome}`);
-  }
+    atualizarTituloEdicao() {
+        this.title.setTitle(`Edição de contato: ${this.contato.nome}`);
+    }
 }

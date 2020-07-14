@@ -1,11 +1,13 @@
+import { Contato } from './../../contatos/models/contato.models';
 import { Segmento } from 'src/app/segmentos/models/segmento.models';
 
 export class Cliente{
     id: number;
     nome: string;
-    segmento = new Array<Segmento>();
+    /* segmento = new Array<Segmento>(); */
 	url: string;
     resumo: string;
+    /* contato = new Array<Contato>(); */
     createdAt: Date;
     updatedAt: Date;
     createdByUser: string;

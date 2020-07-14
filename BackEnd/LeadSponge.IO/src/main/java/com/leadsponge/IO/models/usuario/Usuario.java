@@ -1,6 +1,7 @@
 package com.leadsponge.IO.models.usuario;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -97,7 +98,7 @@ public class Usuario extends UserDateAudit implements UserDetails, Serializable 
 	@JsonIgnoreProperties("usuario")
 	@Valid
 	@OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
-	private List<Tarefa> tarefas;
+	private List<Tarefa> tarefas = new ArrayList<>();
 
 	public Long getId() {
 		return id;

@@ -40,11 +40,21 @@ class ClienteEndPoint extends CrudController {
 	@Autowired
 	private final ApplicationEventPublisher publisher;
 
-	ClienteEndPoint(ClienteRepository repository, ApplicationEventPublisher publisher,
-			ClienteService clienteService) {
+	ClienteEndPoint(ClienteRepository repository, ApplicationEventPublisher publisher, ClienteService clienteService) {
 		this.repository = repository;
 		this.publisher = publisher;
 		this.clienteService = clienteService;
+	}
+
+	@GetMapping(value = { "listar", "listar/" })
+	@PreAuthorize("hasAuthority('PESQUISAR_CLIENTE') and #oauth2.hasScope('read')")
+	public ResponseEntity<Iterable<?>> listar() {
+		Iterable<Cliente> cliente = repository.findAll();
+		if (cliente == null) {
+			return ResponseEntity.notFound().build();
+		} else {
+			return ResponseEntity.ok(cliente);
+		}
 	}
 
 	@GetMapping(value = { "", "/" })

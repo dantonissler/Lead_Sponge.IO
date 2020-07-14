@@ -20,31 +20,31 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SelectButtonModule } from 'primeng/selectbutton';
 
 @NgModule({
-  declarations: [
-    ContatoCadastroComponent,
-    ContatoPesquisaComponent,
-    ContatoCadastroTelefoneComponent,
-    ContatoCadastroEmailComponent
-  ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
+    declarations: [
+        ContatoCadastroComponent,
+        ContatoPesquisaComponent,
+        ContatoCadastroTelefoneComponent,
+        ContatoCadastroEmailComponent
+    ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
 
-    CheckboxModule,
-    InputTextModule,
-    ButtonModule,
-    TableModule,
-    TooltipModule,
-    InputMaskModule,
-    PanelModule,
-    DialogModule,
-    DropdownModule,
-    MultiSelectModule,
-    SelectButtonModule,
-    
-    SharedModule,
-    ContatoRoutingModule
-  ]
+        CheckboxModule,
+        InputTextModule,
+        ButtonModule,
+        TableModule,
+        TooltipModule,
+        InputMaskModule,
+        PanelModule,
+        DialogModule,
+        DropdownModule,
+        MultiSelectModule,
+        SelectButtonModule,
+
+        SharedModule,
+        ContatoRoutingModule
+    ]
 })
 export class ContatoModule { }

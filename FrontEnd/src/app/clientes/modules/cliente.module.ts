@@ -1,3 +1,6 @@
+import { TelefoneComponent } from './../components/cliente-cadastro/telefone/telefone.component';
+import { ContatoComponent } from './../components/cliente-cadastro/contato/contato.component';
+import { EmailComponent } from './../components/cliente-cadastro/email/email.component';
 import { ClienteDetalhaComponent } from './../components/cliente-detalha/cliente-detalha.component';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { MultiSelectModule } from 'primeng/multiselect';
@@ -18,13 +21,14 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-
-
 @NgModule({
   declarations: [
     ClienteCadastroComponent,
     ClientePesquisaComponent,
-    ClienteDetalhaComponent
+    ClienteDetalhaComponent,
+    TelefoneComponent,
+    EmailComponent,
+    ContatoComponent
   ],
   imports: [
     CommonModule,

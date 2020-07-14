@@ -6,8 +6,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.leadsponge.IO.models.cliente.Cliente;
 import com.leadsponge.IO.models.contato.Contato;
+import com.leadsponge.IO.repository.cliente.ClienteRepository;
 import com.leadsponge.IO.repository.contato.ContatoRepository;
+import com.leadsponge.IO.security.exception.UsuarioInativaException;
 
 @Service
 public class ContatoService {
@@ -15,7 +18,11 @@ public class ContatoService {
 	@Autowired
 	private ContatoRepository contatoRepository;
 
+	@Autowired
+	private ClienteRepository clienteRepository;
+
 	public Contato salvar(Contato contato) {
+		validarContato(contato);
 		contato.getTelefone().forEach(c -> c.setContato(contato));
 		contato.getEmail().forEach(c -> c.setContato(contato));
 		return contatoRepository.save(contato);
@@ -39,5 +46,16 @@ public class ContatoService {
 			throw new IllegalArgumentException();
 		}
 		return campanhaSalvo.get();
+	}
+
+	private void validarContato(Contato contato) {
+		Cliente cliente = null;
+		if (contato.getCliente().getId() != null) {
+			cliente = clienteRepository.getOne(contato.getCliente().getId());
+		}
+
+		if (cliente == null) {
+			throw new UsuarioInativaException();
+		}
 	}
 }

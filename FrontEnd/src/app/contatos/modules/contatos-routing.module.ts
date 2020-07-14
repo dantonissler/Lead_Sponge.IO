@@ -2,8 +2,6 @@ import { ContatoCadastroComponent } from './../components/contato-cadastro/conta
 import { ContatoPesquisaComponent } from './../components/contato-pesquisa/contato-pesquisa.component';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './../../usuarios/auth.guard';
-import { ClienteCadastroComponent } from './../../clientes/components/cliente-cadastro/cliente-cadastro.component';
-import { ClientePesquisaComponent } from './../../clientes/components/cliente-pesquisa/cliente-pesquisa.component';
 import { NgModule } from '@angular/core';
 
 const routes: Routes = [

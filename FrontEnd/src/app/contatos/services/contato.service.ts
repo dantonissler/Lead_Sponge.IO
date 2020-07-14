@@ -1,3 +1,4 @@
+import { Cliente } from './../../clientes/models/cliente.models';
 import { Contato } from './../models/contato.models';
 import { HttpParams } from '@angular/common/http';
 import { MoneyHttp } from './../../usuarios/money-http';
@@ -16,9 +17,11 @@ export class ContatoFiltro {
 export class ContatoService {
 
   contatoUrl: string;
+  clienteUrl: string;
 
   constructor(private http: MoneyHttp) {
     this.contatoUrl = `${environment.apiUrl}/contatos`;
+    this.clienteUrl = `${environment.apiUrl}/clientes`;
   }
   listarTodas(): Promise<any> {
     return this.http.get<any>(this.contatoUrl)
@@ -67,5 +70,8 @@ export class ContatoService {
   buscarPorId(id: number): Promise<Contato> {
     return this.http.get<Contato>(`${this.contatoUrl}/${id}`)
       .toPromise();
+  }
+  listarCliente(): Promise<Cliente[]> {
+    return this.http.get<Cliente[]>(`${this.clienteUrl}/listar`).toPromise();
   }
 }

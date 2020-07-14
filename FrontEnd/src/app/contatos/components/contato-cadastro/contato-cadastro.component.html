@@ -21,6 +21,13 @@
                     <label for="float-input">Cargo</label>
                 </span>
             </div>
+            <div class="ui-g-12 ui-fluid">
+                <p-dropdown placeholder="Selecione um cliente *" [filter]="true" [options]="clientes"
+                    [(ngModel)]="contato.cliente.id" name="cliente" (onChange)="carregarClientes()" 
+                    #cliente="ngModel" required>
+                </p-dropdown>
+                <app-message [control]="cliente" error="required" text="Informe o cliente"></app-message>
+            </div>
             <div class="ui-g-6">
                 <p-panel header="Telefones">
                     <app-contato-cadastro-telefone [telefones]="contato.telefone"></app-contato-cadastro-telefone>

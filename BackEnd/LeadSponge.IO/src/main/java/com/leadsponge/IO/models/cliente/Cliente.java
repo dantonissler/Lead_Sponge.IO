@@ -1,15 +1,18 @@
 package com.leadsponge.IO.models.cliente;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
@@ -50,22 +53,22 @@ public class Cliente extends UserDateAudit {
 	@JsonIgnoreProperties("cliente")
 	@Valid
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Contato> contato;
+	private List<Contato> contato = new ArrayList<>();
 
 	@JsonIgnoreProperties("cliente")
 	@Valid
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Tarefa> tarefas;
+	private List<Tarefa> tarefas = new ArrayList<>();
 
 	@JsonIgnoreProperties("cliente")
 	@Valid
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Negociacao> negociacoes;
 
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JsonIgnoreProperties("clientes")
-	@ManyToOne
-	@JoinColumn(name = "segmento_id")
-	private Segmento segmento;
+	@JoinTable(name = "segmentos_clientes", joinColumns = @JoinColumn(name = "cliente_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "segmento_id", referencedColumnName = "id"))
+	private List<Segmento> segmentos = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -123,12 +126,12 @@ public class Cliente extends UserDateAudit {
 		this.negociacoes = negociacoes;
 	}
 
-	public Segmento getSegmento() {
-		return segmento;
+	public List<Segmento> getSegmentos() {
+		return segmentos;
 	}
 
-	public void setSegmento(Segmento segmento) {
-		this.segmento = segmento;
+	public void setSegmentos(List<Segmento> segmentos) {
+		this.segmentos = segmentos;
 	}
 
 	@Override

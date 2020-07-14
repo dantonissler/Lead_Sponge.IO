@@ -1,18 +1,15 @@
 package com.leadsponge.IO.models.segmento;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
-import javax.validation.Valid;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -38,10 +35,9 @@ public class Segmento extends UserDateAudit {
 	@Size(min = 4, max = 50)
 	private String nome;
 
-	@JsonIgnoreProperties("segmento")
-	@Valid
-	@OneToMany(mappedBy = "segmento", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Cliente> clientes = new ArrayList<>();
+	@ManyToMany(mappedBy = "segmentos")
+	@JsonIgnoreProperties("segmentos")
+	private List<Cliente> clientes;
 
 	public Segmento() {
 		// TODO Auto-generated constructor stub
