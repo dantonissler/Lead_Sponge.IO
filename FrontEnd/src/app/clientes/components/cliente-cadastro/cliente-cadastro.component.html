@@ -4,7 +4,7 @@
             <div class="ui-g-12">
                 <h1>{{ editando ? 'Edição de' : 'Nova' }} Empresa/Cliente</h1>
             </div>
-            <div class="p-field p-col-12 p-md-12">
+            <div class="p-field p-col-12 p-md-12 ui-fluid">
                 <span class="ui-float-label">
                     <input pInputText type="text" name="nome" formControlName="nome">
                     <label for="float-input">Nome da empresa ou cliente (pessoa física) <span
@@ -17,61 +17,177 @@
                     text="Mínimo de {{ formulario.get('nome').errors?.tamanhoMinimo?.tamanho }} caracteres.">
                 </app-message>
             </div>
-            <div class="p-field p-col-12 p-md-12" formGroupName="segmento">
-                <p-dropdown name="segmento" [options]="segmentos" placeholder="Selecione um Segmento" [filter]="true"
-                    formControlName="id" [virtualScroll]="true" [itemSize]="10"></p-dropdown>
+            <div class="p-field p-col-12 p-md-6 ui-fluid"><!-- Não aumentar o tamanho pois o style tem limitação -->
+                <p-multiSelect formControlName="segmentos" [options]="segmentos" [(ngModel)]="selectedSegmentos"
+                    emptyFilterMessage="Nenhum resultado encontrado" [style]="{'border': 'none'}">
+                    <ng-template let-value pTemplate="selectedItems">
+                        <div *ngFor="let val of value" class="ui-multiselected-item-token ui-corner-all">
+                            <span>{{val.nome}}</span>
+                        </div>
+                        <span *ngIf="!value || value.length === 0"
+                            class="ui-multiselected-empty-token ui-corner-all">Selecione os segmentos</span>
+                    </ng-template>
+                    <ng-template let-segmento pTemplate="item">
+                        <div style="font-size:14px;float: right; width: 90%; margin-top:4px">
+                            {{segmento.label}}
+                        </div>
+                    </ng-template>
+                </p-multiSelect>
             </div>
-            <div class="p-field p-col-12 p-md-12">
+            <div class="p-field p-col-12 p-md-12 ui-fluid">
                 <span class="ui-float-label">
                     <input pInputText type="text" name="url" formControlName="url">
                     <label for="float-input">Url</label>
                 </span>
             </div>
-            <div class="p-field p-col-12 p-md-12">
+            <div class="p-field p-col-12 p-md-12 ui-fluid">
                 <span class="ui-float-label">
-                    <input pInputText type="text" name="resumo" formControlName="resumo">
+                    <textarea pInputTextarea rows="3" name="resumo" formControlName="resumo"></textarea>
                     <label for="float-input">Resumo</label>
                 </span>
             </div>
-            <div class="p-field p-col">
+            <div class="p-field p-col-12 p-md-12 ui-fluid">
                 <p-panel header="Contatos">
                     <div formArrayName="contato">
-                        <div *ngFor="let contat of contatoFormGroup.controls; let i = index;">
-                            <div [formGroupName]="i" class="ui-fluid p-formgrid p-grid">
-                                <div class="p-field p-col">
-                                    <span class="ui-float-label">
-                                        <input pInputText type="text" formControlName="nome">
-                                        <label for="float-input">Nome <span style="color: crimson;">*</span></label>
-                                    </span>
-                                    <app-message [control]="getContatosFormGroup(i).get('nome')" error="obrigatoriedade"
-                                        text="Informe o um nome para o contato.">
-                                    </app-message>
-                                    <app-message [control]="getContatosFormGroup(i).get('nome')" error="tamanhoMinimo"
-                                        text="Mínimo de {{ getContatosFormGroup(i).get('nome').errors?.tamanhoMinimo?.tamanho }} caracteres.">
-                                    </app-message>
-                                </div>
-                                <div class="p-field p-col">
-                                    <span class="ui-float-label">
-                                        <input pInputText type="text" formControlName="cargo">
-                                        <label for="float-input">Cargo</label>
-                                    </span>
-                                </div>
-                                <div class="p-field p-col-1">
-                                    <button pButton type="button" icon="fas fa-trash" pTooltip="Remover contato"
-                                        tooltipPosition="top" (click)="removerContato(i)"
-                                        class="ui-button-rounded ui-button-danger"></button>
-                                </div>
+                        <div class="ui-fluid p-formgrid p-grid">
+                            <div *ngFor="let contat of getContatos(formulario); let i = index;"
+                                class="p-field p-col-12 p-md-6 ui-fluid">
+                                <p-card header="{{ editando ? 'Edição de' : 'Novo' }} contato" subheader=""
+                                    styleClass="ui-card-shadow">
+                                    <p-header></p-header>
+                                    <div [formGroupName]="i" class="ui-fluid p-formgrid p-grid">
+                                        <div class="p-field p-col p-md ui-fluid">
+                                            <span class="ui-float-label">
+                                                <input pInputText type="text" formControlName="nome">
+                                                <label for="float-input">Nome <span
+                                                        style="color: crimson;">*</span></label>
+                                            </span>
+                                            <app-message [control]="getContatos(formulario)[i].get('nome')"
+                                                error="obrigatoriedade" text="Informe o um nome para o cliente.">
+                                            </app-message>
+                                            <app-message [control]="getContatos(formulario)[i].get('nome')"
+                                                error="tamanhoMinimo"
+                                                text="Mínimo de {{ getContatos(formulario)[i].get('nome').errors?.tamanhoMinimo?.tamanho }} caracteres.">
+                                            </app-message>
+                                        </div>
+                                        <div class="p-field p-col p-md ui-fluid">
+                                            <span class="ui-float-label">
+                                                <input pInputText type="text" formControlName="cargo">
+                                                <label for="float-input">Cargo</label>
+                                            </span>
+                                        </div>
+                                        <div formArrayName="telefone" class="p-field p-col-12">
+                                            <div *ngFor="let telefon of getTelefones(contat); let j = index;">
+                                                <div [formGroupName]="j" class="ui-fluid p-formgrid p-grid">
+                                                    <div class="p-field p-col p-md ui-fluid">
+                                                        <div class="ui-inputgroup">
+                                                            <span class="ui-inputgroup-addon"><i class="fas fa-phone"
+                                                                    style="line-height: 1.25;"></i></span>
+                                                            <span class="ui-float-label">
+                                                                <p-inputMask formControlName="numero"
+                                                                    mask="(99) 99999-999?9" [style]="{'border-top': 'none',
+                                                                        'border-left': 'none',
+                                                                        'border-right': 'none'}">
+                                                                </p-inputMask>
+                                                                <label for="float-input">Telefone <span
+                                                                        style="color: crimson;">*</span></label>
+                                                            </span>
+                                                        </div>
+                                                        <app-message [control]="getTelefones(contat)[j].get('numero')"
+                                                            error="obrigatoriedade" text="Informe o um numero.">
+                                                        </app-message>
+                                                    </div>
+                                                    <div class="p-field p-col p-md ui-fluid">
+                                                        <p-dropdown name="tipo" formControlName="tipo" [options]="tipos"
+                                                            [(ngModel)]="selectedTipo" [style]="{'border': 'none'}">
+                                                            <ng-template let-item pTemplate="selectedItem">
+                                                                <span style="vertical-align:middle; margin-left: .5em">
+                                                                    <i class="{{item.icon}}"></i>
+                                                                    {{item.label}}</span>
+                                                            </ng-template>
+                                                            <ng-template let-tipo pTemplate="tipo">
+                                                                <div class="ui-helper-clearfix"
+                                                                    style="position: relative;height: 25px;">
+                                                                    <div style="font-size:14px;margin-top:4px"><i
+                                                                            class="{{tipo.icon}}"></i>
+                                                                        {{ tipo.label }}
+                                                                        <!-- {{ tipo.label === 'Residencial' ? 'Residencial' : 
+                                                                        tipo.label === 'Comercial' ? 'Comercial' : 
+                                                                        tipo.label === 'Pessoal' ? 'Pessoal' :
+                                                                        tipo.label === 'Fax' ? 'Faxs' : '' }} -->
+                                                                    </div>
+                                                                </div>
+                                                            </ng-template>
+                                                        </p-dropdown>
+                                                    </div>
+                                                    <div class="p-field p-col-1 p-md ui-fluid">
+                                                        <button pButton type="button" icon="fas fa-trash"
+                                                            pTooltip="Remover telefone" tooltipPosition="top"
+                                                            (click)="removerTelefone(i)"
+                                                            class="ui-button-rounded ui-button-danger"></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="p-field p-col p-md">
+                                                <button pButton type="button" icon="fas fa-plus"
+                                                    pTooltip="Adicionar telefone" tooltipPosition="top"
+                                                    class="ui-button-rounded" (click)="adicionarTelefone(i)"></button>
+                                            </div>
+                                        </div>
+                                        <div formArrayName="email" class="p-field p-col-12">
+                                            <div *ngFor="let emai of getEmails(contat); let j = index;">
+                                                <div [formGroupName]="j" class="ui-fluid p-formgrid p-grid">
+                                                    <div class="p-field p-col p-md ui-fluid">
+                                                        <div class="ui-inputgroup">
+                                                            <span class="ui-inputgroup-addon"><i class="fas fa-envelope"
+                                                                    style="line-height: 1.25;"></i></span>
+                                                            <span class="ui-float-label">
+                                                                <input pInputText type="email" formControlName="email">
+                                                                <label for="float-input">E-mail <span
+                                                                        style="color: crimson;">*</span></label>
+                                                            </span>
+                                                        </div>
+                                                        <app-message [control]="getEmails(contat)[j].get('email')"
+                                                            error="obrigatoriedade" text="Informe o um E-mail.">
+                                                        </app-message>
+                                                        <app-message [control]="getEmails(contat)[j].get('email')"
+                                                            error="email" text="Por gentileza insira um E-mail valido.">
+                                                        </app-message>
+                                                    </div>
+                                                    <div class="p-field p-col-1 p-md ui-fluid">
+                                                        <button pButton type="button" icon="fas fa-trash"
+                                                            pTooltip="Remover E-mail" tooltipPosition="top"
+                                                            (click)="removerEmail(i)"
+                                                            class="ui-button-rounded ui-button-danger"></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="p-field p-col p-md">
+                                                <button pButton type="button" icon="fas fa-plus"
+                                                    pTooltip="Adicionar email" tooltipPosition="top"
+                                                    class="ui-button-rounded" (click)="adicionarEmail(i)"></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr style="width: 100%;">
+                                    <p-footer>
+                                        <div class="p-field p-col-1 p-md ui-fluid">
+                                            <button pButton type="button" icon="fas fa-trash" pTooltip="Remover contato"
+                                                tooltipPosition="top" (click)="removerContato(i)"
+                                                class="ui-button-rounded ui-button-danger"></button>
+                                        </div>
+                                    </p-footer>
+                                </p-card>
                             </div>
-                            <p>adicionar telefone</p>
-                            <p>adicionar email</p>
                         </div>
-                        <div class="p-field p-col-12 p-md-12">
+
+                        <div class="p-col-12 p-md-12">
+                            <br>
                             <button pButton type="button" icon="fas fa-plus" pTooltip="Adicionar contato"
                                 tooltipPosition="top" class="ui-button-rounded" (click)="adicionarContato()"></button>
                         </div>
                     </div>
                 </p-panel>
-
             </div>
         </div>
         <div class="p-col-12 p-md-12 cadastro-acoes">
@@ -82,6 +198,6 @@
             <button pButton value="Pesquisar" type="button" label="Pesquisar" class="ui-button-info" Clabel="Pesquisa"
                 routerLink="/clientes" style="padding-left:10;"></button>
         </div>
-
     </form>
+    <!-- <pre> {{formulario.value | json}} </pre> -->
 </div>

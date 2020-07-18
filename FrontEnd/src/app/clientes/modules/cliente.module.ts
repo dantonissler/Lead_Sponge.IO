@@ -1,8 +1,6 @@
-import { TelefoneComponent } from './../components/cliente-cadastro/telefone/telefone.component';
-import { ContatoComponent } from './../components/cliente-cadastro/contato/contato.component';
-import { EmailComponent } from './../components/cliente-cadastro/email/email.component';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { InputSwitchModule } from 'primeng/inputswitch';
 import { ClienteDetalhaComponent } from './../components/cliente-detalha/cliente-detalha.component';
-import { SelectButtonModule } from 'primeng/selectbutton';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
 import { DialogModule } from 'primeng/dialog';
@@ -20,15 +18,13 @@ import { ClienteCadastroComponent } from './../components/cliente-cadastro/clien
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {CardModule} from 'primeng/card';
 
 @NgModule({
   declarations: [
     ClienteCadastroComponent,
     ClientePesquisaComponent,
     ClienteDetalhaComponent,
-    TelefoneComponent,
-    EmailComponent,
-    ContatoComponent
   ],
   imports: [
     CommonModule,
@@ -37,6 +33,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
     CheckboxModule,
     InputTextModule,
+    InputTextareaModule,
     ButtonModule,
     TableModule,
     TooltipModule,
@@ -45,7 +42,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     DialogModule,
     DropdownModule,
     MultiSelectModule,
-    SelectButtonModule,
+    CardModule,
 
     SharedModule,
     ClienteRoutingModule

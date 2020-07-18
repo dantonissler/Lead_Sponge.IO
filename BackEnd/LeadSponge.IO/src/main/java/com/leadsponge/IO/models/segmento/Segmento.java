@@ -2,6 +2,7 @@ package com.leadsponge.IO.models.segmento;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -35,7 +36,7 @@ public class Segmento extends UserDateAudit {
 	@Size(min = 4, max = 50)
 	private String nome;
 
-	@ManyToMany(mappedBy = "segmentos")
+	@ManyToMany(mappedBy = "segmentos", cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("segmentos")
 	private List<Cliente> clientes;
 

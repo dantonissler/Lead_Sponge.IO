@@ -1,7 +1,9 @@
 <div class="table">
     <p-table [value]="clientes" [responsive]="true" [paginator]="true" [rows]="filtro.itensPorPagina" [lazy]="true"
         [totalRecords]="totalRegistros" (onLazyLoad)="aoMudarPagina($event)" [loading]="loading" #tabela
-        styleClass="ui-table-customers" [rowHover]="true">
+        styleClass="ui-table-customers" [rowHover]="true" [rowsPerPageOptions]="[5, 10, 25, 50]"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas">
         <ng-template pTemplate="caption">
             <h1>Empresas/Clientes</h1>
             <div class="ui-table-globalfilter-container">
@@ -45,7 +47,7 @@
                 </td>
                 <td>
                     <span class="ui-column-title">Segmento</span>
-                    {{ cliente.segmento?.nome }}
+                    {{ cliente.segmento?.nome | json}}
                 </td>
                 <td></td>
                 <td></td>

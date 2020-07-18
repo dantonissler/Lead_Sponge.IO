@@ -1,3 +1,4 @@
+import { UsuarioDetalharComponent } from './../components/usuario-detalhar/usuario-detalhar.component';
 import { UsuarioCadastrarComponent } from '../components/usuario-cadastrar/usuario-cadastrar.component';
 import { UsuarioListarComponent } from '../components/usuario-listar/usuario-listar.component';
 import { AuthGuard } from '../auth.guard';
@@ -8,6 +9,12 @@ const routes: Routes = [
   {
     path: '',
     component: UsuarioListarComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['PESQUISAR_USUARIO'] }
+  },
+  {
+    path: 'detalhar/:id',
+    component: UsuarioDetalharComponent,
     canActivate: [AuthGuard],
     data: { roles: ['PESQUISAR_USUARIO'] }
   },

@@ -59,7 +59,7 @@ public class Negociacao extends UserDateAudit {
 	@Column(name = "avaliacao")
 	@NotNull
 	private Integer avaliacao;
-	
+
 	@Column(name = "dataPrevistaEncerramento")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private Date dataPrevistaEncerramento;
@@ -84,8 +84,7 @@ public class Negociacao extends UserDateAudit {
 	private Campanha campanha;
 
 	@ManyToOne
-	@JsonIgnoreProperties("negociacoes")
-	@NotNull
+	@JsonIgnoreProperties(value = "<%= negociacoes %>", allowSetters = true)
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
 
@@ -139,6 +138,14 @@ public class Negociacao extends UserDateAudit {
 
 	public Integer getAvaliacao() {
 		return avaliacao;
+	}
+
+	public Date getDataPrevistaEncerramento() {
+		return dataPrevistaEncerramento;
+	}
+
+	public void setDataPrevistaEncerramento(Date dataPrevistaEncerramento) {
+		this.dataPrevistaEncerramento = dataPrevistaEncerramento;
 	}
 
 	public void setAvaliacao(Integer avaliacao) {

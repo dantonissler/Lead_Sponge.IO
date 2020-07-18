@@ -6,13 +6,13 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
@@ -27,6 +27,7 @@ import com.leadsponge.IO.models.contato.Contato;
 import com.leadsponge.IO.models.negociacao.Negociacao;
 import com.leadsponge.IO.models.segmento.Segmento;
 import com.leadsponge.IO.models.tarefa.Tarefa;
+import com.leadsponge.IO.models.usuario.Usuario;
 
 import lombok.Data;
 
@@ -52,23 +53,32 @@ public class Cliente extends UserDateAudit {
 
 	@JsonIgnoreProperties("cliente")
 	@Valid
-	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
 	private List<Contato> contato = new ArrayList<>();
 
 	@JsonIgnoreProperties("cliente")
 	@Valid
-	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Tarefa> tarefas = new ArrayList<>();
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+	private List<Tarefa> tarefas;
 
 	@JsonIgnoreProperties("cliente")
-	@Valid
-	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "cliente")
 	private List<Negociacao> negociacoes;
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany
 	@JsonIgnoreProperties("clientes")
 	@JoinTable(name = "segmentos_clientes", joinColumns = @JoinColumn(name = "cliente_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "segmento_id", referencedColumnName = "id"))
 	private List<Segmento> segmentos = new ArrayList<>();
+
+	@ManyToMany
+	@JsonIgnoreProperties(value = { "clientes", "clientesSeguidos", "roles", "tarefas" })
+	@JoinTable(name = "seguidores_clientesSeguidos", joinColumns = @JoinColumn(name = "clientesSeguidos_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "seguidor_id", referencedColumnName = "id"))
+	private List<Usuario> seguidores = new ArrayList<>();
+
+	@JsonIgnoreProperties(value = { "clientes", "clientesSeguidos", "roles", "tarefas" })
+	@ManyToOne
+	@JoinColumn(name = "responsavel_id")
+	private Usuario responsavel;
 
 	public Long getId() {
 		return id;
@@ -132,6 +142,22 @@ public class Cliente extends UserDateAudit {
 
 	public void setSegmentos(List<Segmento> segmentos) {
 		this.segmentos = segmentos;
+	}
+
+	public List<Usuario> getSeguidores() {
+		return seguidores;
+	}
+
+	public void setSeguidores(List<Usuario> seguidores) {
+		this.seguidores = seguidores;
+	}
+
+	public Usuario getResponsavel() {
+		return responsavel;
+	}
+
+	public void setResponsavel(Usuario responsavel) {
+		this.responsavel = responsavel;
 	}
 
 	@Override

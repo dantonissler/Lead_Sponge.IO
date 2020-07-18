@@ -17,13 +17,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class NegociacoesCadastroComponent implements OnInit {
 
-    estatus = [
-        { label: 'Em andamento', value: 'EMDAMENTO' },
-        { label: 'Vendido', value: 'VENDIDO' },
-        { label: 'Perdida', value: 'PERDIDA' },
-        { label: 'Pausado', value: 'PAUSADO' }
-    ];
-
     formulario: FormGroup;
     negociacoes = new Negociacao();
     campanha = [];

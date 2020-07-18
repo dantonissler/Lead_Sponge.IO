@@ -15,6 +15,12 @@ import { Table } from 'primeng/table';
 })
 export class NegociacaoesDetalhaComponent {
 
+    estatus = [
+        { label: 'Em andamento', value: 'EMDAMENTO' },
+        { label: 'Vendido', value: 'VENDIDO' },
+        { label: 'Perdida', value: 'PERDIDA' },
+        { label: 'Pausado', value: 'PAUSADO' }
+    ];
     items: MenuItem[];
     activeItem: MenuItem;
     activeIndex: number = 0;

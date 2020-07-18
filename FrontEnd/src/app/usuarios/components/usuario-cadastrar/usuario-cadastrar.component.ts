@@ -23,7 +23,6 @@ export class UsuarioCadastrarComponent implements OnInit {
     icon: string = 'pi pi-eye';
     formulario: FormGroup;
     checked: boolean = true;
-    usuario = new Usuario();
     roles = [];
 
     constructor(
@@ -41,7 +40,7 @@ export class UsuarioCadastrarComponent implements OnInit {
         this.configurarFormulario();
         const idUsuario = this.route.snapshot.params['id'];
         this.title.setTitle('Novo usuario');
-        this.carregarRole()
+        this.carregarRole();
         if (idUsuario) {
             this.carregarUsuario(idUsuario);
         }
@@ -65,7 +64,7 @@ export class UsuarioCadastrarComponent implements OnInit {
     carregarRole() {
         this.roleService.listarTodas()
             .then(roles => {
-                this.roles = roles.map(c => ({ nome: c.nome, id: c.id }));
+                this.roles = roles;
             })
             .catch(erro => this.errorHandler.handle(erro));
     }

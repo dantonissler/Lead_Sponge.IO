@@ -1,3 +1,4 @@
+import { UsuarioDetalharComponent } from './../components/usuario-detalhar/usuario-detalhar.component';
 import { PasswordModule } from 'primeng/password';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { SharedModule } from '../../core/modules/shared.module';
@@ -43,7 +44,8 @@ import {CheckboxModule} from 'primeng/checkbox';
   ],
   declarations: [
     UsuarioCadastrarComponent,
-    UsuarioListarComponent
+    UsuarioListarComponent,
+    UsuarioDetalharComponent
   ],
   exports: []
 })

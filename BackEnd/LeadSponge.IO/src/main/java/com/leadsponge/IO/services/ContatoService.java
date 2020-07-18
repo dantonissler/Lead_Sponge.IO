@@ -31,10 +31,10 @@ public class ContatoService {
 	public Contato atualizar(Long id, Contato contato) {
 		Contato contatoSalva = buscarContatoExistente(id);
 		contatoSalva.getTelefone().clear();
-		contatoSalva.getEmail().clear();
 		contatoSalva.getTelefone().addAll(contato.getTelefone());
-		contatoSalva.getEmail().addAll(contato.getEmail());
 		contatoSalva.getTelefone().forEach(c -> c.setContato(contatoSalva));
+		contatoSalva.getEmail().clear();
+		contatoSalva.getEmail().addAll(contato.getEmail());
 		contatoSalva.getEmail().forEach(c -> c.setContato(contatoSalva));
 		BeanUtils.copyProperties(contato, contatoSalva, "id", "telefone", "email");
 		return contatoRepository.save(contatoSalva);

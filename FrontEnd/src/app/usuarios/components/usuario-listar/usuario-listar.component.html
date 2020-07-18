@@ -1,7 +1,8 @@
 <div class="table">
     <p-table [value]="usuarios" [responsive]="true" [paginator]="true" [rows]="filtro.itensPorPagina" [lazy]="true"
         [totalRecords]="totalRegistros" (onLazyLoad)="aoMudarPagina($event)" #tabela styleClass="ui-table-customers"
-        [loading]="loading" [rowHover]="true">
+        [loading]="loading" [rowHover]="true" [rowsPerPageOptions]="[5, 10, 25, 50]" [showCurrentPageReport]="true"
+        currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas">
         <ng-template pTemplate="caption">
             <button pButton icon="fas fa-arrow-left fa-2x" pTooltip="Voltar" tooltipPosition="top"
                 (click)="backClicked()" class="ui-button-rounded ui-button-secondary"></button>
@@ -50,7 +51,8 @@
                 </td>
                 <td>
                     <span class="ui-column-title">UserName</span>
-                    {{ usuario.username }}
+                    <a icon="fas fa-pencil-alt" pTooltip="{{usuario.username}}" tooltipPosition="top"
+                        [routerLink]="['/usuarios/detalhar', usuario.id]">{{usuario.username}}</a>
                 </td>
                 <td>
                     <span class="ui-column-title">Nome Completo</span>
@@ -68,9 +70,9 @@
                 </td>
                 <td class="col-acoes">
                     <button pButton icon="fas fa-pencil-alt" pTooltip="Editar" tooltipPosition="top"
-                        [routerLink]="['/usuarios', usuario.id]"></button>
+                        [routerLink]="['/usuarios', usuario.id]" class="ui-button-rounded"></button>
                     <button pButton icon="fas fa-trash" pTooltip="Excluir" tooltipPosition="top"
-                        (click)="confirmarExclusao(usuario)"></button>
+                        (click)="confirmarExclusao(usuario)" class="ui-button-rounded ui-button-danger"></button>
                 </td>
             </tr>
         </ng-template>

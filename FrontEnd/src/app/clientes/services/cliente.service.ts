@@ -66,7 +66,6 @@ export class ClienteService {
   }
 
   atualizar(cliente: Cliente): Promise<Cliente> {
-    console.log(cliente);
     return this.http.put<Cliente>(`${this.clienteUrl}/${cliente.id}`, cliente)
       .toPromise();
   }

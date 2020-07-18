@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -33,6 +34,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.leadsponge.IO.models.View;
 import com.leadsponge.IO.models.audit.UserDateAudit;
+import com.leadsponge.IO.models.cliente.Cliente;
 import com.leadsponge.IO.models.role.Role;
 import com.leadsponge.IO.models.tarefa.Tarefa;
 
@@ -91,14 +93,25 @@ public class Usuario extends UserDateAudit implements UserDetails, Serializable 
 	private boolean enabled;
 
 	@ManyToMany(fetch = FetchType.EAGER)
+	@Valid
 	@JsonIgnoreProperties("usuarios")
 	@JoinTable(name = "roles_usuarios", joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	private Set<Role> roles;
 
 	@JsonIgnoreProperties("usuario")
 	@Valid
-	@OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
 	private List<Tarefa> tarefas = new ArrayList<>();
+
+	@ManyToMany(mappedBy = "seguidores", cascade = CascadeType.ALL)
+	@Valid
+	@JsonIgnoreProperties("seguidores")
+	private List<Cliente> clientesSeguidos;
+
+//	@JsonIgnoreProperties("responsavel")
+//	@Valid
+//	@OneToMany(mappedBy = "responsavel", cascade = CascadeType.ALL)
+//	private List<Cliente> clientes = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -171,6 +184,22 @@ public class Usuario extends UserDateAudit implements UserDetails, Serializable 
 	public void setTarefas(List<Tarefa> tarefas) {
 		this.tarefas = tarefas;
 	}
+
+	public List<Cliente> getClientesSeguidos() {
+		return clientesSeguidos;
+	}
+
+	public void setClientesSeguidos(List<Cliente> clientesSeguidos) {
+		this.clientesSeguidos = clientesSeguidos;
+	}
+
+//	public List<Cliente> getClientes() {
+//		return clientes;
+//	}
+//
+//	public void setClientes(List<Cliente> clientes) {
+//		this.clientes = clientes;
+//	}
 
 	@Override
 	@JsonIgnore

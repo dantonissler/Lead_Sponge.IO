@@ -44,6 +44,7 @@ export class ProdutosPesquisaComponent implements OnInit {
     }
 
     aoMudarPagina(event: LazyLoadEvent) {
+        this.filtro.itensPorPagina = event.rows;
         const pagina = event.first / event.rows;
         this.pesquisar(pagina);
     }

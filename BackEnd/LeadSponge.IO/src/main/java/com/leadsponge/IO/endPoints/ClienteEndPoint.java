@@ -67,7 +67,7 @@ class ClienteEndPoint extends CrudController {
 	@PostMapping(value = { "", "/" })
 	@PreAuthorize("hasAuthority('CADASTRAR_CLIENTE') and #oauth2.hasScope('write')")
 	public ResponseEntity<Cliente> cadastrar(@Valid @RequestBody Cliente cliente, HttpServletResponse response) {
-		Cliente criarCliente = clienteService.save(cliente);
+		Cliente criarCliente = clienteService.salvar(cliente);
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, criarCliente.getId()));
 		return ResponseEntity.status(HttpStatus.CREATED).body(criarCliente);
 	}
