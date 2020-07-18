@@ -9,13 +9,13 @@
       "name": "leadsponge.mail",
       "type": "com.leadsponge.IO.config.property.LeadSpongeApiProperty$Mail",
       "sourceType": "com.leadsponge.IO.config.property.LeadSpongeApiProperty",
-      "sourceMethod": "public com.leadsponge.IO.config.property.LeadSpongeApiProperty.Mail getMail() "
+      "sourceMethod": "getMail()"
     },
     {
       "name": "leadsponge.seguranca",
       "type": "com.leadsponge.IO.config.property.LeadSpongeApiProperty$Seguranca",
       "sourceType": "com.leadsponge.IO.config.property.LeadSpongeApiProperty",
-      "sourceMethod": "public com.leadsponge.IO.config.property.LeadSpongeApiProperty.Seguranca getSeguranca() "
+      "sourceMethod": "getSeguranca()"
     }
   ],
   "properties": [
@@ -42,12 +42,14 @@
     {
       "name": "leadsponge.origin-permitida",
       "type": "java.lang.String",
-      "sourceType": "com.leadsponge.IO.config.property.LeadSpongeApiProperty"
+      "sourceType": "com.leadsponge.IO.config.property.LeadSpongeApiProperty",
+      "defaultValue": "http:\/\/localhost:4200"
     },
     {
       "name": "leadsponge.seguranca.enable-https",
       "type": "java.lang.Boolean",
-      "sourceType": "com.leadsponge.IO.config.property.LeadSpongeApiProperty$Seguranca"
+      "sourceType": "com.leadsponge.IO.config.property.LeadSpongeApiProperty$Seguranca",
+      "defaultValue": false
     }
   ],
   "hints": []
