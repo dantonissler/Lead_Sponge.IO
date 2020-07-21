@@ -86,6 +86,11 @@ public class Usuario extends UserDateAudit implements UserDetails, Serializable 
 	@Size(min = 6, max = 150, message = "{senha.size}")
 	private String password;
 
+	private String anexo;
+
+	@Transient
+	private String urlAnexo;
+
 	@Transient
 	private String confirmarPassword;
 
@@ -193,18 +198,26 @@ public class Usuario extends UserDateAudit implements UserDetails, Serializable 
 		this.clientesSeguidos = clientesSeguidos;
 	}
 
-//	public List<Cliente> getClientes() {
-//		return clientes;
-//	}
-//
-//	public void setClientes(List<Cliente> clientes) {
-//		this.clientes = clientes;
-//	}
-
 	@Override
 	@JsonIgnore
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return (Collection<? extends GrantedAuthority>) this.roles;
+	}
+
+	public String getAnexo() {
+		return anexo;
+	}
+
+	public void setAnexo(String anexo) {
+		this.anexo = anexo;
+	}
+
+	public String getUrlAnexo() {
+		return urlAnexo;
+	}
+
+	public void setUrlAnexo(String urlAnexo) {
+		this.urlAnexo = urlAnexo;
 	}
 
 	@Override

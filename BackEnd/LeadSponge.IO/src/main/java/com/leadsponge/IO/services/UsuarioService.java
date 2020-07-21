@@ -7,26 +7,41 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.leadsponge.IO.errorValidate.ResourceBadRequestException;
 import com.leadsponge.IO.models.usuario.Usuario;
 import com.leadsponge.IO.repository.usuario.UsuarioRepository;
 import com.leadsponge.IO.security.exception.UsuarioInativaException;
+import com.leadsponge.IO.storage.S3;
 
 @Service
 public class UsuarioService {
-	
-	@Autowired
-	private UsuarioRepository usuarioRepository;
 
 	@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	private final UsuarioRepository usuarioRepository;
+
+	@Autowired
+	private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+	@Autowired
+	private final S3 s3;
+
+	public UsuarioService(UsuarioRepository usuarioRepository, BCryptPasswordEncoder bCryptPasswordEncoder, S3 s3) {
+		super();
+		this.usuarioRepository = usuarioRepository;
+		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+		this.s3 = s3;
+	}
 
 	public Usuario save(Usuario usuario) {
 		usuariovalidar(usuario);
 		usuario.setPassword(bCryptPasswordEncoder.encode(usuario.getPassword()));
 //		usuario.setRoles(new HashSet<>(roleRepository.findAll()));
 		usuario.setRoles(new HashSet<>(usuario.getRoles()));
+		if (StringUtils.hasText(usuario.getAnexo())) {
+			s3.salvar(usuario.getAnexo());
+		}
 		return usuarioRepository.save(usuario);
 	}
 
@@ -36,6 +51,12 @@ public class UsuarioService {
 		usuarioSalvo.getRoles().clear();
 		usuarioSalvo.getRoles().addAll(usuario.getRoles());
 		usuarioSalvo.setRoles(new HashSet<>(usuarioSalvo.getRoles()));
+
+		if (StringUtils.isEmpty(usuario.getAnexo()) && StringUtils.hasText(usuarioSalvo.getAnexo())) {
+			s3.remover(usuarioSalvo.getAnexo());
+		} else if (StringUtils.hasText(usuario.getAnexo()) && !usuario.getAnexo().equals(usuarioSalvo.getAnexo())) {
+			s3.substituir(usuarioSalvo.getAnexo(), usuario.getAnexo());
+		}
 		BeanUtils.copyProperties(usuario, usuarioSalvo, "id", "roles");
 		return usuarioRepository.save(usuarioSalvo);
 	}
@@ -58,7 +79,7 @@ public class UsuarioService {
 		if (usuario == null) {
 			throw new UsuarioInativaException();
 		}
-		
+
 		if (!usuario.getConfirmarPassword().equals(usuario.getPassword())) {
 			throw new ResourceBadRequestException("O campo de senha não corresponde com o confirmar senha.");
 		}

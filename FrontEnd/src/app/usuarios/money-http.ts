@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 
@@ -12,7 +13,8 @@ export class MoneyHttp extends HttpClient {
 
   constructor(
     private auth: AuthService,
-    private httpHandler: HttpHandler
+    private httpHandler: HttpHandler,
+    private router: Router
   ) {
     super(httpHandler);
   }

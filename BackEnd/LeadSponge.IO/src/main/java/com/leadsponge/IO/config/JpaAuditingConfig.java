@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
-import com.leadsponge.IO.implementated.AuditorAwareImpl;
+import com.leadsponge.IO.models.audit.AuditorAwareImpl;
 
 @Configuration
 @EnableJpaAuditing(auditorAwareRef = "auditorAware")

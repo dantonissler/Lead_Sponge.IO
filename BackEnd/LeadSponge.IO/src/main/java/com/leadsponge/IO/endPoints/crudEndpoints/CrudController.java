@@ -8,4 +8,8 @@ public abstract class CrudController{
 	protected ResourceNotFoundException notFouldId(Long id, String nome) {
 		return new ResourceNotFoundException("Não foi possivel encontrar "+nome+" com o id: " + id);
 	}
+	
+	protected ResourceNotFoundException notFould(String nome) {
+		return new ResourceNotFoundException("Não foi possivel encontrar "+nome+" com o id: ");
+	}
 }

@@ -1,8 +1,10 @@
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/errorValidate/ValidationErrorDetails.java
+/home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/security/implementated/SecurityServiceImpl.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/security/util/GeradorSenha.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/motivoPerda/MotivoPerdaRepositoryQuery.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/tarefa/TarefaRepository.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/RoleRepository.java
+/home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/dto/Anexo.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/negociacaoProduto/NegociacaoProduto_.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/tarefa/TipoTarefa.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/services/NegociacaoService.java
@@ -18,11 +20,13 @@
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/config/BasicSecurityConfig.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/estagioNegociacao/EstagioNegociacaoRepository.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/token/RefreshTokenPostProcessor.java
+/home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/errorValidate/FileStorageException.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/HistEstagioNegociacaoRepository.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/LeadSpongeApiApplication.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/services/SegmentoService.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/endPoints/CampanhaEndPoint.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/usuario/Usuario.java
+/home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/ImagensRepository.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/segmento/SegmentoRepositoryQuery.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/telefone/Telefone.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/Filter/NegociacaoFilter.java
@@ -33,9 +37,8 @@
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/Filter/EstagioNegociacaoFilter.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/endPoints/ClienteEndPoint.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/Filter/UsuarioFilter.java
-/home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/implementated/AuditorAwareImpl.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/endPoints/ProdutoEndPoint.java
-/home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/implementated/UsuarioDetailsServiceImpl.java
+/home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/imagens/Imagens.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/produto/ProdutoRepositoryQuery.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/Filter/FonteNegociacaoFilter.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/services/TarefaService.java
@@ -44,6 +47,7 @@
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/campanha/CampanhaRepositoryImpl.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/config/property/LeadSpongeApiProperty.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/negociacao/NegociacaoRepositoryImpl.java
+/home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/config/S3Config.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/endPoints/crudEndpoints/CrudController.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/mail/Mailer.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/endPoints/EstagioNegociacaoEndPoint.java
@@ -57,6 +61,7 @@
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/fonteNegociacao/FonteNegociacaoRepositoryImpl.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/segmento/Segmento.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/endPoints/NegociacaoEndPoint.java
+/home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/errorValidate/MyFileNotFoundException.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/cliente/Cliente_.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/campanha/CampanhaRepositoryQuery.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/endPoints/SegmentoEndPoint.java
@@ -69,6 +74,7 @@
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/segmento/SegmentoRepository.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/produto/Produto.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/endPoints/MotivoPerdaEndPoint.java
+/home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/security/implementated/UsuarioDetailsServiceImpl.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/campanha/Campanha.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/tarefa/Tarefa_.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/campanha/Campanha_.java
@@ -98,7 +104,6 @@
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/estagioNegociacao/EstagioNegociacao_.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/negociacao/EstatusNegociacao.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/security/SecurityService.java
-/home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/implementated/SecurityServiceImpl.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/estagioNegociacao/EstagioNegociacaoRepositoryQuery.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/endPoints/TarefaEndPoint.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/fonteNegociacao/FonteNegociacao.java
@@ -121,6 +126,7 @@
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/EmailRepository.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/usuario/UsuarioRepositoryQuery.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/produto/Produto_.java
+/home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/storage/Disco.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/cliente/ClienteRepositoryImpl.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/produto/ProdutoRepositoryImpl.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/event/listener/RecursoCriadoListener.java
@@ -133,8 +139,11 @@
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/data/DataConfiguration.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/services/FonteNegociacaoService.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/motivoPerda/MotivoPerdaRepository.java
+/home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/audit/AuditorAwareImpl.java
+/home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/services/ImagensService.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/negociacao/Negociacao.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/contato/ContatoRepositoryImpl.java
+/home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/storage/S3.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/role/Role.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/historicoEstagioNegociacao/HistEstagioNegociacao_.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/contato/ContatoRepositoryQuery.java

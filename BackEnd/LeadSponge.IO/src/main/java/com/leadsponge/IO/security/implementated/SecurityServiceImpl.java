@@ -1,4 +1,4 @@
-package com.leadsponge.IO.implementated;
+package com.leadsponge.IO.security.implementated;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

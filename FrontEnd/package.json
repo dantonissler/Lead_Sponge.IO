@@ -33,6 +33,7 @@
     "jquery": "^3.5.1",
     "jquery-slim": "^3.0.0",
     "ng2-toasty": "^4.0.3",
+    "ngx-currency": "^2.3.3",
     "popper.js": "^1.16.1",
     "primeflex": "^1.1.1",
     "primeicons": "^4.0.0-rc.2",

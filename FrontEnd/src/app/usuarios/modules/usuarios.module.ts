@@ -8,7 +8,11 @@ import { UsuariosRoutingModule } from './usuarios-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {InputSwitchModule} from 'primeng/inputswitch';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { NgxCurrencyModule } from 'ngx-currency';
+
+import { FileUploadModule } from 'primeng/fileupload';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 import { InputMaskModule } from 'primeng/inputmask';
 import { TableModule } from 'primeng/table';
@@ -18,35 +22,38 @@ import { TooltipModule } from 'primeng/tooltip';
 import { PanelModule } from 'primeng/panel';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
-import {CheckboxModule} from 'primeng/checkbox';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
 
-    CheckboxModule,
-    InputTextModule,
-    ButtonModule,
-    TableModule,
-    TooltipModule,
-    InputMaskModule,
-    PanelModule,
-    DialogModule,
-    DropdownModule,
-    MultiSelectModule,
-    PasswordModule,
-    InputSwitchModule,
+        CheckboxModule,
+        InputTextModule,
+        ButtonModule,
+        TableModule,
+        TooltipModule,
+        InputMaskModule,
+        PanelModule,
+        DialogModule,
+        DropdownModule,
+        MultiSelectModule,
+        PasswordModule,
+        InputSwitchModule,
+        FileUploadModule,
+        ProgressSpinnerModule,
+        NgxCurrencyModule,
 
-    SharedModule,
-    UsuariosRoutingModule
-  ],
-  declarations: [
-    UsuarioCadastrarComponent,
-    UsuarioListarComponent,
-    UsuarioDetalharComponent
-  ],
-  exports: []
+        SharedModule,
+        UsuariosRoutingModule
+    ],
+    declarations: [
+        UsuarioCadastrarComponent,
+        UsuarioListarComponent,
+        UsuarioDetalharComponent
+    ],
+    exports: []
 })
 export class UsuariosModule { }

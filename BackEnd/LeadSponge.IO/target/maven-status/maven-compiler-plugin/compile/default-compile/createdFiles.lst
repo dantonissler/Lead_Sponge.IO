@@ -1,4 +1,5 @@
 com/leadsponge/IO/models/contato/Contato_.class
+com/leadsponge/IO/storage/S3.class
 com/leadsponge/IO/models/estagioNegociacao/EstagioNegociacao.class
 com/leadsponge/IO/models/View$Email.class
 com/leadsponge/IO/models/segmento/Segmento.class
@@ -8,6 +9,9 @@ com/leadsponge/IO/models/telefone/TipoTelefone.class
 com/leadsponge/IO/security/util/GeradorSenha.class
 com/leadsponge/IO/models/View$Campanha.class
 com/leadsponge/IO/config/AuthorizationServerConfig.class
+com/leadsponge/IO/security/implementated/UsuarioDetailsServiceImpl.class
+com/leadsponge/IO/storage/Disco.class
+com/leadsponge/IO/config/property/LeadSpongeApiProperty$Disco.class
 com/leadsponge/IO/repository/Filter/EstagioNegociacaoFilter.class
 com/leadsponge/IO/config/JpaAuditingConfig.class
 com/leadsponge/IO/models/tarefa/TipoTarefa.class
@@ -23,6 +27,8 @@ com/leadsponge/IO/repository/EmailRepository.class
 com/leadsponge/IO/config/ResourceServerConfig.class
 com/leadsponge/IO/endPoints/SegmentoEndPoint.class
 com/leadsponge/IO/endPoints/EstagioNegociacaoEndPoint.class
+com/leadsponge/IO/dto/Anexo.class
+com/leadsponge/IO/config/S3Config.class
 com/leadsponge/IO/models/historicoEstagioNegociacao/HistEstagioNegociacao_.class
 com/leadsponge/IO/models/View.class
 com/leadsponge/IO/endPoints/ContatoEndPoint.class
@@ -33,7 +39,6 @@ com/leadsponge/IO/models/cliente/Cliente.class
 com/leadsponge/IO/models/telefone/Telefone_.class
 com/leadsponge/IO/repository/TelefoneRepository.class
 com/leadsponge/IO/models/segmento/Segmento_.class
-com/leadsponge/IO/implementated/AuditorAwareImpl.class
 com/leadsponge/IO/security/UsuarioSistema.class
 com/leadsponge/IO/models/View$EstagioNegociacao.class
 com/leadsponge/IO/models/View$NegociacaoProduto.class
@@ -46,7 +51,6 @@ com/leadsponge/IO/config/WebConfig.class
 com/leadsponge/IO/repository/motivoPerda/MotivoPerdaRepositoryQuery.class
 META-INF/spring-configuration-metadata.json
 com/leadsponge/IO/errorValidate/ErrorDetails$Builder.class
-com/leadsponge/IO/implementated/SecurityServiceImpl.class
 com/leadsponge/IO/models/View$Produto.class
 com/leadsponge/IO/config/token/CustomTokenEnhancer.class
 com/leadsponge/IO/models/negociacao/EstatusNegociacao.class
@@ -65,6 +69,7 @@ com/leadsponge/IO/token/RefreshTokenPostProcessor.class
 com/leadsponge/IO/repository/segmento/SegmentoRepositoryImpl.class
 com/leadsponge/IO/models/View$Contato.class
 com/leadsponge/IO/models/motivoPerda/MotivoPerda.class
+com/leadsponge/IO/errorValidate/FileStorageException.class
 com/leadsponge/IO/models/role/Role_.class
 com/leadsponge/IO/repository/fonteNegociacao/FonteNegociacaoRepositoryQuery.class
 com/leadsponge/IO/security/SecurityService.class
@@ -95,6 +100,7 @@ com/leadsponge/IO/models/View$Fonte.class
 com/leadsponge/IO/models/audit/DateAudit.class
 com/leadsponge/IO/endPoints/UsuarioEndPoint.class
 com/leadsponge/IO/repository/Filter/UsuarioFilter.class
+com/leadsponge/IO/errorValidate/MyFileNotFoundException.class
 com/leadsponge/IO/security/exception/UsuarioInativaException.class
 com/leadsponge/IO/repository/cliente/ClienteRepository.class
 com/leadsponge/IO/repository/campanha/CampanhaRepositoryImpl.class
@@ -122,7 +128,6 @@ com/leadsponge/IO/errorValidate/ResourceBadRequestException.class
 com/leadsponge/IO/models/audit/UserDateAudit.class
 com/leadsponge/IO/endPoints/ClienteEndPoint.class
 com/leadsponge/IO/endPoints/FonteNegociacaoEndPoint.class
-com/leadsponge/IO/implementated/UsuarioDetailsServiceImpl.class
 com/leadsponge/IO/models/email/Email.class
 com/leadsponge/IO/endPoints/RoleEndPoint.class
 com/leadsponge/IO/repository/Filter/ProdutoFilter.class
@@ -142,10 +147,12 @@ com/leadsponge/IO/models/View$Negociacao.class
 com/leadsponge/IO/models/produto/Produto_.class
 com/leadsponge/IO/endPoints/EmailEndPoint.class
 com/leadsponge/IO/repository/produto/ProdutoRepositoryQuery.class
+com/leadsponge/IO/models/audit/AuditorAwareImpl.class
 com/leadsponge/IO/models/View$MotivoPerda.class
 com/leadsponge/IO/models/campanha/Campanha.class
 com/leadsponge/IO/repository/Filter/FonteNegociacaoFilter.class
 com/leadsponge/IO/models/View$Telefone.class
+com/leadsponge/IO/security/implementated/SecurityServiceImpl.class
 com/leadsponge/IO/services/NegociacaoService.class
 com/leadsponge/IO/config/OAuthSecurityConfig.class
 com/leadsponge/IO/models/View$Cliente.class
@@ -154,6 +161,7 @@ com/leadsponge/IO/models/motivoPerda/MotivoPerda_.class
 com/leadsponge/IO/repository/Filter/NegociacaoFilter.class
 com/leadsponge/IO/models/contato/Contato.class
 com/leadsponge/IO/models/cliente/Cliente_.class
+com/leadsponge/IO/config/property/LeadSpongeApiProperty$S3.class
 com/leadsponge/IO/models/negociacao/Negociacao_.class
 com/leadsponge/IO/repository/estagioNegociacao/EstagioNegociacaoRepositoryImpl.class
 com/leadsponge/IO/models/tarefa/Tarefa.class

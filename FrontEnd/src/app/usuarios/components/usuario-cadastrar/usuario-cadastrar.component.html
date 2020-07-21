@@ -4,6 +4,24 @@
             <div class="ui-g-12">
                 <h1>{{ editando ? 'Edição de' : 'Novo' }} Usuario</h1>
             </div>
+            <div class="ui-g-6 ui-g-offset-6 ui-md-2 ui-md-offset-10 ui-fluid" *ngIf="!formulario.get('anexo').value">
+                <p-fileUpload name="anexo" mode="basic" auto="true" maxFileSize="100000000" chooseLabel="Anexar"
+                    accept="image/*" [url]="urlUploadAnexo" (onUpload)="onFileUpload($event)"
+                    (onError)="erroUpload($event)" (onBeforeUpload)="antesUploadAnexo()" [hidden]="uploadEmAndamento">
+                </p-fileUpload>
+                <p-progressSpinner [hidden]="!uploadEmAndamento" [style]="{ width: '25px', height: '25px' }">
+                </p-progressSpinner>
+            </div>
+            <div dir="rtl" *ngIf="formulario.get('anexo').value">
+                <div class="ui-g-3">
+                    <img style="width: 100%; height: auto; border-radius: 50%" target="_blank"
+                        src="///leadspongeuserimagens.s3.us-east-2.amazonaws.com/{{formulario.get('anexo').value}}">
+                </div>
+                <div class="ui-g-2">
+                    <button pButton type="button" class="ui-button-rounded ui-button-danger" icon="fas fa-times"
+                        pTooltip="Remover imagem" tooltipPosition="top" (click)="removerAnexo()"></button>
+                </div>
+            </div>
             <div class="ui-g-12 ui-fluid">
                 <p-inputSwitch name="enabled" formControlName="enabled" binary="false" [(ngModel)]="checked"
                     pTooltip="{{checked === true ? 'Desativar' : 'Ativar'}} usuario">
@@ -92,8 +110,8 @@
                     text="O campo senha não conhecide com o confirmar senhas"></app-message>
             </div>
             <div class="ui-g-12 ui-md-12 ui-fluid">
-                <p-multiSelect name="roles" [options]="roles" defaultLabel="Selecione as Permissões" 
-                    optionLabel="nome" formControlName="roles"></p-multiSelect>
+                <p-multiSelect name="roles" [options]="roles" defaultLabel="Selecione as Permissões" optionLabel="nome"
+                    formControlName="roles"></p-multiSelect>
             </div>
             <div class="ui-g-12 cadastro-acoes">
                 <button pButton value="submit" type="submit" label="Salvar" [disabled]="formulario.invalid"

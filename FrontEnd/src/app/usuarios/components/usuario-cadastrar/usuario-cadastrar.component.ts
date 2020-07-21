@@ -3,9 +3,7 @@ import { RoleService } from '../../services/role.service';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Usuario } from '../../models/usuario.model';
 import { ErrorHandlerService } from '../../../core/error-handler.service';
-
 import { MessageService } from 'primeng/api';
-
 import { Title } from '@angular/platform-browser';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -24,6 +22,14 @@ export class UsuarioCadastrarComponent implements OnInit {
     formulario: FormGroup;
     checked: boolean = true;
     roles = [];
+    uploadEmAndamento = false;
+    get editando() { return Boolean(this.formulario.get('id').value); }
+    get urlUploadAnexo() { return this.usuarioService.urlUploadAnexo(); }
+    get nomeAnexo() {
+        const nome = this.formulario.get('anexo').value;
+        if (nome) return nome.substring(nome.indexOf('_') + 1, nome.length);
+        return '';
+    }
 
     constructor(
         private usuarioService: UsuarioService,
@@ -46,9 +52,23 @@ export class UsuarioCadastrarComponent implements OnInit {
         }
     }
 
-    get editando() {
-        return Boolean(this.formulario.get('id').value);
+    antesUploadAnexo() { this.uploadEmAndamento = true }
+
+    onFileUpload(data) {
+        const file = data.originalEvent.body;
+        this.formulario.patchValue({
+            anexo: file.nome,
+            urlAnexo: file.url
+        });
+        this.uploadEmAndamento = false;
     }
+
+    erroUpload(event) {
+        this.messageService.add({ severity: 'error', detail: 'Erro ao tentar enviar anexo!' });
+        this.uploadEmAndamento = false;
+    }
+
+    removerAnexo() { this.formulario.patchValue({ anexo: null, urlAnexo: null }); }
 
     carregarUsuario(id: number) {
         this.usuarioService.buscarPorCodigo(id)
@@ -70,11 +90,8 @@ export class UsuarioCadastrarComponent implements OnInit {
     }
 
     salvar() {
-        if (this.editando) {
-            this.atualizarUsuario();
-        } else {
-            this.adicionarUsuario();
-        }
+        if (this.editando) this.atualizarUsuario();
+        else this.adicionarUsuario();
     }
 
     adicionarUsuario() {
@@ -97,9 +114,7 @@ export class UsuarioCadastrarComponent implements OnInit {
             .catch(erro => this.errorHandler.handle(erro));
     }
 
-    atualizarTituloEdicao() {
-        this.title.setTitle(`Edição de usuario: ${this.formulario.get('nomeCompleto').value}`);
-    }
+    atualizarTituloEdicao() { this.title.setTitle(`Edição de usuario: ${this.formulario.get('nomeCompleto').value}`); }
 
     configurarFormulario() {
         this.formulario = this.formBuilder.group({
@@ -110,7 +125,9 @@ export class UsuarioCadastrarComponent implements OnInit {
             password: [null, [this.validarObrigatoriedade, this.validarTamanhoMinimo(6)]],
             confirmarPassword: [null, [this.validarObrigatoriedade, this.validarTamanhoMinimo(6)]],
             enabled: [],
-            roles: [],
+            anexo: [],
+            urlAnexo: [],
+            roles: []
         }, { validator: this.validarConfirmaPassword });
     }
 
@@ -137,6 +154,7 @@ export class UsuarioCadastrarComponent implements OnInit {
         }.bind(this), 1);
         this.router.navigate(['/usuarios/novo']);
     }
+
     esconderSenha() {
         this.showPass = !this.showPass;
         if (this.showPass == true) {
@@ -145,6 +163,7 @@ export class UsuarioCadastrarComponent implements OnInit {
             this.icon = 'pi pi-eye';
         }
     }
+
     esconderConfSenha() {
         this.showConfPass = !this.showConfPass;
         if (this.showConfPass == true) {

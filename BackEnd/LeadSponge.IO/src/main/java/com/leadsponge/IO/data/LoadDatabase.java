@@ -64,15 +64,14 @@ class LoadDatabase {
 			repository.save(new Role("CADASTRAR_ESTAGIO"));
 			repository.save(new Role("REMOVER_ESTAGIO"));
 			repository.save(new Role("PESQUISAR_ESTAGIO"));
-			
+
 			repository.save(new Role("CADASTRAR_SEGMENTO"));
 			repository.save(new Role("REMOVER_SEGMENTO"));
 			repository.save(new Role("PESQUISAR_SEGMENTO"));
-			
+
 			repository.save(new Role("CADASTRAR_MOTIVO"));
 			repository.save(new Role("REMOVER_MOTIVO"));
 			repository.save(new Role("PESQUISAR_MOTIVO"));
-			
 
 			repository.save(new Role("USER"));
 		};
@@ -81,9 +80,8 @@ class LoadDatabase {
 	@Bean
 	CommandLineRunner initTableUsuario(UsuarioService repository, RoleRepository roleRepository) {
 		return args -> {
-			repository.save(
-					new Usuario("danton", "Danton Issler Rodrigues", "danton@danton.com", "214255", 
-						"214255", true, new HashSet<>(roleRepository.findAll())));
+			repository.save(new Usuario("danton", "Danton Issler Rodrigues", "danton@danton.com", "214255", "214255",
+					true, new HashSet<>(roleRepository.findAll())));
 		};
 	}
 
@@ -110,18 +108,18 @@ class LoadDatabase {
 			repository.save(new FonteNegociacao("Redes Sociais"));
 		};
 	}
-	
+
 	@Bean
 	CommandLineRunner initTableEstagio(EstagioNegociacaoService repository) {
 		return args -> {
-			repository.save(new EstagioNegociacao("Sem contato", "SC",1));
-			repository.save(new EstagioNegociacao("Contrato Feito", "CF",2));
-			repository.save(new EstagioNegociacao("Identificação de Interece", "IDI",3));
-			repository.save(new EstagioNegociacao("Apresentação", "A",4));
-			repository.save(new EstagioNegociacao("Proposta Enviada", "PE",5));
+			repository.save(new EstagioNegociacao("Sem contato", "SC", 1));
+			repository.save(new EstagioNegociacao("Contrato Feito", "CF", 2));
+			repository.save(new EstagioNegociacao("Identificação de Interece", "IDI", 3));
+			repository.save(new EstagioNegociacao("Apresentação", "A", 4));
+			repository.save(new EstagioNegociacao("Proposta Enviada", "PE", 5));
 		};
 	}
-	
+
 	@Bean
 	CommandLineRunner initTablePerda(MotivoPerdaService repository) {
 		return args -> {
@@ -131,10 +129,10 @@ class LoadDatabase {
 			repository.save(new MotivoPerda("Não gostou do produto/serviço"));
 			repository.save(new MotivoPerda("Outros"));
 			repository.save(new MotivoPerda("Preço"));
-			
+
 		};
 	}
-	
+
 	@Bean
 	CommandLineRunner initTableSegmento(SegmentoService repository) {
 		return args -> {

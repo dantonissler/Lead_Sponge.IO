@@ -17,75 +17,85 @@ export class UsuarioFiltro {
 @Injectable()
 export class UsuarioService {
 
-  usuariosUrl: string;
+    usuariosUrl: string;
 
-  constructor(private http: MoneyHttp) {
-    this.usuariosUrl = `${environment.apiUrl}/usuarios`;
-  }
-
-  listarTodas(): Promise<any> {
-    return this.http.get<any>(this.usuariosUrl)
-      .toPromise()
-      .then(response => response.content);
-  }
-
-  pesquisar(filtro: UsuarioFiltro): Promise<any> {
-    let params = new HttpParams({
-      fromObject: {
-        page: filtro.pagina.toString(),
-        size: filtro.itensPorPagina.toString()
-      }
-    });
-    if (filtro.nomeCompleto) {
-      params = params.append('nomeCompleto', filtro.nomeCompleto);
-    } else if (filtro.username) {
-      params = params.append('username', filtro.username);
+    constructor(private http: MoneyHttp) {
+        this.usuariosUrl = `${environment.apiUrl}/usuarios`;
     }
-    else if (filtro.email) {
-      params = params.append('email', filtro.email);
+
+    listarTodas(): Promise<any> {
+        return this.http.get<any>(this.usuariosUrl)
+            .toPromise()
+            .then(response => response.content);
     }
-    return this.http.get<any>(`${this.usuariosUrl}?resumo`, { params })
-      .toPromise()
-      .then(response => {
-        const usuarios = response.content;
-        const resultado = {
-          usuarios,
-          total: response.totalElements
-        };
-        return resultado;
-      })
-  }
 
-  excluir(id: number): Promise<void> {
-    return this.http.delete(`${this.usuariosUrl}/${id}`)
-      .toPromise()
-      .then(() => null);
-  }
+    pesquisar(filtro: UsuarioFiltro): Promise<any> {
+        let params = new HttpParams({
+            fromObject: {
+                page: filtro.pagina.toString(),
+                size: filtro.itensPorPagina.toString()
+            }
+        });
+        if (filtro.nomeCompleto) {
+            params = params.append('nomeCompleto', filtro.nomeCompleto);
+        } else if (filtro.username) {
+            params = params.append('username', filtro.username);
+        }
+        else if (filtro.email) {
+            params = params.append('email', filtro.email);
+        }
+        return this.http.get<any>(`${this.usuariosUrl}?resumo`, { params })
+            .toPromise()
+            .then(response => {
+                const usuarios = response.content;
+                const resultado = {
+                    usuarios,
+                    total: response.totalElements
+                };
+                return resultado;
+            })
+    }
 
-  mudarStatus(id: number, ativo: boolean): Promise<void> {
-    const headers = new HttpHeaders()
-        .append('Content-Type', 'application/json');
-    return this.http.put(`${this.usuariosUrl}/${id}/ativo`, ativo, { headers })
-      .toPromise()
-      .then(() => null);
-  }
+    excluir(id: number): Promise<void> {
+        return this.http.delete(`${this.usuariosUrl}/${id}`)
+            .toPromise()
+            .then(() => null);
+    }
 
-  adicionar(usuario: Usuario): Promise<Usuario> {
-    return this.http.post<Usuario>(this.usuariosUrl, usuario)
-      .toPromise();
-  }
+    mudarStatus(id: number, ativo: boolean): Promise<void> {
+        const headers = new HttpHeaders()
+            .append('Content-Type', 'application/json');
+        return this.http.put(`${this.usuariosUrl}/${id}/ativo`, ativo, { headers })
+            .toPromise()
+            .then(() => null);
+    }
 
-  atualizar(usuario: Usuario): Promise<Usuario> {
-    return this.http.put<Usuario>(`${this.usuariosUrl}/${usuario.id}`, usuario)
-      .toPromise()
-      .then(response => {
-        const usuarioAlterado = response;
-        return usuarioAlterado;
-      });
-  }
+    adicionar(usuario: Usuario): Promise<Usuario> {
+        return this.http.post<Usuario>(this.usuariosUrl, usuario)
+            .toPromise();
+    }
 
-  buscarPorCodigo(id: number): Promise<Usuario> {
-    return this.http.get<Usuario>(`${this.usuariosUrl}/${id}`)
-      .toPromise();
-  }
+    atualizar(usuario: Usuario): Promise<Usuario> {
+        return this.http.put<Usuario>(`${this.usuariosUrl}/${usuario.id}`, usuario)
+            .toPromise()
+            .then(response => {
+                const usuarioAlterado = response;
+                return usuarioAlterado;
+            });
+    }
+
+    buscarPorCodigo(id: number): Promise<Usuario> {
+        return this.http.get<Usuario>(`${this.usuariosUrl}/${id}`)
+            .toPromise();
+    }
+
+    urlUploadAnexo(): string {
+        return `${this.usuariosUrl}/anexo`;
+    }
+
+    buscarPeloNome(username: string): Promise<Usuario>{
+        return this.http.get<Usuario>(`${this.usuariosUrl}/username/${username}`)
+            .toPromise();
+    }
+
 }

@@ -11,6 +11,14 @@ public class LeadSpongeApiProperty {
 
 	private final Mail mail = new Mail();
 
+	private final Disco disco = new Disco();
+
+	private final S3 s3 = new S3();
+
+	public S3 getS3() {
+		return s3;
+	}
+
 	public Mail getMail() {
 		return mail;
 	}
@@ -25,6 +33,67 @@ public class LeadSpongeApiProperty {
 
 	public void setOriginPermitida(String originPermitida) {
 		this.originPermitida = originPermitida;
+	}
+
+	public Disco getDisco() {
+		return disco;
+	}
+
+	public static class S3 {
+
+		private String accessKeyId;
+
+		private String secretAccessKey;
+
+		private String bucket;
+
+		public String getBucket() {
+			return bucket;
+		}
+
+		public void setBucket(String bucket) {
+			this.bucket = bucket;
+		}
+
+		public String getAccessKeyId() {
+			return accessKeyId;
+		}
+
+		public void setAccessKeyId(String accessKeyId) {
+			this.accessKeyId = accessKeyId;
+		}
+
+		public String getSecretAccessKey() {
+			return secretAccessKey;
+		}
+
+		public void setSecretAccessKey(String secretAccessKey) {
+			this.secretAccessKey = secretAccessKey;
+		}
+	}
+
+	public static class Disco {
+
+		private String raiz;
+
+		private String diretorioFotos;
+
+		public String getRaiz() {
+			return raiz;
+		}
+
+		public void setRaiz(String raiz) {
+			this.raiz = raiz;
+		}
+
+		public String getDiretorioFotos() {
+			return diretorioFotos;
+		}
+
+		public void setDiretorioFotos(String diretorioFotos) {
+			this.diretorioFotos = diretorioFotos;
+		}
+
 	}
 
 	public static class Seguranca {

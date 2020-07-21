@@ -1,5 +1,7 @@
 package com.leadsponge.IO.endPoints;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -17,9 +19,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.leadsponge.IO.dto.Anexo;
 import com.leadsponge.IO.endPoints.crudEndpoints.CrudController;
 import com.leadsponge.IO.event.RecursoCriadoEvent;
 import com.leadsponge.IO.models.usuario.Usuario;
@@ -27,6 +32,7 @@ import com.leadsponge.IO.repository.Filter.UsuarioFilter;
 import com.leadsponge.IO.repository.projection.ResumoUsuario;
 import com.leadsponge.IO.repository.usuario.UsuarioRepository;
 import com.leadsponge.IO.services.UsuarioService;
+import com.leadsponge.IO.storage.S3;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -41,11 +47,18 @@ class UsuarioEndPoint extends CrudController {
 	@Autowired
 	private final ApplicationEventPublisher publisher;
 
+	@Autowired
+	private final S3 s3;
+
+//	@Autowired
+//	private ImagensService imagensService;
+
 	public UsuarioEndPoint(UsuarioRepository repository, UsuarioService usuarioService,
-			ApplicationEventPublisher publisher) {
+			ApplicationEventPublisher publisher, S3 s3) {
 		this.repository = repository;
 		this.usuarioService = usuarioService;
 		this.publisher = publisher;
+		this.s3 = s3;
 	}
 
 	@GetMapping
@@ -79,7 +92,8 @@ class UsuarioEndPoint extends CrudController {
 	@PutMapping(value = { "/{id}", "/{id}/" })
 	@ResponseStatus(HttpStatus.CREATED)
 	@PreAuthorize("hasAuthority('CADASTRAR_USUARIO') and #oauth2.hasScope('write')")
-	ResponseEntity<Usuario> atualizar(@Valid @RequestBody Usuario novoUsuario, @PathVariable Long id, HttpServletResponse response) {
+	ResponseEntity<Usuario> atualizar(@Valid @RequestBody Usuario novoUsuario, @PathVariable Long id,
+			HttpServletResponse response) {
 		try {
 			Usuario usuario = usuarioService.atualizar(id, novoUsuario);
 			publisher.publishEvent(new RecursoCriadoEvent(this, response, usuario.getId()));
@@ -87,7 +101,6 @@ class UsuarioEndPoint extends CrudController {
 		} catch (IllegalArgumentException e) {
 			throw notFouldId(id, "o usuario");
 		}
-//		return ResponseEntity.ok(repository.findById(id).map(usuario -> {usuario.setUsername(novoUsuario.getUsername());usuario.setNomeCompleto(novoUsuario.getNomeCompleto());usuario.setEmail(novoUsuario.getEmail());usuario.setPassword(novoUsuario.getPassword());usuario.setConfirmarPassword(novoUsuario.getConfirmarPassword());usuario.setEnabled(novoUsuario.isEnabled());return usuarioService.atualizar(id, usuario);}).orElseThrow(() -> notFouldId(id, "o usuario")));
 	}
 
 	@DeleteMapping(value = { "/{id}", "/{id}/" })
@@ -109,5 +122,24 @@ class UsuarioEndPoint extends CrudController {
 		usuarioService.atualizarPropriedadeEnabled(id, enabled);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
+
+	@PostMapping("/anexo")
+	@PreAuthorize("hasAuthority('CADASTRAR_USUARIO') and #oauth2.hasScope('write')")
+	public Anexo uploadAnexo(@RequestParam MultipartFile anexo) throws IOException {
+		String nome = s3.salvarTemporariamente(anexo);
+		return new Anexo(nome, s3.configurarUrl(nome));
+	}
+	
+	@GetMapping(value = { "/username/{username}", "/username/{username}/" })
+	@PreAuthorize("hasAuthority('PESQUISAR_USUARIO') and #oauth2.hasScope('read')")
+	public ResponseEntity<Usuario> encontrarPeloNome(@Valid @PathVariable String username) {
+		return ResponseEntity.ok(repository.findByUsername(username).orElseThrow(() -> notFould(username+"o usuario")));
+	}
+
+//	@PostMapping("/uploadFile")
+//	public ResponseEntity<Usuario> uploadImagem(@RequestParam("imagem") MultipartFile imagem) {
+//		imagensService.salvar(imagem);
+//		return ResponseEntity.ok().build();
+//	}
 
 }
