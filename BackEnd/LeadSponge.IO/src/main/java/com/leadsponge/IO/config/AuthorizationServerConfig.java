@@ -82,13 +82,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
-//		endpoints.tokenStore(tokenStore())
-//		.authenticationManager(authenticationManager)
-//		.accessTokenConverter(accessTokenConverter());
-		
 		TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
 		tokenEnhancerChain.setTokenEnhancers(Arrays.asList(tokenEnhancer(), accessTokenConverter()));
-		
 		endpoints.tokenStore(tokenStore())
 		.tokenEnhancer(tokenEnhancerChain)
 		.reuseRefreshTokens(false)

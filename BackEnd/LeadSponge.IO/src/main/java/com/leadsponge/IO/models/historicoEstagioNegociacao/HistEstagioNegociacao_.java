@@ -12,9 +12,10 @@ import com.leadsponge.IO.models.negociacao.Negociacao;
 @StaticMetamodel(HistEstagioNegociacao.class)
 public abstract class HistEstagioNegociacao_ {
 	public static volatile SingularAttribute<HistEstagioNegociacao, Long> id;
+	public static volatile SingularAttribute<HistEstagioNegociacao, String> apelido;
+	public static volatile SingularAttribute<HistEstagioNegociacao, String> idEstagio;
 	public static volatile SingularAttribute<HistEstagioNegociacao, LocalDate> dataInicio;
 	public static volatile SingularAttribute<HistEstagioNegociacao, LocalDate> dataMudanca;
-	public static volatile SingularAttribute<HistEstagioNegociacao, LocalDate> dataVenda;
 	public static volatile SingularAttribute<HistEstagioNegociacao, Negociacao> negociacao;
 	public static final String ID = "id";
 	public static final String DATA_INICIO = "dataInicio";

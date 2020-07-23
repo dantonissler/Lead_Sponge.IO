@@ -14,7 +14,7 @@ export class AppComponent {
     if(this.router.url === '/login'){
       return false;
     }
-    if(this.router.url === '/pagina-nao-encontrada'){
+    if (this.router.url === '/pagina-nao-encontrada'){
       return false;
     }
     return true;

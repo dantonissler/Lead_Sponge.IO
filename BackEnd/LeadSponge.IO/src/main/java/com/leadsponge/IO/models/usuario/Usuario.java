@@ -113,11 +113,6 @@ public class Usuario extends UserDateAudit implements UserDetails, Serializable 
 	@JsonIgnoreProperties("seguidores")
 	private List<Cliente> clientesSeguidos;
 
-//	@JsonIgnoreProperties("responsavel")
-//	@Valid
-//	@OneToMany(mappedBy = "responsavel", cascade = CascadeType.ALL)
-//	private List<Cliente> clientes = new ArrayList<>();
-
 	public Long getId() {
 		return id;
 	}

@@ -2,6 +2,7 @@ package com.leadsponge.IO.data;
 
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -9,16 +10,22 @@ import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
+import com.leadsponge.IO.config.property.LeadSpongeApiProperty;
+
 @Configuration
 public class DataConfiguration {
+
+	@Autowired
+	private LeadSpongeApiProperty property;
 
 	@Bean
 	public DataSource dataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-		dataSource.setUrl("jdbc:mysql://localhost:3306/leadsponge?createDatabaseIfNotExist=true&useSSL=false");
-		dataSource.setUsername("dev");
-		dataSource.setPassword("D@n214255");
+		dataSource.setUrl("jdbc:mysql://" + property.getBancoMysql().getHost() + ":"
+				+ property.getBancoMysql().getPort() + "/leadsponge?createDatabaseIfNotExist=true&useSSL=false");
+		dataSource.setUsername(property.getBancoMysql().getUsername());
+		dataSource.setPassword(property.getBancoMysql().getPassword());
 		return dataSource;
 	}
 

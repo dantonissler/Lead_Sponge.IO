@@ -1,5 +1,6 @@
 package com.leadsponge.IO.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -14,10 +15,15 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import com.leadsponge.IO.config.property.LeadSpongeApiProperty;
+
 @Profile("oauth-security")
 @Configuration
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
+	@Autowired
+	private LeadSpongeApiProperty property;
+	
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 		http
@@ -42,7 +48,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		CorsConfiguration config = new CorsConfiguration();
 		config.setAllowCredentials(true);
-		config.addAllowedOrigin("http://localhost:4200");
+		config.addAllowedOrigin(property.getSeguranca().getOriginPermitida());
 		config.addAllowedHeader("*");
 		config.setMaxAge(3600L);
 		config.addAllowedMethod(HttpMethod.GET);

@@ -5,8 +5,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties("leadsponge")
 public class LeadSpongeApiProperty {
 
-	private String originPermitida = "http://localhost:4200";
-
 	private final Seguranca seguranca = new Seguranca();
 
 	private final Mail mail = new Mail();
@@ -14,6 +12,12 @@ public class LeadSpongeApiProperty {
 	private final Disco disco = new Disco();
 
 	private final S3 s3 = new S3();
+
+	private final BancoMysql bancoMysql = new BancoMysql();
+
+	public BancoMysql getBancoMysql() {
+		return bancoMysql;
+	}
 
 	public S3 getS3() {
 		return s3;
@@ -27,53 +31,52 @@ public class LeadSpongeApiProperty {
 		return seguranca;
 	}
 
-	public String getOriginPermitida() {
-		return originPermitida;
-	}
-
-	public void setOriginPermitida(String originPermitida) {
-		this.originPermitida = originPermitida;
-	}
-
 	public Disco getDisco() {
 		return disco;
 	}
 
-	public static class S3 {
+	public class BancoMysql {
 
-		private String accessKeyId;
+		private String username;
+		private String password;
+		private String host;
+		private String port;
 
-		private String secretAccessKey;
-
-		private String bucket;
-
-		public String getBucket() {
-			return bucket;
+		public String getUsername() {
+			return username;
 		}
 
-		public void setBucket(String bucket) {
-			this.bucket = bucket;
+		public void setUsername(String username) {
+			this.username = username;
 		}
 
-		public String getAccessKeyId() {
-			return accessKeyId;
+		public String getPassword() {
+			return password;
 		}
 
-		public void setAccessKeyId(String accessKeyId) {
-			this.accessKeyId = accessKeyId;
+		public void setPassword(String password) {
+			this.password = password;
 		}
 
-		public String getSecretAccessKey() {
-			return secretAccessKey;
+		public String getHost() {
+			return host;
 		}
 
-		public void setSecretAccessKey(String secretAccessKey) {
-			this.secretAccessKey = secretAccessKey;
+		public void setHost(String host) {
+			this.host = host;
 		}
+
+		public String getPort() {
+			return port;
+		}
+
+		public void setPort(String port) {
+			this.port = port;
+		}
+
 	}
 
-	public static class Disco {
-
+	public class Disco {
 		private String raiz;
 
 		private String diretorioFotos;
@@ -93,23 +96,9 @@ public class LeadSpongeApiProperty {
 		public void setDiretorioFotos(String diretorioFotos) {
 			this.diretorioFotos = diretorioFotos;
 		}
-
 	}
 
-	public static class Seguranca {
-
-		private boolean enableHttps;
-
-		public boolean isEnableHttps() {
-			return enableHttps;
-		}
-
-		public void setEnableHttps(boolean enableHttps) {
-			this.enableHttps = enableHttps;
-		}
-	}
-
-	public static class Mail {
+	public class Mail {
 
 		private String host;
 
@@ -149,6 +138,63 @@ public class LeadSpongeApiProperty {
 
 		public void setPassword(String password) {
 			this.password = password;
+		}
+	}
+
+	public class S3 {
+
+		private String accessKeyId;
+
+		private String secretAccessKey;
+
+		private String bucket;
+
+		public String getBucket() {
+			return bucket;
+		}
+
+		public void setBucket(String bucket) {
+			this.bucket = bucket;
+		}
+
+		public String getAccessKeyId() {
+			return accessKeyId;
+		}
+
+		public void setAccessKeyId(String accessKeyId) {
+			this.accessKeyId = accessKeyId;
+		}
+
+		public String getSecretAccessKey() {
+			return secretAccessKey;
+		}
+
+		public void setSecretAccessKey(String secretAccessKey) {
+			this.secretAccessKey = secretAccessKey;
+		}
+
+	}
+
+	public class Seguranca {
+
+		private String originPermitida;
+
+		private boolean enableHttps;
+
+		public String getOriginPermitida() {
+			return originPermitida;
+		}
+
+		public void setOriginPermitida(String originPermitida) {
+			this.originPermitida = originPermitida;
+		}
+
+		public boolean isEnableHttps() {
+			return enableHttps;
+		}
+
+		public void setEnableHttps(boolean enableHttps) {
+			this.enableHttps = enableHttps;
 		}
 	}
 

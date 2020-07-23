@@ -1,4 +1,5 @@
 com/leadsponge/IO/models/contato/Contato_.class
+com/leadsponge/IO/config/property/LeadSpongeApiProperty$BancoMysql.class
 com/leadsponge/IO/storage/S3.class
 com/leadsponge/IO/models/estagioNegociacao/EstagioNegociacao.class
 com/leadsponge/IO/models/View$Email.class
