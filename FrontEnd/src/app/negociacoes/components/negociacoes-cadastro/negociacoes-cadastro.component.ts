@@ -39,9 +39,7 @@ export class NegociacoesCadastroComponent implements OnInit {
     ngOnInit(): void {
         this.configurarFormulario();
         const idNegociacao = this.route.snapshot.params['id'];
-
         this.title.setTitle('Nova Negociação');
-
         if (idNegociacao) {
             this.carregarNegociacao(idNegociacao);
         }

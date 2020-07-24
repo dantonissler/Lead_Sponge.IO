@@ -1,6 +1,6 @@
 import { LoginFormComponent } from './usuarios/components/login-form/login-form.component';
-import { PaginaNaoEncontradaComponent } from './core/components/pagina-nao-encontrada.component';
-import { NaoAutorizadoComponent } from './core/components/nao-autorizado.component';
+import { PaginaNaoEncontradaComponent } from './core/components/pagina-nao-encontrada/pagina-nao-encontrada.component';
+import { NaoAutorizadoComponent } from './core/components/nao-autorizado/nao-autorizado.component';
 
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';

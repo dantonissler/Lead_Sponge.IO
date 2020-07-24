@@ -52,7 +52,7 @@ public class Usuario extends UserDateAudit implements UserDetails, Serializable 
 	}
 
 	public Usuario(String username, String nomeCompleto, String email, String password, String confirmarPassword,
-			boolean enabled, Set<Role> roles) {
+			boolean enabled, Set<Role> roles, String anexo) {
 		super();
 		this.username = username;
 		this.nomeCompleto = nomeCompleto;
@@ -61,6 +61,7 @@ public class Usuario extends UserDateAudit implements UserDetails, Serializable 
 		this.confirmarPassword = confirmarPassword;
 		this.enabled = enabled;
 		this.roles = roles;
+		this.anexo = anexo;
 	}
 
 	@Id

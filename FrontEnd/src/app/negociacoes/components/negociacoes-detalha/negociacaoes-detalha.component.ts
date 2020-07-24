@@ -1,5 +1,5 @@
-import { Router, ActivatedRoute } from '@angular/router';
 import { Negociacao } from './../../models/negociacao.models';
+import { Router, ActivatedRoute } from '@angular/router';
 import { NegociacoesService } from './../../services/negociacoes.service';
 import { ErrorHandlerService } from './../../../core/error-handler.service';
 import { Title } from '@angular/platform-browser';
@@ -24,7 +24,7 @@ export class NegociacaoesDetalhaComponent {
     items: MenuItem[];
     activeItem: MenuItem;
     activeIndex: number = 0;
-    negociacoes: any;
+    negociacao: any;
     @ViewChild('dt') table: Table;
 
     constructor(
@@ -43,18 +43,14 @@ export class NegociacaoesDetalhaComponent {
         this.title.setTitle('Detalhar de Negociação');
         this.carregarItems();
         const idNegociacao = this.route.snapshot.params['id'];
-
         this.carregarNegociacao(idNegociacao);
-        console.log(this.negociacoes);
-        this.carregarNegociacao
         this.activeItem = this.items[0];
     }
 
     carregarNegociacao(id: number) {
         this.negociacoesService.buscarPorCodigo(id)
             .then(negociacao => {
-                this.negociacoes = negociacao;
-                
+                this.negociacao = negociacao;
             })
             .catch(erro => this.errorHandler.handle(erro));
     }

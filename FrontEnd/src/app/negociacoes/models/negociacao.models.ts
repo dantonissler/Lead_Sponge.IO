@@ -14,6 +14,7 @@ export class Negociacao{
     valorTotal: number;
     valorMensal: number;
     valorUnico: number;
+    createdAt:Date;
     motivoPerda = new Perda();
     cliente = new Cliente();
     campanha = new Campanha();

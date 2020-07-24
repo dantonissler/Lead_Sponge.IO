@@ -81,7 +81,7 @@ class LoadDatabase {
 	CommandLineRunner initTableUsuario(UsuarioService repository, RoleRepository roleRepository) {
 		return args -> {
 			repository.save(new Usuario("danton", "Danton Issler Rodrigues", "danton@danton.com", "214255", "214255",
-					true, new HashSet<>(roleRepository.findAll())));
+					true, new HashSet<>(roleRepository.findAll()),"165eb90c-568b-4a0b-9804-44bf30412dc2_ninguem.png"));
 		};
 	}
 

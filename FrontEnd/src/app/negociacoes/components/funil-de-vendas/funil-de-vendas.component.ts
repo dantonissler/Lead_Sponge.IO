@@ -21,7 +21,7 @@ export class FunilDeVendasComponent implements OnInit {
     * e a alteração esta sendo feita pelo id e não pela possição conforme o planejado.
     */
 
-    @Input() negociacao: Negociacao;
+    @Input('negociacao') negociacao: any;
     items: MenuItem[];
     activeIndex: number = 0;
 
