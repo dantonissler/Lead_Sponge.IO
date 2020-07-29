@@ -56,12 +56,11 @@ public class Cliente extends UserDateAudit {
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
 	private List<Contato> contato = new ArrayList<>();
 
-	@JsonIgnoreProperties("cliente")
-	@Valid
+	@JsonIgnoreProperties(value = {"cliente", "negociacao"})
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
-	private List<Tarefa> tarefas;
+	private List<Tarefa> tarefas = new ArrayList<>();
 
-	@JsonIgnoreProperties("cliente")
+	@JsonIgnoreProperties(value = { "cliente", "clientes", "clientesSeguidos", "roles", "tarefas" })
 	@OneToMany(mappedBy = "cliente")
 	private List<Negociacao> negociacoes;
 

@@ -35,7 +35,7 @@ public abstract class Negociacao_ {
 	public static volatile SingularAttribute<Negociacao, EstagioNegociacao> estagio;
 	public static volatile SingularAttribute<Negociacao, FonteNegociacao> fonte;
 	public static volatile ListAttribute<Negociacao, HistEstagioNegociacao> histEstagioNegociacoes;
-	public static volatile SingularAttribute<Negociacao, Tarefa> tarefa;
+	public static volatile ListAttribute<Negociacao, Tarefa> tarefa;
 	public static final String ID = "id";
 	public static final String NOME = "nome";
 	public static final String CAMPANHA = "campanha";

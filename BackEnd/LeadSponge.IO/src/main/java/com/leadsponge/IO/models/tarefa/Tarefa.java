@@ -11,13 +11,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -48,30 +46,28 @@ public class Tarefa extends UserDateAudit {
 	@Size(max = 255)
 	private String descricao;
 
-	@NotNull
 	@Column(name = "hora_vencimento")
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 	private Date horaMarcada;
 
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	private TipoTarefa tipo;
 
-	@JsonIgnoreProperties("tarefas")
+	@JsonIgnoreProperties(value = { "tarefas", "roles", "clientesSeguidos" })
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "usuario_id")
 	private Usuario usuario;
 
-	@JsonIgnoreProperties("tarefas")
+	@JsonIgnoreProperties(value = { "<%= tarefas %>", "negociacoes", "seguidores" }, allowSetters = true)
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
 
-	@JsonIgnoreProperties("tarefa")
+	@JsonIgnoreProperties(value = { "cliente", "tarefa" })
 	@NotNull
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "negociacao_id")
 	private Negociacao negociacao;
 

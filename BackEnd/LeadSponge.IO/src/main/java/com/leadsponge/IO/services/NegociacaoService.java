@@ -1,5 +1,6 @@
 package com.leadsponge.IO.services;
 
+import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
@@ -21,10 +22,16 @@ public class NegociacaoService {
 	public NegociacaoService(NegociacaoRepository negociacaoRepository) {
 		this.negociacaoRepository = negociacaoRepository;
 	}
-
+	
 	public void atualizarPropriedadeEstatus(Long id, EstatusNegociacao estatus) {
 		Negociacao negociacaoSalva = buscarNegociacaoExistente(id);
 		negociacaoSalva.setEstatus(estatus);
+		negociacaoRepository.save(negociacaoSalva);
+	}
+
+	public void atualizarPropriedadeDataFim(Long id, Date data) {
+		Negociacao negociacaoSalva = buscarNegociacaoExistente(id);
+		negociacaoSalva.setDataPrevistaEncerramento(data);
 		negociacaoRepository.save(negociacaoSalva);
 	}
 

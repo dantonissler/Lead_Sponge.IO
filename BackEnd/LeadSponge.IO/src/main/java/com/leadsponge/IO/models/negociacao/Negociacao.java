@@ -23,7 +23,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -61,7 +60,6 @@ public class Negociacao extends UserDateAudit {
 	private Integer avaliacao;
 
 	@Column(name = "dataPrevistaEncerramento")
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private Date dataPrevistaEncerramento;
 
 	@NotNull
@@ -84,7 +82,6 @@ public class Negociacao extends UserDateAudit {
 	private Campanha campanha;
 
 	@ManyToOne
-	@JsonIgnoreProperties(value = "<%= negociacoes %>", allowSetters = true)
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
 
@@ -115,10 +112,10 @@ public class Negociacao extends UserDateAudit {
 	@Valid
 	private List<HistEstagioNegociacao> histEstagioNegociacoes;
 
-	@OneToOne(mappedBy = "negociacao", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "negociacao", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonIgnoreProperties("negociacao")
 	@Valid
-	private Tarefa tarefa;
+	private List<Tarefa> tarefas;
 
 	public Long getId() {
 		return id;
@@ -232,17 +229,17 @@ public class Negociacao extends UserDateAudit {
 		this.histEstagioNegociacoes = histEstagioNegociacoes;
 	}
 
-	public Tarefa getTarefa() {
-		return tarefa;
-	}
-
-	public void setTarefa(Tarefa tarefa) {
-		this.tarefa = tarefa;
-	}
-
 	@JsonIgnore
 	public boolean isReceita() {
 		return EstatusNegociacao.EMDAMENTO.equals(estatus);
+	}
+
+	public List<Tarefa> getTarefa() {
+		return tarefas;
+	}
+
+	public void setTarefa(List<Tarefa> tarefas) {
+		this.tarefas = tarefas;
 	}
 
 	public EstatusNegociacao getEstatus() {

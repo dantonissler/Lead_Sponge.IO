@@ -55,6 +55,7 @@ export class TarefasCadastroComponent implements OnInit {
     }
     this.carregarCliente();
     this.carregarUsuario();
+    this.carregarNegociacao();
   }
   get editando() {
     return Boolean(this.formulario.get('id').value);

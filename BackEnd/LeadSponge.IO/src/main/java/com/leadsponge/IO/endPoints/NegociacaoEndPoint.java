@@ -1,5 +1,7 @@
 package com.leadsponge.IO.endPoints;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -118,6 +120,15 @@ class NegociacaoEndPoint extends CrudController {
 	ResponseEntity<Negociacao> atualizarPropriedadeEstatus(@PathVariable Long id,
 			@RequestBody EstatusNegociacao estatus) {
 		negociacaoService.atualizarPropriedadeEstatus(id, estatus);
+		return ResponseEntity.status(HttpStatus.CREATED).build();
+	}
+	
+	@PutMapping("/{id}/dataFim")
+	@ResponseStatus(HttpStatus.CREATED)
+	@PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
+	ResponseEntity<Negociacao> atualizarPropriedadeDataFim(@PathVariable Long id,
+			@RequestBody Date data) {
+		negociacaoService.atualizarPropriedadeDataFim(id, data);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 }

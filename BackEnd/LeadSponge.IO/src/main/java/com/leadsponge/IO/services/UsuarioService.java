@@ -19,20 +19,14 @@ import com.leadsponge.IO.storage.S3;
 public class UsuarioService {
 
 	@Autowired
-	private final UsuarioRepository usuarioRepository;
+	private UsuarioRepository usuarioRepository;
 
 	@Autowired
-	private final BCryptPasswordEncoder bCryptPasswordEncoder;
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@Autowired
-	private final S3 s3;
+	private S3 s3;
 
-	public UsuarioService(UsuarioRepository usuarioRepository, BCryptPasswordEncoder bCryptPasswordEncoder, S3 s3) {
-		super();
-		this.usuarioRepository = usuarioRepository;
-		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-		this.s3 = s3;
-	}
 
 	public Usuario save(Usuario usuario) {
 		usuariovalidar(usuario);

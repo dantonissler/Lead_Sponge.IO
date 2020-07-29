@@ -1,17 +1,18 @@
+import { EstagioNegociacaoService } from './../../../estagioNegociacao/services/estagio-negociacao.service';
 import { Negociacao } from './../../models/negociacao.models';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { NegociacoesService } from './../../services/negociacoes.service';
 import { ErrorHandlerService } from './../../../core/error-handler.service';
 import { Title } from '@angular/platform-browser';
-import { MenuItem, MessageService, ConfirmationService } from 'primeng/api';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { MenuItem, MessageService, LazyLoadEvent } from 'primeng/api';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { Location } from '@angular/common';
-import { Table } from 'primeng/table';
 
 @Component({
     selector: 'app-negociacaoes-detalha',
     templateUrl: './negociacaoes-detalha.component.html',
-    styleUrls: ['./negociacaoes-detalha.component.scss']
+    styleUrls: ['./negociacaoes-detalha.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class NegociacaoesDetalhaComponent {
 
@@ -21,19 +22,22 @@ export class NegociacaoesDetalhaComponent {
         { label: 'Perdida', value: 'PERDIDA' },
         { label: 'Pausado', value: 'PAUSADO' }
     ];
+
     items: MenuItem[];
+    funil: MenuItem[];
     activeItem: MenuItem;
     activeIndex: number = 0;
-    negociacao: any;
-    @ViewChild('dt') table: Table;
+    activeIndexFunil: number = 0;
+    negociacao = new Negociacao();
+    editing = false
+    ptBR: any;
 
     constructor(
         private negociacoesService: NegociacoesService,
+        private estagioNegociacaoService: EstagioNegociacaoService,
         private errorHandler: ErrorHandlerService,
-        private confirmation: ConfirmationService,
         private messageService: MessageService,
         private route: ActivatedRoute,
-        private router: Router,
         private title: Title,
         private _location: Location,
     ) { }
@@ -41,9 +45,11 @@ export class NegociacaoesDetalhaComponent {
 
     ngOnInit() {
         this.title.setTitle('Detalhar de Negociação');
-        this.carregarItems();
         const idNegociacao = this.route.snapshot.params['id'];
         this.carregarNegociacao(idNegociacao);
+        this.traducaoCalendario();
+        this.carregarItems();
+        this.carregarFunilDeVendas();
         this.activeItem = this.items[0];
     }
 
@@ -51,6 +57,15 @@ export class NegociacaoesDetalhaComponent {
         this.negociacoesService.buscarPorCodigo(id)
             .then(negociacao => {
                 this.negociacao = negociacao;
+                this.activeIndexFunil = negociacao.estagio.id - 1;
+            })
+            .catch(erro => this.errorHandler.handle(erro));
+    }
+
+    carregarFunilDeVendas() {
+        this.estagioNegociacaoService.listarTodas()
+            .then(estagios => {
+                this.funil = estagios.map(c => ({ label: c.nome, activeIndexFunil: c.posicao, titulo: c.apelido }));
             })
             .catch(erro => this.errorHandler.handle(erro));
     }
@@ -76,27 +91,6 @@ export class NegociacaoesDetalhaComponent {
         ];
     }
 
-    confirmarExclusao(negociacao: any) {
-        this.confirmation.confirm({
-            message: 'Tem certeza que deseja excluir?',
-            accept: () => {
-                this.excluir(negociacao);
-            }
-        });
-    }
-
-    excluir(negociacao: any) {
-        this.negociacoesService.excluir(negociacao.id)
-            .then(() => {
-                if (this.table.first === 0) {
-                } else {
-                    this.table.first = 0;
-                }
-                this.messageService.add({ severity: 'success', detail: 'Negociação excluída com sucesso!' });
-            })
-            .catch(erro => this.errorHandler.handle(erro));
-    }
-
     alternarAvaliacao(negociacoes: any): void {
         const novoavaliacao = negociacoes.avaliacao;
         this.negociacoesService.mudarAvaliacao(negociacoes.id, novoavaliacao)
@@ -108,7 +102,43 @@ export class NegociacaoesDetalhaComponent {
             .catch(erro => this.errorHandler.handle(erro));
     }
 
+    alterarFunil(negociacao: any): void {
+        const novoVis = negociacao.estagio;
+        novoVis.id = this.activeIndexFunil + 1;
+        this.negociacoesService.mudarEstagio(negociacao.id, novoVis)
+            .then(() => {
+                const acao = novoVis.nome;
+                negociacao.estagio = novoVis;
+                this.messageService.add({ severity: 'success', detail: `estagio alterado para ${acao} com sucesso!` });
+            })
+            .catch(erro => this.errorHandler.handle(erro));
+    }
+
+    alternarDPE(event: LazyLoadEvent, negociacoes: any): void {
+        const novodata = event;
+        console.log(event);
+        this.negociacoesService.mudarData(negociacoes.id, novodata)
+            .then(() => {
+                const acao = novodata;
+                negociacoes.dataPrevistaEncerramento = novodata;
+                this.messageService.add({ severity: 'success', detail: `Avaliação da negociação igual à ${acao} alterado com sucesso!` });
+            })
+            .catch(erro => this.errorHandler.handle(erro));
+    }
+
     backClicked() {
         this._location.back();
+    }
+
+    traducaoCalendario(){
+        this.ptBR = {
+            dayNames: [ "domingo","segunda-feira","terça-feira","quarta-feira","quinta-feira","sexta-feira","sábado" ],
+            dayNamesShort: [ "dom","seg","ter","qua","qui","sex","sáb" ],
+            dayNamesMin: [ "D","S","T","Q","Q","S","S" ],
+            monthNames: [ "janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro" ],
+            monthNamesShort: [ "jan","fev","mar","abr","mai","jun","jul","ago","sep","out","nov","dez" ],
+            today: 'Hoje',
+            clear: 'Limpar'
+        }
     }
 }

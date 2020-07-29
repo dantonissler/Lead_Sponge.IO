@@ -1,3 +1,4 @@
+import { EstagioNegociacaoService } from './../../../estagioNegociacao/services/estagio-negociacao.service';
 import { MenuItem } from 'primeng/api/menuitem';
 import { Title } from '@angular/platform-browser';
 import { ConfirmationService, MessageService, LazyLoadEvent } from 'primeng/api';
@@ -10,7 +11,7 @@ import { Table } from 'primeng/table';
 @Component({
     selector: 'app-negociacoes-pesquisa',
     templateUrl: './negociacoes-pesquisa.component.html',
-    styleUrls: ['./negociacoes-pesquisa.component.scss']
+    styleUrls: ['./negociacoes-pesquisa.component.scss'],
 })
 export class NegociacoesPesquisaComponent implements OnInit {
 
@@ -18,7 +19,6 @@ export class NegociacoesPesquisaComponent implements OnInit {
     filtro = new NegociacoesFiltro();
     negociacoes: Negociacao[];
     items: MenuItem[];
-    activeIndex: number = 1;
     selectedNegociacao: Negociacao[];
     loading: boolean = true;
     @ViewChild('dt') table: Table;

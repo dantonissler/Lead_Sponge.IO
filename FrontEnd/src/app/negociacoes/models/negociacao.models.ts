@@ -14,7 +14,11 @@ export class Negociacao{
     valorTotal: number;
     valorMensal: number;
     valorUnico: number;
-    createdAt:Date;
+    createdAt: Date;
+    updatedAt: Date;
+    dataPrevistaEncerramento: Date;
+    createdByUser: string;
+    modifiedByUser: string;
     motivoPerda = new Perda();
     cliente = new Cliente();
     campanha = new Campanha();

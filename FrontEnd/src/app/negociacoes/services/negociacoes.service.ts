@@ -4,6 +4,7 @@ import { HttpParams, HttpHeaders } from '@angular/common/http';
 import { MoneyHttp } from './../../usuarios/money-http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import * as moment from 'moment';
 
 export class NegociacoesFiltro {
     nome: string;
@@ -75,7 +76,19 @@ export class NegociacoesService {
 
     buscarPorCodigo(id: number): Promise<Negociacao> {
         return this.http.get<Negociacao>(`${this.negociacaoUrl}/${id}`)
-            .toPromise();
+            .toPromise()
+            .then(response => {
+                const tarefaAlterada = response;
+                this.converterStringsParaDatas([tarefaAlterada]);
+                return tarefaAlterada;
+            });
+    }
+
+    private converterStringsParaDatas(negociacaos: Negociacao[]) {
+        for (const negociacao of negociacaos) {
+            negociacao.createdAt = moment(negociacao.createdAt,
+                'YYYY-MM-DD').toDate();
+        }
     }
 
     mudarAvaliacao(id: number, avaliacao: number): Promise<void> {
@@ -94,6 +107,14 @@ export class NegociacoesService {
             .then(() => null);
     }
 
+    mudarData(id: number, dataFim: any): Promise<void> {
+        const headers = new HttpHeaders()
+            .append('Content-Type', 'application/json');
+        return this.http.put(`${this.negociacaoUrl}/${id}/dataFim`, dataFim, { headers })
+            .toPromise()
+            .then(() => null);
+    }
+
     mudarEstagio(id: number, estagio: Estagio): Promise<void> {
         const headers = new HttpHeaders()
             .append('Content-Type', 'application/json');
@@ -101,4 +122,6 @@ export class NegociacoesService {
             .toPromise()
             .then(() => null);
     }
+
+
 }

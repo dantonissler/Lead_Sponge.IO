@@ -1,10 +1,18 @@
 <div class="custom">
     <div class="ui-g">
-        <button pButton icon="fas fa-arrow-left fa-2x" pTooltip="Voltar" tooltipPosition="top" (click)="backClicked()"
-            class="ui-button-rounded ui-button-secondary"></button>
-        <p>{{negociacao.nome}}</p>
+        <div style="width: 50px; padding: 0.3em 1em;">
+            <button pButton icon="fas fa-arrow-left fa-2x" pTooltip="Voltar" tooltipPosition="top"
+                (click)="backClicked()" class="ui-button-rounded ui-button-secondary"></button>
+        </div>
+        <div class="p-col p-md ui-fluid">
+            <h5>{{negociacao.nome}}</h5>
+        </div>
     </div>
     <h1>Empresa/Cliente</h1>
+    <div class="p-col p-md ui-fluid">
+        <a icon="fas fa-pencil-alt" pTooltip="{{negociacao.cliente.nome}}" tooltipPosition="top"
+            [routerLink]="['/clientes/detalhar', negociacao.cliente.id]">{{negociacao.cliente.nome}}</a>
+    </div>
     <p-tabMenu [model]="items" [activeItem]="activeItem">
         <ng-template pTemplate="item" let-item let-i="index">
             <div class="ui-tabmenu">
@@ -17,12 +25,15 @@
         </ng-template>
     </p-tabMenu>
     <div class="ui-g">
-        <div class="p-col-3">
-            <div class="p-col p-md ui-fluid">
-                <span class="ui-column-title">Funil de vendas</span>
-            </div>
-            <div class="p-col p-md ui-fluid">
-                <app-funil-de-vendas [negociacao]="negociacao"></app-funil-de-vendas>
+        <div class="p-col">
+            <div style="width: 220px;">
+                <div class="p-col p-md ui-fluid">
+                    <span class="ui-column-title">Funil de vendas</span>
+                </div>
+                <div class="p-col p-md ui-fluid">
+                    <p-steps-extended [model]="funil" [(activeIndex)]="activeIndexFunil" [readonly]="false"
+                        (click)="alterarFunil(negociacao)"></p-steps-extended>
+                </div>
             </div>
         </div>
         <div class="p-col">
@@ -40,34 +51,43 @@
             </div>
             <div class="p-col p-md ui-fluid">
                 <ul>
-                    <li> {{negociacao.valorMensa == null ? 'R$ 0,00' : negociacao.valorMensa}}</li>
+                    <li> {{negociacao.valorMensal == null ? 'R$ 0,00' : negociacao.valorMensal}}</li>
                     <li>{{negociacao.valorUnico == null ? 'R$ 0,00' : negociacao.valorUnico}}</li>
                 </ul>
             </div>
-
         </div>
         <div class="p-col">
             <div class="p-col p-md ui-fluid">
                 Data de criação
             </div>
             <div class="p-col p-md ui-fluid">
-                {{negociacao.createdAt | date:'dd/MM/yyyy' }}
+                {{ negociacao.updatedAt | date:'dd/MM/yyyy' }}
             </div>
-
         </div>
         <div class="p-col">
-            <div class="p-col p-md ui-fluid">
-                Data de fechamento
+            <div style="width: 190px;">
+                <div class="p-col p-md ui-fluid">
+                    Data de fechamento
+                </div>
+                <div class="p-col p-md ui-fluid">
+                    <p-calendar name="dataPE" [locale]="ptBR" (onSelect)="alternarDPE($event,negociacao)"
+                        [showIcon]="false" [hidden]="!editing" dateFormat="dd/mm/yy" [showTime]="true"
+                        placeholder="insira uma data" [ngModel]="negociacao.dataPrevistaEncerramento| date: 'short'"
+                        showButtonBar="true">
+                    </p-calendar>
+                    <p [hidden]="editing" (click)="editing = !editing">
+                        {{negociacao.dataPrevistaEncerramento == null ? 'insira uma data' : negociacao.dataPrevistaEncerramento | date: 'short'}}
+                    </p>
+                </div>
             </div>
-            <div class="p-col p-md ui-fluid"></div>
-
         </div>
         <div class="p-col">
             <div class="p-col p-md ui-fluid">
                 Ações
             </div>
-            <div class="p-col p-md ui-fluid"></div>
+            <div class="p-col p-md ui-fluid">
 
+            </div>
         </div>
     </div>
     <div style="padding: 0.5em;">

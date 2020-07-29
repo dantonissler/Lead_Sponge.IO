@@ -1,4 +1,41 @@
+@media (max-width: 40em) {
+    .ui-steps .ui-steps-item .ui-steps-title {
+        display: block;
+    }
+}
+.ui-steps .ui-steps-item {
+    width: auto;
+}
+.ui-steps .ui-steps-item .ui-menuitem-link {
+    padding: 0.45em;
+}
+body .ui-steps .ui-steps-item .ui-menuitem-link .ui-steps-number {
+    position: initial;
+}
+body .ui-steps .ui-steps-item .ui-menuitem-link {
+    height: 40px;
+}
+body .ui-steps .ui-steps-item .ui-menuitem-link .ui-steps-title {
+    margin-top: 15px;
+}
+body .ui-steps:before {
+    top: 45%;
+}
 
 div.custom {
     padding: 0.5em;
+}
+
+body {
+    a {
+        text-decoration: none;
+        font-family: "Poppins", sans-serif;
+        font-weight: bolder;
+        color: rgb(10, 17, 22);
+        &:hover {
+            text-decoration: none;
+            color: #51575c;
+            transition: all 0.3s;
+        }
+    }
 }

@@ -1,3 +1,4 @@
+import { CalendarModule } from 'primeng/calendar';
 import { TarefasComponent } from './../components/negociacoes-detalha/tarefas/tarefas.component';
 import { ProdutosComponent } from './../components/negociacoes-detalha/produtos/produtos.component';
 import { HistoricoComponent } from './../components/negociacoes-detalha/historico/historico.component';
@@ -64,6 +65,7 @@ import { NegociacaoesDetalhaComponent } from '../components/negociacoes-detalha/
     ProgressBarModule,
     HttpClientModule,
     StepsExtendedModule,
+    CalendarModule,
 
     SharedModule,
     NegociacoesRoutingModule

@@ -62,7 +62,6 @@ export class MotivoPerdaService {
   }
 
   atualizar(motivoPerda: Perda): Promise<Perda> {
-    console.log(motivoPerda);
     return this.http.put<Perda>(`${this.motivoPerdaUrl}/${motivoPerda.id}`, motivoPerda)
       .toPromise();
   }

@@ -77,17 +77,16 @@ export class TarefasService {
       .toPromise()
       .then(response => {
         const tarefaAlterada = response;
-
         this.converterStringsParaDatas([tarefaAlterada]);
-
         return tarefaAlterada;
       });
   }
 
   private converterStringsParaDatas(tarefas: Tarefa[]) {
     for (const tarefa of tarefas) {
-      tarefa.horaMarcada = moment(tarefa.horaMarcada,
-        'YYYY-MM-DD HH:mm').toDate();
+      console.log(tarefa.horaMarcada)
+      tarefa.horaMarcada = moment(tarefa.horaMarcada).toDate();
+        console.log(tarefa.horaMarcada)
     }
   }
 

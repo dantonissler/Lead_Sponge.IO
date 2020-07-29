@@ -1,6 +1,6 @@
 package com.leadsponge.IO.models.historicoEstagioNegociacao;
 
-import java.time.Instant;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +13,6 @@ import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.leadsponge.IO.models.View;
 import com.leadsponge.IO.models.audit.UserDateAudit;
@@ -43,8 +42,7 @@ public class HistEstagioNegociacao extends UserDateAudit {
 
 	@NotNull
 	@Column(name = "data_mudanca")
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-	private Instant dataMudanca;
+	private Date dataMudanca;
 
 	@ManyToOne
 	@JoinColumn(name = "negociacao_id")
@@ -58,7 +56,7 @@ public class HistEstagioNegociacao extends UserDateAudit {
 		this.id = id;
 	}
 
-	public Instant getDataMudanca() {
+	public Date getDataMudanca() {
 		return dataMudanca;
 	}
 

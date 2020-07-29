@@ -28,7 +28,7 @@
             </div>
             <div class="ui-g-12 ui-fluid">
                 <label>Marcar Horario</label>
-                <p-calendar name="horaMarcada" [showIcon]="true" [showTime]="true" formControlName="horaMarcada">
+                <p-calendar name="horaMarcada" [showIcon]="true" [showTime]="true" formControlName="horaMarcada" dateFormat="dd/mm/yy">
                 </p-calendar>
                 <app-message [control]="formulario.get('horaMarcada')" error="required" text="Informe uma data e hora">
                 </app-message>
@@ -43,7 +43,7 @@
                 <p-dropdown name="usuario" [options]="usuario" placeholder="Selecione" [filter]="true"
                     formControlName="id"></p-dropdown>
             </div>
-            <div class="ui-g-12 ui-md-4 ui-fluid" formGroupName="usuario">
+            <div class="ui-g-12 ui-md-4 ui-fluid" formGroupName="negociacao">
                 <label>Negociacao <span style="color: crimson;">*</span></label>
                 <p-dropdown name="negociacao" [options]="negociacao" placeholder="Selecione" [filter]="true"
                     formControlName="id"></p-dropdown>
@@ -57,5 +57,6 @@
                     Clabel="Pesquisa" routerLink="/tarefas" style="padding-left:10;"></button>
             </div>
         </div>
+        <pre> {{formulario.value | json}} </pre>
     </form>
 </div>
