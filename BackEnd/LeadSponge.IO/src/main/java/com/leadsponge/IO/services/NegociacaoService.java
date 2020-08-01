@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.leadsponge.IO.models.estagioNegociacao.EstagioNegociacao;
+import com.leadsponge.IO.models.motivoPerda.MotivoPerda;
 import com.leadsponge.IO.models.negociacao.EstatusNegociacao;
 import com.leadsponge.IO.models.negociacao.Negociacao;
 import com.leadsponge.IO.repository.negociacao.NegociacaoRepository;
@@ -18,13 +19,22 @@ public class NegociacaoService {
 
 	@Autowired
 	private final NegociacaoRepository negociacaoRepository;
-	
+
 	public NegociacaoService(NegociacaoRepository negociacaoRepository) {
 		this.negociacaoRepository = negociacaoRepository;
 	}
-	
+
+	public void atribuirPropMP(Long id, MotivoPerda motivoPerda) {
+		Negociacao negociacaoSalva = buscarNegociacaoExistente(id);
+		negociacaoSalva.setMotivoPerda(motivoPerda);
+		negociacaoSalva.setEstatus(EstatusNegociacao.PERDIDA);
+		negociacaoRepository.save(negociacaoSalva);
+	}
+
 	public void atualizarPropriedadeEstatus(Long id, EstatusNegociacao estatus) {
 		Negociacao negociacaoSalva = buscarNegociacaoExistente(id);
+		if (negociacaoSalva.getEstatus() == EstatusNegociacao.PERDIDA)
+			negociacaoSalva.setMotivoPerda(null);
 		negociacaoSalva.setEstatus(estatus);
 		negociacaoRepository.save(negociacaoSalva);
 	}

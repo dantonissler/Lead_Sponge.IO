@@ -1,7 +1,7 @@
 package com.leadsponge.IO.models.negociacao;
 
 public enum EstatusNegociacao {
-	EMDAMENTO("Em andamento"),
+	EMANDAMENTO("Em andamento"),
 	VENDIDO("Vendido"),
 	PERDIDA("Perdida"),
 	PAUSADO("Pausado");

@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.leadsponge.IO.endPoints.crudEndpoints.CrudController;
 import com.leadsponge.IO.event.RecursoCriadoEvent;
 import com.leadsponge.IO.models.estagioNegociacao.EstagioNegociacao;
+import com.leadsponge.IO.models.motivoPerda.MotivoPerda;
 import com.leadsponge.IO.models.negociacao.EstatusNegociacao;
 import com.leadsponge.IO.models.negociacao.Negociacao;
 import com.leadsponge.IO.repository.Filter.NegociacaoFilter;
@@ -129,6 +130,15 @@ class NegociacaoEndPoint extends CrudController {
 	ResponseEntity<Negociacao> atualizarPropriedadeDataFim(@PathVariable Long id,
 			@RequestBody Date data) {
 		negociacaoService.atualizarPropriedadeDataFim(id, data);
+		return ResponseEntity.status(HttpStatus.CREATED).build();
+	}
+	
+	@PutMapping("/{id}/perda")
+	@ResponseStatus(HttpStatus.CREATED)
+	@PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
+	ResponseEntity<Negociacao> atribuirMotivoPerda(@PathVariable Long id,
+			@RequestBody MotivoPerda morivoPerda) {
+		negociacaoService.atribuirPropMP(id, morivoPerda);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 }

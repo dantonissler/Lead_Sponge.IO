@@ -82,11 +82,56 @@
             </div>
         </div>
         <div class="p-col">
-            <div class="p-col p-md ui-fluid">
-                Ações
-            </div>
-            <div class="p-col p-md ui-fluid">
-
+            <div style="width: 280px;">
+                <div class="p-col p-md ui-fluid">
+                    Ações
+                </div>
+                <div class="ui-fluid p-formgrid p-grid">
+                    <div [hidden]="!motivoPerdAtivo" class="p-field p-col p-md ui-fluid">
+                        <p-dropdown [options]="motivoPerda" [filter]="true" optionLabel="nome"
+                            placeholder="Motivo da perda" [(ngModel)]="selectedMP"
+                            (onHide)="alterarMP(negociacao.id, selectedMP)">
+                        </p-dropdown>
+                    </div>
+                    <div [hidden]="!motivoPerdAtivo" class="p-field p-col p-md ui-fluid">
+                        <span pTooltip="Excluir negociação" tooltipPosition="top" class="apagar"
+                            (click)="motivoPerdAtivo = !motivoPerdAtivo">
+                            <i class="far fa-times-circle fa-2x"></i>
+                        </span>
+                    </div>
+                    <div [hidden]="negociacao.estatus == 'EMANDAMENTO'" class="p-field p-col p-md ui-fluid">
+                        <button pButton icon="fas fa-undo-alt" label="Retomar Negociação"
+                            (click)="alternarEstatus(negociacao,estatus[0])" class="ui-button-secondary">
+                        </button>
+                    </div>
+                    <div [hidden]="negociacao.estatus != 'EMANDAMENTO'|| motivoPerdAtivo "
+                        class="p-field p-col p-md ui-fluid">
+                        <span pTooltip="Excluir negociação" tooltipPosition="top" class="vendido"
+                            (click)="alternarEstatus(negociacao,estatus[1])">
+                            <i class="fas fa-thumbs-up fa-2x"></i>
+                        </span>
+                    </div>
+                    <div [hidden]="negociacao.estatus != 'EMANDAMENTO' || motivoPerdAtivo "
+                        class="p-field p-col p-md ui-fluid">
+                        <span pTooltip="Excluir negociação" tooltipPosition="top" class="perdido"
+                            (click)="motivoPerdAtivo = !motivoPerdAtivo">
+                            <i class="fas fa-thumbs-down fa-2x"></i>
+                        </span>
+                    </div>
+                    <div [hidden]="negociacao.estatus != 'EMANDAMENTO' || motivoPerdAtivo "
+                        class="p-field p-col p-md ui-fluid">
+                        <span pTooltip="Excluir negociação" tooltipPosition="top" class="pausado"
+                            (click)="alternarEstatus(negociacao,estatus[3])">
+                            <i class="fas fa-pause fa-2x"></i>
+                        </span>
+                    </div>
+                    <div class="p-field p-col-2 p-md ui-fluid">
+                        <span pTooltip="Excluir negociação" tooltipPosition="top" class="apagar"
+                            (click)="confirmarExclusao(negociacao)">
+                            <i class="fas fa-trash fa-2x"></i>
+                        </span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

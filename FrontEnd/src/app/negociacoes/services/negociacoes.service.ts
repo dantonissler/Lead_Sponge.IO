@@ -1,3 +1,4 @@
+import { Perda } from './../../motivoPerda/models/motivo-perda.models';
 import { Estagio } from './../../estagioNegociacao/models/estagio-negociacao.models';
 import { Negociacao } from './../models/negociacao.models';
 import { HttpParams, HttpHeaders } from '@angular/common/http';
@@ -93,7 +94,7 @@ export class NegociacoesService {
 
     mudarAvaliacao(id: number, avaliacao: number): Promise<void> {
         const headers = new HttpHeaders()
-            .append('Content-Type', 'application/json');
+            .append('Content-Type', 'application/json; charset=utf-8');
         return this.http.put(`${this.negociacaoUrl}/${id}/avaliacao`, avaliacao, { headers })
             .toPromise()
             .then(() => null);
@@ -101,15 +102,15 @@ export class NegociacoesService {
 
     mudarEstatus(id: number, estatus: string): Promise<void> {
         const headers = new HttpHeaders()
-            .append('Content-Type', 'application/json');
-        return this.http.put(`${this.negociacaoUrl}/${id}/estatus`, estatus, { headers })
+            .append('Content-Type', 'application/json; charset=utf-8');
+        return this.http.put(`${this.negociacaoUrl}/${id}/estatus`, `"${estatus}"`, { headers })
             .toPromise()
             .then(() => null);
     }
 
     mudarData(id: number, dataFim: any): Promise<void> {
         const headers = new HttpHeaders()
-            .append('Content-Type', 'application/json');
+            .append('Content-Type', 'application/json; charset=utf-8');
         return this.http.put(`${this.negociacaoUrl}/${id}/dataFim`, dataFim, { headers })
             .toPromise()
             .then(() => null);
@@ -117,8 +118,16 @@ export class NegociacoesService {
 
     mudarEstagio(id: number, estagio: Estagio): Promise<void> {
         const headers = new HttpHeaders()
-            .append('Content-Type', 'application/json');
+            .append('Content-Type', 'application/json; charset=utf-8');
         return this.http.put(`${this.negociacaoUrl}/${id}/estagio`, estagio, { headers })
+            .toPromise()
+            .then(() => null);
+    }
+
+    atribuirMotivoPerda(id: number, perda: Perda): Promise<void> {
+        const headers = new HttpHeaders()
+            .append('Content-Type', 'application/json; charset=utf-8');
+        return this.http.put(`${this.negociacaoUrl}/${id}/perda`, perda, { headers })
             .toPromise()
             .then(() => null);
     }

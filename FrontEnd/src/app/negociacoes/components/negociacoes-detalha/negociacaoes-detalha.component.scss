@@ -38,4 +38,31 @@ body {
             transition: all 0.3s;
         }
     }
+    span {
+        &.vendido {
+            &:hover {
+                color: green;
+                transition: inherit;
+            }
+        }
+        &.perdido {
+            &:hover {
+                color: red;
+                transition: inherit;
+            }
+        }
+        &.pausado {
+            &:hover {
+                color: orange;
+                transition: inherit;
+            }
+        }
+
+        &.apagar {
+            &:hover {
+                color: red;
+                transition: inherit;
+            }
+        }
+    }
 }

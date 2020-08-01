@@ -82,6 +82,7 @@ public class Negociacao extends UserDateAudit {
 	private Campanha campanha;
 
 	@ManyToOne
+	@JsonIgnoreProperties(value= {"negociacoes", "tarefas", "contato", "segmentos", "seguidores", "responsavel"}, allowSetters = true)
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
 
@@ -231,7 +232,7 @@ public class Negociacao extends UserDateAudit {
 
 	@JsonIgnore
 	public boolean isReceita() {
-		return EstatusNegociacao.EMDAMENTO.equals(estatus);
+		return EstatusNegociacao.EMANDAMENTO.equals(estatus);
 	}
 
 	public List<Tarefa> getTarefa() {

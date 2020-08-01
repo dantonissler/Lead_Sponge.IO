@@ -122,7 +122,7 @@ export class NegociacoesCadastroComponent implements OnInit {
     configurarFormulario() {
         this.formulario = this.formBuilder.group({
             id: [],
-            estatus: ['EMDAMENTO', Validators.required],
+            estatus: ['EMANDAMENTO', Validators.required],
             nome: [null, [this.validarObrigatoriedade, this.validarTamanhoMinimo(4)]],
             avaliacao: [1, Validators.required],
             cliente: this.formBuilder.group({
