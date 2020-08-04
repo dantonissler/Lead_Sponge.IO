@@ -16,7 +16,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.validation.Valid;
@@ -82,7 +81,8 @@ public class Negociacao extends UserDateAudit {
 	private Campanha campanha;
 
 	@ManyToOne
-	@JsonIgnoreProperties(value= {"negociacoes", "tarefas", "contato", "segmentos", "seguidores", "responsavel"}, allowSetters = true)
+	@JsonIgnoreProperties(value = { "negociacoes", "tarefas", "contato", "segmentos", "seguidores",
+			"responsavel" }, allowSetters = true)
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
 
@@ -103,10 +103,10 @@ public class Negociacao extends UserDateAudit {
 	@JoinColumn(name = "motivo_perda_negociacao_id")
 	private MotivoPerda motivoPerda;
 
-	@OneToOne(mappedBy = "negociacao", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JsonIgnoreProperties("negociacao")
+	@OneToMany(mappedBy = "negociacao", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonIgnoreProperties(value = { "negociacao", "produto" })
 	@Valid
-	private NegociacaoProduto negociacaoProduto;
+	private List<NegociacaoProduto> negociacaoProdutos;
 
 	@OneToMany(mappedBy = "negociacao", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonIgnoreProperties("negociacao")
@@ -214,12 +214,20 @@ public class Negociacao extends UserDateAudit {
 		this.motivoPerda = motivoPerda;
 	}
 
-	public NegociacaoProduto getNegociacaoProduto() {
-		return negociacaoProduto;
+	public List<NegociacaoProduto> getNegociacaoProdutos() {
+		return negociacaoProdutos;
 	}
 
-	public void setNegociacaoProduto(NegociacaoProduto negociacaoProduto) {
-		this.negociacaoProduto = negociacaoProduto;
+	public void setNegociacaoProdutos(List<NegociacaoProduto> negociacaoProdutos) {
+		this.negociacaoProdutos = negociacaoProdutos;
+	}
+
+	public List<Tarefa> getTarefas() {
+		return tarefas;
+	}
+
+	public void setTarefas(List<Tarefa> tarefas) {
+		this.tarefas = tarefas;
 	}
 
 	public List<HistEstagioNegociacao> getHistEstagioNegociacoes() {

@@ -1,6 +1,7 @@
 package com.leadsponge.IO.models.produto;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,12 +10,14 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.leadsponge.IO.models.View;
 import com.leadsponge.IO.models.audit.UserDateAudit;
@@ -46,8 +49,10 @@ public class Produto extends UserDateAudit {
 	@NotNull
 	private Boolean visibilidade;
 
-	@OneToOne(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private NegociacaoProduto negociacaoProduto;
+	@JsonIgnoreProperties(value = { "negociacao", "produto" })
+	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@Valid
+	private List<NegociacaoProduto> negociacaoProdutos;
 
 	public Long getId() {
 		return id;
@@ -89,12 +94,12 @@ public class Produto extends UserDateAudit {
 		this.visibilidade = visibilidade;
 	}
 
-	public NegociacaoProduto getNegociacaoProduto() {
-		return negociacaoProduto;
+	public List<NegociacaoProduto> getNegociacaoProdutos() {
+		return negociacaoProdutos;
 	}
 
-	public void setNegociacaoProduto(NegociacaoProduto negociacaoProduto) {
-		this.negociacaoProduto = negociacaoProduto;
+	public void setNegociacaoProdutos(List<NegociacaoProduto> negociacaoProdutos) {
+		this.negociacaoProdutos = negociacaoProdutos;
 	}
 
 	@Override

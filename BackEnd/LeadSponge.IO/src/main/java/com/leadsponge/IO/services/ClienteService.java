@@ -20,38 +20,27 @@ public class ClienteService {
 	public Cliente salvar(Cliente cliente) {
 		clienteValidar(cliente);
 		cliente.setSegmentos(new ArrayList<>(cliente.getSegmentos()));
-
 		cliente.getContato().forEach(c -> c.setCliente(cliente));
-		cliente.getContato()
-				.forEach(contato -> contato.getTelefone().forEach(telefone -> telefone.setContato(contato)));
+		cliente.getContato().forEach(contato -> contato.getTelefone().forEach(telefone -> telefone.setContato(contato)));
 		cliente.getContato().forEach(contato -> contato.getEmail().forEach(email -> email.setContato(contato)));
-
 		cliente.setSeguidores(new ArrayList<>(cliente.getSeguidores()));
 		return clienteRepository.save(cliente);
 	}
 
 	public Cliente atualizar(Long id, Cliente cliente) {
 		Cliente clienteSalvo = buscarClienteExistente(id);
-
 		clienteSalvo.getSegmentos().clear();
 		clienteSalvo.getSegmentos().addAll(cliente.getSegmentos());
 		clienteSalvo.setSegmentos(new ArrayList<>(clienteSalvo.getSegmentos()));
-
 		clienteSalvo.getContato().clear();
 		clienteSalvo.getContato().forEach(contato -> contato.getEmail().clear());
 		clienteSalvo.getContato().forEach(contato -> contato.getTelefone().clear());
-
 		clienteSalvo.getContato().addAll(cliente.getContato());
-		cliente.getContato().forEach(contatos -> clienteSalvo.getContato()
-				.forEach(contato -> contato.getTelefone().addAll(contatos.getTelefone())));
-		cliente.getContato().forEach(contatos -> clienteSalvo.getContato()
-				.forEach(contato -> contato.getEmail().addAll(contatos.getEmail())));
-
+		cliente.getContato().forEach(contatos -> clienteSalvo.getContato().forEach(contato -> contato.getTelefone().addAll(contatos.getTelefone())));
+		cliente.getContato().forEach(contatos -> clienteSalvo.getContato().forEach(contato -> contato.getEmail().addAll(contatos.getEmail())));
 		clienteSalvo.getContato().forEach(contato -> contato.setCliente(clienteSalvo));
-		clienteSalvo.getContato()
-				.forEach(contato -> contato.getTelefone().forEach(telefone -> telefone.setContato(contato)));
+		clienteSalvo.getContato().forEach(contato -> contato.getTelefone().forEach(telefone -> telefone.setContato(contato)));
 		clienteSalvo.getContato().forEach(contato -> contato.getEmail().forEach(email -> email.setContato(contato)));
-
 		BeanUtils.copyProperties(cliente, clienteSalvo, "id", "segmentos", "contatos");
 		return clienteRepository.save(clienteSalvo);
 

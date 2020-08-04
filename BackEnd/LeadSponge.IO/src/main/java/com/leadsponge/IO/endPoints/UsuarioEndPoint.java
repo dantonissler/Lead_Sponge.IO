@@ -39,27 +39,20 @@ import com.leadsponge.IO.storage.S3;
 class UsuarioEndPoint extends CrudController {
 
 	@Autowired
-	private final UsuarioRepository repository;
+	private UsuarioRepository repository;
 
 	@Autowired
-	private final UsuarioService usuarioService;
+	private UsuarioService usuarioService;
 
 	@Autowired
-	private final ApplicationEventPublisher publisher;
+	private ApplicationEventPublisher publisher;
 
 	@Autowired
-	private final S3 s3;
+	private S3 s3;
 
 //	@Autowired
 //	private ImagensService imagensService;
-
-	public UsuarioEndPoint(UsuarioRepository repository, UsuarioService usuarioService,
-			ApplicationEventPublisher publisher, S3 s3) {
-		this.repository = repository;
-		this.usuarioService = usuarioService;
-		this.publisher = publisher;
-		this.s3 = s3;
-	}
+	
 
 	@GetMapping
 	@PreAuthorize("hasAuthority('PESQUISAR_USUARIO') and #oauth2.hasScope('read')")

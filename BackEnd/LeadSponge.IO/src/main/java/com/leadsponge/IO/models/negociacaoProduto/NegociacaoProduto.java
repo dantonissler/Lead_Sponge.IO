@@ -1,12 +1,14 @@
 package com.leadsponge.IO.models.negociacaoProduto;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.validation.constraints.NotNull;
@@ -32,14 +34,36 @@ public class NegociacaoProduto extends UserDateAudit {
 	private Long id;
 
 	@NotNull
-	@Column(name = "quantidade_produtos")
-	private Integer quantidadeProdutos;
+	@Column(name = "quantidade")
+	private Integer quantidade;
 
-	@OneToOne
+	@NotNull
+	@Column(name = "valor")
+	private BigDecimal valor;
+	
+	@NotNull
+	@Column(name = "tipo_reincidencia")
+	private TipoReincidencia reincidencia;
+
+	@Column(name = "desconto")
+	private BigDecimal desconto;
+
+	@Column(name = "tem_desconto")
+	private Boolean temDesconto;
+
+	@Column(name = "total")
+	private BigDecimal total;
+
+	@Column(name = "tipo_desconto")
+	private TipoDesconto tipoDesconto;
+
+	@ManyToOne
+	@NotNull
 	@JoinColumn(name = "produto_id")
 	private Produto produto;
 
-	@OneToOne
+	@ManyToOne
+	@NotNull
 	@JoinColumn(name = "negociacao_id")
 	private Negociacao negociacao;
 
@@ -49,14 +73,6 @@ public class NegociacaoProduto extends UserDateAudit {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Integer getQuantidadeProdutos() {
-		return quantidadeProdutos;
-	}
-
-	public void setQuantidadeProdutos(Integer quantidadeProdutos) {
-		this.quantidadeProdutos = quantidadeProdutos;
 	}
 
 	public Produto getProduto() {
@@ -73,6 +89,62 @@ public class NegociacaoProduto extends UserDateAudit {
 
 	public void setNegociacao(Negociacao negociacao) {
 		this.negociacao = negociacao;
+	}
+
+	public Integer getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(Integer quantidade) {
+		this.quantidade = quantidade;
+	}
+
+	public BigDecimal getDesconto() {
+		return desconto;
+	}
+
+	public void setDesconto(BigDecimal desconto) {
+		this.desconto = desconto;
+	}
+
+	public BigDecimal getTotal() {
+		return total;
+	}
+
+	public void setTotal(BigDecimal total) {
+		this.total = total;
+	}
+
+	public TipoDesconto getTipoDesconto() {
+		return tipoDesconto;
+	}
+
+	public void setTipoDesconto(TipoDesconto tipoDesconto) {
+		this.tipoDesconto = tipoDesconto;
+	}
+
+	public TipoReincidencia getReincidencia() {
+		return reincidencia;
+	}
+
+	public void setReincidencia(TipoReincidencia reincidencia) {
+		this.reincidencia = reincidencia;
+	}
+
+	public Boolean getTemDesconto() {
+		return temDesconto;
+	}
+
+	public void setTemDesconto(Boolean temDesconto) {
+		this.temDesconto = temDesconto;
+	}
+
+	public BigDecimal getValor() {
+		return valor;
+	}
+
+	public void setValor(BigDecimal valor) {
+		this.valor = valor;
 	}
 
 	@Override

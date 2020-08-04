@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.leadsponge.leadsponge.IO.ApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 32.597 s - in com.leadsponge.leadsponge.IO.ApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 29.988 s - in com.leadsponge.leadsponge.IO.ApplicationTests

@@ -23,6 +23,7 @@ com/leadsponge/IO/endPoints/ProdutoEndPoint.class
 com/leadsponge/IO/endPoints/CampanhaEndPoint.class
 com/leadsponge/IO/repository/usuario/UsuarioRepositoryQuery.class
 com/leadsponge/IO/event/listener/RecursoCriadoListener.class
+com/leadsponge/IO/models/negociacaoProduto/TipoReincidencia.class
 com/leadsponge/IO/models/campanha/Campanha_.class
 com/leadsponge/IO/repository/EmailRepository.class
 com/leadsponge/IO/config/ResourceServerConfig.class
@@ -62,6 +63,7 @@ com/leadsponge/IO/repository/negociacao/NegociacaoRepositoryImpl.class
 com/leadsponge/IO/models/historicoEstagioNegociacao/HistEstagioNegociacao.class
 com/leadsponge/IO/endPoints/MotivoPerdaEndPoint.class
 com/leadsponge/IO/event/RecursoCriadoEvent.class
+com/leadsponge/IO/models/negociacaoProduto/TipoDesconto.class
 com/leadsponge/IO/repository/usuario/UsuarioRepositoryImpl.class
 com/leadsponge/IO/errorValidate/ResourceNotFoundException.class
 com/leadsponge/IO/models/fonteNegociacao/FonteNegociacao_.class
@@ -98,6 +100,7 @@ com/leadsponge/IO/models/View$Tarefa.class
 com/leadsponge/IO/endPoints/NegociacaoEndPoint.class
 com/leadsponge/IO/services/TarefaService.class
 com/leadsponge/IO/models/View$Fonte.class
+com/leadsponge/IO/repository/NegociacaoProdutoRepository.class
 com/leadsponge/IO/models/audit/DateAudit.class
 com/leadsponge/IO/endPoints/UsuarioEndPoint.class
 com/leadsponge/IO/repository/Filter/UsuarioFilter.class

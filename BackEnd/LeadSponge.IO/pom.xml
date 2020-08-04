@@ -123,8 +123,6 @@
 			<artifactId>aws-java-sdk</artifactId>
 			<version>1.11.327</version>
 		</dependency>
-
-
 	</dependencies>
 
 	<build>

@@ -28,6 +28,7 @@ import com.leadsponge.IO.models.estagioNegociacao.EstagioNegociacao;
 import com.leadsponge.IO.models.motivoPerda.MotivoPerda;
 import com.leadsponge.IO.models.negociacao.EstatusNegociacao;
 import com.leadsponge.IO.models.negociacao.Negociacao;
+import com.leadsponge.IO.models.negociacaoProduto.NegociacaoProduto;
 import com.leadsponge.IO.repository.Filter.NegociacaoFilter;
 import com.leadsponge.IO.repository.negociacao.NegociacaoRepository;
 import com.leadsponge.IO.services.NegociacaoService;
@@ -51,7 +52,7 @@ class NegociacaoEndPoint extends CrudController {
 		this.repository = repository;
 		this.negociacaoService = negociacaoService;
 	}
-	
+
 	@GetMapping(value = { "", "/" })
 	@ResponseStatus(HttpStatus.OK)
 	@PreAuthorize("hasAuthority('PESQUISAR_NEGOCIACAO') and #oauth2.hasScope('read')")
@@ -100,12 +101,11 @@ class NegociacaoEndPoint extends CrudController {
 	@PutMapping("/{id}/avaliacao")
 	@ResponseStatus(HttpStatus.CREATED)
 	@PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
-	ResponseEntity<Negociacao> atualizarPropriedadeEnabled(@PathVariable Long id,
-			@RequestBody Integer avaliacao) {
+	ResponseEntity<Negociacao> atualizarPropriedadeEnabled(@PathVariable Long id, @RequestBody Integer avaliacao) {
 		negociacaoService.atualizarPropriedadeAvaliacao(id, avaliacao);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
-	
+
 	@PutMapping("/{id}/estagio")
 	@ResponseStatus(HttpStatus.CREATED)
 	@PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
@@ -114,7 +114,7 @@ class NegociacaoEndPoint extends CrudController {
 		negociacaoService.atualizarPropriedadeEstagio(id, estagio);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
-	
+
 	@PutMapping("/{id}/estatus")
 	@ResponseStatus(HttpStatus.CREATED)
 	@PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
@@ -123,22 +123,30 @@ class NegociacaoEndPoint extends CrudController {
 		negociacaoService.atualizarPropriedadeEstatus(id, estatus);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
-	
+
 	@PutMapping("/{id}/dataFim")
 	@ResponseStatus(HttpStatus.CREATED)
 	@PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
-	ResponseEntity<Negociacao> atualizarPropriedadeDataFim(@PathVariable Long id,
-			@RequestBody Date data) {
+	ResponseEntity<Negociacao> atualizarPropriedadeDataFim(@PathVariable Long id, @RequestBody Date data) {
 		negociacaoService.atualizarPropriedadeDataFim(id, data);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
-	
+
 	@PutMapping("/{id}/perda")
 	@ResponseStatus(HttpStatus.CREATED)
 	@PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
-	ResponseEntity<Negociacao> atribuirMotivoPerda(@PathVariable Long id,
-			@RequestBody MotivoPerda morivoPerda) {
+	ResponseEntity<Negociacao> atribuirMotivoPerda(@PathVariable Long id, @RequestBody MotivoPerda morivoPerda) {
 		negociacaoService.atribuirPropMP(id, morivoPerda);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
+	}
+
+	@PostMapping("/produto")
+	@ResponseStatus(HttpStatus.CREATED)
+	@PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
+	ResponseEntity<NegociacaoProduto> atribuirProduto(@RequestBody NegociacaoProduto negociacaoProduto,
+			HttpServletResponse response) {
+		NegociacaoProduto criarNegociacao = negociacaoService.atribuirProduto(negociacaoProduto);
+		publisher.publishEvent(new RecursoCriadoEvent(this, response, criarNegociacao.getId()));
+		return ResponseEntity.status(HttpStatus.CREATED).body(criarNegociacao);
 	}
 }

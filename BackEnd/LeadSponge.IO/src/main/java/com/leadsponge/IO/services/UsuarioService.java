@@ -17,7 +17,7 @@ import com.leadsponge.IO.storage.S3;
 
 @Service
 public class UsuarioService {
-
+	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 
@@ -26,7 +26,6 @@ public class UsuarioService {
 
 	@Autowired
 	private S3 s3;
-
 
 	public Usuario save(Usuario usuario) {
 		usuariovalidar(usuario);

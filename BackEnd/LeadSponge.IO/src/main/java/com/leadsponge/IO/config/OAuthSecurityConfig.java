@@ -18,16 +18,16 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableAuthorizationServer
 @EnableResourceServer
-public class OAuthSecurityConfig  extends WebSecurityConfigurerAdapter {
-	
+public class OAuthSecurityConfig extends WebSecurityConfigurerAdapter {
+
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+
 	@Bean
 	@Override
 	protected AuthenticationManager authenticationManager() throws Exception {
 		return super.authenticationManager();
-	}
-	
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
 	}
 }

@@ -1,34 +1,59 @@
-<p-panel>
-    <p-header>
-        <div class="ui-helper-clearfix">
-            <span class="title1">Adicionar produtos e serviços</span><br />
-            <span class="title2">Adicione produtos e serviços para a sua negociação</span>
-        </div>
-    </p-header>
-    <form [formGroup]="formulario" autocomplete="off" (ngSubmit)="salvar()">
+<form [formGroup]="formulario" autocomplete="off" (ngSubmit)="salvar()">
+    <p-panel>
+        <p-header>
+            <div class="ui-helper-clearfix">
+                <span class="title1">Adicionar produtos e serviços</span><br />
+                <span class="title2">Adicione produtos e serviços para a sua negociação</span>
+            </div>
+        </p-header>
         <div class="ui-g">
-            <div class="ui-g-12 ui-md-4 ui-fluid" formGroupName="produto">
-                <label>Produto: <span style="color: crimson;">*</span></label>
-                <p-dropdown name="cliente" [options]="cliente" placeholder="Selecione" [filter]="true"
-                    formControlName="id"></p-dropdown>
+            <div class="ui-g-12 ui-fluid" formGroupName="produto">
+                <p-dropdown name="produto" [options]="produtos" [filter]="true" formControlName="id"
+                    placeholder="selecione um produto"></p-dropdown>
             </div>
             <div class="ui-g-12 ui-fluid">
                 <span class="ui-float-label">
-                    <p-inputNumber mode="decimal" [showButtons]="true" [min]="1" formControlName="quantidade" [max]="100">
+                    <p-inputNumber mode="decimal" value="1" [showButtons]="true" [min]="1" formControlName="quantidade">
                     </p-inputNumber>
-                    <label for="float-input">Nome <span style="color: crimson;">*</span></label>
+
                 </span>
-                <app-message [control]="formulario.get('nome')" error="obrigatoriedade" text="Informe o uma descrição.">
-                </app-message>
-                <app-message [control]="formulario.get('nome')" error="tamanhoMinimo"
-                    text="Mínimo de {{ formulario.get('nome').errors?.tamanhoMinimo?.tamanho }} caracteres.">
-                </app-message>
+            </div>
+            <div class="p-col-12 ui-fluid">
+                <label>Valor</label>
+                <p-inputNumber>
+                </p-inputNumber>
+            </div>
+            <div class="p-col-12 ui-fluid">
+                <label>Recorrência</label>
+                <p-dropdown [options]="optReincidencia" [filter]="false" formControlName="reincidencia">
+                </p-dropdown>
+            </div>
+            <div class="p-formgroup-inline p-col-3">
+                <div class="p-col-8">
+                    <label>Haverá desconto?</label>
+                </div>
+                <div class="p-col-4">
+                    <p-inputSwitch [(ngModel)]="checked" formControlName="temDesconto"></p-inputSwitch>
+                </div>
+            </div>
+            <div class="p-col-1 ui-fluid" [hidden]="!checked">
+                <p-dropdown name="produto" [options]="optTipoDesconto" [filter]="false" formControlName="tipoDesconto">
+                </p-dropdown>
+            </div>
+            <div class="p-col-12 ui-fluid" [hidden]="!checked">
+                <span class="ui-float-label">
+                    <p-inputNumber>
+                    </p-inputNumber>
+                    <label>Valor do Desconto</label>
+                </span>
+                <p>Use apenas 2 casas decimais e use ponto (.) ao invés de vírgula (,) para separar!</p>
             </div>
         </div>
-    </form>
-    <p-footer>
-        <button pButton type="button" icon="pi pi-plus" label="New" class="ui-button-info"
-            style="margin-right: .25em"></button>
-        <button pButton type="button" icon="pi pi-search" label="View" class="ui-button-success"></button>
-    </p-footer>
-</p-panel>
+        <p-footer>
+            <button pButton type="button" icon="fas fa-plus" pTooltip="Adicionar telefone" tooltipPosition="top"
+                class="ui-button-rounded" [disabled]="formulario.invalid">
+            </button>
+        </p-footer>
+    </p-panel>
+    <pre>{{formulario.value| json}}</pre>
+</form>

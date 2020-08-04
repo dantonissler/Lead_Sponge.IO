@@ -13,8 +13,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProdutosComponent implements OnInit {
 
-    formulario: FormGroup;
     produtos: [];
+    formulario: FormGroup;
+    idNeg: number = +this.route.snapshot.params['id'];
+    optReincidencia = [{ label: 'Recorrente', value: 'RECORRENTE' }, { label: 'Único', value: 'UNICO' }];
+    optTipoDesconto = [{ label: '%', value: 'PORCENTAGEM' }, { label: 'R$', value: 'VALOR' }];
+    checked: boolean = false;
 
     constructor(
         private negociacoesService: NegociacoesService,
@@ -33,9 +37,9 @@ export class ProdutosComponent implements OnInit {
 
     carregarProduto() {
         this.produtosService.listarTodas()
-            .then(cliente => {
-                this.produtos = cliente
-                    .map(p => ({ label: p.nome, value: p.id }));
+            .then(produto => {
+                this.produtos = produto
+                    .map(p => ({ label: p.nome, value: p.id, valor: p.valor }));
             })
             .catch(erro => this.errorHandler.handle(erro));
     }
@@ -53,14 +57,16 @@ export class ProdutosComponent implements OnInit {
         this.formulario = this.formBuilder.group({
             id: [],
             quantidade: [null, Validators.required],
+            reincidencia: ['RECORRENTE', Validators.required],
+            temDesconto: [],
+            tipoDesconto: ['PORCENTAGEM'],
+            desconto: [],
             produto: this.formBuilder.group({
-                id: [null, Validators.required],
-                nome: []
+                id: [null, Validators.required]
             }),
             negociação: this.formBuilder.group({
-                id: [this.route.snapshot.params['id']],
+                id: [this.idNeg],
             }),
         })
     }
-
 }

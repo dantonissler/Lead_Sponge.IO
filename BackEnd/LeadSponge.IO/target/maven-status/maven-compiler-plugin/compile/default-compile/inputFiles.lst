@@ -33,6 +33,7 @@
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/errorValidate/ErrorDetails.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/services/CampanhaService.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/config/OAuthSecurityConfig.java
+/home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/negociacaoProduto/TipoReincidencia.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/config/WebConfig.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/Filter/EstagioNegociacaoFilter.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/endPoints/ClienteEndPoint.java
@@ -70,6 +71,7 @@
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/Filter/ProdutoFilter.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/telefone/TipoTelefone.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/config/token/CustomTokenEnhancer.java
+/home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/NegociacaoProdutoRepository.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/Filter/MotivoPerdaFilter.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/segmento/SegmentoRepository.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/produto/Produto.java
@@ -134,6 +136,7 @@
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/role/Role_.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/Filter/CampanhaFilter.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/services/ClienteService.java
+/home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/negociacaoProduto/TipoDesconto.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/estagioNegociacao/EstagioNegociacao.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/campanha/CampanhaRepository.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/data/DataConfiguration.java

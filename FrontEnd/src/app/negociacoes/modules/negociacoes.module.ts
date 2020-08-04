@@ -1,3 +1,4 @@
+import { InputSwitchModule } from 'primeng/inputswitch';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { CalendarModule } from 'primeng/calendar';
 import { TarefasComponent } from './../components/negociacoes-detalha/tarefas/tarefas.component';
@@ -68,6 +69,7 @@ import { NegociacaoesDetalhaComponent } from '../components/negociacoes-detalha/
     StepsExtendedModule,
     CalendarModule,
     InputNumberModule,
+    InputSwitchModule,
 
     SharedModule,
     NegociacoesRoutingModule
