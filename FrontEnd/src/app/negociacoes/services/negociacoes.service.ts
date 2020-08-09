@@ -6,6 +6,7 @@ import { MoneyHttp } from './../../usuarios/money-http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import * as moment from 'moment';
+import { NegociacaoProduto } from '../models/negociacao-produto-models';
 
 export class NegociacoesFiltro {
     nome: string;
@@ -56,7 +57,7 @@ export class NegociacoesService {
                     total: response.totalElements
                 };
                 return resultado;
-            })
+            });
     }
 
     excluir(id: number): Promise<void> {
@@ -132,5 +133,14 @@ export class NegociacoesService {
             .then(() => null);
     }
 
-
+    adicionarVenda(negociacaoProduto: NegociacaoProduto): Promise<NegociacaoProduto> {
+        return this.http.post<NegociacaoProduto>(`${this.negociacaoUrl}/produto`, negociacaoProduto)
+        .toPromise();
+    }
+    /* TODO : BackEnd... */
+    /* listarTodasVenda(): Promise<any> {
+        return this.http.get<any>(this.negociacaoUrl)
+            .toPromise()
+            .then(response => response.content);
+    } */
 }

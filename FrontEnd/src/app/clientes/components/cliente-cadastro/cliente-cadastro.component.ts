@@ -11,35 +11,23 @@ import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@ang
 import { ActivatedRoute, Router } from '@angular/router';
 import { SegmentosService } from 'src/app/segmentos/services/segmentos.service';
 
-/**
- * TODO: Os dados de seguidores e responsaveis são mocados, pois há uma certa dificuldade
- * para buscar o id do usuario ativo. revisar o codigo e atender a necessidade existe uma
- * logica previa que esta comentada no meio do codigo.
- */
 @Component({
     selector: 'app-cliente-cadastro',
     templateUrl: './cliente-cadastro.component.html',
     styleUrls: ['./cliente-cadastro.component.scss']
 })
 export class ClienteCadastroComponent implements OnInit {
+    id: number;
     formulario: FormGroup;
     segmentos: SelectItem[];
     selectedSegmentos: string[] = [];
     tipos: SelectItem[];
-    selectedTipo: string = 'COMERCIAL';
+    selectedTipo = 'COMERCIAL';
     filtro = new UsuarioFiltro();
     get editando() { return Boolean(this.formulario.get('id').value); }
-    /*     get usuario() {
-            this.filtro.username = this.auth.jwtPayload?.client_id;
-            return this.usuarioService.pesquisar(this.filtro)
-                .then(resultado => {
-                    return resultado.usuarios['0'].id;
-                })
-                .catch(erro => this.errorHandler.handle(erro));
-        } */
 
     constructor(
-        /* private usuarioService: UsuarioService, */
+        private usuarioService: UsuarioService,
         private segmentoService: SegmentosService,
         private clienteService: ClienteService,
         private messageService: MessageService,
@@ -47,22 +35,30 @@ export class ClienteCadastroComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private title: Title,
-        /* private auth: AuthService, */
+        public auth: AuthService,
         private formBuilder: FormBuilder
-    ) {}
+    ) { }
 
     ngOnInit(): void {
+        this.carregarUsuario(this.auth.jwtPayload?.user_name);
         this.configurarFormulario();
-        const idCliente = this.route.snapshot.params['id'];
+        const idCliente = this.route.snapshot.params.id;
         this.title.setTitle('Novo Cliente');
         this.carregarSegmento();
         this.carregarTipo();
         if (idCliente) {
             this.carregarCliente(idCliente);
         }
-        console.log(this.selectedSegmentos);
-        /* this.usuario.then(data => console.log(data)); */
     }
+
+    carregarUsuario(username: string) {
+        this.usuarioService.buscarPeloNome(username)
+            .then(usuario => {
+                this.id = usuario.id;
+            })
+            .catch(erro => this.errorHandler.handle(erro));
+    }
+
 
     carregarCliente(id) {
         this.clienteService.buscarPorCodigo(id)
@@ -76,33 +72,26 @@ export class ClienteCadastroComponent implements OnInit {
     carregarSegmento() {
         return this.segmentoService.listarTodas()
             .then(segmentos => {
-                this.segmentos = segmentos.map(segmento => ({ label: segmento.nome, value: { nome: segmento.nome, id: segmento.id}}));
+                this.segmentos = segmentos.map(segmento => ({ label: segmento.nome, value: { nome: segmento.nome, id: segmento.id } }));
             })
             .catch(erro => this.errorHandler.handle(erro));
     }
 
-    carregarTipo(){
+    carregarTipo() {
         this.tipos = [
-            { label: 'Comercial', value: 'COMERCIAL', icon:'pi pi-briefcase'},
-            { label: 'Residencial', value: 'RESIDENCIAL', icon:'pi pi-home'},
-            { label: 'Pessoal', value: 'PESSOAL', icon:'pi pi-mobile'},
-            { label: 'Fax', value: 'FAX', icon:'pi pi-print'}
+            { label: 'Comercial', value: 'COMERCIAL', icon: 'pi pi-briefcase' },
+            { label: 'Residencial', value: 'RESIDENCIAL', icon: 'pi pi-home' },
+            { label: 'Pessoal', value: 'PESSOAL', icon: 'pi pi-mobile' },
+            { label: 'Fax', value: 'FAX', icon: 'pi pi-print' }
         ];
     }
     configurarFormulario() {
         this.formulario = this.formBuilder.group({
             id: [],
             nome: [null, [this.validarObrigatoriedade, this.validarTamanhoMinimo(4)]],
-            segmentos:  
-                [this.selectedSegmentos]
-            ,
-            seguidores: this.formBuilder.array([
-                this.formBuilder.group({
-                    id: [1]
-                })
-            ]),
+            segmentos: [this.selectedSegmentos],
             responsavel: this.formBuilder.group({
-                id: [1]
+                id: []
             }),
             url: [],
             resumo: [],
@@ -112,27 +101,27 @@ export class ClienteCadastroComponent implements OnInit {
 
     criarContato(): FormGroup {
         return this.formBuilder.group({
-            id:[],
+            id: [],
             nome: [null, [this.validarObrigatoriedade, this.validarTamanhoMinimo(4)]],
             cargo: [],
             telefone: this.formBuilder.array([this.criarTelefone()]),
             email: this.formBuilder.array([this.criarEmail()]),
-        })
+        });
     }
 
     criarTelefone(): FormGroup {
         return this.formBuilder.group({
-            id:[],
+            id: [],
             numero: [null, [this.validarObrigatoriedade]],
             tipo: [this.selectedTipo, Validators.required]
-        })
+        });
     }
 
     criarEmail(): FormGroup {
         return this.formBuilder.group({
-            id:[],
+            id: [],
             email: [null, [this.validarObrigatoriedade, Validators.email]],
-        })
+        });
     }
 
     getContatos(form): FormArray {
@@ -148,36 +137,40 @@ export class ClienteCadastroComponent implements OnInit {
     }
 
     adicionarContato() {
-        const control = <FormArray>this.formulario.get('contato');
+        const control = this.formulario.get('contato') as FormArray;
         control.push(this.criarContato());
     }
 
     adicionarTelefone(j) {
-        const control = <FormArray>this.formulario.get('contato')['controls'][j].get('telefone');
+        // tslint:disable-next-line: no-string-literal
+        const control = this.formulario.get('contato')['controls'][j].get('telefone') as FormArray;
         control.push(this.criarTelefone());
     }
 
     adicionarEmail(j) {
-        const control = <FormArray>this.formulario.get('contato')['controls'][j].get('email');
+        // tslint:disable-next-line: no-string-literal
+        const control = this.formulario.get('contato')['controls'][j].get('email') as FormArray;
         control.push(this.criarEmail());
     }
 
     // remover form group de contatos
     removerContato(i) {
-        const control = <FormArray>this.formulario.get('contato');
+        const control = this.formulario.get('contato') as FormArray;
         control.removeAt(i);
 
     }
 
     // remover form group de Telefones
     removerTelefone(j) {
-        const control = <FormArray>this.formulario.get('contato')['controls'][j].get('telefone');
+        // tslint:disable-next-line: no-string-literal
+        const control = this.formulario.get('contato')['controls'][j].get('telefone') as FormArray;
         control.removeAt(j);
     }
 
     // remover form group de emails
     removerEmail(j) {
-        const control = <FormArray>this.formulario.get('contato')['controls'][j].get('email');
+        // tslint:disable-next-line: no-string-literal
+        const control = this.formulario.get('contato')['controls'][j].get('email') as FormArray;
         control.removeAt(j);
     }
 
@@ -224,7 +217,7 @@ export class ClienteCadastroComponent implements OnInit {
 
     limpar() {
         this.formulario.reset();
-        setTimeout(function () {
+        setTimeout(function() {
             this.lancamento = new Cliente();
         }.bind(this), 1);
         this.router.navigate(['/clientes/novo']);

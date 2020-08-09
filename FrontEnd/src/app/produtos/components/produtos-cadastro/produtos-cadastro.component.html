@@ -6,7 +6,7 @@
             </div>
             <div class="ui-g-12">
                 <p-inputSwitch name="visibilidade" formControlName="visibilidade" binary="false" [(ngModel)]="checked"
-                pTooltip="{{checked === true ? 'Desativar' : 'Ativar'}} produto">
+                    pTooltip="{{checked === true ? 'Desativar' : 'Ativar'}} produto">
                 </p-inputSwitch>
             </div>
             <div class="ui-g-12 ui-fluid">
@@ -30,7 +30,8 @@
                 <p-inputNumber formControlName="valor" [(ngModel)]="valorInicial" [showButtons]="true"
                     buttonLayout="horizontal" spinnerMode="horizontal" [step]="0.25"
                     decrementButtonClass="ui-button-danger" incrementButtonClass="ui-button-success"
-                    incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" mode="currency" currency="USD">
+                    incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" prefix="R$" mode="decimal"
+                    [minFractionDigits]="2">
                 </p-inputNumber>
             </div>
 

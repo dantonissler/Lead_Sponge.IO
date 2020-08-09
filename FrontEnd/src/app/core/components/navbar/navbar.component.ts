@@ -16,7 +16,7 @@ export class NavbarComponent implements OnInit {
     visibleSidebar1;
     items: MenuItem[];
     users: MenuItem[];
-    url:string;
+    url;
 
     constructor(
         public auth: AuthService,
@@ -30,13 +30,12 @@ export class NavbarComponent implements OnInit {
         this.carregarMenu();
         this.carregarUsuarios();
         this.carregarUsuario(this.auth.jwtPayload?.user_name);
-        
     }
 
     carregarUsuario(username: string) {
         this.usuarioService.buscarPeloNome(username)
             .then(usuario => {
-                this.url = '///leadspongeuserimagens.s3.us-east-2.amazonaws.com/'+usuario.anexo;
+                this.url = '///leadspongeuserimagens.s3.us-east-2.amazonaws.com/' + usuario.anexo;
             })
             .catch(erro => this.errorHandler.handle(erro));
     }
@@ -46,7 +45,7 @@ export class NavbarComponent implements OnInit {
             {
                 label: 'Menu',
                 icon: 'fa fa-bars',
-                command: (onclick) => { this.visibleSidebar1 = true }
+                command: (onclick) => { this.visibleSidebar1 = true; }
             },
         ];
     }
@@ -89,10 +88,9 @@ export class NavbarComponent implements OnInit {
             {
                 label: 'Sair',
                 icon: 'pi pi-sign-out',
-                command: (onclick) => { this.logout() }
+                command: (onclick) => { this.logout(); }
             }];
     }
-
 
     logout() {
         this.logoutService.logout()
@@ -101,5 +99,4 @@ export class NavbarComponent implements OnInit {
             })
             .catch(erro => this.errorHandler.handle(erro));
     }
-
 }

@@ -28,7 +28,6 @@ public class NegociacaoService {
 
 	@Autowired
 	private NegociacaoProdutoRepository negociacaoProdutoRepository;
-
 	
 	/**
 	 * TODO: Criar formula para calcular os valores da negociação.

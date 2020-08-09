@@ -7,20 +7,20 @@
             </div>
         </p-header>
         <div class="ui-g">
-            <div class="ui-g-12 ui-fluid" formGroupName="produto">
-                <p-dropdown name="produto" [options]="produtos" [filter]="true" formControlName="id"
-                    placeholder="selecione um produto"></p-dropdown>
+            <div class="ui-g-12 ui-fluid">
+                <p-dropdown name="produto" [options]="produtos" [filter]="true" formControlName="produto"
+                    [(ngModel)]="produtoSelecionado" placeholder="selecione um produto" optionLabel="nome"></p-dropdown>
             </div>
             <div class="ui-g-12 ui-fluid">
                 <span class="ui-float-label">
-                    <p-inputNumber mode="decimal" value="1" [showButtons]="true" [min]="1" formControlName="quantidade">
+                    <p-inputNumber mode="decimal" [(ngModel)]="qtd" formControlName="quantidade">
                     </p-inputNumber>
-
                 </span>
             </div>
             <div class="p-col-12 ui-fluid">
                 <label>Valor</label>
-                <p-inputNumber>
+                <p-inputNumber formControlName="valor" mode="decimal" mode="currency"
+                    [(ngModel)]="produtoSelecionado.valor" prefix="R$" mode="decimal" [minFractionDigits]="2">
                 </p-inputNumber>
             </div>
             <div class="p-col-12 ui-fluid">
@@ -50,10 +50,60 @@
             </div>
         </div>
         <p-footer>
-            <button pButton type="button" icon="fas fa-plus" pTooltip="Adicionar telefone" tooltipPosition="top"
-                class="ui-button-rounded" [disabled]="formulario.invalid">
-            </button>
+            <div class="cadastro-acoes">
+                <button pButton value="submit" type="submit" icon="fas fa-plus" iconPos="right"
+                    pTooltip="Adicionar telefone" tooltipPosition="top" class="ui-button-rounded"
+                    [disabled]="formulario.invalid" label="Salvar">
+                </button>
+
+                <!-- <button pButton type="reset" icon="fas fa-snowplow" iconPos="right" class="ui-button-rounded"
+                    label="Limpar" (click)="limpar()">
+                </button> -->
+            </div>
         </p-footer>
     </p-panel>
-    <pre>{{formulario.value| json}}</pre>
+    <!-- <pre>{{formulario.value| json}}</pre> -->
 </form>
+
+<p-table [value]="negociacaoProduto" [responsive]="true" styleClass="ui-table-customer">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Produto ou serviço</th>
+            <th>Qtde</th>
+            <th>Preço</th>
+            <th>Recorrência</th>
+            <th>Subtotal</th>
+            <th class="col-acoes-header"></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-negociacaoProdutos let-rowIndex="rowIndex">
+        <tr class="ui-selectable-row">
+            <td>
+                <!-- {{ negociacaoProdutos.produto.nome }} -->
+            </td>
+            <td>
+                <!-- {{ negociacaoProdutos.quantidade }} -->
+            </td>
+            <td>
+                <!-- {{ negociacaoProdutos. }} -->
+            </td>
+            <td>
+                <!-- {{ negociacaoProdutos. }} -->
+            </td>
+            <td>
+                <!-- {{ negociacaoProdutos. }} -->
+            </td>
+            <td class="col-acoes">
+                <button pButton icon="fas fa-pencil-alt" type="button" pTooltip="Editar" tooltipPosition="top"></button>
+                <button pButton icon="fa fa-trash" type="button" pTooltip="Excluir" tooltipPosition="top"></button>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="6">
+                Nenhum produto a venda cadastrado
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

@@ -14,11 +14,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ProdutosCadastroComponent implements OnInit {
 
-  valorInicial: number = 0.00;
+  valorInicial = 0.00;
   formulario: FormGroup;
   produtos = new Produto();
-  checked: boolean = true;
-  
+  checked = true;
+
   constructor(
     private produtosService: ProdutosService,
     private messageService: MessageService,
@@ -31,10 +31,10 @@ export class ProdutosCadastroComponent implements OnInit {
 
   ngOnInit(): void {
     this.configurarFormulario();
-    const idProduto = this.route.snapshot.params['id'];
+    const idProduto = this.route.snapshot.params.id;
 
     this.title.setTitle('Novo Produto');
-    
+
     if (idProduto) {
       this.carregarProduto(idProduto);
     }
@@ -84,11 +84,11 @@ export class ProdutosCadastroComponent implements OnInit {
 
   configurarFormulario() {
     this.formulario = this.formBuilder.group({
-      id:[],
-      nome: [null, [ this.validarObrigatoriedade, this.validarTamanhoMinimo(4) ]],
+      id: [],
+      nome: [null, [this.validarObrigatoriedade, this.validarTamanhoMinimo(4)]],
       descricao: [],
-      valor: [null, [ this.validarObrigatoriedade]],
-      visibilidade:[]
+      valor: [null, [this.validarObrigatoriedade]],
+      visibilidade: []
     });
   }
   validarObrigatoriedade(input: FormControl) {

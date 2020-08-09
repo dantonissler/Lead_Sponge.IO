@@ -38,7 +38,7 @@ export class NegociacoesCadastroComponent implements OnInit {
 
     ngOnInit(): void {
         this.configurarFormulario();
-        const idNegociacao = this.route.snapshot.params['id'];
+        const idNegociacao = this.route.snapshot.params.id;
         this.title.setTitle('Nova Negociação');
         if (idNegociacao) {
             this.carregarNegociacao(idNegociacao);
@@ -153,7 +153,7 @@ export class NegociacoesCadastroComponent implements OnInit {
 
     limpar() {
         this.formulario.reset();
-        setTimeout(function () {
+        setTimeout(function() {
             this.negociacao = new Negociacao();
         }.bind(this), 1);
         this.router.navigate(['/negociacoes/novo']);

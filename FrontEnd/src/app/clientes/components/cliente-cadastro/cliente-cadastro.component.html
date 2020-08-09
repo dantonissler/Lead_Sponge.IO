@@ -17,7 +17,8 @@
                     text="Mínimo de {{ formulario.get('nome').errors?.tamanhoMinimo?.tamanho }} caracteres.">
                 </app-message>
             </div>
-            <div class="p-field p-col-12 p-md-6 ui-fluid"><!-- Não aumentar o tamanho pois o style tem limitação -->
+            <div class="p-field p-col-12 p-md-6 ui-fluid">
+                <!-- Não aumentar o tamanho pois o style tem limitação -->
                 <p-multiSelect formControlName="segmentos" [options]="segmentos" [(ngModel)]="selectedSegmentos"
                     emptyFilterMessage="Nenhum resultado encontrado" [style]="{'border': 'none'}">
                     <ng-template let-value pTemplate="selectedItems">
@@ -184,6 +185,9 @@
                         </div>
                     </div>
                 </p-panel>
+            </div>
+            <div [hidden]="true" formGroupName="responsavel">
+                <input formControlName="id" [(ngModel)]="id">
             </div>
         </div>
         <div class="p-col-12 p-md-12 cadastro-acoes">

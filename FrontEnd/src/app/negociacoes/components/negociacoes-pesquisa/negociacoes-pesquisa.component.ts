@@ -20,7 +20,7 @@ export class NegociacoesPesquisaComponent implements OnInit {
     negociacoes: Negociacao[];
     items: MenuItem[];
     selectedNegociacao: Negociacao[];
-    loading: boolean = true;
+    loading = true;
     @ViewChild('dt') table: Table;
 
     constructor(

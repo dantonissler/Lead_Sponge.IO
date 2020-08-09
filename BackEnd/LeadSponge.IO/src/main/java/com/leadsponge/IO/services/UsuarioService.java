@@ -22,10 +22,10 @@ public class UsuarioService {
 	private UsuarioRepository usuarioRepository;
 
 	@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	private S3 s3;
 
 	@Autowired
-	private S3 s3;
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	public Usuario save(Usuario usuario) {
 		usuariovalidar(usuario);
@@ -44,7 +44,6 @@ public class UsuarioService {
 		usuarioSalvo.getRoles().clear();
 		usuarioSalvo.getRoles().addAll(usuario.getRoles());
 		usuarioSalvo.setRoles(new HashSet<>(usuarioSalvo.getRoles()));
-
 		if (StringUtils.isEmpty(usuario.getAnexo()) && StringUtils.hasText(usuarioSalvo.getAnexo())) {
 			s3.remover(usuarioSalvo.getAnexo());
 		} else if (StringUtils.hasText(usuario.getAnexo()) && !usuario.getAnexo().equals(usuarioSalvo.getAnexo())) {

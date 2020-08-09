@@ -22,8 +22,8 @@ export class NegociacaoesDetalhaComponent {
     items: MenuItem[];
     funil: MenuItem[];
     activeItem: MenuItem;
-    activeIndex: number = 0;
-    activeIndexFunil: number = 0;
+    activeIndex = 0;
+    activeIndexFunil = 0;
     negociacao = new Negociacao();
     motivoPerda = new Perda();
     selectedMP: any;
@@ -41,13 +41,13 @@ export class NegociacaoesDetalhaComponent {
         private confirmation: ConfirmationService,
         private router: Router,
         private title: Title,
-        private _location: Location,
+        private location: Location
     ) { }
 
-
+    // tslint:disable-next-line: use-lifecycle-interface
     ngOnInit() {
         this.title.setTitle('Detalhar de Negociação');
-        const idNegociacao = this.route.snapshot.params['id'];
+        const idNegociacao = this.route.snapshot.params.id;
         this.carregarNegociacao(idNegociacao);
         this.traducaoCalendario();
         this.carregarItems();
@@ -83,20 +83,20 @@ export class NegociacaoesDetalhaComponent {
     carregarItems() {
         this.items = [
             {
-                label: 'HISTÓRICO',
-                command: (onclick) => { this.activeIndex = 0 }
+                label: 'PRODUTOS E SERVIÇOS',
+                command: (onclick) => { this.activeIndex = 0; }
             },
             {
                 label: 'TAREFAS',
-                command: (onclick) => { this.activeIndex = 1 }
+                command: (onclick) => { this.activeIndex = 1; }
             },
             {
                 label: 'CONTATOS',
-                command: (onclick) => { this.activeIndex = 2 }
+                command: (onclick) => { this.activeIndex = 2; }
             },
             {
-                label: 'PRODUTOS E SERVIÇOS',
-                command: (onclick) => { this.activeIndex = 3 }
+                label: 'HISTÓRICO',
+                command: (onclick) => { this.activeIndex = 3; }
             }
         ];
     }
@@ -162,19 +162,19 @@ export class NegociacaoesDetalhaComponent {
     }
 
     backClicked() {
-        this._location.back();
+        this.location.back();
     }
 
     traducaoCalendario() {
         this.ptBR = {
-            dayNames: ["domingo", "segunda-feira", "terça-feira", "quarta-feira", "quinta-feira", "sexta-feira", "sábado"],
-            dayNamesShort: ["dom", "seg", "ter", "qua", "qui", "sex", "sáb"],
-            dayNamesMin: ["D", "S", "T", "Q", "Q", "S", "S"],
-            monthNames: ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"],
-            monthNamesShort: ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "sep", "out", "nov", "dez"],
+            dayNames: ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'],
+            dayNamesShort: ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb'],
+            dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'],
+            monthNames: ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'],
+            monthNamesShort: ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'sep', 'out', 'nov', 'dez'],
             today: 'Hoje',
             clear: 'Limpar'
-        }
+        };
     }
 
     confirmarExclusao(negociacao: any) {
