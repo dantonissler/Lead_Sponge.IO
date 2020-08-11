@@ -46,6 +46,7 @@
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/campanha/CampanhaRepositoryImpl.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/event/RecursoCriadoEvent.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/historicoEstagioNegociacao/HistEstagioNegociacao.java
+/home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/services/NegociacaoProdutoService.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/config/property/LeadSpongeApiProperty.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/negociacao/NegociacaoRepositoryImpl.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/config/S3Config.java
@@ -127,6 +128,7 @@
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/Filter/SegmentoFilter.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/EmailRepository.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/usuario/UsuarioRepositoryQuery.java
+/home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/Filter/NegociacaoProdutoFilter.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/produto/Produto_.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/storage/Disco.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/cliente/ClienteRepositoryImpl.java
@@ -153,3 +155,4 @@
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/security/UsuarioSistema.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/Filter/ContatoFilter.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/services/ProdutoService.java
+/home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/endPoints/NegociacaoProdutoEndPoint.java

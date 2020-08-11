@@ -24,6 +24,6 @@ export class Negociacao{
     campanha = new Campanha();
     fonteNegociacao = new Fonte();
     estagio = new Estagio();
-    negociacaoProduto = new NegociacaoProduto();
+    negociacaoProdutos = new NegociacaoProduto();
     histEstagioNegociacoes = new HistEstagioNegociacao();
 }

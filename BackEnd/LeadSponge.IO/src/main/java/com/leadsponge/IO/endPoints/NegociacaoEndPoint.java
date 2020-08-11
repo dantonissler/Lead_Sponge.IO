@@ -28,7 +28,6 @@ import com.leadsponge.IO.models.estagioNegociacao.EstagioNegociacao;
 import com.leadsponge.IO.models.motivoPerda.MotivoPerda;
 import com.leadsponge.IO.models.negociacao.EstatusNegociacao;
 import com.leadsponge.IO.models.negociacao.Negociacao;
-import com.leadsponge.IO.models.negociacaoProduto.NegociacaoProduto;
 import com.leadsponge.IO.repository.Filter.NegociacaoFilter;
 import com.leadsponge.IO.repository.negociacao.NegociacaoRepository;
 import com.leadsponge.IO.services.NegociacaoService;
@@ -140,13 +139,4 @@ class NegociacaoEndPoint extends CrudController {
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 
-	@PostMapping("/produto")
-	@ResponseStatus(HttpStatus.CREATED)
-	@PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
-	ResponseEntity<NegociacaoProduto> atribuirProduto(@RequestBody NegociacaoProduto negociacaoProduto,
-			HttpServletResponse response) {
-		NegociacaoProduto criarNegociacao = negociacaoService.atribuirProduto(negociacaoProduto);
-		publisher.publishEvent(new RecursoCriadoEvent(this, response, criarNegociacao.getId()));
-		return ResponseEntity.status(HttpStatus.CREATED).body(criarNegociacao);
-	}
 }

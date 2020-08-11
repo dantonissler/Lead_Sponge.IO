@@ -104,7 +104,7 @@ public class Negociacao extends UserDateAudit {
 	private MotivoPerda motivoPerda;
 
 	@OneToMany(mappedBy = "negociacao", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JsonIgnoreProperties(value = { "negociacao", "produto" })
+	@JsonIgnoreProperties(value = { "negociacao" })
 	@Valid
 	private List<NegociacaoProduto> negociacaoProdutos;
 

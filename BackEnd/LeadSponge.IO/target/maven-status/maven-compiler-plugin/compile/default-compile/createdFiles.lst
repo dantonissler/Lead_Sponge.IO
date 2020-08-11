@@ -69,6 +69,7 @@ com/leadsponge/IO/errorValidate/ResourceNotFoundException.class
 com/leadsponge/IO/models/fonteNegociacao/FonteNegociacao_.class
 com/leadsponge/IO/services/SegmentoService.class
 com/leadsponge/IO/repository/segmento/SegmentoRepositoryImpl.class
+com/leadsponge/IO/endPoints/NegociacaoProdutoEndPoint.class
 com/leadsponge/IO/token/RefreshTokenPostProcessor.class
 com/leadsponge/IO/models/View$Contato.class
 com/leadsponge/IO/models/motivoPerda/MotivoPerda.class
@@ -128,7 +129,9 @@ com/leadsponge/IO/models/telefone/Telefone.class
 com/leadsponge/IO/repository/Filter/ContatoFilter.class
 com/leadsponge/IO/repository/fonteNegociacao/FonteNegociacaoRepositoryImpl.class
 com/leadsponge/IO/token/RefreshTokenCookiePreProcessorFilter$MyServletRequestWrapper.class
+com/leadsponge/IO/services/NegociacaoProdutoService.class
 com/leadsponge/IO/errorValidate/ResourceBadRequestException.class
+com/leadsponge/IO/repository/Filter/NegociacaoProdutoFilter.class
 com/leadsponge/IO/models/audit/UserDateAudit.class
 com/leadsponge/IO/endPoints/ClienteEndPoint.class
 com/leadsponge/IO/endPoints/FonteNegociacaoEndPoint.class

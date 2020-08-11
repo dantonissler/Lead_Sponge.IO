@@ -23,7 +23,7 @@ public class DataConfiguration {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
 		dataSource.setUrl("jdbc:mysql://" + property.getBancoMysql().getHost() + ":"
-				+ property.getBancoMysql().getPort() + "/leadsponge?createDatabaseIfNotExist=true&useSSL=false");
+				+ property.getBancoMysql().getPort() + "/leadsponge?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false");
 		dataSource.setUsername(property.getBancoMysql().getUsername());
 		dataSource.setPassword(property.getBancoMysql().getPassword());
 		return dataSource;

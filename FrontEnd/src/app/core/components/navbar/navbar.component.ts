@@ -29,7 +29,9 @@ export class NavbarComponent implements OnInit {
     ngOnInit(): void {
         this.carregarMenu();
         this.carregarUsuarios();
-        this.carregarUsuario(this.auth.jwtPayload?.user_name);
+        if ( this.auth.jwtPayload != null) {
+            this.carregarUsuario(this.auth.jwtPayload?.user_name);
+        }
     }
 
     carregarUsuario(username: string) {

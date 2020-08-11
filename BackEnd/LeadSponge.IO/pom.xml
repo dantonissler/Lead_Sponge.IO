@@ -95,14 +95,11 @@
 		</dependency>
 
 		<!-- Hibernate Java 8 Support -->
+		
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-java8</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>javax.xml.bind</groupId>
-			<artifactId>jaxb-api</artifactId>
+			<version>5.4.12.Final</version>
 		</dependency>
 
 		<!-- Suporte do Jackson para as datas do Java 8 -->

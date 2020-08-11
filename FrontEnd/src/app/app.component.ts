@@ -7,11 +7,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  
+
   constructor(private router: Router) {}
 
   exibindoLogin() {
-    if(this.router.url === '/login'){
+    if (this.router.url === '/login'){
       return false;
     }
     if (this.router.url === '/pagina-nao-encontrada'){

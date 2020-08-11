@@ -29,7 +29,7 @@ export function tokenGetter() {
     }),
     InputTextModule,
     ButtonModule,
-    
+
     SegurancaRoutingModule
   ],
   declarations: [LoginFormComponent],

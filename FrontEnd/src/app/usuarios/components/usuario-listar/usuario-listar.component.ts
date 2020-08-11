@@ -16,7 +16,7 @@ export class UsuarioListarComponent implements OnInit {
     totalRegistros = 0;
     filtro = new UsuarioFiltro();
     usuarios = [];
-    loading: boolean = true;
+    loading = true;
     @ViewChild('tabela', { static: true }) grid;
 
     constructor(

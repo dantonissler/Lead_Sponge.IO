@@ -50,10 +50,6 @@ class UsuarioEndPoint extends CrudController {
 	@Autowired
 	private S3 s3;
 
-//	@Autowired
-//	private ImagensService imagensService;
-	
-
 	@GetMapping
 	@PreAuthorize("hasAuthority('PESQUISAR_USUARIO') and #oauth2.hasScope('read')")
 	public Page<Usuario> pesquisar(UsuarioFilter usuarioFilter, Pageable pageable) {
@@ -128,11 +124,5 @@ class UsuarioEndPoint extends CrudController {
 	public ResponseEntity<Usuario> encontrarPeloNome(@Valid @PathVariable String username) {
 		return ResponseEntity.ok(repository.findByUsername(username).orElseThrow(() -> notFould(username+"o usuario")));
 	}
-
-//	@PostMapping("/uploadFile")
-//	public ResponseEntity<Usuario> uploadImagem(@RequestParam("imagem") MultipartFile imagem) {
-//		imagensService.salvar(imagem);
-//		return ResponseEntity.ok().build();
-//	}
 
 }
