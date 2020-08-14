@@ -51,8 +51,8 @@
             </div>
             <div class="p-col p-md ui-fluid">
                 <ul>
-                    <li> {{negociacao.valorMensal == null ? 'R$ 0,00' : negociacao.valorMensal}}</li>
-                    <li>{{negociacao.valorUnico == null ? 'R$ 0,00' : negociacao.valorUnico}}</li>
+                    <li pTooltip="Recorrente" tooltipPosition="top"> {{negociacao.valorMensal == null ? 'R$ 0,00' : negociacao.valorMensal}}</li>
+                    <li pTooltip="Único" tooltipPosition="top">{{negociacao.valorUnico == null ? 'R$ 0,00' : negociacao.valorUnico}}</li>
                 </ul>
             </div>
         </div>

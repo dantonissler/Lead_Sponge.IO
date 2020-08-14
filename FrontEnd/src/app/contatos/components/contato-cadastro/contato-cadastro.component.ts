@@ -28,7 +28,7 @@ export class ContatoCadastroComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        const idContato = this.route.snapshot.params['id'];
+        const idContato = this.route.snapshot.params.id;
         this.carregarClientes();
         this.title.setTitle('Nova Contato');
         if (idContato) {
@@ -37,14 +37,13 @@ export class ContatoCadastroComponent implements OnInit {
     }
 
     get editando() {
-        return Boolean(this.contato.id)
+        return Boolean(this.contato.id);
     }
 
     carregarContato(id: number) {
         this.contatoService.buscarPorId(id)
             .then(contato => {
                 this.contato = contato;
-                console.log(contato)
                 this.atualizarTituloEdicao();
             })
             .catch(erro => this.errorHandler.handle(erro));
@@ -86,7 +85,7 @@ export class ContatoCadastroComponent implements OnInit {
 
     limpar(form) {
         form.reset();
-        setTimeout(function () {
+        setTimeout(function() {
             this.contato = new Contato();
         }.bind(this), 1);
         this.router.navigate(['/contatos/novo']);

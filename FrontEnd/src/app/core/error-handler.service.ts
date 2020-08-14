@@ -26,7 +26,6 @@ export class ErrorHandlerService {
     } else if (errorResponse instanceof HttpErrorResponse
       && errorResponse.status >= 400 && errorResponse.status <= 499) {
       msg = 'Ocorreu um erro ao processar a sua solicitação';
-      console.log(this.router.url);
 
       if (errorResponse.status === 403) {
         msg = 'Você não tem permissão para executar esta ação';

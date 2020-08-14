@@ -15,6 +15,15 @@ export class NegociacaoProdutoService {
         this.negociacaoUrl = `${environment.apiUrl}/negociacaoProduto`;
     }
 
+    buscarPorCodigo(id: number): Promise<NegociacaoProduto> {
+        return this.http.get<NegociacaoProduto>(`${this.negociacaoUrl}/${id}`)
+            .toPromise()
+            .then(response => {
+                const negociacaoProdutoAlterada = response;
+                return negociacaoProdutoAlterada;
+            });
+    }
+
     adicionarVenda(negociacaoProduto: NegociacaoProduto): Promise<NegociacaoProduto> {
         return this.http.post<NegociacaoProduto>(this.negociacaoUrl, negociacaoProduto)
             .toPromise();

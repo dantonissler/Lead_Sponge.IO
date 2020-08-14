@@ -60,7 +60,6 @@ export class EstagioNegociacaoService {
   }
 
   atualizar(estagio: Estagio): Promise<Estagio> {
-    console.log(estagio);
     return this.http.put<Estagio>(`${this.estagioUrl}/${estagio.id}`, estagio)
       .toPromise();
   }

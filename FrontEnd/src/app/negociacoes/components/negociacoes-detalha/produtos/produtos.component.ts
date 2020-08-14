@@ -4,10 +4,10 @@ import { ErrorHandlerService } from './../../../../core/error-handler.service';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { ProdutosService } from './../../../../produtos/services/produtos.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Produto } from 'src/app/produtos/models/produto.models';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { NegociacoesService } from 'src/app/negociacoes/services/negociacoes.service';
 import { Table } from 'primeng/table';
+import { NegociacaoProduto } from 'src/app/negociacoes/models/negociacao-produto-models';
 
 @Component({
     selector: 'app-produtos',
@@ -17,13 +17,18 @@ import { Table } from 'primeng/table';
 export class ProdutosComponent implements OnInit {
 
     qtd = 1;
+    desconto = null;
     checked = false;
-    produtos = new Produto();
-    produtoSelecionado = new Produto();
-    formulario: FormGroup;
-    negociacaoProdutos: any;
-    @ViewChild('dt') table: Table;
+    checkedEdit = false;
     loading = true;
+    valorProduto: number;
+    produtos: any;
+    formulario: FormGroup;
+    formularioEdit: FormGroup;
+    negociacaoProdutos: NegociacaoProduto;
+    negociacaoProdutoIndex: number;
+    @ViewChild('dt') table: Table;
+    exbindoFormularioEdicao = false;
     idNeg: number = +this.route.snapshot.params.id;
     optReincidencia = [{ label: 'Único', value: 'UNICO' }, { label: 'Recorrente', value: 'RECORRENTE' }];
     optTipoDesconto = [{ label: '%', value: 'PORCENTAGEM' }, { label: 'R$', value: 'VALOR' }];
@@ -57,7 +62,7 @@ export class ProdutosComponent implements OnInit {
     carregarProduto() {
         this.produtosService.listarTodas()
             .then(produto => {
-                this.produtos = produto.map(p => ({ nome: p.nome, id: p.id, valor: p.valor }));
+                this.produtos = produto.map(p => ({ label: p.nome, value: p.id, valor: p.valor }));
             })
             .catch(erro => this.errorHandler.handle(erro));
     }
@@ -71,30 +76,36 @@ export class ProdutosComponent implements OnInit {
             tipoDesconto: ['PORCENTAGEM'],
             desconto: [],
             valor: [null, Validators.required],
-            produto: [null, Validators.required],
+            produto: this.formBuilder.group({
+                id: [null, Validators.required]
+            }),
             negociacao: this.formBuilder.group({
                 id: [this.idNeg],
             }),
         });
     }
 
-    salvar() {
-        this.negociacaoProdutoService.adicionarVenda(this.formulario.value)
-            .then(negociacaoAdicionado => {
-                this.carregarNegociacao(this.idNeg);
-                this.configurarFormulario();
-                this.carregarProduto();
-                this.produtoSelecionado = new Produto();
-                this.qtd = 1;
-                this.messageService.add({ severity: 'success', detail: 'Negociacao adicionado com sucesso!' });
-            })
-            .catch(erro => this.errorHandler.handle(erro));
+    configurarFormularioEdit() {
+        this.formularioEdit = this.formBuilder.group({
+            id: [],
+            quantidade: [null, Validators.required],
+            reincidencia: ['UNICO', Validators.required],
+            temDesconto: [],
+            tipoDesconto: ['PORCENTAGEM'],
+            desconto: [],
+            valor: [null, Validators.required],
+            produto: this.formBuilder.group({
+                id: [null, Validators.required]
+            }),
+            negociacao: this.formBuilder.group({
+                id: [this.idNeg],
+            }),
+        });
     }
 
     /*     limpar() {
             this.formulario.reset();
             setTimeout(function() {
-                this.produtoSelecionado = new Produto();
                 this.qtd = 1;
             }.bind(this), 1);
             this.router.navigate(['/negociacoes/detalhar/' + this.route.snapshot.params.id]);
@@ -118,4 +129,53 @@ export class ProdutosComponent implements OnInit {
             })
             .catch(erro => this.errorHandler.handle(erro));
     }
+
+    salvar() {
+        this.negociacaoProdutoService.adicionarVenda(this.formulario.value)
+            .then(negociacaoAdicionado => {
+                this.carregarNegociacao(this.idNeg);
+                this.configurarFormulario();
+                this.carregarProduto();
+                this.qtd = 1;
+                this.messageService.add({ severity: 'success', detail: 'Negociacao adicionado com sucesso!' });
+            })
+            .catch(erro => this.errorHandler.handle(erro));
+    }
+
+    valor(produtoSelecionado: number): number{
+        this.produtos.forEach(produto => {
+            if (produto.value === produtoSelecionado) {
+                this.valorProduto = produto.valor;
+            }
+        });
+        return this.valorProduto;
+    }
+
+    carregarNegociacaoProdutoId(id: number) {
+        this.negociacaoProdutoService.buscarPorCodigo(id)
+            .then(negociacao => {
+                this.formularioEdit.patchValue(negociacao);
+            })
+            .catch(erro => this.errorHandler.handle(erro));
+    }
+
+    prepararEdicao(negociacaoProduto: NegociacaoProduto) {
+        this.configurarFormularioEdit();
+        this.carregarNegociacaoProdutoId(negociacaoProduto.id);
+        this.exbindoFormularioEdicao = true;
+    }
+
+    salvarNegociacaoProduto() {
+        this.negociacaoProdutoService.atualizar(this.formularioEdit.value)
+            .then(negociacaoProduto => {
+                this.exbindoFormularioEdicao = false;
+                this.carregarNegociacao(this.idNeg);
+
+                this.carregarProduto();
+                /* this.formularioEdit.patchValue(negociacaoProduto); */
+                this.messageService.add({ severity: 'success', detail: 'Negociacao Alterada com sucesso!' });
+            })
+            .catch(erro => this.errorHandler.handle(erro));
+    }
+
 }

@@ -65,7 +65,6 @@ export class ProdutosService {
   }
 
   atualizar(produto: Produto): Promise<Produto> {
-    console.log(produto);
     return this.http.put<Produto>(`${this.produtoUrl}/${produto.id}`, produto)
       .toPromise();
   }
@@ -76,7 +75,6 @@ export class ProdutosService {
   }
 
   mudarVisibilidade(id: number, visibilidade: boolean): Promise<void> {
-    console.log(visibilidade);
     const headers = new HttpHeaders()
         .append('Content-Type', 'application/json');
     return this.http.put(`${this.produtoUrl}/${id}/vasivel`, visibilidade, { headers })

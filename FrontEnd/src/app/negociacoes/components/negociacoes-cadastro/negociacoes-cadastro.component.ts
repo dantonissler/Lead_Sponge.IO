@@ -108,7 +108,6 @@ export class NegociacoesCadastroComponent implements OnInit {
         this.negociacoesService.atualizar(this.formulario.value)
             .then(negociacao => {
                 this.formulario.patchValue(negociacao);
-
                 this.messageService.add({ severity: 'success', detail: 'Negociacao alterado com sucesso!' });
                 this.atualizarTituloEdicao();
             })
@@ -142,9 +141,11 @@ export class NegociacoesCadastroComponent implements OnInit {
             }),
         });
     }
+
     validarObrigatoriedade(input: FormControl) {
         return (input.value ? null : { obrigatoriedade: true });
     }
+
     validarTamanhoMinimo(valor: number) {
         return (input: FormControl) => {
             return (!input.value || input.value.length >= valor) ? null : { tamanhoMinimo: { tamanho: valor } };

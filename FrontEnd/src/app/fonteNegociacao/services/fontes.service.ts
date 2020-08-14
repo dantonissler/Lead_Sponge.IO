@@ -62,7 +62,6 @@ export class FontesService {
   }
 
   atualizar(fonte: Fonte): Promise<Fonte> {
-    console.log(fonte);
     return this.http.put<Fonte>(`${this.fonteUrl}/${fonte.id}`, fonte)
       .toPromise();
   }

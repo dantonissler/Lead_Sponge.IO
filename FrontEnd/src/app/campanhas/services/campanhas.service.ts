@@ -60,7 +60,6 @@ export class CampanhasService {
   }
 
   atualizar(campanha: Campanha): Promise<Campanha> {
-    console.log(campanha);
     return this.http.put<Campanha>(`${this.campanhaUrl}/${campanha.id}`, campanha)
       .toPromise();
   }

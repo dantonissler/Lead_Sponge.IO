@@ -84,9 +84,7 @@ export class TarefasService {
 
   private converterStringsParaDatas(tarefas: Tarefa[]) {
     for (const tarefa of tarefas) {
-      console.log(tarefa.horaMarcada)
       tarefa.horaMarcada = moment(tarefa.horaMarcada).toDate();
-        console.log(tarefa.horaMarcada)
     }
   }
 
