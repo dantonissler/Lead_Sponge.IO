@@ -11,6 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.oauth2.common.exceptions.UserDeniedAuthorizationException;
 import org.springframework.stereotype.Service;
 
 import com.leadsponge.IO.models.usuario.Usuario;
@@ -26,8 +27,12 @@ public class UsuarioDetailsServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Optional<Usuario> usuarioOptional = usuarioRepository.findByUsername(username);
-		Usuario usuario = usuarioOptional.orElseThrow(() -> new UsernameNotFoundException("Usuário e/ou senha incorretos"));
+		Usuario usuario = usuarioOptional.orElseThrow(() -> new UsernameNotFoundException("Usuário ou senha incorretos"));
+		if (!usuario.isEnabled()) {
+			throw new UserDeniedAuthorizationException("Usuário inativo");
+		}
 		return new UsuarioSistema(usuario, getRoles(usuario));
+		
 	}
 	
 	private Collection<? extends GrantedAuthority> getRoles(Usuario usuario) {

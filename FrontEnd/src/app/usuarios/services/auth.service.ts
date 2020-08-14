@@ -35,6 +35,9 @@ export class AuthService {
                     if (response.error.error === 'invalid_grant') {
                         return Promise.reject('Usuário ou senha inválida!');
                     }
+                    if (response.error.error === 'access_denied') {
+                        return Promise.reject('Usuário inativo!');
+                    }
                 }
                 return Promise.reject(response);
             });
