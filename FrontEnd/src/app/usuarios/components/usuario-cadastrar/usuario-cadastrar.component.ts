@@ -15,19 +15,19 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class UsuarioCadastrarComponent implements OnInit {
 
-    showConfPass: boolean = false;
-    iconConf: string = 'pi pi-eye';
-    showPass: boolean = false;
-    icon: string = 'pi pi-eye';
+    showConfPass = false;
+    iconConf = 'pi pi-eye';
+    showPass = false;
+    icon = 'pi pi-eye';
     formulario: FormGroup;
-    checked: boolean = true;
+    checked = true;
     roles = [];
     uploadEmAndamento = false;
     get editando() { return Boolean(this.formulario.get('id').value); }
     get urlUploadAnexo() { return this.usuarioService.urlUploadAnexo(); }
     get nomeAnexo() {
         const nome = this.formulario.get('anexo').value;
-        if (nome) return nome.substring(nome.indexOf('_') + 1, nome.length);
+        if (nome) { return nome.substring(nome.indexOf('_') + 1, nome.length); }
         return '';
     }
 
@@ -44,7 +44,7 @@ export class UsuarioCadastrarComponent implements OnInit {
 
     ngOnInit() {
         this.configurarFormulario();
-        const idUsuario = this.route.snapshot.params['id'];
+        const idUsuario = this.route.snapshot.params.id;
         this.title.setTitle('Novo usuario');
         this.carregarRole();
         if (idUsuario) {
@@ -52,7 +52,7 @@ export class UsuarioCadastrarComponent implements OnInit {
         }
     }
 
-    antesUploadAnexo() { this.uploadEmAndamento = true }
+    antesUploadAnexo() { this.uploadEmAndamento = true; }
 
     onFileUpload(data) {
         const file = data.originalEvent.body;
@@ -90,8 +90,8 @@ export class UsuarioCadastrarComponent implements OnInit {
     }
 
     salvar() {
-        if (this.editando) this.atualizarUsuario();
-        else this.adicionarUsuario();
+        if (this.editando) { this.atualizarUsuario(); }
+        else { this.adicionarUsuario(); }
     }
 
     adicionarUsuario() {
@@ -132,8 +132,8 @@ export class UsuarioCadastrarComponent implements OnInit {
     }
 
     validarConfirmaPassword(formGroup: FormGroup) {
-        let password = formGroup.get('password').value;
-        let confirmarPassword = formGroup.get('confirmarPassword').value;
+        const password = formGroup.get('password').value;
+        const confirmarPassword = formGroup.get('confirmarPassword').value;
         return password === confirmarPassword ? null : { passwordNotMatch: true };
     }
 
@@ -149,15 +149,16 @@ export class UsuarioCadastrarComponent implements OnInit {
 
     limpar() {
         this.formulario.reset();
-        setTimeout(function () {
+        setTimeout(function() {
             this.lancamento = new Usuario();
+            this.checked = true;
         }.bind(this), 1);
         this.router.navigate(['/usuarios/novo']);
     }
 
     esconderSenha() {
         this.showPass = !this.showPass;
-        if (this.showPass == true) {
+        if (this.showPass === true) {
             this.icon = 'pi pi-eye-slash';
         } else {
             this.icon = 'pi pi-eye';
@@ -166,7 +167,7 @@ export class UsuarioCadastrarComponent implements OnInit {
 
     esconderConfSenha() {
         this.showConfPass = !this.showConfPass;
-        if (this.showConfPass == true) {
+        if (this.showConfPass === true) {
             this.iconConf = 'pi pi-eye-slash';
         } else {
             this.iconConf = 'pi pi-eye';

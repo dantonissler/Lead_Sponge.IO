@@ -46,7 +46,7 @@ export class TarefasCadastroComponent implements OnInit {
 
   ngOnInit(): void {
     this.configurarFormulario();
-    const idTarefa = this.route.snapshot.params['id'];
+    const idTarefa = this.route.snapshot.params.id;
 
     this.title.setTitle('Novo Tarefa');
 
@@ -162,10 +162,9 @@ export class TarefasCadastroComponent implements OnInit {
 
   limpar() {
     this.formulario.reset();
-    setTimeout(function () {
+    setTimeout(function() {
       this.tarefa = new Tarefa();
     }.bind(this), 1);
     this.router.navigate(['/tarefas/novo']);
   }
-
 }

@@ -31,7 +31,7 @@
                 <div class="ui-inputgroup">
                     <span class="ui-inputgroup-addon"><i class="fas fa-user" style="line-height: 1.25;"></i></span>
                     <span class="ui-float-label">
-                        <input pInputText type="text" name="username" formControlName="username">
+                        <input pInputText type="text" name="username" formControlName="username" class="uppercase">
                         <label for="float-input">Nome de Usuario *</label>
                     </span>
                 </div>
@@ -115,9 +115,9 @@
             </div>
             <div class="ui-g-12 cadastro-acoes">
                 <button pButton value="submit" type="submit" label="Salvar" [disabled]="formulario.invalid"
-                    style="padding-left:10;"></button>
-                <button pButton value="Limpar" type="button" label="Limpar" class="ui-button-info" (click)="limpar()"
-                    style="padding-left:10;"></button>
+                    style="padding-left:10;" class="ui-button-success"></button>
+                <button pButton value="Limpar" type="button" label="Limpar" (click)="limpar()"
+                    style="padding-left:10;" class="ui-button-warning"></button>
                 <button pButton value="Pesquisar" type="button" label="Pesquisar" class="ui-button-info"
                     Clabel="Pesquisa" routerLink="/usuarios" style="padding-left:10;"></button>
             </div>

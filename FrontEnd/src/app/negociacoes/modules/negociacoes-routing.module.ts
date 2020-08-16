@@ -30,7 +30,7 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: { roles: ['PESQUISAR_NEGOCIACAO'] }
     },
-]
+];
 
 @NgModule({
     declarations: [],

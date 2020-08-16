@@ -127,7 +127,7 @@ public class Usuario extends UserDateAudit implements UserDetails, Serializable 
 	}
 
 	public void setUsername(String username) {
-		this.username = username;
+		this.username = username.toUpperCase();
 	}
 
 	public String getNomeCompleto() {

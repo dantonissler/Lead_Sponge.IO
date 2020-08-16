@@ -20,7 +20,7 @@
             <div class="p-field p-col-12 p-md-6 ui-fluid">
                 <!-- Não aumentar o tamanho pois o style tem limitação -->
                 <p-multiSelect formControlName="segmentos" [options]="segmentos" [(ngModel)]="selectedSegmentos"
-                    emptyFilterMessage="Nenhum resultado encontrado" [style]="{'border': 'none'}">
+                    emptyFilterMessage="Nenhum resultado encontrado">
                     <ng-template let-value pTemplate="selectedItems">
                         <div *ngFor="let val of value" class="ui-multiselected-item-token ui-corner-all">
                             <span>{{val.nome}}</span>
@@ -192,8 +192,8 @@
         </div>
         <div class="p-col-12 p-md-12 cadastro-acoes">
             <button pButton value="submit" type="submit" label="Salvar" [disabled]="formulario.invalid"
-                style="padding-left:10;"></button>
-            <button pButton value="Limpar" type="button" label="Limpar" class="ui-button-info" (click)="limpar()"
+                style="padding-left:10;" class="ui-button-success"></button>
+            <button pButton value="Limpar" type="button" label="Limpar" class="ui-button-warning" (click)="limpar()"
                 style="padding-left:10;"></button>
             <button pButton value="Pesquisar" type="button" label="Pesquisar" class="ui-button-info" Clabel="Pesquisa"
                 routerLink="/clientes" style="padding-left:10;"></button>

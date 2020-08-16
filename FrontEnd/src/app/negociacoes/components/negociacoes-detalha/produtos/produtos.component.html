@@ -7,62 +7,115 @@
             </div>
         </p-header>
         <div class="ui-g">
-            <div class="ui-g-12 ui-fluid" formGroupName="produto">
-                <p-dropdown name="produto" [options]="produtos" [filter]="true" formControlName="id"
-                    placeholder="selecione um produto" (onChange)="valor($event.value)">
-                </p-dropdown>
-                <app-message [control]="formulario.get('produto')" error="obrigatoriedade"
-                    text="Selecione um Produto/Serviço para a Negociação.">
-                </app-message>
-            </div>
-            <div class="ui-g-12 ui-fluid">
-                <span class="ui-float-label">
-                    <p-inputNumber mode="decimal" [(ngModel)]="qtd" formControlName="quantidade">
-                    </p-inputNumber>
-                </span>
-            </div>
-            <div class="p-col-12 ui-fluid">
-                <label>Valor</label>
-                <p-inputNumber formControlName="valor" mode="decimal" mode="currency"
-                    [(ngModel)]="valorProduto == null ? 0.00 : valorProduto" prefix="R$" mode="decimal"
-                    [minFractionDigits]="2">
-                </p-inputNumber>
-            </div>
-            <div class="p-col-12 ui-fluid">
-                <label>Recorrência</label>
-                <p-dropdown [options]="optReincidencia" [filter]="false" formControlName="reincidencia">
-                </p-dropdown>
-            </div>
-            <div class="p-formgroup-inline p-col-3">
-                <div class="p-col-8">
-                    <label>Haverá desconto?</label>
-                </div>
-                <div class="p-col-4">
-                    <p-inputSwitch [(ngModel)]="checked" formControlName="temDesconto"></p-inputSwitch>
+            <div class="row">
+                <div class="p-field p-grid" formGroupName="produto">
+                    <label for="produto" class="p-col-fixed" style="width:130px; padding-left: 16px;">Produto <span
+                            style="color: crimson;">*</span></label>
+                    <div class="p-col">
+                        <p-dropdown name="produto" [options]="produtos" [filter]="true" formControlName="id"
+                            placeholder="selecione um produto" (onChange)="valor($event.value)">
+                        </p-dropdown>
+                        <app-message [control]="formulario.get('produto')" error="obrigatoriedade"
+                            text="Selecione um Produto/Serviço para a Negociação.">
+                        </app-message>
+                    </div>
                 </div>
             </div>
-            <div class="p-col-1 ui-fluid" [hidden]="!checked">
-                <p-dropdown name="produto" [options]="optTipoDesconto" [filter]="false" formControlName="tipoDesconto">
-                </p-dropdown>
+            <div class="row">
+                <div class="p-field p-grid">
+                    <label for="quantidade" class="p-col-fixed"
+                        style="width:130px; padding-left: 16px;">Recorrência</label>
+                    <div class="p-col">
+                        <p-dropdown [options]="optReincidencia" [filter]="false" formControlName="reincidencia">
+                        </p-dropdown>
+                    </div>
+                </div>
             </div>
-            <div class="p-col-12 ui-fluid" [hidden]="!checked">
-                <span class="ui-float-label" [hidden]="formulario.value.tipoDesconto == 'PORCENTAGEM' ? false : true">
-                    <p-inputNumber formControlName="desconto" [(ngModel)]="desconto == null ? 0 : desconto"
-                        mode="decimal" [min]="0" [max]="100">
-                    </p-inputNumber>
-                    <p>Use apenas 2 casas decimais e use ponto (.) ao invés de vírgula (,) para separar!</p>
-                </span>
-                <span class="ui-float-label" [hidden]="formulario.value.tipoDesconto == 'VALOR' ? false : true">
-                    <p-inputNumber formControlName="desconto" [(ngModel)]="desconto == null ? 0.00 : desconto"
-                        prefix="R$" mode="decimal" [minFractionDigits]="2">
-                    </p-inputNumber>
-                </span>
+            <div class="row">
+                <div class="p-field p-grid">
+                    <label for="quantidade" class="p-col-fixed"
+                        style="width:130px; padding-left: 16px;">Quantidade</label>
+                    <div class="p-col">
+                        <p-inputNumber [(ngModel)]="qtd" formControlName="quantidade" mode="decimal"
+                            [showButtons]="true" buttonLayout="horizontal" spinnerMode="horizontal"
+                            incrementButtonIcon="pi pi-plus" decrementButtonClass="ui-button-danger"
+                            incrementButtonClass="ui-button-success" decrementButtonIcon="pi pi-minus" [min]="1">
+                        </p-inputNumber>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="p-field p-grid">
+                    <label for="valor" class="p-col-fixed" style="width:130px; padding-left: 16px;">Valor</label>
+                    <div class="p-col">
+                        <p-inputNumber formControlName="valor" mode="decimal" mode="currency"
+                            [(ngModel)]="valorProduto == null ? 0.00 : valorProduto" [showButtons]="true"
+                            buttonLayout="horizontal" spinnerMode="horizontal" [step]="0.25"
+                            decrementButtonClass="ui-button-danger" incrementButtonClass="ui-button-success"
+                            incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" prefix="R$"
+                            mode="decimal" [minFractionDigits]="2">
+                        </p-inputNumber>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="p-field p-grid">
+                    <label for="temDesconto" class="p-col-fixed" style="width:130px; padding-left: 16px;">Tem
+                        desconto?</label>
+                    <div class="p-col">
+                        <p-inputSwitch [(ngModel)]="checked" formControlName="temDesconto"></p-inputSwitch>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="p-field p-grid" [hidden]="!checked">
+                    <label for="optTipoDesconto" class="p-col-fixed" style="width:130px; padding-left: 16px;">Tipo
+                        desconto</label>
+                    <div class="p-col">
+                        <p-dropdown name="optTipoDesconto" [options]="optTipoDesconto" [filter]="false"
+                            formControlName="tipoDesconto">
+                        </p-dropdown>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div [hidden]="!checked">
+                    <div [hidden]="formulario.value.tipoDesconto == 'PORCENTAGEM' ? false : true">
+                        <div class="p-field p-grid">
+                            <label for="desconto" class="p-col-fixed" style="width:130px; padding-left: 16px;">Valor
+                                desconto</label>
+                            <div class="p-col">
+                                <p-inputNumber formControlName="desconto" [(ngModel)]="desconto == null ? 0 : desconto"
+                                    mode="decimal" [showButtons]="true" buttonLayout="horizontal"
+                                    spinnerMode="horizontal" incrementButtonIcon="pi pi-plus"
+                                    decrementButtonClass="ui-button-danger" [max]="100"
+                                    incrementButtonClass="ui-button-success" decrementButtonIcon="pi pi-minus"
+                                    [min]="1">
+                                </p-inputNumber>
+                            </div>
+                        </div>
+                        <p style="padding-left: 24px;">Use apenas 2 casas decimais e use ponto (.) ao invés de vírgula
+                            (,) para separar!</p>
+                    </div>
+                    <div class="p-field p-grid" [hidden]="formulario.value.tipoDesconto == 'VALOR' ? false : true">
+                        <label for="desconto" class="p-col-fixed" style="width:130px; padding-left: 16px;">valor
+                            desconto</label>
+                        <div class="p-col">
+                            <p-inputNumber formControlName="desconto" [(ngModel)]="desconto == null ? 0.00 : desconto"
+                                mode="decimal" mode="currency" [showButtons]="true" buttonLayout="horizontal"
+                                spinnerMode="horizontal" [step]="0.25" decrementButtonClass="ui-button-danger"
+                                incrementButtonClass="ui-button-success" incrementButtonIcon="pi pi-plus"
+                                decrementButtonIcon="pi pi-minus" prefix="R$" mode="decimal" [minFractionDigits]="2">
+                            </p-inputNumber>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <p-footer>
             <div class="cadastro-acoes">
                 <button pButton value="submit" type="submit" icon="fas fa-plus" iconPos="right"
-                    class="ui-button-rounded" [disabled]="formulario.invalid" label="Salvar">
+                    class="ui-button-success" [disabled]="formulario.invalid" label="Salvar">
                 </button>
                 <!-- <button pButton type="reset" icon="fas fa-snowplow" iconPos="right" class="ui-button-rounded"
                     label="Limpar" (click)="limpar()">
@@ -87,7 +140,7 @@
     <ng-template pTemplate="body" let-negociacaoProduto let-rowIndex="rowIndex">
         <tr class="ui-selectable-row">
             <td>
-                {{ negociacaoProduto.valor }}
+                {{ negociacaoProduto.produto.nome }}
             </td>
             <td>
                 {{ negociacaoProduto.quantidade }}
@@ -107,8 +160,9 @@
                 </ul>
             </td>
             <td class="col-acoes">
-                <button pButton icon="fas fa-pencil-alt" type="button" value="editar" pTooltip="Editar" tooltipPosition="top"
-                    class="ui-button-rounded" (click)="prepararEdicao(negociacaoProduto)"></button>
+                <button pButton icon="fas fa-pencil-alt" type="button" value="editar" pTooltip="Editar"
+                    tooltipPosition="top" class="ui-button-rounded"
+                    (click)="prepararEdicao(negociacaoProduto)"></button>
                 <button pButton icon="fa fa-trash" type="button" pTooltip="Excluir" tooltipPosition="top"
                     (click)="confirmarExclusao(negociacaoProduto)" class="ui-button-rounded ui-button-danger"></button>
             </td>
@@ -124,67 +178,108 @@
 </p-table>
 <!-- <pre>{{ negociacaoProdutos |json}}</pre> -->
 
-<p-dialog header="Edição de Produto ou Serviços" [(visible)]="exbindoFormularioEdicao" modal="modal"
-    *ngIf="formularioEdit">
-    <form [formGroup]="formularioEdit" autocomplete="off" (ngSubmit)="salvarNegociacaoProduto()">
+<form [formGroup]="formularioEdit" autocomplete="off" (ngSubmit)="salvarNegociacaoProduto()">
+    <p-dialog header="Edição de Produto ou Serviços" [(visible)]="exbindoFormularioEdicao" modal="modal"
+        [style]="{width: '35vw'}" *ngIf="formularioEdit">
         <div class="ui-g">
-            <div class="ui-g-12 ui-fluid" formGroupName="produto">
-                <p-dropdown name="produto" [options]="produtos" [filter]="true" formControlName="id"
-                    placeholder="selecione um produto" (onChange)="valor($event.value)">
-                </p-dropdown>
-                <app-message [control]="formulario.get('produto')" error="obrigatoriedade"
-                    text="Selecione um Produto/Serviço para a Negociação.">
-                </app-message>
-            </div>
-            <div class="ui-g-12 ui-fluid">
-                <span class="ui-float-label">
-                    <p-inputNumber mode="decimal" [(ngModel)]="qtd" formControlName="quantidade">
-                    </p-inputNumber>
-                </span>
-            </div>
-            <div class="p-col-12 ui-fluid">
-                <label>Valor</label>
-                <p-inputNumber formControlName="valor" mode="decimal" mode="currency"
-                    [(ngModel)]="valorProduto == null ? 0.00 : valorProduto" prefix="R$" mode="decimal"
-                    [minFractionDigits]="2">
-                </p-inputNumber>
-            </div>
-            <div class="p-col-12 ui-fluid">
-                <label>Recorrência</label>
-                <p-dropdown [options]="optReincidencia" [filter]="false" formControlName="reincidencia">
-                </p-dropdown>
-            </div>
-            <div class="p-formgroup-inline p-col-3">
-                <div class="p-col-8">
-                    <label>Haverá desconto?</label>
-                </div>
-                <div class="p-col-4">
-                    <p-inputSwitch [(ngModel)]="checkedEdit" formControlName="temDesconto"></p-inputSwitch>
+            <div class="p-field p-grid" formGroupName="produto">
+                <label for="produto" class="p-col-fixed" style="width:130px; padding-left: 16px;">Produto <span
+                        style="color: crimson;">*</span></label>
+                <div class="p-col">
+                    <p-dropdown name="produto" [options]="produtos" [filter]="true" formControlName="id"
+                        placeholder="selecione um produto" (onChange)="valor($event.value)">
+                    </p-dropdown>
+                    <app-message [control]="formularioEdit.get('produto')" error="obrigatoriedade"
+                        text="Selecione um Produto/Serviço para a Negociação.">
+                    </app-message>
                 </div>
             </div>
-            <div class="p-col-1 ui-fluid" [hidden]="!checkedEdit">
-                <p-dropdown name="produto" [options]="optTipoDesconto" [filter]="false" formControlName="tipoDesconto" placeholder="selecione o tipo">
-                </p-dropdown>
+            <div class="p-field p-grid">
+                <label for="quantidade" class="p-col-fixed" style="width:130px; padding-left: 16px;">Recorrência</label>
+                <div class="p-col">
+                    <p-dropdown [options]="optReincidencia" [filter]="false" formControlName="reincidencia">
+                    </p-dropdown>
+                </div>
             </div>
-            <div class="p-col-12 ui-fluid" [hidden]="!checkedEdit">
-                <span class="ui-float-label" [hidden]="formularioEdit.value.tipoDesconto == 'PORCENTAGEM' ? false : true">
-                    <p-inputNumber formControlName="desconto" [(ngModel)]="desconto == null ? 0 : desconto"
-                        mode="decimal" [min]="0" [max]="100">
+            <div class="p-field p-grid">
+                <label for="quantidade" class="p-col-fixed" style="width:130px; padding-left: 16px;">Quantidade</label>
+                <div class="p-col">
+                    <p-inputNumber [(ngModel)]="qtd" formControlName="quantidade" mode="decimal" [showButtons]="true"
+                        buttonLayout="horizontal" spinnerMode="horizontal" incrementButtonIcon="pi pi-plus"
+                        decrementButtonClass="ui-button-danger" incrementButtonClass="ui-button-success"
+                        decrementButtonIcon="pi pi-minus" [min]="1">
                     </p-inputNumber>
-                    <p>Use apenas 2 casas decimais e use ponto (.) ao invés de vírgula (,) para separar!</p>
-                </span>
-                <span class="ui-float-label" [hidden]="formularioEdit.value.tipoDesconto == 'VALOR' ? false : true">
-                    <p-inputNumber formControlName="desconto" [(ngModel)]="desconto == null ? 0.00 : desconto"
-                        prefix="R$" mode="decimal" [minFractionDigits]="2">
-                    </p-inputNumber>
-                </span>
+                </div>
             </div>
-            <div class="cadastro-acoes ui-g-12">
-                <button pButton value="submit" type="submit" icon="fas fa-plus" iconPos="right"
-                    class="ui-button-rounded" [disabled]="formularioEdit.invalid" label="Salvar">
-                </button>
+            <div class="p-field p-grid">
+                <label for="valor" class="p-col-fixed" style="width:130px; padding-left: 16px;">Valor</label>
+                <div class="p-col">
+                    <p-inputNumber formControlName="valor" mode="decimal" mode="currency"
+                        [(ngModel)]="valorProduto == null ? 0.00 : valorProduto" [showButtons]="true"
+                        buttonLayout="horizontal" spinnerMode="horizontal" [step]="0.25"
+                        decrementButtonClass="ui-button-danger" incrementButtonClass="ui-button-success"
+                        incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" prefix="R$" mode="decimal"
+                        [minFractionDigits]="2">
+                    </p-inputNumber>
+                </div>
+            </div>
+            <div class="p-field p-grid">
+                <label for="temDesconto" class="p-col-fixed" style="width:130px; padding-left: 16px;">Tem
+                    desconto?</label>
+                <div class="p-col">
+                    <p-inputSwitch [(ngModel)]="checkedEdit" formControlName="temDesconto"
+                        (click)="formularioEdit.value.tipoDesconto = 'PORCENTAGEM'"></p-inputSwitch>
+                </div>
+            </div>
+            <div class="p-field p-grid" [hidden]="!checkedEdit">
+                <label for="optTipoDesconto" class="p-col-fixed" style="width:130px; padding-left: 16px;">Tipo
+                    desconto</label>
+                <div class="p-col">
+                    <p-dropdown name="optTipoDesconto" [options]="optTipoDesconto" [filter]="false"
+                        formControlName="tipoDesconto">
+                    </p-dropdown>
+                </div>
+            </div>
+            <div [hidden]="!checkedEdit">
+                <div [hidden]="formularioEdit.value.tipoDesconto == 'PORCENTAGEM' ? false : true">
+                    <div class="p-field p-grid">
+                        <label for="desconto" class="p-col-fixed" style="width:130px; padding-left: 16px;">Valor
+                            desconto</label>
+                        <div class="p-col">
+                            <p-inputNumber formControlName="desconto" [(ngModel)]="desconto == null ? 0 : desconto"
+                                mode="decimal" [showButtons]="true" buttonLayout="horizontal" spinnerMode="horizontal"
+                                incrementButtonIcon="pi pi-plus" decrementButtonClass="ui-button-danger" [max]="100"
+                                incrementButtonClass="ui-button-success" decrementButtonIcon="pi pi-minus" [min]="1">
+                            </p-inputNumber>
+                        </div>
+                    </div>
+                    <p style="padding-left: 24px;">Use apenas 2 casas decimais e use ponto (.) ao invés de vírgula
+                        (,) para separar!</p>
+                </div>
+                <div class="p-field p-grid" [hidden]="formularioEdit.value.tipoDesconto == 'VALOR' ? false : true">
+                    <label for="desconto" class="p-col-fixed" style="width:130px; padding-left: 16px;">valor
+                        desconto</label>
+                    <div class="p-col">
+                        <p-inputNumber formControlName="desconto" [(ngModel)]="desconto == null ? 0.00 : desconto"
+                            mode="decimal" mode="currency" [showButtons]="true" buttonLayout="horizontal"
+                            spinnerMode="horizontal" [step]="0.25" decrementButtonClass="ui-button-danger"
+                            incrementButtonClass="ui-button-success" incrementButtonIcon="pi pi-plus"
+                            decrementButtonIcon="pi pi-minus" prefix="R$" mode="decimal" [minFractionDigits]="2">
+                        </p-inputNumber>
+                    </div>
+                </div>
             </div>
         </div>
-    </form>
+        <p-footer>
+            <div class="cadastro-acoes">
+                <button pButton value="submit" type="submit" icon="fas fa-plus" iconPos="right"
+                    class="ui-button-success" [disabled]="formularioEdit.invalid" label="Salvar">
+                </button>
+                <button pButton type="reset" icon="fas fa-snowplow" iconPos="right" class="ui-button-warning"
+                    label="Fechar" (click)="fechar()">
+                </button>
+            </div>
+        </p-footer>
+    </p-dialog>
     <!-- <pre>{{formularioEdit.value|json}}</pre> -->
-</p-dialog>
+</form>

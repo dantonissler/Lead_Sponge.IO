@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 
 export class ContatoFiltro {
   nome: string;
-  pagina = 0; 
+  pagina = 0;
   itensPorPagina = 5;
 }
 
@@ -48,7 +48,7 @@ export class ContatoService {
           total: response.totalElements
         };
         return resultado;
-      })
+      });
   }
 
   excluir(id: number): Promise<void> {

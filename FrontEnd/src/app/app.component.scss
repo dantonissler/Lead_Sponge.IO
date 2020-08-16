@@ -74,7 +74,7 @@
 
     .ui-paginator {
         border: 0 none;
-        padding: .7em;
+        padding: 0.7em;
     }
 
     .ui-table-thead > tr > th {
@@ -149,4 +149,36 @@
             }
         }
     }
+}
+
+:host ::ng-deep .ui-inputnumber-input {
+    border: none;
+}
+
+:host ::ng-deep .ui-dropdown {
+    border: none;
+}
+
+:host ::ng-deep .ui-multiselect {
+    min-width: 15em;
+    border: none;
+}
+
+:host ::ng-deep .ui-multiselected-item-token,
+:host ::ng-deep .ui-multiselected-empty-token {
+    padding: 2px 4px;
+    margin: 0 0.286em 0 0;
+    display: inline-block;
+    vertical-align: middle;
+    height: 1.857em;
+}
+
+:host ::ng-deep .ui-multiselected-item-token {
+    background: #007ad9;
+    color: #ffffff;
+}
+
+:host ::ng-deep .ui-multiselected-empty-token {
+    background: #d95f00;
+    color: #ffffff;
 }

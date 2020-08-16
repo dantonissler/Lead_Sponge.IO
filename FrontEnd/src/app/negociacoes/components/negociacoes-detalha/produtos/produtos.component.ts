@@ -178,4 +178,6 @@ export class ProdutosComponent implements OnInit {
             .catch(erro => this.errorHandler.handle(erro));
     }
 
+    fechar(){ this.exbindoFormularioEdicao = false; }
+
 }

@@ -3,21 +3,20 @@
         <div class="card-header">
             <h1 class="text-center text-info">Conectar-me</h1>
             <div class="fadeIn first">
-                
+
             </div>
         </div>
         <div class="card-body">
-            <form autocomplete="off" #f="ngForm" >
-                <input pInputText type="text" class="fadeIn second" name="usuario" 
-                placeholder="Usuario" ngModel required #usuario>
-                <input pInputText type="password" class="fadeIn third" name="senha" 
-                placeholder="Senha" ngModel required #senha>
+            <form autocomplete="off" #f="ngForm">
+                <input pInputText type="text" class="fadeIn second" name="usuario" class="uppercase"
+                    placeholder="Usuario" ngModel required #usuario>
+                <input pInputText type="password" class="fadeIn third" name="senha" placeholder="Senha" ngModel required
+                    #senha>
                 <div class="checkbox">
-                    <label><input type="checkbox" value=""/> Lembre de min</label>
+                    <label><input type="checkbox" value="" /> Lembre de min</label>
                 </div>
-                <button  type="submit" label="" [disabled]="!f.valid" 
-                value="Entrar" (click)="login(usuario.value, senha.value); senha.value = '';" 
-                class="fadeIn fourth">
+                <button type="submit" label="" [disabled]="!f.valid" value="Entrar"
+                    (click)="login(usuario.value, senha.value); senha.value = '';" class="fadeIn fourth">
                     <i class="fas fa-sign-in-alt"></i>
                     ENTRAR
                 </button>

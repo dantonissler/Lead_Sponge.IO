@@ -17,23 +17,23 @@
             </div>
             <div class="ui-g-12 ui-md-4 ui-fluid" formGroupName="cliente">
                 <label>Empresa/Cliente <span style="color: crimson;">*</span></label>
-                <p-dropdown name="cliente" [options]="cliente" placeholder="Selecione" [filter]="true"
+                <p-dropdown name="cliente" [options]="cliente" placeholder="Selecione o cliente" [filter]="true"
                     formControlName="id"></p-dropdown>
             </div>
             <div class="ui-g-12 ui-md-4 ui-fluid" formGroupName="campanha">
                 <label>Campanha <span style="color: crimson;">*</span></label>
-                <p-dropdown name="campanha" [options]="campanha" placeholder="Selecione" [filter]="true"
+                <p-dropdown name="campanha" [options]="campanha" placeholder="Selecione a campanha" [filter]="true"
                     formControlName="id"></p-dropdown>
             </div>
             <div class="ui-g-12 ui-md-4 ui-fluid" formGroupName="fonte">
-                <label>Fonte <span style="color: crimson;">*</span></label>
-                <p-dropdown name="fonte" [options]="fonte" placeholder="Selecione" [filter]="true" formControlName="id">
+                <label>Fonte da negociação<span style="color: crimson;">*</span></label>
+                <p-dropdown name="fonte" [options]="fonte" placeholder="Selecione a fonte" [filter]="true" formControlName="id">
                 </p-dropdown>
             </div>
             <div class="ui-g-12 cadastro-acoes">
                 <button pButton value="submit" type="submit" label="Salvar" [disabled]="formulario.invalid"
-                    style="padding-left:10;"></button>
-                <button pButton value="Limpar" type="button" label="Limpar" class="ui-button-info" (click)="limpar()"
+                    style="padding-left:10;" class="ui-button-success"></button>
+                <button pButton value="Limpar" type="button" label="Limpar" class="ui-button-warning" (click)="limpar()"
                     style="padding-left:10;"></button>
                 <button pButton value="Pesquisar" type="button" label="Pesquisar" class="ui-button-info"
                     Clabel="Pesquisa" routerLink="/negociacoes" style="padding-left:10;"></button>

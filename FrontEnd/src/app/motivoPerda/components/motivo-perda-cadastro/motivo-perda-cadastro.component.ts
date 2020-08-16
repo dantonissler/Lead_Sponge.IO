@@ -8,98 +8,98 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-motivo-perda-cadastro',
-  templateUrl: './motivo-perda-cadastro.component.html',
-  styleUrls: ['./motivo-perda-cadastro.component.scss']
+    selector: 'app-motivo-perda-cadastro',
+    templateUrl: './motivo-perda-cadastro.component.html',
+    styleUrls: ['./motivo-perda-cadastro.component.scss']
 })
 export class MotivoPerdaCadastroComponent implements OnInit {
 
-  formulario: FormGroup;
-  motivoPerdas = new Perda();
-  
-  constructor(
-    private motivoPerdaService: MotivoPerdaService,
-    private messageService: MessageService,
-    private errorHandler: ErrorHandlerService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private title: Title,
-    private formBuilder: FormBuilder
-  ) { }
+    formulario: FormGroup;
+    motivoPerdas = new Perda();
 
-  ngOnInit(): void {
-    this.configurarFormulario();
-    const idMotivoPerda = this.route.snapshot.params['id'];
+    constructor(
+        private motivoPerdaService: MotivoPerdaService,
+        private messageService: MessageService,
+        private errorHandler: ErrorHandlerService,
+        private route: ActivatedRoute,
+        private router: Router,
+        private title: Title,
+        private formBuilder: FormBuilder
+    ) { }
 
-    this.title.setTitle('Novo Motivo de Perda');
-    
-    if (idMotivoPerda) {
-      this.carregarMotivoPerda(idMotivoPerda);
+    ngOnInit(): void {
+        this.configurarFormulario();
+        const idMotivoPerda = this.route.snapshot.params.id;
+
+        this.title.setTitle('Novo Motivo de Perda');
+
+        if (idMotivoPerda) {
+            this.carregarMotivoPerda(idMotivoPerda);
+        }
     }
-  }
-  get editando() {
-    return Boolean(this.formulario.get('id').value);
-  }
-
-  carregarMotivoPerda(id: number) {
-    this.motivoPerdaService.buscarPorCodigo(id)
-      .then(motivoPerda => {
-        this.formulario.patchValue(motivoPerda);
-        this.atualizarTituloEdicao();
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-  salvar() {
-    if (this.editando) {
-      this.atualizarMotivoPerda();
-    } else {
-      this.adicionarMotivoPerda();
+    get editando() {
+        return Boolean(this.formulario.get('id').value);
     }
-  }
-  adicionarMotivoPerda() {
-    this.motivoPerdaService.adicionar(this.formulario.value)
-      .then(fonteAdicionado => {
-        this.messageService.add({ severity: 'success', detail: 'Motivo de perda adicionado com sucesso!' });
-        this.router.navigate(['/motivoperda', fonteAdicionado.id]);
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
 
-  atualizarMotivoPerda() {
-    this.motivoPerdaService.atualizar(this.formulario.value)
-      .then(fonteAdicionado => {
-        this.formulario.patchValue(fonteAdicionado);
+    carregarMotivoPerda(id: number) {
+        this.motivoPerdaService.buscarPorCodigo(id)
+            .then(motivoPerda => {
+                this.formulario.patchValue(motivoPerda);
+                this.atualizarTituloEdicao();
+            })
+            .catch(erro => this.errorHandler.handle(erro));
+    }
+    salvar() {
+        if (this.editando) {
+            this.atualizarMotivoPerda();
+        } else {
+            this.adicionarMotivoPerda();
+        }
+    }
+    adicionarMotivoPerda() {
+        this.motivoPerdaService.adicionar(this.formulario.value)
+            .then(fonteAdicionado => {
+                this.messageService.add({ severity: 'success', detail: 'Motivo de perda adicionado com sucesso!' });
+                this.router.navigate(['/motivoperda', fonteAdicionado.id]);
+            })
+            .catch(erro => this.errorHandler.handle(erro));
+    }
 
-        this.messageService.add({ severity: 'success', detail: 'Motivo de perda alterado com sucesso!' });
-        this.atualizarTituloEdicao();
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
+    atualizarMotivoPerda() {
+        this.motivoPerdaService.atualizar(this.formulario.value)
+            .then(fonteAdicionado => {
+                this.formulario.patchValue(fonteAdicionado);
 
-  atualizarTituloEdicao() {
-    this.title.setTitle(`Edição do Motivo de perda: ${this.motivoPerdas.nome}`);
-  }
+                this.messageService.add({ severity: 'success', detail: 'Motivo de perda alterado com sucesso!' });
+                this.atualizarTituloEdicao();
+            })
+            .catch(erro => this.errorHandler.handle(erro));
+    }
 
-  configurarFormulario() {
-    this.formulario = this.formBuilder.group({
-      id:[],
-      nome: [null, [ this.validarObrigatoriedade, this.validarTamanhoMinimo(4) ]],
-    });
-  }
-  validarObrigatoriedade(input: FormControl) {
-    return (input.value ? null : { obrigatoriedade: true });
-  }
-  validarTamanhoMinimo(valor: number) {
-    return (input: FormControl) => {
-      return (!input.value || input.value.length >= valor) ? null : { tamanhoMinimo: { tamanho: valor } };
-    };
-  }
+    atualizarTituloEdicao() {
+        this.title.setTitle(`Edição do Motivo de perda: ${this.motivoPerdas.nome}`);
+    }
 
-  limpar() {
-    this.formulario.reset();
-    setTimeout(function() {
-      this.motivoPerdas = new Perda();
-    }.bind(this), 1);
-    this.router.navigate(['/motivoperda/novo']);
-  }
+    configurarFormulario() {
+        this.formulario = this.formBuilder.group({
+            id: [],
+            nome: [null, [this.validarObrigatoriedade, this.validarTamanhoMinimo(4)]],
+        });
+    }
+    validarObrigatoriedade(input: FormControl) {
+        return (input.value ? null : { obrigatoriedade: true });
+    }
+    validarTamanhoMinimo(valor: number) {
+        return (input: FormControl) => {
+            return (!input.value || input.value.length >= valor) ? null : { tamanhoMinimo: { tamanho: valor } };
+        };
+    }
+
+    limpar() {
+        this.formulario.reset();
+        setTimeout(function() {
+            this.motivoPerdas = new Perda();
+        }.bind(this), 1);
+        this.router.navigate(['/motivoperda/novo']);
+    }
 }

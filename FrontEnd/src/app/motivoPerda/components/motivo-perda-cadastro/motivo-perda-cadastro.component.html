@@ -6,7 +6,7 @@
             </div>
             <div class="ui-g-12 ui-fluid">
                 <span class="ui-float-label">
-                    <input pInputText ype="text" name="nome" formControlName="nome">
+                    <input pInputText type="text" name="nome" formControlName="nome">
                     <label for="float-input">Nome <span style="color: crimson;">*</span></label>
                 </span>
                 <app-message [control]="formulario.get('nome')" error="obrigatoriedade" text="Informe o um nome.">
@@ -17,8 +17,8 @@
             </div>
             <div class="ui-g-12 cadastro-acoes">
                 <button pButton value="submit" type="submit" label="Salvar" [disabled]="formulario.invalid"
-                    style="padding-left:10;"></button>
-                <button pButton value="Limpar" type="button" label="Limpar" class="ui-button-info" (click)="limpar()"
+                    style="padding-left:10;" class="ui-button-success"></button>
+                <button pButton value="Limpar" type="button" label="Limpar" class="ui-button-warning" (click)="limpar()"
                     style="padding-left:10;"></button>
                 <button pButton value="Pesquisar" type="button" label="Pesquisar" class="ui-button-info"
                     Clabel="Pesquisa" routerLink="/motivoperda" style="padding-left:10;"></button>

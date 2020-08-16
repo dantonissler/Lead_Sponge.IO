@@ -26,7 +26,7 @@
                     <label for="float-input">Descrição</label>
                 </span>
             </div>
-            <div class="p-col-12 ui-fluid">
+            <div class="p-col-4 ui-fluid">
                 <p-inputNumber formControlName="valor" [(ngModel)]="valorInicial" [showButtons]="true"
                     buttonLayout="horizontal" spinnerMode="horizontal" [step]="0.25"
                     decrementButtonClass="ui-button-danger" incrementButtonClass="ui-button-success"
@@ -34,11 +34,10 @@
                     [minFractionDigits]="2">
                 </p-inputNumber>
             </div>
-
             <div class="ui-g-12 cadastro-acoes">
                 <button pButton value="submit" type="submit" label="Salvar" (click)="salvar()"
-                    [disabled]="formulario.invalid" style="padding-left:10;"></button>
-                <button pButton value="Limpar" type="button" label="Limpar" class="ui-button-info" (click)="limpar()"
+                    [disabled]="formulario.invalid" style="padding-left:10;" class="ui-button-success"></button>
+                <button pButton value="Limpar" type="button" label="Limpar" class="ui-button-warning" (click)="limpar()"
                     style="padding-left:10;"></button>
                 <button pButton value="Pesquisar" type="button" label="Pesquisar" class="ui-button-info"
                     Clabel="Pesquisa" routerLink="/produtos" style="padding-left:10;"></button>
