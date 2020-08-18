@@ -47,10 +47,18 @@
                 </td>
                 <td>
                     <span class="ui-column-title">Segmento</span>
-                    {{ cliente.segmento?.nome | json}}
+                    <span *ngFor="let segmento of cliente.segmentos" class="col-segmento">
+                        {{segmento.nome}}
+                    </span>
                 </td>
-                <td></td>
-                <td></td>
+                <td>
+                    <span class="ui-column-title">Responsável</span>
+                    <a icon="fas fa-pencil-alt" pTooltip="{{cliente.responsavel.nomeCompleto}}" tooltipPosition="top"
+                        [routerLink]="['/usuarios/detalhar', cliente.responsavel.id]">{{cliente.responsavel.nomeCompleto}}</a>
+                </td>
+                <td>
+                    <span class="ui-column-title">Placar</span>
+                </td>
                 <td class="col-acoes">
                     <button pButton icon="fas fa-pencil-alt" pTooltip="Editar" tooltipPosition="top"
                         [routerLink]="['/clientes', cliente.id]" class="ui-button-rounded"></button>
@@ -67,4 +75,5 @@
             </tr>
         </ng-template>
     </p-table>
+    <!-- <pre>{{clientes | json}}</pre> -->
 </div>

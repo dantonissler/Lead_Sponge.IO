@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.leadsponge.IO.endPoints.crudEndpoints.CrudController;
+import com.leadsponge.IO.errorValidate.ErroMessage;
 import com.leadsponge.IO.event.RecursoCriadoEvent;
 import com.leadsponge.IO.models.campanha.Campanha;
 import com.leadsponge.IO.repository.Filter.CampanhaFilter;
@@ -29,7 +29,7 @@ import com.leadsponge.IO.services.CampanhaService;
 
 @RestController
 @RequestMapping("/campanhas")
-class CampanhaEndPoint extends CrudController {
+class CampanhaEndPoint extends ErroMessage {
 
 	@Autowired
 	private final CampanhaRepository repository;
@@ -50,13 +50,13 @@ class CampanhaEndPoint extends CrudController {
 	@GetMapping(value = { "", "/" })
 	@ResponseStatus(HttpStatus.OK)
 	@PreAuthorize("hasAuthority('PESQUISAR_CAMPANHA') and #oauth2.hasScope('read')")
-	public Page<Campanha> pesquisar(CampanhaFilter campanhaFilter, Pageable pageable) {
+	Page<Campanha> pesquisar(CampanhaFilter campanhaFilter, Pageable pageable) {
 		return repository.filtrar(campanhaFilter, pageable);
 	}
 
 	@PostMapping(value = { "", "/" })
 	@PreAuthorize("hasAuthority('CADASTRAR_CAMPANHA') and #oauth2.hasScope('write')")
-	public ResponseEntity<Campanha> cadastrar(@Valid @RequestBody Campanha campanha, HttpServletResponse response) {
+	ResponseEntity<Campanha> cadastrar(@Valid @RequestBody Campanha campanha, HttpServletResponse response) {
 		Campanha criarCliente = campanhaService.save(campanha);
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, criarCliente.getId()));
 		return ResponseEntity.status(HttpStatus.CREATED).body(criarCliente);
@@ -77,7 +77,7 @@ class CampanhaEndPoint extends CrudController {
 
 	@DeleteMapping(value = { "/{id}", "/{id}/" })
 	@PreAuthorize("hasAuthority('REMOVER_CAMPANHA') and #oauth2.hasScope('write')")
-	public ResponseEntity<Campanha> remover(@PathVariable Long id) {
+	ResponseEntity<Campanha> remover(@PathVariable Long id) {
 		try {
 			repository.deleteById(id);
 			return ResponseEntity.ok().build();
@@ -88,7 +88,7 @@ class CampanhaEndPoint extends CrudController {
 
 	@GetMapping(value = { "/{id}", "/{id}/" })
 	@PreAuthorize("hasAuthority('PESQUISAR_CAMPANHA') and #oauth2.hasScope('read')")
-	public ResponseEntity<Campanha> detalhar(@Valid @PathVariable("id") Long id) {
+	ResponseEntity<Campanha> detalhar(@Valid @PathVariable("id") Long id) {
 		return ResponseEntity.ok(repository.findById(id).orElseThrow(() -> notFouldId(id, "a campanha")));
 	}
 }

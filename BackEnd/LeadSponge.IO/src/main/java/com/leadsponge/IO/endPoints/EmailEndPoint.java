@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.leadsponge.IO.endPoints.crudEndpoints.CrudController;
+import com.leadsponge.IO.errorValidate.ErroMessage;
 import com.leadsponge.IO.event.RecursoCriadoEvent;
 import com.leadsponge.IO.models.email.Email;
 import com.leadsponge.IO.repository.EmailRepository;
 
 @RestController
 @RequestMapping("/emails")
-class EmailEndPoint extends CrudController {
+class EmailEndPoint extends ErroMessage {
 	
 	@Autowired
 	private final EmailRepository repository;
@@ -38,7 +38,7 @@ class EmailEndPoint extends CrudController {
 
 	@GetMapping(value = { "", "/" })
 	@PreAuthorize("hasAuthority('PESQUISAR_CLIENTE') and #oauth2.hasScope('read')")
-	public ResponseEntity<Iterable<?>> listar() {
+	ResponseEntity<Iterable<?>> listar() {
 		Iterable<Email> email = repository.findAll();
 		if (email == null) {
 			return ResponseEntity.notFound().build();
@@ -61,13 +61,13 @@ class EmailEndPoint extends CrudController {
 
 	@GetMapping(value = { "/{id}", "/{id}/" })
 	@PreAuthorize("hasAuthority('PESQUISAR_CLIENTE') and #oauth2.hasScope('read')")
-	public ResponseEntity<Email> detalhar(@PathVariable("id") Long id) {
+	ResponseEntity<Email> detalhar(@PathVariable("id") Long id) {
 		return ResponseEntity.ok(repository.findById(id).orElseThrow(() -> notFouldId(id, "o email")));
 	}
 
 	@DeleteMapping(value = { "/{id}", "/{id}/" })
 	@PreAuthorize("hasAuthority('REMOVER_CLIENTE') and #oauth2.hasScope('write')")
-	public ResponseEntity<Email> remover(@PathVariable Long id) {
+	ResponseEntity<Email> remover(@PathVariable Long id) {
 		try {
 			repository.deleteById(id);
 			return ResponseEntity.noContent().build();

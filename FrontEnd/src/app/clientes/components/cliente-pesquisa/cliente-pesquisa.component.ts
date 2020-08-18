@@ -14,7 +14,7 @@ export class ClientePesquisaComponent implements OnInit {
   totalRegistros = 0;
   filtro = new ClienteFiltro();
   clientes = [];
-  loading: boolean = true;
+  loading = true;
   @ViewChild('tabela', { static: true }) grid;
 
   constructor(

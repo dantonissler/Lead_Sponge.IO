@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.leadsponge.IO.endPoints.crudEndpoints.CrudController;
+import com.leadsponge.IO.errorValidate.ErroMessage;
 import com.leadsponge.IO.event.RecursoCriadoEvent;
 import com.leadsponge.IO.models.produto.Produto;
 import com.leadsponge.IO.repository.Filter.ProdutoFilter;
@@ -29,7 +29,7 @@ import com.leadsponge.IO.services.ProdutoService;
 
 @RestController
 @RequestMapping("/produtos")
-class ProdutoEndPoint extends CrudController {
+class ProdutoEndPoint extends ErroMessage {
 
 	@Autowired
 	private final ProdutoRepository repository;

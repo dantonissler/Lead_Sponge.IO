@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.leadsponge.IO.endPoints.crudEndpoints.CrudController;
+import com.leadsponge.IO.errorValidate.ErroMessage;
 import com.leadsponge.IO.event.RecursoCriadoEvent;
 import com.leadsponge.IO.models.estagioNegociacao.EstagioNegociacao;
 import com.leadsponge.IO.repository.Filter.EstagioNegociacaoFilter;
@@ -29,7 +29,7 @@ import com.leadsponge.IO.services.EstagioNegociacaoService;
 
 @RestController
 @RequestMapping("/estagios")
-class EstagioNegociacaoEndPoint extends CrudController {
+class EstagioNegociacaoEndPoint extends ErroMessage {
 
 	@Autowired
 	private final EstagioNegociacaoRepository repository;
@@ -50,13 +50,13 @@ class EstagioNegociacaoEndPoint extends CrudController {
 	@GetMapping(value = { "", "/" })
 	@ResponseStatus(HttpStatus.OK)
 	@PreAuthorize("hasAuthority('PESQUISAR_ESTAGIO') and #oauth2.hasScope('read')")
-	public Page<EstagioNegociacao> pesquisar(EstagioNegociacaoFilter estagioNegociacaoFilter, Pageable pageable) {
+	Page<EstagioNegociacao> pesquisar(EstagioNegociacaoFilter estagioNegociacaoFilter, Pageable pageable) {
 		return repository.filtrar(estagioNegociacaoFilter, pageable);
 	}
 
 	@PostMapping(value = { "", "/" })
 	@PreAuthorize("hasAuthority('CADASTRAR_ESTAGIO') and #oauth2.hasScope('write')")
-	public ResponseEntity<EstagioNegociacao> cadastrar(@Valid @RequestBody EstagioNegociacao estagioNegociacao,
+	ResponseEntity<EstagioNegociacao> cadastrar(@Valid @RequestBody EstagioNegociacao estagioNegociacao,
 			HttpServletResponse response) {
 		EstagioNegociacao criarEstagioNegociacao = estagioNegociacaoService.save(estagioNegociacao);
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, criarEstagioNegociacao.getId()));
@@ -78,7 +78,7 @@ class EstagioNegociacaoEndPoint extends CrudController {
 
 	@DeleteMapping(value = { "/{id}", "/{id}/" })
 	@PreAuthorize("hasAuthority('REMOVER_ESTAGIO') and #oauth2.hasScope('write')")
-	public ResponseEntity<EstagioNegociacao> remover(@PathVariable Long id) {
+	ResponseEntity<EstagioNegociacao> remover(@PathVariable Long id) {
 		try {
 			repository.deleteById(id);
 			return ResponseEntity.ok().build();

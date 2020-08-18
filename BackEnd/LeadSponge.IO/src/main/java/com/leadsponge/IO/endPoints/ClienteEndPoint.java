@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.leadsponge.IO.endPoints.crudEndpoints.CrudController;
+import com.leadsponge.IO.errorValidate.ErroMessage;
 import com.leadsponge.IO.event.RecursoCriadoEvent;
 import com.leadsponge.IO.models.cliente.Cliente;
 import com.leadsponge.IO.repository.Filter.ClienteFilter;
@@ -29,7 +29,7 @@ import com.leadsponge.IO.services.ClienteService;
 
 @RestController
 @RequestMapping("/clientes")
-class ClienteEndPoint extends CrudController {
+class ClienteEndPoint extends ErroMessage {
 
 	@Autowired
 	private final ClienteRepository repository;
@@ -48,7 +48,7 @@ class ClienteEndPoint extends CrudController {
 
 	@GetMapping(value = { "listar", "listar/" })
 	@PreAuthorize("hasAuthority('PESQUISAR_CLIENTE') and #oauth2.hasScope('read')")
-	public ResponseEntity<Iterable<?>> listar() {
+	ResponseEntity<Iterable<?>> listar() {
 		Iterable<Cliente> cliente = repository.findAll();
 		if (cliente == null) {
 			return ResponseEntity.notFound().build();
@@ -60,13 +60,13 @@ class ClienteEndPoint extends CrudController {
 	@GetMapping(value = { "", "/" })
 	@ResponseStatus(HttpStatus.OK)
 	@PreAuthorize("hasAuthority('PESQUISAR_CLIENTE') and #oauth2.hasScope('read')")
-	public Page<Cliente> pesquisar(ClienteFilter clienteFilter, Pageable pageable) {
+	Page<Cliente> pesquisar(ClienteFilter clienteFilter, Pageable pageable) {
 		return repository.filtrar(clienteFilter, pageable);
 	}
 
 	@PostMapping(value = { "", "/" })
 	@PreAuthorize("hasAuthority('CADASTRAR_CLIENTE') and #oauth2.hasScope('write')")
-	public ResponseEntity<Cliente> cadastrar(@Valid @RequestBody Cliente cliente, HttpServletResponse response) {
+	ResponseEntity<Cliente> cadastrar(@Valid @RequestBody Cliente cliente, HttpServletResponse response) {
 		Cliente criarCliente = clienteService.salvar(cliente);
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, criarCliente.getId()));
 		return ResponseEntity.status(HttpStatus.CREATED).body(criarCliente);
@@ -87,7 +87,7 @@ class ClienteEndPoint extends CrudController {
 
 	@DeleteMapping(value = { "/{id}", "/{id}/" })
 	@PreAuthorize("hasAuthority('REMOVER_CLIENTE') and #oauth2.hasScope('write')")
-	public ResponseEntity<Cliente> remover(@PathVariable Long id) {
+	ResponseEntity<Cliente> remover(@PathVariable Long id) {
 		try {
 			repository.deleteById(id);
 			return ResponseEntity.ok().build();
@@ -98,7 +98,7 @@ class ClienteEndPoint extends CrudController {
 
 	@GetMapping(value = { "/{id}", "/{id}/" })
 	@PreAuthorize("hasAuthority('PESQUISAR_CLIENTE') and #oauth2.hasScope('read')")
-	public ResponseEntity<Cliente> detalhar(@Valid @PathVariable("id") Long id) {
+	ResponseEntity<Cliente> detalhar(@Valid @PathVariable("id") Long id) {
 		return ResponseEntity.ok(repository.findById(id).orElseThrow(() -> notFouldId(id, "o cliente")));
 	}
 }

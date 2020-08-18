@@ -14,7 +14,7 @@ export class TarefasPesquisaComponent implements OnInit {
   totalRegistros = 0;
   filtro = new TarefaFiltro();
   tarefas = [];
-  loading: boolean = true;
+  loading = true;
   @ViewChild('tabela', { static: true }) grid;
 
   constructor(

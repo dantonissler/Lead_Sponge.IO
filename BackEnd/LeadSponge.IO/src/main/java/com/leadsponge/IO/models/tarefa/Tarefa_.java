@@ -6,7 +6,6 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-import com.leadsponge.IO.models.cliente.Cliente;
 import com.leadsponge.IO.models.negociacao.Negociacao;
 import com.leadsponge.IO.models.usuario.Usuario;
 
@@ -19,7 +18,7 @@ public abstract class Tarefa_ {
 	public static volatile SingularAttribute<Tarefa, LocalDateTime> horaMarcada;
 	public static volatile SingularAttribute<Tarefa, TipoTarefa> tipo;
 	public static volatile SingularAttribute<Tarefa, Usuario> usuario;
-	public static volatile SingularAttribute<Tarefa, Cliente> cliente;
+
 	public static volatile SingularAttribute<Tarefa, Negociacao> negociacao;
 	public static final String ID = "id";
 	public static final String ASSUNTO = "assunto";

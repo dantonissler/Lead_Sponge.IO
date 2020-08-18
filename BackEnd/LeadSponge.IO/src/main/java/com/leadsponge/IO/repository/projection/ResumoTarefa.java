@@ -11,15 +11,14 @@ public class ResumoTarefa {
 	private Date horaMarcada;
 	private TipoTarefa tipo;
 	private String usuario;
-	private String cliente;
+	
 
-	public ResumoTarefa(Long id, String assunto, Date horaMarcada, TipoTarefa tipo, String usuario, String cliente) {
+	public ResumoTarefa(Long id, String assunto, Date horaMarcada, TipoTarefa tipo, String usuario) {
 		this.id = id;
 		this.assunto = assunto;
 		this.horaMarcada = horaMarcada;
 		this.tipo = tipo;
 		this.usuario = usuario;
-		this.cliente = cliente;
 	}
 
 	public Long getId() {
@@ -62,12 +61,6 @@ public class ResumoTarefa {
 		this.usuario = usuario;
 	}
 
-	public String getCliente() {
-		return cliente;
-	}
 
-	public void setCliente(String cliente) {
-		this.cliente = cliente;
-	}
 
 }

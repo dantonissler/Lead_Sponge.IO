@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.leadsponge.IO.endPoints.crudEndpoints.CrudController;
+import com.leadsponge.IO.errorValidate.ErroMessage;
 import com.leadsponge.IO.event.RecursoCriadoEvent;
 import com.leadsponge.IO.models.contato.Contato;
 import com.leadsponge.IO.repository.Filter.ContatoFilter;
@@ -29,7 +29,7 @@ import com.leadsponge.IO.services.ContatoService;
 
 @RestController
 @RequestMapping("/contatos")
-class ContatoEndPoint extends CrudController {
+class ContatoEndPoint extends ErroMessage {
 
 	@Autowired
 	private final ContatoRepository repository;
@@ -40,7 +40,7 @@ class ContatoEndPoint extends CrudController {
 	@Autowired
 	private final ApplicationEventPublisher publisher;
 	
-	public ContatoEndPoint(ContatoRepository repository, ContatoService contatoService, 
+	ContatoEndPoint(ContatoRepository repository, ContatoService contatoService, 
 			ApplicationEventPublisher publisher) {
 		this.publisher = publisher;
 		this.repository = repository;
@@ -50,13 +50,13 @@ class ContatoEndPoint extends CrudController {
 	@GetMapping(value = { "", "/" })
 	@ResponseStatus(HttpStatus.OK)
 	@PreAuthorize("hasAuthority('PESQUISAR_CONTATO') and #oauth2.hasScope('read')")
-	public Page<Contato> pesquisar(ContatoFilter contatoFilter, Pageable pageable) {
+	Page<Contato> pesquisar(ContatoFilter contatoFilter, Pageable pageable) {
 		return repository.filtrar(contatoFilter, pageable);
 	}
 	
 	@PostMapping(value = { "", "/" })
 	@PreAuthorize("hasAuthority('CADASTRAR_CONTATO') and #oauth2.hasScope('write')")
-	public ResponseEntity<Contato> cadastrar(@Valid @RequestBody Contato contato, HttpServletResponse response) {
+	ResponseEntity<Contato> cadastrar(@Valid @RequestBody Contato contato, HttpServletResponse response) {
 		Contato criarCliente = contatoService.salvar(contato);
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, criarCliente.getId()));
 		return ResponseEntity.status(HttpStatus.CREATED).body(criarCliente);
@@ -78,7 +78,7 @@ class ContatoEndPoint extends CrudController {
 
 	@DeleteMapping(value = { "/{id}", "/{id}/" })
 	@PreAuthorize("hasAuthority('REMOVER_CONTATO') and #oauth2.hasScope('write')")
-	public ResponseEntity<Contato> remover(@PathVariable Long id) {
+	ResponseEntity<Contato> remover(@PathVariable Long id) {
 		try {
 			repository.deleteById(id);
 			return ResponseEntity.ok().build();
@@ -89,7 +89,7 @@ class ContatoEndPoint extends CrudController {
 	
 	@GetMapping(value = { "/{id}", "/{id}/" })
 	@PreAuthorize("hasAuthority('PESQUISAR_CAMPANHA') and #oauth2.hasScope('read')")
-	public ResponseEntity<Contato> detalhar(@Valid @PathVariable("id") Long id) {
+	ResponseEntity<Contato> detalhar(@Valid @PathVariable("id") Long id) {
 		return ResponseEntity.ok(repository.findById(id).orElseThrow(() -> notFouldId(id, "o contato")));
 	}
 }

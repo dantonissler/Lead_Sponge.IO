@@ -21,7 +21,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.leadsponge.IO.models.View;
 import com.leadsponge.IO.models.audit.UserDateAudit;
-import com.leadsponge.IO.models.cliente.Cliente;
 import com.leadsponge.IO.models.negociacao.Negociacao;
 import com.leadsponge.IO.models.usuario.Usuario;
 
@@ -58,12 +57,6 @@ public class Tarefa extends UserDateAudit {
 	@ManyToOne
 	@JoinColumn(name = "usuario_id")
 	private Usuario usuario;
-
-	@JsonIgnoreProperties(value = { "<%= tarefas %>", "negociacoes", "seguidores" }, allowSetters = true)
-	@NotNull
-	@ManyToOne
-	@JoinColumn(name = "cliente_id")
-	private Cliente cliente;
 
 	@JsonIgnoreProperties(value = { "cliente", "tarefa" })
 	@NotNull
@@ -130,14 +123,6 @@ public class Tarefa extends UserDateAudit {
 
 	public void setNegociacao(Negociacao negociacao) {
 		this.negociacao = negociacao;
-	}
-
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
 	}
 
 	@Override

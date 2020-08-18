@@ -26,7 +26,6 @@ import com.leadsponge.IO.models.audit.UserDateAudit;
 import com.leadsponge.IO.models.contato.Contato;
 import com.leadsponge.IO.models.negociacao.Negociacao;
 import com.leadsponge.IO.models.segmento.Segmento;
-import com.leadsponge.IO.models.tarefa.Tarefa;
 import com.leadsponge.IO.models.usuario.Usuario;
 
 import lombok.Data;
@@ -55,10 +54,6 @@ public class Cliente extends UserDateAudit {
 	@Valid
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
 	private List<Contato> contato = new ArrayList<>();
-
-	@JsonIgnoreProperties(value = {"cliente", "negociacao"})
-	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
-	private List<Tarefa> tarefas = new ArrayList<>();
 
 	@JsonIgnoreProperties(value = { "cliente", "clientes", "clientesSeguidos", "roles", "tarefas" })
 	@OneToMany(mappedBy = "cliente")
@@ -117,14 +112,6 @@ public class Cliente extends UserDateAudit {
 
 	public void setContato(List<Contato> contato) {
 		this.contato = contato;
-	}
-
-	public List<Tarefa> getTarefas() {
-		return tarefas;
-	}
-
-	public void setTarefas(List<Tarefa> tarefas) {
-		this.tarefas = tarefas;
 	}
 
 	public List<Negociacao> getNegociacoes() {

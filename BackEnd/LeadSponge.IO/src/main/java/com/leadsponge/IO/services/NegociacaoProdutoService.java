@@ -1,23 +1,33 @@
 package com.leadsponge.IO.services;
 
 import java.math.BigDecimal;
-import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.leadsponge.IO.errorValidate.ErroMessage;
 import com.leadsponge.IO.models.negociacaoProduto.NegociacaoProduto;
 import com.leadsponge.IO.models.negociacaoProduto.TipoDesconto;
 import com.leadsponge.IO.repository.NegociacaoProdutoRepository;
+import com.leadsponge.IO.repository.negociacao.NegociacaoRepository;
+import com.leadsponge.IO.repository.produto.ProdutoRepository;
 
 @Service
-public class NegociacaoProdutoService {
+public class NegociacaoProdutoService extends ErroMessage{
 
 	@Autowired
 	private NegociacaoProdutoRepository repository;
+	
+	@Autowired
+	private ProdutoRepository produtoR;
+	
+	@Autowired
+	private NegociacaoRepository negociacaoR;
 
 	public NegociacaoProduto salvar(NegociacaoProduto nProduto) {
+		produtoR.findById(nProduto.getProduto().getId()).orElseThrow(() -> notFouldId(nProduto.getProduto().getId(), "o produto"));
+		negociacaoR.findById(nProduto.getNegociacao().getId()).orElseThrow(() -> notFouldId(nProduto.getNegociacao().getId(), "a negociação"));
 		valorTotal(nProduto);
 		return repository.save(nProduto);
 	}
@@ -30,11 +40,7 @@ public class NegociacaoProdutoService {
 	}
 
 	private NegociacaoProduto buscarNegociacaoProdutoExistente(Long id) {
-		Optional<NegociacaoProduto> negociacaoProdutoSalvo = repository.findById(id);
-		if (!negociacaoProdutoSalvo.isPresent()) {
-			throw new IllegalArgumentException();
-		}
-		return negociacaoProdutoSalvo.get();
+		return repository.findById(id).orElseThrow(() -> notFouldId(id, "o produto"));
 	}
 
 	private NegociacaoProduto valorTotal(NegociacaoProduto negociacaoProduto) {
@@ -55,9 +61,8 @@ public class NegociacaoProdutoService {
 				negociacaoProduto.setTotal(total);
 			}
 		} catch (Exception e) {
-			throw new IllegalArgumentException();
+			throw notFould("o produto");
 		}
 		return negociacaoProduto;
 	}
-
 }

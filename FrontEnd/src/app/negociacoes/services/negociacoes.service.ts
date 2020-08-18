@@ -125,6 +125,4 @@ export class NegociacoesService {
             .toPromise()
             .then(() => null);
     }
-
-
 }

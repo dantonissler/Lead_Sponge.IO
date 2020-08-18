@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.leadsponge.IO.endPoints.crudEndpoints.CrudController;
+import com.leadsponge.IO.errorValidate.ErroMessage;
 import com.leadsponge.IO.event.RecursoCriadoEvent;
 import com.leadsponge.IO.models.telefone.Telefone;
 import com.leadsponge.IO.repository.TelefoneRepository;
 
 @RestController
 @RequestMapping("/telefones")
-class TelefoneEndPoint extends CrudController {
+class TelefoneEndPoint extends ErroMessage {
 	@Autowired
 	private final TelefoneRepository repository;
 	

@@ -8,19 +8,24 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.leadsponge.IO.errorValidate.ErroMessage;
 import com.leadsponge.IO.models.estagioNegociacao.EstagioNegociacao;
 import com.leadsponge.IO.models.motivoPerda.MotivoPerda;
 import com.leadsponge.IO.models.negociacao.EstatusNegociacao;
 import com.leadsponge.IO.models.negociacao.Negociacao;
 import com.leadsponge.IO.models.negociacaoProduto.TipoReincidencia;
+import com.leadsponge.IO.repository.cliente.ClienteRepository;
 import com.leadsponge.IO.repository.negociacao.NegociacaoRepository;
 import com.leadsponge.IO.security.exception.UsuarioInativaException;
 
 @Service
-public class NegociacaoService {
+public class NegociacaoService extends ErroMessage{
 
 	@Autowired
 	private NegociacaoRepository repository;
+
+	@Autowired
+	private ClienteRepository clienteR;
 
 	/**
 	 * TODO: Criar formula para calcular os valores da negociação.
@@ -31,11 +36,11 @@ public class NegociacaoService {
 		BigDecimal somaTotal = negociacao.getNegociacaoProdutos().stream().map(total -> total.getTotal())
 				.reduce(BigDecimal.ZERO, BigDecimal::add);
 		BigDecimal somaMensal = negociacao.getNegociacaoProdutos().stream()
-				.filter(mensal -> mensal.getReincidencia().equals(TipoReincidencia.RECORRENTE)).map(total -> total.getTotal())
-				.reduce(BigDecimal.ZERO, BigDecimal::add);
+				.filter(mensal -> mensal.getReincidencia().equals(TipoReincidencia.RECORRENTE))
+				.map(total -> total.getTotal()).reduce(BigDecimal.ZERO, BigDecimal::add);
 		BigDecimal somaUnico = negociacao.getNegociacaoProdutos().stream()
-				.filter(mensal -> mensal.getReincidencia().equals(TipoReincidencia.UNICO)).map(unico -> unico.getTotal())
-				.reduce(BigDecimal.ZERO, BigDecimal::add);
+				.filter(mensal -> mensal.getReincidencia().equals(TipoReincidencia.UNICO))
+				.map(unico -> unico.getTotal()).reduce(BigDecimal.ZERO, BigDecimal::add);
 		negociacao.setValorMensal(somaMensal);
 		negociacao.setValorUnico(somaUnico);
 		negociacao.setValorTotal(somaTotal);
@@ -99,6 +104,7 @@ public class NegociacaoService {
 		if (negociacao == null) {
 			throw new UsuarioInativaException();
 		}
+		clienteR.findById(negociacao.getCliente().getId())
+				.orElseThrow(() -> notFouldId(negociacao.getCliente().getId(), "o cliente"));
 	}
-
 }

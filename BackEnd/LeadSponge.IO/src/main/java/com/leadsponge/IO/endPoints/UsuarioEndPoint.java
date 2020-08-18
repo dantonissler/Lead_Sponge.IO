@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.leadsponge.IO.dto.Anexo;
-import com.leadsponge.IO.endPoints.crudEndpoints.CrudController;
+import com.leadsponge.IO.errorValidate.ErroMessage;
 import com.leadsponge.IO.event.RecursoCriadoEvent;
 import com.leadsponge.IO.models.usuario.Usuario;
 import com.leadsponge.IO.repository.Filter.UsuarioFilter;
@@ -36,7 +36,7 @@ import com.leadsponge.IO.storage.S3;
 
 @RestController
 @RequestMapping("/usuarios")
-class UsuarioEndPoint extends CrudController {
+class UsuarioEndPoint extends ErroMessage {
 
 	@Autowired
 	private UsuarioRepository repository;

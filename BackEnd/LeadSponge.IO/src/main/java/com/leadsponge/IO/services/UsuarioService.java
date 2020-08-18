@@ -71,7 +71,6 @@ public class UsuarioService {
 		if (usuario == null) {
 			throw new UsuarioInativaException();
 		}
-
 		if (!usuario.getConfirmarPassword().equals(usuario.getPassword())) {
 			throw new ResourceBadRequestException("O campo de senha não corresponde com o confirmar senha.");
 		}
