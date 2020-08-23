@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.leadsponge.IO.errorValidate.ErroMessage;
 import com.leadsponge.IO.errorValidate.ResourceBadRequestException;
 import com.leadsponge.IO.models.usuario.Usuario;
 import com.leadsponge.IO.repository.usuario.UsuarioRepository;
@@ -16,16 +17,28 @@ import com.leadsponge.IO.security.exception.UsuarioInativaException;
 import com.leadsponge.IO.storage.S3;
 
 @Service
-public class UsuarioService {
-	
+public class UsuarioService extends ErroMessage {
+
 	@Autowired
-	private UsuarioRepository usuarioRepository;
+	private UsuarioRepository repository;
 
 	@Autowired
 	private S3 s3;
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+	public void removerImg(Long id) {
+		Usuario usuarioSalva = buscarUsuarioExistente(id);
+		usuarioSalva.setAnexo(null);
+		repository.save(usuarioSalva);
+	}
+
+	public void atualizarImg(Long id, String anexo) {
+		Usuario usuarioSalva = buscarUsuarioExistente(id);
+		usuarioSalva.setAnexo(anexo);
+		repository.save(usuarioSalva);
+	}
 
 	public Usuario save(Usuario usuario) {
 		usuariovalidar(usuario);
@@ -35,7 +48,7 @@ public class UsuarioService {
 		if (StringUtils.hasText(usuario.getAnexo())) {
 			s3.salvar(usuario.getAnexo());
 		}
-		return usuarioRepository.save(usuario);
+		return repository.save(usuario);
 	}
 
 	public Usuario atualizar(Long id, Usuario usuario) {
@@ -50,19 +63,19 @@ public class UsuarioService {
 			s3.substituir(usuarioSalvo.getAnexo(), usuario.getAnexo());
 		}
 		BeanUtils.copyProperties(usuario, usuarioSalvo, "id", "roles");
-		return usuarioRepository.save(usuarioSalvo);
+		return repository.save(usuarioSalvo);
 	}
 
 	public void atualizarPropriedadeEnabled(Long id, Boolean enabled) {
 		Usuario usuarioSalva = buscarUsuarioExistente(id);
 		usuarioSalva.setEnabled(enabled);
-		usuarioRepository.save(usuarioSalva);
+		repository.save(usuarioSalva);
 	}
 
 	private Usuario buscarUsuarioExistente(Long id) {
-		Optional<Usuario> usuarioSalvo = usuarioRepository.findById(id);
+		Optional<Usuario> usuarioSalvo = repository.findById(id);
 		if (!usuarioSalvo.isPresent()) {
-			throw new IllegalArgumentException();
+			throw notFould("o usuario");
 		}
 		return usuarioSalvo.get();
 	}

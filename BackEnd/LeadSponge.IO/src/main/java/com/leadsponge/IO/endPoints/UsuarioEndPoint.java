@@ -118,11 +118,36 @@ class UsuarioEndPoint extends ErroMessage {
 		String nome = s3.salvarTemporariamente(anexo);
 		return new Anexo(nome, s3.configurarUrl(nome));
 	}
-	
+
 	@GetMapping(value = { "/username/{username}", "/username/{username}/" })
 	@PreAuthorize("hasAuthority('PESQUISAR_USUARIO') and #oauth2.hasScope('read')")
 	public ResponseEntity<Usuario> encontrarPeloNome(@Valid @PathVariable String username) {
-		return ResponseEntity.ok(repository.findByUsername(username).orElseThrow(() -> notFould(username+"o usuario")));
+		return ResponseEntity
+				.ok(repository.findByUsername(username).orElseThrow(() -> notFould(username + "o usuario")));
+	}
+
+	@PutMapping(value = { "/{id}/img", "/{id}/img/" })
+	@ResponseStatus(HttpStatus.CREATED)
+	@PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
+	ResponseEntity<Usuario> atualizarImg(@PathVariable Long id, @RequestBody String anexo) {
+		try {
+			usuarioService.atualizarImg(id, anexo);
+			return ResponseEntity.status(HttpStatus.CREATED).build();
+		} catch (IllegalArgumentException e) {
+			throw notFouldId(id, "o usuario");
+		}
+	}
+	
+	@PutMapping(value = { "/{id}/removerImg", "/{id}/removerImg/" })
+	@ResponseStatus(HttpStatus.CREATED)
+	@PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
+	ResponseEntity<Usuario> removerImg(@PathVariable Long id) {
+		try {
+			usuarioService.removerImg(id);
+			return ResponseEntity.ok().build();
+		} catch (IllegalArgumentException e) {
+			throw notFouldId(id, "o usuario");
+		}
 	}
 
 }

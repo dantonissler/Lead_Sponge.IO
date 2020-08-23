@@ -24,10 +24,20 @@ import com.leadsponge.IO.models.View;
 import com.leadsponge.IO.models.audit.UserDateAudit;
 import com.leadsponge.IO.models.negociacaoProduto.NegociacaoProduto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 @Table(name = "produtos")
 @TableGenerator(name = "produto_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "produtos", allocationSize = 1, initialValue = 0)
 public class Produto extends UserDateAudit {
@@ -55,70 +65,5 @@ public class Produto extends UserDateAudit {
 	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@Valid
 	private List<NegociacaoProduto> negociacaoProdutos;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
-	public BigDecimal getValor() {
-		return valor;
-	}
-
-	public void setValor(BigDecimal valor) {
-		this.valor = valor;
-	}
-
-	public Boolean getVisibilidade() {
-		return visibilidade;
-	}
-
-	public void setVisibilidade(Boolean visibilidade) {
-		this.visibilidade = visibilidade;
-	}
-
-	public List<NegociacaoProduto> getNegociacaoProdutos() {
-		return negociacaoProdutos;
-	}
-
-	public void setNegociacaoProdutos(List<NegociacaoProduto> negociacaoProdutos) {
-		this.negociacaoProdutos = negociacaoProdutos;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Produto other = (Produto) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
-	}
 
 }

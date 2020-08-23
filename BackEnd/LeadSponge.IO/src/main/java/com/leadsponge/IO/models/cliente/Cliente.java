@@ -28,10 +28,20 @@ import com.leadsponge.IO.models.negociacao.Negociacao;
 import com.leadsponge.IO.models.segmento.Segmento;
 import com.leadsponge.IO.models.usuario.Usuario;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 @Table(name = "clientes")
 @TableGenerator(name = "cliente_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "clientes", allocationSize = 1, initialValue = 0)
 public class Cliente extends UserDateAudit {
@@ -41,6 +51,7 @@ public class Cliente extends UserDateAudit {
 	@JsonView(View.Cliente.class)
 	@GeneratedValue(strategy = GenerationType.TABLE, generator = "cliente_id")
 	private Long id;
+
 	@Size(min = 4, max = 50)
 	private String nome;
 
@@ -73,94 +84,4 @@ public class Cliente extends UserDateAudit {
 	@ManyToOne
 	@JoinColumn(name = "responsavel_id")
 	private Usuario responsavel;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
-	public String getResumo() {
-		return resumo;
-	}
-
-	public void setResumo(String resumo) {
-		this.resumo = resumo;
-	}
-
-	public List<Contato> getContato() {
-		return contato;
-	}
-
-	public void setContato(List<Contato> contato) {
-		this.contato = contato;
-	}
-
-	public List<Negociacao> getNegociacoes() {
-		return negociacoes;
-	}
-
-	public void setNegociacoes(List<Negociacao> negociacoes) {
-		this.negociacoes = negociacoes;
-	}
-
-	public List<Segmento> getSegmentos() {
-		return segmentos;
-	}
-
-	public void setSegmentos(List<Segmento> segmentos) {
-		this.segmentos = segmentos;
-	}
-
-	public List<Usuario> getSeguidores() {
-		return seguidores;
-	}
-
-	public void setSeguidores(List<Usuario> seguidores) {
-		this.seguidores = seguidores;
-	}
-
-	public Usuario getResponsavel() {
-		return responsavel;
-	}
-
-	public void setResponsavel(Usuario responsavel) {
-		this.responsavel = responsavel;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Cliente other = (Cliente) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
-	}
-
 }

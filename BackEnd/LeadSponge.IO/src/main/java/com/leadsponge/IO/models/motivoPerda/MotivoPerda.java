@@ -21,10 +21,20 @@ import com.leadsponge.IO.models.View;
 import com.leadsponge.IO.models.audit.UserDateAudit;
 import com.leadsponge.IO.models.negociacao.Negociacao;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 @Table(name = "motivo_perda")
 @TableGenerator(name = "motivo_perda_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "motivo_perda", allocationSize = 1, initialValue = 0)
 public class MotivoPerda extends UserDateAudit {
@@ -38,44 +48,9 @@ public class MotivoPerda extends UserDateAudit {
 	@Size(min = 4, max = 50, message = "{nome.size}")
 	@Column(name = "nome")
 	private String nome;
-	
+
 	@JsonIgnoreProperties("motivoPerda")
 	@Valid
 	@OneToMany(mappedBy = "motivoPerda", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Negociacao> negociacoes;
-
-	public MotivoPerda() {
-		// TODO Auto-generated constructor stub
-	}
-
-	public MotivoPerda(String nome) {
-		super();
-		this.nome = nome;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public List<Negociacao> getNegociacoes() {
-		return negociacoes;
-	}
-
-	public void setNegociacoes(List<Negociacao> negociacoes) {
-		this.negociacoes = negociacoes;
-	}
-	
-
 }

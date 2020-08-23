@@ -1,6 +1,5 @@
 package com.leadsponge.IO.models.usuario;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -38,31 +37,25 @@ import com.leadsponge.IO.models.cliente.Cliente;
 import com.leadsponge.IO.models.role.Role;
 import com.leadsponge.IO.models.tarefa.Tarefa;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 @Table(name = "usuarios", uniqueConstraints = { @UniqueConstraint(columnNames = { "username" }) })
 @TableGenerator(name = "usuario_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "usuarios", allocationSize = 1, initialValue = 0)
-public class Usuario extends UserDateAudit implements UserDetails, Serializable {
+public class Usuario extends UserDateAudit implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
-
-	public Usuario() {
-	}
-
-	public Usuario(String username, String nomeCompleto, String email, String password, String confirmarPassword,
-			boolean enabled, Set<Role> roles, String anexo) {
-		super();
-		this.username = username;
-		this.nomeCompleto = nomeCompleto;
-		this.email = email;
-		this.password = password;
-		this.confirmarPassword = confirmarPassword;
-		this.enabled = enabled;
-		this.roles = roles;
-		this.anexo = anexo;
-	}
 
 	@Id
 	@Column(name = "id")
@@ -114,106 +107,10 @@ public class Usuario extends UserDateAudit implements UserDetails, Serializable 
 	@JsonIgnoreProperties("seguidores")
 	private List<Cliente> clientesSeguidos;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username.toUpperCase();
-	}
-
-	public String getNomeCompleto() {
-		return nomeCompleto;
-	}
-
-	public void setNomeCompleto(String nomeCompleto) {
-		this.nomeCompleto = nomeCompleto;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getConfirmarPassword() {
-		return confirmarPassword;
-	}
-
-	public void setConfirmarPassword(String confirmarPassword) {
-		this.confirmarPassword = confirmarPassword;
-	}
-
-	public boolean isEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
-
-	public Set<Role> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
-	}
-
-	public List<Tarefa> getTarefas() {
-		return tarefas;
-	}
-
-	public void setTarefas(List<Tarefa> tarefas) {
-		this.tarefas = tarefas;
-	}
-
-	public List<Cliente> getClientesSeguidos() {
-		return clientesSeguidos;
-	}
-
-	public void setClientesSeguidos(List<Cliente> clientesSeguidos) {
-		this.clientesSeguidos = clientesSeguidos;
-	}
-
 	@Override
 	@JsonIgnore
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return (Collection<? extends GrantedAuthority>) this.roles;
-	}
-
-	public String getAnexo() {
-		return anexo;
-	}
-
-	public void setAnexo(String anexo) {
-		this.anexo = anexo;
-	}
-
-	public String getUrlAnexo() {
-		return urlAnexo;
-	}
-
-	public void setUrlAnexo(String urlAnexo) {
-		this.urlAnexo = urlAnexo;
 	}
 
 	@Override
@@ -234,23 +131,6 @@ public class Usuario extends UserDateAudit implements UserDetails, Serializable 
 	@JsonIgnore
 	public boolean isCredentialsNonExpired() {
 		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Usuario other = (Usuario) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
 		return true;
 	}
 }

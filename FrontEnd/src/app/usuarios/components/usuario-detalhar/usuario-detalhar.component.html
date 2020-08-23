@@ -1,1 +1,30 @@
-<p>usuario-detalhar works!</p>
+<div class="container">
+    <div class="ui-g-12">
+        <h1>Editar Perfil</h1>
+    </div>
+    <div class="ui-g-6 ui-g-offset-6 ui-md-2 ui-md-offset-10 ui-fluid" *ngIf="anexo == null">
+        <p-fileUpload name="anexo" mode="basic" auto="true" maxFileSize="100000000" chooseLabel="Anexar"
+            accept="image/*" [url]="urlUploadAnexo" (onUpload)="onFileUpload($event)" (onError)="erroUpload($event)"
+            (onBeforeUpload)="antesUploadAnexo()" [hidden]="uploadEmAndamento">
+        </p-fileUpload>
+        <p-progressSpinner [hidden]="!uploadEmAndamento" [style]="{ width: '25px', height: '25px' }">
+        </p-progressSpinner>
+    </div>
+    <div *ngIf="anexo != null">
+        <div class="p-grid p-justify-center">
+            <div class="p-col-2">
+                <a target="_blank" [download]="anexo" [href]="urlAnexo" >
+                    <img style="width: 100%; height: auto; border-radius: 50%"
+                        src="///leadspongeuserimagens.s3.us-east-2.amazonaws.com/{{anexo}}">
+                </a>
+            </div>
+            <div class="p-col-1">
+                <button pButton type="button" class="ui-button-rounded ui-button-danger" icon="fas fa-times"
+                    pTooltip="Remover imagem" tooltipPosition="top" (click)="removerAnexo()">
+                </button>
+            </div>
+        </div>
+    </div>
+    <div>
+    </div>
+</div>

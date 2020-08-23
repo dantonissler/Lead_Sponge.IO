@@ -3,7 +3,7 @@ import { LogoutService } from '../../../usuarios/services/logout.service';
 import { ErrorHandlerService } from '../../error-handler.service';
 import { AuthService } from '../../../usuarios/services/auth.service';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MenuItem } from 'primeng/api/menuitem';
 
 @Component({
@@ -17,19 +17,21 @@ export class NavbarComponent implements OnInit {
     items: MenuItem[];
     users: MenuItem[];
     url;
+    idNeg: number = +this.route.snapshot.params.id;
 
     constructor(
         public auth: AuthService,
         public usuarioService: UsuarioService,
         private logoutService: LogoutService,
         private errorHandler: ErrorHandlerService,
-        private router: Router
+        private router: Router,
+        private route: ActivatedRoute,
     ) { }
 
     ngOnInit(): void {
         this.carregarMenu();
         this.carregarUsuarios();
-        if ( this.auth.jwtPayload != null) {
+        if (this.auth.jwtPayload != null) {
             this.carregarUsuario(this.auth.jwtPayload?.user_name);
         }
     }
@@ -38,6 +40,7 @@ export class NavbarComponent implements OnInit {
         this.usuarioService.buscarPeloNome(username)
             .then(usuario => {
                 this.url = '///leadspongeuserimagens.s3.us-east-2.amazonaws.com/' + usuario.anexo;
+                this.idNeg = usuario.id;
             })
             .catch(erro => this.errorHandler.handle(erro));
     }
@@ -55,30 +58,10 @@ export class NavbarComponent implements OnInit {
     carregarUsuarios() {
         this.users = [
             {
-                label: 'Help',
-                icon: 'pi pi-fw pi-question',
-                items: [
-                    {
-                        label: 'Contents'
-                    },
-                    {
-                        label: 'Search',
-                        icon: 'pi pi-fw pi-search',
-                        items: [
-                            {
-                                label: 'Text',
-                                items: [
-                                    {
-                                        label: 'Workspace'
-                                    }
-                                ]
-                            },
-                            {
-                                label: 'File'
-                            }
-                        ]
-                    }
-                ]
+                label: 'Perfil',
+                icon: 'far fa-id-badge',
+                command: (onclick) => { this.router.navigate(['/usuarios/perfil/' + this.idNeg]); }
+
             },
             {
                 label: 'Configurações',

@@ -13,7 +13,7 @@ const routes: Routes = [
     data: { roles: ['PESQUISAR_USUARIO'] }
   },
   {
-    path: 'detalhar/:id',
+    path: 'perfil/:id',
     component: UsuarioDetalharComponent,
     canActivate: [AuthGuard],
     data: { roles: ['PESQUISAR_USUARIO'] }
@@ -30,7 +30,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: { roles: ['CADASTRAR_USUARIO'] }
   }
-]
+];
 
 @NgModule({
   imports: [

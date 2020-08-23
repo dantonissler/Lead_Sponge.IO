@@ -36,10 +36,10 @@ export class UsuarioCadastrarComponent implements OnInit {
         private roleService: RoleService,
         private messageService: MessageService,
         private errorHandler: ErrorHandlerService,
+        private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
-        private title: Title,
-        private formBuilder: FormBuilder
+        private title: Title
     ) { }
 
     ngOnInit() {

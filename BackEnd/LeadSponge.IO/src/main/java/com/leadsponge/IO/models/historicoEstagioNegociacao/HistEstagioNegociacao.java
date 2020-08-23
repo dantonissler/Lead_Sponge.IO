@@ -18,10 +18,20 @@ import com.leadsponge.IO.models.View;
 import com.leadsponge.IO.models.audit.UserDateAudit;
 import com.leadsponge.IO.models.negociacao.Negociacao;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 @Table(name = "hist_estagio_negociacao")
 @TableGenerator(name = "hist_estagio_negociacao_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "hist_estagio_negociacao", allocationSize = 1, initialValue = 0)
 public class HistEstagioNegociacao extends UserDateAudit {
@@ -35,7 +45,7 @@ public class HistEstagioNegociacao extends UserDateAudit {
 	@NotNull
 	@Column(name = "id_estagio")
 	private String idEstagio;
-	
+
 	@NotNull
 	@Column(name = "apelido")
 	private String apelido;
@@ -47,29 +57,4 @@ public class HistEstagioNegociacao extends UserDateAudit {
 	@ManyToOne
 	@JoinColumn(name = "negociacao_id")
 	private Negociacao negociacao;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Date getDataMudanca() {
-		return dataMudanca;
-	}
-
-	public void setDataMudanca() {
-		this.dataMudanca = getUpdatedAt();
-	}
-
-	public Negociacao getNegociacao() {
-		return negociacao;
-	}
-
-	public void setNegociacao(Negociacao negociacao) {
-		this.negociacao = negociacao;
-	}
-
 }

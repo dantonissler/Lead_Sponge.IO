@@ -19,10 +19,20 @@ import com.leadsponge.IO.models.View;
 import com.leadsponge.IO.models.audit.UserDateAudit;
 import com.leadsponge.IO.models.contato.Contato;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 @Table(name = "telefones")
 @TableGenerator(name = "telefone_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "telefones", allocationSize = 1, initialValue = 0)
 public class Telefone extends UserDateAudit {
@@ -49,54 +59,4 @@ public class Telefone extends UserDateAudit {
 	public boolean isComercial() {
 		return TipoTelefone.COMERCIAL.equals(tipo);
 	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getNumero() {
-		return numero;
-	}
-
-	public void setNumero(String numero) {
-		this.numero = numero;
-	}
-
-	public TipoTelefone getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(TipoTelefone tipo) {
-		this.tipo = tipo;
-	}
-
-	public Contato getContato() {
-		return contato;
-	}
-
-	public void setContato(Contato contato) {
-		this.contato = contato;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Telefone other = (Telefone) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
-	}
-
 }

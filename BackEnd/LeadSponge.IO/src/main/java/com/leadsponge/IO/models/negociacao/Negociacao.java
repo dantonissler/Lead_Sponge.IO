@@ -36,10 +36,20 @@ import com.leadsponge.IO.models.motivoPerda.MotivoPerda;
 import com.leadsponge.IO.models.negociacaoProduto.NegociacaoProduto;
 import com.leadsponge.IO.models.tarefa.Tarefa;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 @Table(name = "negociacoes")
 @TableGenerator(name = "negociacao_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "negociacoes", allocationSize = 1, initialValue = 0)
 public class Negociacao extends UserDateAudit {
@@ -118,162 +128,9 @@ public class Negociacao extends UserDateAudit {
 	@Valid
 	private List<Tarefa> tarefas;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public Integer getAvaliacao() {
-		return avaliacao;
-	}
-
-	public Date getDataPrevistaEncerramento() {
-		return dataPrevistaEncerramento;
-	}
-
-	public void setDataPrevistaEncerramento(Date dataPrevistaEncerramento) {
-		this.dataPrevistaEncerramento = dataPrevistaEncerramento;
-	}
-
-	public void setAvaliacao(Integer avaliacao) {
-		this.avaliacao = avaliacao;
-	}
-
-	public BigDecimal getValorTotal() {
-		return valorTotal;
-	}
-
-	public void setValorTotal(BigDecimal valorTotal) {
-		this.valorTotal = valorTotal;
-	}
-
-	public BigDecimal getValorMensal() {
-		return valorMensal;
-	}
-
-	public void setValorMensal(BigDecimal valorMensal) {
-		this.valorMensal = valorMensal;
-	}
-
-	public BigDecimal getValorUnico() {
-		return valorUnico;
-	}
-
-	public void setValorUnico(BigDecimal valorUnico) {
-		this.valorUnico = valorUnico;
-	}
-
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
-
-	public Campanha getCampanha() {
-		return campanha;
-	}
-
-	public void setCampanha(Campanha campanha) {
-		this.campanha = campanha;
-	}
-
-	public EstagioNegociacao getEstagio() {
-		return estagio;
-	}
-
-	public void setEstagio(EstagioNegociacao estagio) {
-		this.estagio = estagio;
-	}
-
-	public FonteNegociacao getFonte() {
-		return fonte;
-	}
-
-	public void setFonte(FonteNegociacao fonte) {
-		this.fonte = fonte;
-	}
-
-	public MotivoPerda getMotivoPerda() {
-		return motivoPerda;
-	}
-
-	public void setMotivoPerda(MotivoPerda motivoPerda) {
-		this.motivoPerda = motivoPerda;
-	}
-
-	public List<NegociacaoProduto> getNegociacaoProdutos() {
-		return negociacaoProdutos;
-	}
-
-	public void setNegociacaoProdutos(List<NegociacaoProduto> negociacaoProdutos) {
-		this.negociacaoProdutos = negociacaoProdutos;
-	}
-
-	public List<Tarefa> getTarefas() {
-		return tarefas;
-	}
-
-	public void setTarefas(List<Tarefa> tarefas) {
-		this.tarefas = tarefas;
-	}
-
-	public List<HistEstagioNegociacao> getHistEstagioNegociacoes() {
-		return histEstagioNegociacoes;
-	}
-
-	public void setHistEstagioNegociacoes(List<HistEstagioNegociacao> histEstagioNegociacoes) {
-		this.histEstagioNegociacoes = histEstagioNegociacoes;
-	}
-
 	@JsonIgnore
 	public boolean isReceita() {
 		return EstatusNegociacao.EMANDAMENTO.equals(estatus);
-	}
-
-	public List<Tarefa> getTarefa() {
-		return tarefas;
-	}
-
-	public void setTarefa(List<Tarefa> tarefas) {
-		this.tarefas = tarefas;
-	}
-
-	public EstatusNegociacao getEstatus() {
-		return estatus;
-	}
-
-	public void setEstatus(EstatusNegociacao estatus) {
-		this.estatus = estatus;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Negociacao other = (Negociacao) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
 	}
 
 }

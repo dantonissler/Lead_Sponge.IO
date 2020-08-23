@@ -11,7 +11,6 @@ public class ResumoTarefa {
 	private Date horaMarcada;
 	private TipoTarefa tipo;
 	private String usuario;
-	
 
 	public ResumoTarefa(Long id, String assunto, Date horaMarcada, TipoTarefa tipo, String usuario) {
 		this.id = id;
@@ -60,7 +59,4 @@ public class ResumoTarefa {
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
-
-
-
 }

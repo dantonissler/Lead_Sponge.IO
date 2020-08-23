@@ -82,6 +82,7 @@ export class UsuarioListarComponent implements OnInit {
             })
             .catch(erro => this.errorHandler.handle(erro));
     }
+
     backClicked() {
         this._location.back();
     }

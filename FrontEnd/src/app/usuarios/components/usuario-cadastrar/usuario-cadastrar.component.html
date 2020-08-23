@@ -12,7 +12,7 @@
                 <p-progressSpinner [hidden]="!uploadEmAndamento" [style]="{ width: '25px', height: '25px' }">
                 </p-progressSpinner>
             </div>
-            <div dir="rtl" *ngIf="formulario.get('anexo').value">
+            <div *ngIf="formulario.get('anexo').value">
                 <div class="ui-g-3">
                     <img style="width: 100%; height: auto; border-radius: 50%" target="_blank"
                         src="///leadspongeuserimagens.s3.us-east-2.amazonaws.com/{{formulario.get('anexo').value}}">

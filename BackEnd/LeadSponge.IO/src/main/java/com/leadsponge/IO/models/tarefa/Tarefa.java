@@ -24,10 +24,20 @@ import com.leadsponge.IO.models.audit.UserDateAudit;
 import com.leadsponge.IO.models.negociacao.Negociacao;
 import com.leadsponge.IO.models.usuario.Usuario;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 @Table(name = "tarefas")
 @TableGenerator(name = "tarefa_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "tarefas", allocationSize = 1, initialValue = 0)
 public class Tarefa extends UserDateAudit {
@@ -67,78 +77,5 @@ public class Tarefa extends UserDateAudit {
 	@JsonIgnore
 	public boolean isEmail() {
 		return TipoTarefa.EMAIL.equals(tipo);
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getAssunto() {
-		return assunto;
-	}
-
-	public void setAssunto(String assunto) {
-		this.assunto = assunto;
-	}
-
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
-	public Date getHoraMarcada() {
-		return horaMarcada;
-	}
-
-	public void setHoraMarcada(Date horaMarcada) {
-		this.horaMarcada = horaMarcada;
-	}
-
-	public TipoTarefa getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(TipoTarefa tipo) {
-		this.tipo = tipo;
-	}
-
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
-	public Negociacao getNegociacao() {
-		return negociacao;
-	}
-
-	public void setNegociacao(Negociacao negociacao) {
-		this.negociacao = negociacao;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Tarefa other = (Tarefa) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
 	}
 }

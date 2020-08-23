@@ -53,7 +53,7 @@ export class UsuarioService {
                     total: response.totalElements
                 };
                 return resultado;
-            })
+            });
     }
 
     excluir(id: number): Promise<void> {
@@ -98,4 +98,19 @@ export class UsuarioService {
             .toPromise();
     }
 
+    atualizarImg(id: number, anexo: string): Promise<void> {
+        const headers = new HttpHeaders()
+            .append('Content-Type', 'application/json');
+        return this.http.put(`${this.usuariosUrl}/${id}/img`, anexo, { headers })
+            .toPromise()
+            .then(() => null);
+    }
+
+    removerImg(id: number): Promise<void> {
+        const headers = new HttpHeaders()
+            .append('Content-Type', 'application/json');
+        return this.http.put(`${this.usuariosUrl}/${id}/removerImg`, { headers })
+            .toPromise()
+            .then(() => null);
+    }
 }

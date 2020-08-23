@@ -21,10 +21,7 @@
 //import com.leadsponge.IO.services.SegmentoService;
 //import com.leadsponge.IO.services.UsuarioService;
 //
-//import lombok.extern.slf4j.Slf4j;
-//
 //@Configuration
-//@Slf4j
 //class LoadDatabase {
 //	@Bean
 //	CommandLineRunner initTableRole(RoleRepository repository) {
@@ -88,7 +85,7 @@
 //	@Bean
 //	CommandLineRunner initTableCampanha(CampanhaService repository) {
 //		return args -> {
-//			repository.save(new Campanha("Sem Campanha", ""));
+//			repository.save(new Campanha(null,"Sem Campanha", ""));
 //		};
 //	}
 //

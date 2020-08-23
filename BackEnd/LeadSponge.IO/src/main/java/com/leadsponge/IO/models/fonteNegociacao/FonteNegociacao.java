@@ -20,10 +20,20 @@ import com.leadsponge.IO.models.View;
 import com.leadsponge.IO.models.audit.UserDateAudit;
 import com.leadsponge.IO.models.negociacao.Negociacao;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 @Table(name = "fonte_negociacao")
 @TableGenerator(name = "fonte_negociacao_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "fonte_negociacao", allocationSize = 1, initialValue = 0)
 public class FonteNegociacao extends UserDateAudit {
@@ -41,55 +51,4 @@ public class FonteNegociacao extends UserDateAudit {
 	@Valid
 	@OneToMany(mappedBy = "fonte", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Negociacao> negociacoes;
-
-	public FonteNegociacao() {
-		// TODO Auto-generated constructor stub
-	}
-
-	public FonteNegociacao(String nome) {
-		super();
-		this.nome = nome;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public List<Negociacao> getNegociacoes() {
-		return negociacoes;
-	}
-
-	public void setNegociacoes(List<Negociacao> negociacoes) {
-		this.negociacoes = negociacoes;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		FonteNegociacao other = (FonteNegociacao) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
-	}
-
 }
