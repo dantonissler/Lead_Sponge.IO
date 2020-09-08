@@ -24,7 +24,6 @@ import com.leadsponge.IO.models.telefone.Telefone;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -35,7 +34,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = false)
 @Table(name = "contatos")
 @TableGenerator(name = "contato_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "contatos", allocationSize = 1, initialValue = 0)
 public class Contato extends UserDateAudit {
@@ -64,4 +62,31 @@ public class Contato extends UserDateAudit {
 	@Valid
 	@OneToMany(mappedBy = "contato", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Email> email;
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Contato other = (Contato) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
+
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		return super.clone();
+	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
 }

@@ -94,13 +94,6 @@
 			<artifactId>httpclient</artifactId>
 		</dependency>
 
-		<!-- Hibernate Java 8 Support -->
-		
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-java8</artifactId>
-		</dependency>
-
 		<!-- Suporte do Jackson para as datas do Java 8 -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>

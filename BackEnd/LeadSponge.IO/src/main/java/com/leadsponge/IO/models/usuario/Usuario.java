@@ -39,7 +39,6 @@ import com.leadsponge.IO.models.tarefa.Tarefa;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -50,7 +49,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = false)
 @Table(name = "usuarios", uniqueConstraints = { @UniqueConstraint(columnNames = { "username" }) })
 @TableGenerator(name = "usuario_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "usuarios", allocationSize = 1, initialValue = 0)
 public class Usuario extends UserDateAudit implements UserDetails {
@@ -80,10 +78,9 @@ public class Usuario extends UserDateAudit implements UserDetails {
 	@Size(min = 6, max = 150, message = "{senha.size}")
 	private String password;
 
-	private String anexo;
+	private String foto;
 
-	@Transient
-	private String urlAnexo;
+	private String urlFoto;
 
 	@Transient
 	private String confirmarPassword;
@@ -133,4 +130,45 @@ public class Usuario extends UserDateAudit implements UserDetails {
 		// TODO Auto-generated method stub
 		return true;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Usuario other = (Usuario) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
+
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		return super.clone();
+	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
+
+	public Usuario(String username, String nomeCompleto, String email, String password, String confirmarPassword,
+			Boolean enabled, String foto, String urlFoto, Set<Role> roles) {
+		this.username = username;
+		this.nomeCompleto = nomeCompleto;
+		this.email = email;
+		this.password = password;
+		this.confirmarPassword = confirmarPassword;
+		this.enabled = enabled;
+		this.foto = foto;
+		this.urlFoto = urlFoto;
+		this.roles = roles;
+	}
+
 }

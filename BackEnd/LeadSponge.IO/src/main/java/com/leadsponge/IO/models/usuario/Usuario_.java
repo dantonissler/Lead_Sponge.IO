@@ -23,12 +23,4 @@ public abstract class Usuario_ {
 	public static volatile ListAttribute<Usuario, Tarefa> tarefas;
 	public static volatile SingularAttribute<Usuario, String> password;
 	public static volatile ListAttribute<Usuario, Cliente> clientesSeguidos;
-	public static final String ID = "id";
-	public static final String USERNAME = "username";
-	public static final String NOME_COMPLETO = "nomeCompleto";
-	public static final String EMAIL = "email";
-	public static final String ENABLED = "enabled";
-	public static final String ROLES = "roles";
-	public static final String TAREFAS = "tarefas";
-	public static final String PASSWORD = "password";
 }

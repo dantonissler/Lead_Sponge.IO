@@ -15,6 +15,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = { "createdBy", "updatedBy" }, allowGetters = true)
@@ -27,22 +32,6 @@ public abstract class UserDateAudit extends DateAudit {
 	@LastModifiedBy
 	@Column(nullable = false)
 	private String modifiedByUser;
-
-	public String getCreatedByUser() {
-		return createdByUser;
-	}
-
-	public void setCreatedByUser(String createdByUser) {
-		this.createdByUser = createdByUser;
-	}
-
-	public String getModifiedByUser() {
-		return modifiedByUser;
-	}
-
-	public void setModifiedByUser(String modifiedByUser) {
-		this.modifiedByUser = modifiedByUser;
-	}
 
 	@PrePersist
 	public void prePersist() {

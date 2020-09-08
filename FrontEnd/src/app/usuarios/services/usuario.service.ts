@@ -90,7 +90,7 @@ export class UsuarioService {
     }
 
     urlUploadAnexo(): string {
-        return `${this.usuariosUrl}/anexo`;
+        return `${this.usuariosUrl}/foto`;
     }
 
     buscarPeloNome(username: string): Promise<Usuario>{
@@ -98,10 +98,10 @@ export class UsuarioService {
             .toPromise();
     }
 
-    atualizarImg(id: number, anexo: string): Promise<void> {
+    atualizarImg(id: number, foto: string): Promise<void> {
         const headers = new HttpHeaders()
             .append('Content-Type', 'application/json');
-        return this.http.put(`${this.usuariosUrl}/${id}/img`, anexo, { headers })
+        return this.http.put(`${this.usuariosUrl}/${id}/foto`, foto, { headers })
             .toPromise()
             .then(() => null);
     }

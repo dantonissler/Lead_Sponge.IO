@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,24 +17,30 @@ public class Disco {
 
 	@Autowired
 	private LeadSpongeApiProperty property;
-	
+
 	public Disco(LeadSpongeApiProperty property) {
-		super();
 		this.property = property;
 	}
 
-	public void salvarImagem(MultipartFile foto) {
-		this.salvar(property.getDisco().getDiretorioFotos(), foto);
-	}
-
-	public void salvar(String diretorio, MultipartFile arquivo) {
-		Path diretorioPath = Paths.get(property.getDisco().getRaiz(), diretorio);
-		Path arquivoPath = diretorioPath.resolve(arquivo.getOriginalFilename());
+	public String salvarFoto(MultipartFile foto) {
+		String nomeUnico = gerarNomeUnico(foto.getOriginalFilename());
+		Path diretorioPath = Paths.get(property.getDisco().getRaiz(), property.getDisco().getDiretorioFotos());
+		Path arquivoPath = diretorioPath.resolve(nomeUnico);
+		
 		try {
 			Files.createDirectories(diretorioPath);
-			arquivo.transferTo(arquivoPath.toFile());
+			foto.transferTo(arquivoPath.toFile());
 		} catch (IOException e) {
-			throw new RuntimeException("Problemas na tentativa de salvar arquivo.", e);
+			throw new RuntimeException("Problemas na tentativa de salvar arquivo. ", e);
 		}
+		return nomeUnico;
+	}
+
+	public String configurarUrlFoto(String objeto) {
+		return "\\\\" + property.getDisco().getRaiz() + property.getDisco().getDiretorioFotos() + objeto;
+	}
+	
+	private String gerarNomeUnico(String originalFilename) {
+		return UUID.randomUUID().toString() + "_" + originalFilename;
 	}
 }

@@ -21,7 +21,6 @@ import com.leadsponge.IO.models.cliente.Cliente;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -32,7 +31,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = false)
 @Table(name = "segmentos")
 @TableGenerator(name = "segmento_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "segmentos", allocationSize = 1, initialValue = 0)
 public class Segmento extends UserDateAudit {
@@ -49,4 +47,35 @@ public class Segmento extends UserDateAudit {
 	@ManyToMany(mappedBy = "segmentos", cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("segmentos")
 	private List<Cliente> clientes;
+
+	public Segmento(String nome) {
+		this.nome = nome;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Segmento other = (Segmento) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
+
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		return super.clone();
+	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
 }

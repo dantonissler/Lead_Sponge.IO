@@ -1,7 +1,5 @@
 package com.leadsponge.IO.endPoints;
 
-import java.io.IOException;
-
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -32,7 +30,8 @@ import com.leadsponge.IO.repository.Filter.UsuarioFilter;
 import com.leadsponge.IO.repository.projection.ResumoUsuario;
 import com.leadsponge.IO.repository.usuario.UsuarioRepository;
 import com.leadsponge.IO.services.UsuarioService;
-import com.leadsponge.IO.storage.S3;
+import com.leadsponge.IO.storage.Disco;
+//import com.leadsponge.IO.storage.S3;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -47,8 +46,11 @@ class UsuarioEndPoint extends ErroMessage {
 	@Autowired
 	private ApplicationEventPublisher publisher;
 
+//	@Autowired
+//	private S3 s3;
+	
 	@Autowired
-	private S3 s3;
+	private Disco disco;
 
 	@GetMapping
 	@PreAuthorize("hasAuthority('PESQUISAR_USUARIO') and #oauth2.hasScope('read')")
@@ -112,11 +114,18 @@ class UsuarioEndPoint extends ErroMessage {
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 
-	@PostMapping("/anexo")
+//	@PostMapping("/anexo")
+//	@PreAuthorize("hasAuthority('CADASTRAR_USUARIO') and #oauth2.hasScope('write')")
+//	public Anexo uploadAnexo(@RequestParam MultipartFile anexo) throws IOException {
+//		String nome = s3.salvarTemporariamente(anexo);
+//		return new Anexo(nome, s3.configurarUrl(nome));
+//	}
+	
+	@PostMapping("/foto")
 	@PreAuthorize("hasAuthority('CADASTRAR_USUARIO') and #oauth2.hasScope('write')")
-	public Anexo uploadAnexo(@RequestParam MultipartFile anexo) throws IOException {
-		String nome = s3.salvarTemporariamente(anexo);
-		return new Anexo(nome, s3.configurarUrl(nome));
+	public Anexo uploadFoto(@RequestParam MultipartFile foto) {
+		String nome = disco.salvarFoto(foto);
+		return new Anexo(nome, disco.configurarUrlFoto(nome));
 	}
 
 	@GetMapping(value = { "/username/{username}", "/username/{username}/" })
