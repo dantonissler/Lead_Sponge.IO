@@ -166,4 +166,5 @@ FrontEnd/baseline.json
 
 *.original
 
-BackEnd/LeadSponge.IO/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/
+BackEnd/LeadSponge.IO/target/*
+
