@@ -41,7 +41,7 @@ class UsuarioEndPoint extends ErroMessage {
 	private UsuarioRepository repository;
 
 	@Autowired
-	private UsuarioService usuarioService;
+	private UsuarioService service;
 
 	@Autowired
 	private ApplicationEventPublisher publisher;
@@ -68,7 +68,7 @@ class UsuarioEndPoint extends ErroMessage {
 	@ResponseStatus(HttpStatus.CREATED)
 	@PreAuthorize("hasAuthority('CADASTRAR_USUARIO') and #oauth2.hasScope('write')")
 	ResponseEntity<Usuario> cadastrar(@Valid @RequestBody Usuario usuario, HttpServletResponse response) {
-		Usuario usuarioSalvar = usuarioService.save(usuario);
+		Usuario usuarioSalvar = service.salvar(usuario);
 //		usuarioService.autoLogin(usuario.getUsername(), usuario.getPassword());
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, usuarioSalvar.getId()));
 		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioSalvar);
@@ -86,7 +86,7 @@ class UsuarioEndPoint extends ErroMessage {
 	ResponseEntity<Usuario> atualizar(@Valid @RequestBody Usuario novoUsuario, @PathVariable Long id,
 			HttpServletResponse response) {
 		try {
-			Usuario usuario = usuarioService.atualizar(id, novoUsuario);
+			Usuario usuario = service.atualizar(id, novoUsuario);
 			publisher.publishEvent(new RecursoCriadoEvent(this, response, usuario.getId()));
 			return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
 		} catch (IllegalArgumentException e) {
@@ -110,7 +110,7 @@ class UsuarioEndPoint extends ErroMessage {
 	@ResponseStatus(HttpStatus.CREATED)
 	@PreAuthorize("hasAuthority('CADASTRAR_USUARIO') and #oauth2.hasScope('write')")
 	public ResponseEntity<Usuario> atualizarPropriedadeEnabled(@PathVariable Long id, @RequestBody Boolean enabled) {
-		usuarioService.atualizarPropriedadeEnabled(id, enabled);
+		service.atualizarPropriedadeEnabled(id, enabled);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 
@@ -135,24 +135,24 @@ class UsuarioEndPoint extends ErroMessage {
 				.ok(repository.findByUsername(username).orElseThrow(() -> notFould(username + "o usuario")));
 	}
 
-	@PutMapping(value = { "/{id}/img", "/{id}/img/" })
+	@PutMapping(value = { "/{id}/foto", "/{id}/foto/" })
 	@ResponseStatus(HttpStatus.CREATED)
 	@PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
-	ResponseEntity<Usuario> atualizarImg(@PathVariable Long id, @RequestBody String anexo) {
+	ResponseEntity<Usuario> atualizarImg(@PathVariable Long id, @RequestBody String foto) {
 		try {
-			usuarioService.atualizarImg(id, anexo);
+			service.atualizarImg(id, foto);
 			return ResponseEntity.status(HttpStatus.CREATED).build();
 		} catch (IllegalArgumentException e) {
 			throw notFouldId(id, "o usuario");
 		}
 	}
 	
-	@PutMapping(value = { "/{id}/removerImg", "/{id}/removerImg/" })
+	@PutMapping(value = { "/{id}/removerFoto", "/{id}/removerFoto/" })
 	@ResponseStatus(HttpStatus.CREATED)
 	@PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
 	ResponseEntity<Usuario> removerImg(@PathVariable Long id) {
 		try {
-			usuarioService.removerImg(id);
+			service.removerImg(id);
 			return ResponseEntity.ok().build();
 		} catch (IllegalArgumentException e) {
 			throw notFouldId(id, "o usuario");

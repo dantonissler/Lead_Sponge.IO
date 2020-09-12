@@ -9,31 +9,31 @@
       "name": "leadsponge.banco-mysql",
       "type": "com.leadsponge.IO.config.property.LeadSpongeApiProperty$BancoMysql",
       "sourceType": "com.leadsponge.IO.config.property.LeadSpongeApiProperty",
-      "sourceMethod": "public com.leadsponge.IO.config.property.LeadSpongeApiProperty.BancoMysql getBancoMysql() "
+      "sourceMethod": "getBancoMysql()"
     },
     {
       "name": "leadsponge.disco",
       "type": "com.leadsponge.IO.config.property.LeadSpongeApiProperty$Disco",
       "sourceType": "com.leadsponge.IO.config.property.LeadSpongeApiProperty",
-      "sourceMethod": "public com.leadsponge.IO.config.property.LeadSpongeApiProperty.Disco getDisco() "
+      "sourceMethod": "getDisco()"
     },
     {
       "name": "leadsponge.mail",
       "type": "com.leadsponge.IO.config.property.LeadSpongeApiProperty$Mail",
       "sourceType": "com.leadsponge.IO.config.property.LeadSpongeApiProperty",
-      "sourceMethod": "public com.leadsponge.IO.config.property.LeadSpongeApiProperty.Mail getMail() "
+      "sourceMethod": "getMail()"
     },
     {
       "name": "leadsponge.s3",
       "type": "com.leadsponge.IO.config.property.LeadSpongeApiProperty$S3",
       "sourceType": "com.leadsponge.IO.config.property.LeadSpongeApiProperty",
-      "sourceMethod": "public com.leadsponge.IO.config.property.LeadSpongeApiProperty.S3 getS3() "
+      "sourceMethod": "getS3()"
     },
     {
       "name": "leadsponge.seguranca",
       "type": "com.leadsponge.IO.config.property.LeadSpongeApiProperty$Seguranca",
       "sourceType": "com.leadsponge.IO.config.property.LeadSpongeApiProperty",
-      "sourceMethod": "public com.leadsponge.IO.config.property.LeadSpongeApiProperty.Seguranca getSeguranca() "
+      "sourceMethod": "getSeguranca()"
     }
   ],
   "properties": [
@@ -105,7 +105,8 @@
     {
       "name": "leadsponge.seguranca.enable-https",
       "type": "java.lang.Boolean",
-      "sourceType": "com.leadsponge.IO.config.property.LeadSpongeApiProperty$Seguranca"
+      "sourceType": "com.leadsponge.IO.config.property.LeadSpongeApiProperty$Seguranca",
+      "defaultValue": false
     },
     {
       "name": "leadsponge.seguranca.origin-permitida",

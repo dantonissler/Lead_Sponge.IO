@@ -10,7 +10,6 @@ com/leadsponge/IO/security/util/GeradorSenha.class
 com/leadsponge/IO/models/View$Campanha.class
 com/leadsponge/IO/security/implementated/UsuarioDetailsServiceImpl.class
 com/leadsponge/IO/config/AuthorizationServerConfig.class
-META-INF/MANIFEST.MF
 com/leadsponge/IO/storage/Disco.class
 com/leadsponge/IO/config/property/LeadSpongeApiProperty$Disco.class
 com/leadsponge/IO/repository/Filter/EstagioNegociacaoFilter.class
@@ -52,7 +51,6 @@ com/leadsponge/IO/config/WebConfig.class
 com/leadsponge/IO/repository/motivoPerda/MotivoPerdaRepositoryQuery.class
 META-INF/spring-configuration-metadata.json
 com/leadsponge/IO/errorValidate/ErrorDetails$Builder.class
-META-INF/maven/com.leadsponge/leadsponge.IO/pom.properties
 com/leadsponge/IO/models/View$Produto.class
 com/leadsponge/IO/config/token/CustomTokenEnhancer.class
 com/leadsponge/IO/repository/contato/ContatoRepositoryImpl.class
@@ -101,7 +99,6 @@ com/leadsponge/IO/models/View$Tarefa.class
 com/leadsponge/IO/config/property/LeadSpongeApiProperty$Mail.class
 com/leadsponge/IO/endPoints/NegociacaoEndPoint.class
 com/leadsponge/IO/services/TarefaService.class
-META-INF/maven/com.leadsponge/leadsponge.IO/pom.xml
 com/leadsponge/IO/repository/NegociacaoProdutoRepository.class
 com/leadsponge/IO/models/View$Fonte.class
 com/leadsponge/IO/models/audit/DateAudit.class
@@ -113,7 +110,6 @@ com/leadsponge/IO/repository/cliente/ClienteRepository.class
 com/leadsponge/IO/repository/contato/ContatoRepository.class
 com/leadsponge/IO/repository/campanha/CampanhaRepositoryImpl.class
 com/leadsponge/IO/repository/campanha/CampanhaRepositoryQuery.class
-com/leadsponge/IO/data/LoadDatabase.class
 com/leadsponge/IO/models/View$Usuario.class
 com/leadsponge/IO/errorValidate/ValidationErrorDetails$Builder.class
 com/leadsponge/IO/token/RefreshTokenCookiePreProcessorFilter.class

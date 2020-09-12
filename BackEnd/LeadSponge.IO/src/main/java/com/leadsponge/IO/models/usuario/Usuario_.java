@@ -17,8 +17,9 @@ public abstract class Usuario_ {
 	public static volatile SingularAttribute<Usuario, String> username;
 	public static volatile SingularAttribute<Usuario, String> nomeCompleto;
 	public static volatile SingularAttribute<Usuario, String> email;
-	public static volatile SingularAttribute<Usuario, String> anexo;
 	public static volatile SingularAttribute<Usuario, Boolean> enabled;
+	public static volatile SingularAttribute<Usuario, String> foto;
+	public static volatile SingularAttribute<Usuario, String> urlFoto;
 	public static volatile SetAttribute<Usuario, Role> roles;
 	public static volatile ListAttribute<Usuario, Tarefa> tarefas;
 	public static volatile SingularAttribute<Usuario, String> password;

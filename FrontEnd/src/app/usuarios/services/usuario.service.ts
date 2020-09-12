@@ -109,7 +109,7 @@ export class UsuarioService {
     removerImg(id: number): Promise<void> {
         const headers = new HttpHeaders()
             .append('Content-Type', 'application/json');
-        return this.http.put(`${this.usuariosUrl}/${id}/removerImg`, { headers })
+        return this.http.put(`${this.usuariosUrl}/${id}/removerFoto`, { headers })
             .toPromise()
             .then(() => null);
     }

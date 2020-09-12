@@ -14,8 +14,8 @@ import { Usuario } from '../../models/usuario.model';
 })
 export class UsuarioDetalharComponent implements OnInit {
 
-    anexo: string;
-    urlAnexo: string;
+    foto: string;
+    urlFoto: string;
     formularioImg: FormGroup;
     uploadEmAndamento = false;
     idNeg: number = +this.route.snapshot.params.id;
@@ -23,8 +23,6 @@ export class UsuarioDetalharComponent implements OnInit {
 
     constructor(
         private usuarioService: UsuarioService,
-        private formBuilder: FormBuilder,
-        private roleService: RoleService,
         private messageService: MessageService,
         private errorHandler: ErrorHandlerService,
         private route: ActivatedRoute
@@ -39,8 +37,8 @@ export class UsuarioDetalharComponent implements OnInit {
             .then(usuario => {
                 usuario.password = '';
                 usuario.confirmarPassword = '';
-                this.anexo = usuario.foto;
-                this.urlAnexo = usuario.urlFoto;
+                this.foto = usuario.foto;
+                this.urlFoto = usuario.urlFoto;
                 /* this.formularioImg.patchValue(usuario); */
             })
             .catch(erro => this.errorHandler.handle(erro));
@@ -83,5 +81,4 @@ export class UsuarioDetalharComponent implements OnInit {
             })
             .catch(erro => this.errorHandler.handle(erro));
     }
-
 }

@@ -7,13 +7,14 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.leadsponge.IO.errorValidate.ErroMessage;
 import com.leadsponge.IO.errorValidate.ResourceBadRequestException;
 import com.leadsponge.IO.models.usuario.Usuario;
 import com.leadsponge.IO.repository.usuario.UsuarioRepository;
 import com.leadsponge.IO.security.exception.UsuarioInativaException;
-
+import com.leadsponge.IO.storage.Disco;
 
 @Service
 public class UsuarioService extends ErroMessage {
@@ -22,21 +23,27 @@ public class UsuarioService extends ErroMessage {
 	private UsuarioRepository repository;
 
 	@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
-	
+	private Disco disco;
+
+	@Autowired
+	private static BCryptPasswordEncoder bCryptPasswordEncoder;
+
 	public void removerImg(Long id) {
 		Usuario usuarioSalva = buscarUsuarioExistente(id);
-//		usuarioSalva.setAnexo(null);
+		disco.remover(usuarioSalva.getUrlFoto());
+		usuarioSalva.setFoto(null);
+		usuarioSalva.setUrlFoto(null);
 		repository.save(usuarioSalva);
 	}
 
-	public void atualizarImg(Long id, String anexo) {
+	public void atualizarImg(Long id, String foto) {
 		Usuario usuarioSalva = buscarUsuarioExistente(id);
-//		usuarioSalva.setAnexo(anexo);
+		usuarioSalva.setFoto(foto);
+		usuarioSalva.setUrlFoto(disco.configurarUrlFoto(foto));
 		repository.save(usuarioSalva);
 	}
 
-	public Usuario save(Usuario usuario) {
+	public Usuario salvar(Usuario usuario) {
 		usuariovalidar(usuario);
 		usuario.setPassword(bCryptPasswordEncoder.encode(usuario.getPassword()));
 		usuario.setRoles(new HashSet<>(usuario.getRoles()));
@@ -49,11 +56,12 @@ public class UsuarioService extends ErroMessage {
 		usuarioSalvo.getRoles().clear();
 		usuarioSalvo.getRoles().addAll(usuario.getRoles());
 		usuarioSalvo.setRoles(new HashSet<>(usuarioSalvo.getRoles()));
-//		if (StringUtils.isEmpty(usuario.getAnexo()) && StringUtils.hasText(usuarioSalvo.getAnexo())) {
-//			s3.remover(usuarioSalvo.getAnexo());
-//		} else if (StringUtils.hasText(usuario.getAnexo()) && !usuario.getAnexo().equals(usuarioSalvo.getAnexo())) {
-//			s3.substituir(usuarioSalvo.getAnexo(), usuario.getAnexo());
-//		}
+		if (StringUtils.isEmpty(usuario.getFoto()) && StringUtils.hasText(usuarioSalvo.getFoto())) {
+			disco.remover(usuarioSalvo.getUrlFoto());
+		} else if (StringUtils.hasText(usuario.getFoto()) && !usuario.getFoto().equals(usuarioSalvo.getFoto())) {
+			disco.remover(usuario.getUrlFoto());
+		}
+
 		BeanUtils.copyProperties(usuario, usuarioSalvo, "id", "roles");
 		return repository.save(usuarioSalvo);
 	}
