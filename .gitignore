@@ -168,3 +168,5 @@ FrontEnd/baseline.json
 
 BackEnd/LeadSponge.IO/target/*
 
+
+*.jpg
