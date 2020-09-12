@@ -37,7 +37,7 @@ public class Disco {
 	}
 
 	public String configurarUrlFoto(String objeto) {
-		return "\\\\" + property.getDisco().getRaiz() + property.getDisco().getDiretorioFotos() + objeto;
+		return property.getDisco().getDiretorioFotos() + objeto;
 	}
 	
 	private String gerarNomeUnico(String originalFilename) {

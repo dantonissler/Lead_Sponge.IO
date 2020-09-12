@@ -26,7 +26,7 @@ export class UsuarioCadastrarComponent implements OnInit {
     get editando() { return Boolean(this.formulario.get('id').value); }
     get urlUploadAnexo() { return this.usuarioService.urlUploadAnexo(); }
     get nomeAnexo() {
-        const nome = this.formulario.get('anexo').value;
+        const nome = this.formulario.get('foto').value;
         if (nome) { return nome.substring(nome.indexOf('_') + 1, nome.length); }
         return '';
     }
@@ -57,18 +57,18 @@ export class UsuarioCadastrarComponent implements OnInit {
     onFileUpload(data) {
         const file = data.originalEvent.body;
         this.formulario.patchValue({
-            anexo: file.nome,
-            urlAnexo: file.url
+            foto: file.nome,
+            urlFoto: file.url
         });
         this.uploadEmAndamento = false;
     }
 
     erroUpload(event) {
-        this.messageService.add({ severity: 'error', detail: 'Erro ao tentar enviar anexo!' });
+        this.messageService.add({ severity: 'error', detail: 'Erro ao tentar enviar foto!' });
         this.uploadEmAndamento = false;
     }
 
-    removerAnexo() { this.formulario.patchValue({ anexo: null, urlAnexo: null }); }
+    removerAnexo() { this.formulario.patchValue({ foto: null, urlFoto: null }); }
 
     carregarUsuario(id: number) {
         this.usuarioService.buscarPorCodigo(id)
@@ -125,8 +125,8 @@ export class UsuarioCadastrarComponent implements OnInit {
             password: [null, [this.validarObrigatoriedade, this.validarTamanhoMinimo(6)]],
             confirmarPassword: [null, [this.validarObrigatoriedade, this.validarTamanhoMinimo(6)]],
             enabled: [],
-            anexo: [],
-            urlAnexo: [],
+            foto: [],
+            urlFoto: [],
             roles: []
         }, { validator: this.validarConfirmaPassword });
     }

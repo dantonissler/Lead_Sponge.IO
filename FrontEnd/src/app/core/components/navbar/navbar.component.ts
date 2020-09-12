@@ -39,7 +39,7 @@ export class NavbarComponent implements OnInit {
     carregarUsuario(username: string) {
         this.usuarioService.buscarPeloNome(username)
             .then(usuario => {
-                this.url = '///leadspongeuserimagens.s3.us-east-2.amazonaws.com/' + usuario.anexo;
+                this.url = usuario.urlFoto;
                 this.idNeg = usuario.id;
             })
             .catch(erro => this.errorHandler.handle(erro));

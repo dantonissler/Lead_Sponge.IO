@@ -163,3 +163,7 @@ FrontEnd/.bazelrc.user
 
 FrontEnd/.notes.md
 FrontEnd/baseline.json
+
+*.original
+
+BackEnd/LeadSponge.IO/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/

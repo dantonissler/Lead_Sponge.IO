@@ -4,18 +4,18 @@
             <div class="ui-g-12">
                 <h1>{{ editando ? 'Edição de' : 'Novo' }} Usuario</h1>
             </div>
-            <div class="ui-g-6 ui-g-offset-6 ui-md-2 ui-md-offset-10 ui-fluid" *ngIf="!formulario.get('anexo').value">
-                <p-fileUpload name="anexo" mode="basic" auto="true" maxFileSize="100000000" chooseLabel="Anexar"
+            <div class="ui-g-6 ui-g-offset-6 ui-md-2 ui-md-offset-10 ui-fluid" *ngIf="!formulario.get('foto').value">
+                <p-fileUpload name="foto" mode="basic" auto="true" maxFileSize="100000000" chooseLabel="Anexar"
                     accept="image/*" [url]="urlUploadAnexo" (onUpload)="onFileUpload($event)"
                     (onError)="erroUpload($event)" (onBeforeUpload)="antesUploadAnexo()" [hidden]="uploadEmAndamento">
                 </p-fileUpload>
                 <p-progressSpinner [hidden]="!uploadEmAndamento" [style]="{ width: '25px', height: '25px' }">
                 </p-progressSpinner>
             </div>
-            <div *ngIf="formulario.get('anexo').value">
+            <div *ngIf="formulario.get('foto').value">
                 <div class="ui-g-3">
-                    <img style="width: 100%; height: auto; border-radius: 50%" target="_blank"
-                        src="///leadspongeuserimagens.s3.us-east-2.amazonaws.com/{{formulario.get('anexo').value}}">
+                    <img id="img" style="width: 100%; height: auto; border-radius: 50%" target="_blank"
+                        [src]="formulario.get('urlFoto').value">
                 </div>
                 <div class="ui-g-2">
                     <button pButton type="button" class="ui-button-rounded ui-button-danger" icon="fas fa-times"

@@ -1,6 +1,5 @@
 com/leadsponge/IO/models/contato/Contato_.class
 com/leadsponge/IO/config/property/LeadSpongeApiProperty$BancoMysql.class
-com/leadsponge/IO/storage/S3.class
 com/leadsponge/IO/models/estagioNegociacao/EstagioNegociacao.class
 com/leadsponge/IO/models/segmento/Segmento.class
 com/leadsponge/IO/models/View$Email.class
@@ -11,6 +10,7 @@ com/leadsponge/IO/security/util/GeradorSenha.class
 com/leadsponge/IO/models/View$Campanha.class
 com/leadsponge/IO/security/implementated/UsuarioDetailsServiceImpl.class
 com/leadsponge/IO/config/AuthorizationServerConfig.class
+META-INF/MANIFEST.MF
 com/leadsponge/IO/storage/Disco.class
 com/leadsponge/IO/config/property/LeadSpongeApiProperty$Disco.class
 com/leadsponge/IO/repository/Filter/EstagioNegociacaoFilter.class
@@ -30,7 +30,6 @@ com/leadsponge/IO/config/ResourceServerConfig.class
 com/leadsponge/IO/endPoints/SegmentoEndPoint.class
 com/leadsponge/IO/endPoints/EstagioNegociacaoEndPoint.class
 com/leadsponge/IO/dto/Anexo.class
-com/leadsponge/IO/config/S3Config.class
 com/leadsponge/IO/models/historicoEstagioNegociacao/HistEstagioNegociacao_.class
 com/leadsponge/IO/models/View.class
 com/leadsponge/IO/endPoints/ContatoEndPoint.class
@@ -53,6 +52,7 @@ com/leadsponge/IO/config/WebConfig.class
 com/leadsponge/IO/repository/motivoPerda/MotivoPerdaRepositoryQuery.class
 META-INF/spring-configuration-metadata.json
 com/leadsponge/IO/errorValidate/ErrorDetails$Builder.class
+META-INF/maven/com.leadsponge/leadsponge.IO/pom.properties
 com/leadsponge/IO/models/View$Produto.class
 com/leadsponge/IO/config/token/CustomTokenEnhancer.class
 com/leadsponge/IO/repository/contato/ContatoRepositoryImpl.class
@@ -73,6 +73,7 @@ com/leadsponge/IO/endPoints/NegociacaoProdutoEndPoint.class
 com/leadsponge/IO/token/RefreshTokenPostProcessor.class
 com/leadsponge/IO/models/View$Contato.class
 com/leadsponge/IO/models/motivoPerda/MotivoPerda.class
+com/leadsponge/IO/errorValidate/ErroMessage.class
 com/leadsponge/IO/errorValidate/FileStorageException.class
 com/leadsponge/IO/repository/fonteNegociacao/FonteNegociacaoRepositoryQuery.class
 com/leadsponge/IO/models/role/Role_.class
@@ -100,6 +101,7 @@ com/leadsponge/IO/models/View$Tarefa.class
 com/leadsponge/IO/config/property/LeadSpongeApiProperty$Mail.class
 com/leadsponge/IO/endPoints/NegociacaoEndPoint.class
 com/leadsponge/IO/services/TarefaService.class
+META-INF/maven/com.leadsponge/leadsponge.IO/pom.xml
 com/leadsponge/IO/repository/NegociacaoProdutoRepository.class
 com/leadsponge/IO/models/View$Fonte.class
 com/leadsponge/IO/models/audit/DateAudit.class
@@ -114,7 +116,6 @@ com/leadsponge/IO/repository/campanha/CampanhaRepositoryQuery.class
 com/leadsponge/IO/data/LoadDatabase.class
 com/leadsponge/IO/models/View$Usuario.class
 com/leadsponge/IO/errorValidate/ValidationErrorDetails$Builder.class
-com/leadsponge/IO/endPoints/crudEndpoints/CrudController.class
 com/leadsponge/IO/token/RefreshTokenCookiePreProcessorFilter.class
 com/leadsponge/IO/repository/produto/ProdutoRepositoryImpl.class
 com/leadsponge/IO/models/role/Role.class

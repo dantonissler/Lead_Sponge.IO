@@ -1,4 +1,11 @@
 -------------------------------------------------------------------------------
 Test set: com.leadsponge.leadsponge.IO.ApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 21.76 s - in com.leadsponge.leadsponge.IO.ApplicationTests
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 13.836 s <<< FAILURE! - in com.leadsponge.leadsponge.IO.ApplicationTests
+contextLoads  Time elapsed: 0.007 s  <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext
+Caused by: java.lang.IllegalStateException: Failed to execute CommandLineRunner
+Caused by: org.springframework.dao.DataIntegrityViolationException: could not execute statement; SQL [n/a]; constraint [roles.UK7xq7p7jlaaotwefc21s2ecs55]; nested exception is org.hibernate.exception.ConstraintViolationException: could not execute statement
+Caused by: org.hibernate.exception.ConstraintViolationException: could not execute statement
+Caused by: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'CADASTRAR_USUARIO' for key 'roles.UK7xq7p7jlaaotwefc21s2ecs55'
+

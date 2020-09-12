@@ -39,8 +39,8 @@ export class UsuarioDetalharComponent implements OnInit {
             .then(usuario => {
                 usuario.password = '';
                 usuario.confirmarPassword = '';
-                this.anexo = usuario.anexo;
-                this.urlAnexo = '///leadspongeuserimagens.s3.us-east-2.amazonaws.com/' + usuario.anexo;
+                this.anexo = usuario.foto;
+                this.urlAnexo = usuario.urlFoto;
                 /* this.formularioImg.patchValue(usuario); */
             })
             .catch(erro => this.errorHandler.handle(erro));

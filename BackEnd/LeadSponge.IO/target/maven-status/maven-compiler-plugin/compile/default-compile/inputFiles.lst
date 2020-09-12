@@ -38,6 +38,7 @@
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/config/WebConfig.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/Filter/UsuarioFilter.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/endPoints/ClienteEndPoint.java
+/home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/errorValidate/ErroMessage.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/endPoints/ProdutoEndPoint.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/imagens/Imagens.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/Filter/FonteNegociacaoFilter.java
@@ -50,7 +51,6 @@
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/config/property/LeadSpongeApiProperty.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/negociacao/NegociacaoRepositoryImpl.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/config/S3Config.java
-/home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/endPoints/crudEndpoints/CrudController.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/mail/Mailer.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/tarefa/TarefaRepositoryImpl.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/endPoints/EstagioNegociacaoEndPoint.java

@@ -7,6 +7,7 @@ export class Usuario {
     nomeCompleto: string;
     email: string;
     enabled: boolean;
-    anexo: string;
+    foto: string;
+    urlFoto: string;
     roles: Role;
   }
