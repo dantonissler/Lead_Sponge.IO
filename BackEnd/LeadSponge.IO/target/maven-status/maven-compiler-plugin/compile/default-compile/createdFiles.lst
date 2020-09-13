@@ -28,7 +28,6 @@ com/leadsponge/IO/repository/EmailRepository.class
 com/leadsponge/IO/config/ResourceServerConfig.class
 com/leadsponge/IO/endPoints/SegmentoEndPoint.class
 com/leadsponge/IO/endPoints/EstagioNegociacaoEndPoint.class
-com/leadsponge/IO/dto/Anexo.class
 com/leadsponge/IO/models/historicoEstagioNegociacao/HistEstagioNegociacao_.class
 com/leadsponge/IO/models/View.class
 com/leadsponge/IO/endPoints/ContatoEndPoint.class
@@ -51,6 +50,7 @@ com/leadsponge/IO/config/WebConfig.class
 com/leadsponge/IO/repository/motivoPerda/MotivoPerdaRepositoryQuery.class
 META-INF/spring-configuration-metadata.json
 com/leadsponge/IO/errorValidate/ErrorDetails$Builder.class
+com/leadsponge/IO/dto/UsuarioDTO.class
 com/leadsponge/IO/models/View$Produto.class
 com/leadsponge/IO/config/token/CustomTokenEnhancer.class
 com/leadsponge/IO/repository/contato/ContatoRepositoryImpl.class
@@ -171,5 +171,6 @@ com/leadsponge/IO/repository/estagioNegociacao/EstagioNegociacaoRepositoryImpl.c
 com/leadsponge/IO/repository/tarefa/TarefaRepositoryImpl.class
 com/leadsponge/IO/repository/Filter/ClienteFilter.class
 com/leadsponge/IO/models/tarefa/Tarefa.class
+com/leadsponge/IO/dto/AnexoDTO.class
 com/leadsponge/IO/models/produto/Produto.class
 com/leadsponge/IO/config/property/LeadSpongeApiProperty.class

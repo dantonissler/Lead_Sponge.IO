@@ -22,7 +22,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.leadsponge.IO.dto.Anexo;
+import com.leadsponge.IO.dto.AnexoDTO;
+import com.leadsponge.IO.dto.UsuarioDTO;
 import com.leadsponge.IO.errorValidate.ErroMessage;
 import com.leadsponge.IO.event.RecursoCriadoEvent;
 import com.leadsponge.IO.models.usuario.Usuario;
@@ -48,7 +49,7 @@ class UsuarioEndPoint extends ErroMessage {
 
 //	@Autowired
 //	private S3 s3;
-	
+
 	@Autowired
 	private Disco disco;
 
@@ -106,7 +107,7 @@ class UsuarioEndPoint extends ErroMessage {
 		}
 	}
 
-	@PutMapping("/{id}/ativo")
+	@PutMapping(value = { "/{id}/ativo", "/{id}/ativo/" })
 	@ResponseStatus(HttpStatus.CREATED)
 	@PreAuthorize("hasAuthority('CADASTRAR_USUARIO') and #oauth2.hasScope('write')")
 	public ResponseEntity<Usuario> atualizarPropriedadeEnabled(@PathVariable Long id, @RequestBody Boolean enabled) {
@@ -120,12 +121,12 @@ class UsuarioEndPoint extends ErroMessage {
 //		String nome = s3.salvarTemporariamente(anexo);
 //		return new Anexo(nome, s3.configurarUrl(nome));
 //	}
-	
+
 	@PostMapping("/foto")
 	@PreAuthorize("hasAuthority('CADASTRAR_USUARIO') and #oauth2.hasScope('write')")
-	public Anexo uploadFoto(@RequestParam MultipartFile foto) {
+	public AnexoDTO uploadFoto(@RequestParam MultipartFile foto) {
 		String nome = disco.salvarFoto(foto);
-		return new Anexo(nome, disco.configurarUrlFoto(nome));
+		return new AnexoDTO(nome, disco.configurarUrlFoto(nome));
 	}
 
 	@GetMapping(value = { "/username/{username}", "/username/{username}/" })
@@ -146,7 +147,7 @@ class UsuarioEndPoint extends ErroMessage {
 			throw notFouldId(id, "o usuario");
 		}
 	}
-	
+
 	@PutMapping(value = { "/{id}/removerFoto", "/{id}/removerFoto/" })
 	@ResponseStatus(HttpStatus.CREATED)
 	@PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
@@ -154,6 +155,19 @@ class UsuarioEndPoint extends ErroMessage {
 		try {
 			service.removerImg(id);
 			return ResponseEntity.ok().build();
+		} catch (IllegalArgumentException e) {
+			throw notFouldId(id, "o usuario");
+		}
+	}
+
+	@PutMapping(value = { "/{id}/atualizar", "/{id}/atualizar/" })
+	@ResponseStatus(HttpStatus.CREATED)
+	@PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
+	ResponseEntity<UsuarioDTO> atualizarUsuarioDTO(@PathVariable Long id, @RequestBody UsuarioDTO usuario) {
+		try {
+			service.atualizarUsuarioDTO(id, usuario);
+			return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
+			
 		} catch (IllegalArgumentException e) {
 			throw notFouldId(id, "o usuario");
 		}

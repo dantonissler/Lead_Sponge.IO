@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.leadsponge.IO.dto.UsuarioDTO;
 import com.leadsponge.IO.errorValidate.ErroMessage;
 import com.leadsponge.IO.errorValidate.ResourceBadRequestException;
 import com.leadsponge.IO.models.usuario.Usuario;
@@ -20,13 +21,28 @@ import com.leadsponge.IO.storage.Disco;
 public class UsuarioService extends ErroMessage {
 
 	@Autowired
-	private UsuarioRepository repository;
+	private final UsuarioRepository repository;
 
 	@Autowired
-	private Disco disco;
+	private final Disco disco;
 
 	@Autowired
-	private static BCryptPasswordEncoder bCryptPasswordEncoder;
+	private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+	public UsuarioService(UsuarioRepository repository, Disco disco, BCryptPasswordEncoder bCryptPasswordEncoder) {
+		super();
+		this.repository = repository;
+		this.disco = disco;
+		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+	}
+
+	public Usuario atualizarUsuarioDTO(Long id, UsuarioDTO usuario) {
+		Usuario usuarioSalvo = buscarUsuarioExistente(id);
+		usuarioSalvo.getRoles().clear();
+		usuarioSalvo.getRoles().addAll(usuario.getRoles());
+		BeanUtils.copyProperties(usuario, usuarioSalvo, "id", "roles");
+		return repository.save(usuarioSalvo);
+	}
 
 	public void removerImg(Long id) {
 		Usuario usuarioSalva = buscarUsuarioExistente(id);

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { UsuarioService } from '../../services/usuario.service';
-import { RoleService } from '../../services/role.service';
 import { MessageService } from 'primeng/api';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 import { ActivatedRoute } from '@angular/router';
 import { Usuario } from '../../models/usuario.model';
+import { RoleService } from '../../services/role.service';
 
 @Component({
     selector: 'app-usuario-detalhar',
@@ -14,22 +14,27 @@ import { Usuario } from '../../models/usuario.model';
 })
 export class UsuarioDetalharComponent implements OnInit {
 
-    foto: string;
-    urlFoto: string;
-    formularioImg: FormGroup;
+    checked = true;
+    usuario = new Usuario();
+    formulario: FormGroup;
+    roles = [];
     uploadEmAndamento = false;
     idNeg: number = +this.route.snapshot.params.id;
     get urlUploadAnexo() { return this.usuarioService.urlUploadAnexo(); }
 
     constructor(
         private usuarioService: UsuarioService,
+        private roleService: RoleService,
         private messageService: MessageService,
+        private formBuilder: FormBuilder,
         private errorHandler: ErrorHandlerService,
         private route: ActivatedRoute
     ) { }
 
     ngOnInit(): void {
+        this.configurarFormulario();
         this.carregarUsuario(this.idNeg);
+        this.carregarRole();
     }
 
     carregarUsuario(id: number) {
@@ -37,11 +42,37 @@ export class UsuarioDetalharComponent implements OnInit {
             .then(usuario => {
                 usuario.password = '';
                 usuario.confirmarPassword = '';
-                this.foto = usuario.foto;
-                this.urlFoto = usuario.urlFoto;
-                /* this.formularioImg.patchValue(usuario); */
+                this.usuario = usuario;
+                this.formulario.patchValue(usuario);
             })
             .catch(erro => this.errorHandler.handle(erro));
+    }
+
+    carregarRole() {
+        this.roleService.listarTodas()
+            .then(roles => {
+                this.roles = roles;
+            })
+            .catch(erro => this.errorHandler.handle(erro));
+    }
+
+    configurarFormulario() {
+        this.formulario = this.formBuilder.group({
+            username: [null, [this.validarObrigatoriedade, this.validarTamanhoMinimo(4)]],
+            nomeCompleto: [null, [this.validarObrigatoriedade, this.validarTamanhoMinimo(4)]],
+            email: [null, [this.validarObrigatoriedade, Validators.email]],
+            roles: []
+        });
+    }
+
+    validarObrigatoriedade(input: FormControl) {
+        return (input.value ? null : { obrigatoriedade: true });
+    }
+
+    validarTamanhoMinimo(valor: number) {
+        return (input: FormControl) => {
+            return (!input.value || input.value.length >= valor) ? null : { tamanhoMinimo: { tamanho: valor } };
+        };
     }
 
     alternarStatus(usuario: any): void {
@@ -60,11 +91,11 @@ export class UsuarioDetalharComponent implements OnInit {
     onFileUpload(data) {
         const file = data.originalEvent.body;
         this.usuarioService.atualizarImg(this.idNeg, file.nome)
-        .then(() => {
-            this.carregarUsuario(this.idNeg);
-            this.messageService.add({ severity: 'success', detail: `Imagem alterada com sucesso!` });
-        })
-        .catch(erro => this.errorHandler.handle(erro));
+            .then(() => {
+                this.carregarUsuario(this.idNeg);
+                this.messageService.add({ severity: 'success', detail: `Imagem alterada com sucesso!` });
+            })
+            .catch(erro => this.errorHandler.handle(erro));
         this.uploadEmAndamento = false;
     }
 
@@ -78,6 +109,15 @@ export class UsuarioDetalharComponent implements OnInit {
             .then(() => {
                 this.carregarUsuario(this.idNeg);
                 this.messageService.add({ severity: 'success', detail: `Imagem removida com sucesso!` });
+            })
+            .catch(erro => this.errorHandler.handle(erro));
+    }
+
+    atualizarUsuarioDTO() {
+        this.usuarioService.atualizarUsuarioDTO(this.idNeg, this.formulario.value)
+            .then(usuario => {
+                this.formulario.patchValue(usuario);
+                this.messageService.add({ severity: 'success', detail: 'Usuario alterado com sucesso!' });
             })
             .catch(erro => this.errorHandler.handle(erro));
     }

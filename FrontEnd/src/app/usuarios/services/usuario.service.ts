@@ -1,4 +1,4 @@
-import { Usuario } from '../models/usuario.model';
+import { Usuario, UsuarioDTO } from '../models/usuario.model';
 import { environment } from '../../../environments/environment';
 import { MoneyHttp } from '../money-http';
 
@@ -112,5 +112,14 @@ export class UsuarioService {
         return this.http.put(`${this.usuariosUrl}/${id}/removerFoto`, { headers })
             .toPromise()
             .then(() => null);
+    }
+
+    atualizarUsuarioDTO(id: number, usuario: UsuarioDTO): Promise<UsuarioDTO> {
+        return this.http.put<Usuario>(`${this.usuariosUrl}/${id}/atualizar`, usuario)
+        .toPromise()
+        .then(response => {
+            const usuarioAlterado = response;
+            return usuarioAlterado;
+        });
     }
 }

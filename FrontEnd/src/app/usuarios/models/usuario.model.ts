@@ -10,4 +10,11 @@ export class Usuario {
     foto: string;
     urlFoto: string;
     roles: Role;
-  }
+}
+
+export class UsuarioDTO {
+    username: string;
+    nomeCompleto: string;
+    email: string;
+    roles: Role;
+}

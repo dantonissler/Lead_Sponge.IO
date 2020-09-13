@@ -5,7 +5,6 @@
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/motivoPerda/MotivoPerdaRepositoryQuery.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/RoleRepository.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/negociacaoProduto/NegociacaoProduto_.java
-/home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/dto/Anexo.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/tarefa/TipoTarefa.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/services/NegociacaoService.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/cliente/Cliente.java
@@ -23,6 +22,7 @@
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/errorValidate/FileStorageException.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/HistEstagioNegociacaoRepository.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/LeadSpongeApiApplication.java
+/home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/dto/UsuarioDTO.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/services/SegmentoService.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/ImagensRepository.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/endPoints/CampanhaEndPoint.java
@@ -55,6 +55,7 @@
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/tarefa/TarefaRepositoryImpl.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/endPoints/EstagioNegociacaoEndPoint.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/handler/RestExceptionHandler.java
+/home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/dto/AnexoDTO.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/motivoPerda/MotivoPerda_.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/errorValidate/ResourceBadRequestException.java
 /home/danton/workspace/Lead_Sponge.IO/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/security/exception/UsuarioInativaException.java

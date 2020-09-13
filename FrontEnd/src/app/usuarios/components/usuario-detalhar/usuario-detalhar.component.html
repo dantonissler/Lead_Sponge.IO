@@ -2,20 +2,19 @@
     <div class="ui-g-12">
         <h1>Editar Perfil</h1>
     </div>
-    <div class="ui-g-6 ui-g-offset-6 ui-md-2 ui-md-offset-10 ui-fluid" *ngIf="foto == null">
-        <p-fileUpload name="foto" mode="basic" auto="true" maxFileSize="100000000" chooseLabel="Anexar"
-            accept="image/*" [url]="urlUploadAnexo" (onUpload)="onFileUpload($event)" (onError)="erroUpload($event)"
+    <div class="ui-g-6 ui-g-offset-6 ui-md-2 ui-md-offset-10 ui-fluid" *ngIf="usuario.foto == null">
+        <p-fileUpload name="foto" mode="basic" auto="true" maxFileSize="100000000" chooseLabel="Anexar" accept="image/*"
+            [url]="urlUploadAnexo" (onUpload)="onFileUpload($event)" (onError)="erroUpload($event)"
             (onBeforeUpload)="antesUploadAnexo()" [hidden]="uploadEmAndamento">
         </p-fileUpload>
         <p-progressSpinner [hidden]="!uploadEmAndamento" [style]="{ width: '25px', height: '25px' }">
         </p-progressSpinner>
     </div>
-    <div *ngIf="foto != null">
+    <div *ngIf="usuario.foto != null">
         <div class="p-grid p-justify-center">
             <div class="p-col-2">
-                <a target="_blank" [download]="foto" [href]="urlFoto" >
-                    <img style="width: 100%; height: auto; border-radius: 50%"
-                        src="{{urlFoto}}">
+                <a target="_blank" [download]="usuario.foto" [href]="usuario.urlFoto">
+                    <img style="width: 100%; height: auto; border-radius: 50%" [src]="usuario.urlFoto">
                 </a>
             </div>
             <div class="p-col-1">
@@ -25,6 +24,76 @@
             </div>
         </div>
     </div>
-    <div>
+    <div class="ui-g-12">
+        <hr style="width: 100%;">
     </div>
+    <div class="ui-g-12">
+        <h5>Desativar usuario</h5>
+        <p-inputSwitch [(ngModel)]="usuario.enabled" tooltipPosition="top"
+            pTooltip="{{usuario.enabled ? 'Desativar' : 'Ativar'}}" (click)="alternarStatus(usuario)">
+        </p-inputSwitch>
+    </div>
+    <div class="ui-g-12">
+        <hr style="width: 100%;">
+    </div>
+    <form [formGroup]="formulario" autocomplete="off" class="ui-g-12" (ngSubmit)="atualizarUsuarioDTO()">
+        <div class="ui-g">
+            <h5>Alterar informações do cadastro de usuario</h5>
+            <div class="ui-g-12 ui-fluid">
+                <div class="ui-inputgroup">
+                    <span class="ui-inputgroup-addon"><i class="fas fa-user" style="line-height: 1.25;"></i></span>
+                    <span class="ui-float-label">
+                        <input pInputText type="text" name="username" formControlName="username" class="uppercase">
+                        <label for="float-input">Nome de Usuario *</label>
+                    </span>
+                </div>
+                <app-message [control]="formulario.get('username')" error="obrigatoriedade"
+                    text="Informe um nome de usuario.">
+                </app-message>
+                <app-message [control]="formulario.get('username')" error="tamanhoMinimo"
+                    text="Mínimo de {{ formulario.get('username').errors?.tamanhoMinimo?.tamanho }} caracteres.">
+                </app-message>
+            </div>
+            <div class="ui-g-12 ui-fluid">
+                <div class="ui-inputgroup">
+                    <span class="ui-inputgroup-addon"><i class="fas fa-user" style="line-height: 1.25;"></i></span>
+                    <span class="ui-float-label">
+                        <input pInputText type="text" name="nomeCompleto" formControlName="nomeCompleto">
+                        <label for="float-input">Nome Completo *</label>
+                    </span>
+                </div>
+                <app-message [control]="formulario.get('nomeCompleto')" error="obrigatoriedade"
+                    text="Informe o um nome.">
+                </app-message>
+                <app-message [control]="formulario.get('nomeCompleto')" error="tamanhoMinimo"
+                    text="Mínimo de {{ formulario.get('nomeCompleto').errors?.tamanhoMinimo?.tamanho }} caracteres.">
+                </app-message>
+            </div>
+            <div class="ui-g-12 ui-fluid">
+                <div class="ui-inputgroup">
+                    <span class="ui-inputgroup-addon"><i class="fas fa-envelope" style="line-height: 1.25;"></i></span>
+                    <span class="ui-float-label">
+                        <input pInputText type="text" name="email" formControlName="email">
+                        <label for="float-input">E-mail *</label>
+                    </span>
+                </div>
+                <app-message [control]="formulario.get('email')" error="obrigatoriedade" text="Informe um E-mail.">
+                </app-message>
+                <app-message [control]="formulario.get('email')" error="email"
+                    text="Por gentileza insira um E-mail valido.">
+                </app-message>
+            </div>
+            <div class="ui-g-12 ui-md-12 ui-fluid">
+                <p-multiSelect name="roles" [options]="roles" defaultLabel="Selecione as Permissões" optionLabel="nome"
+                    formControlName="roles"></p-multiSelect>
+            </div>
+            <div class="ui-g-12 cadastro-acoes">
+                <button pButton value="submit" type="submit" label="Salvar" [disabled]="formulario.invalid"
+                    style="padding-left:10;" class="ui-button-success"></button>
+            </div>
+        </div>
+    </form>
+    <!-- <div class="ui-g-12">
+        <pre> {{formulario.value | json}} </pre>
+    </div> -->
 </div>
