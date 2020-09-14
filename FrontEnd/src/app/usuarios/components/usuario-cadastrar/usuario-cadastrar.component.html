@@ -1,6 +1,6 @@
 <div class="container">
     <form [formGroup]="formulario" autocomplete="off" (ngSubmit)="salvar()">
-        <div class="ui-g">
+        <div class="p-grid">
             <div class="ui-g-12">
                 <h1>{{ editando ? 'Edição de' : 'Novo' }} Usuario</h1>
             </div>
@@ -22,12 +22,12 @@
                         pTooltip="Remover imagem" tooltipPosition="top" (click)="removerAnexo()"></button>
                 </div>
             </div>
-            <div class="ui-g-12 ui-fluid">
+            <div class="p-field ui-g-12 ui-md-12 ui-lg-12 ui-fluid">
                 <p-inputSwitch name="enabled" formControlName="enabled" binary="false" [(ngModel)]="checked"
                     pTooltip="{{checked === true ? 'Desativar' : 'Ativar'}} usuario">
                 </p-inputSwitch>
             </div>
-            <div class="ui-g-12 ui-fluid">
+            <div class="p-field ui-g-12 ui-md-12 ui-lg-12 ui-fluid">
                 <div class="ui-inputgroup">
                     <span class="ui-inputgroup-addon"><i class="fas fa-user" style="line-height: 1.25;"></i></span>
                     <span class="ui-float-label">
@@ -42,7 +42,7 @@
                     text="Mínimo de {{ formulario.get('username').errors?.tamanhoMinimo?.tamanho }} caracteres.">
                 </app-message>
             </div>
-            <div class="ui-g-12 ui-fluid">
+            <div class="p-field ui-g-12 ui-md-12 ui-lg-12 ui-fluid">
                 <div class="ui-inputgroup">
                     <span class="ui-inputgroup-addon"><i class="fas fa-user" style="line-height: 1.25;"></i></span>
                     <span class="ui-float-label">
@@ -57,7 +57,7 @@
                     text="Mínimo de {{ formulario.get('nomeCompleto').errors?.tamanhoMinimo?.tamanho }} caracteres.">
                 </app-message>
             </div>
-            <div class="ui-g-12 ui-fluid">
+            <div class="p-field ui-g-12 ui-md-12 ui-lg-12 ui-fluid">
                 <div class="ui-inputgroup">
                     <span class="ui-inputgroup-addon"><i class="fas fa-envelope" style="line-height: 1.25;"></i></span>
                     <span class="ui-float-label">
@@ -71,7 +71,7 @@
                     text="Por gentileza insira um E-mail valido.">
                 </app-message>
             </div>
-            <div class="ui-g-6 ui-fluid">
+            <div class="p-field ui-g-12 ui-md-6 ui-lg-6 ui-fluid">
                 <div class="ui-inputgroup">
                     <span class="ui-inputgroup-addon"><i class="fas fa-key" style="line-height: 1.25;"></i></span>
                     <span class="ui-float-label">
@@ -90,7 +90,7 @@
                     text="Mínimo de {{ formulario.get('password').errors?.tamanhoMinimo?.tamanho }} caracteres">
                 </app-message>
             </div>
-            <div class="ui-g-6 ui-fluid">
+            <div class="p-field ui-g-12 ui-md-6 ui-lg-6 ui-fluid">
                 <div class="ui-inputgroup">
                     <span class="ui-inputgroup-addon"><i class="fas fa-key" style="line-height: 1.25;"></i></span>
                     <span class="ui-float-label">
@@ -109,11 +109,11 @@
                 <app-message [control]="formulario" error="passwordNotMatch"
                     text="O campo senha não conhecide com o confirmar senhas"></app-message>
             </div>
-            <div class="ui-g-12 ui-md-12 ui-fluid">
+            <div class="p-field ui-g-12 ui-md-12 ui-lg-12 ui-fluid">
                 <p-multiSelect name="roles" [options]="roles" defaultLabel="Selecione as Permissões" optionLabel="nome"
                     formControlName="roles"></p-multiSelect>
             </div>
-            <div class="ui-g-12 cadastro-acoes">
+            <div class="p-grid ui-g-12 ui-md-12 ui-lg-12 cadastro-acoes">
                 <button pButton value="submit" type="submit" label="Salvar" [disabled]="formulario.invalid"
                     style="padding-left:10;" class="ui-button-success"></button>
                 <button pButton value="Limpar" type="button" label="Limpar" (click)="limpar()"
@@ -123,5 +123,5 @@
             </div>
         </div>
     </form>
-    <pre> {{formulario.value | json}} </pre>
+    <!-- <pre> {{formulario.value | json}} </pre> -->
 </div>
