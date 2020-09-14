@@ -112,6 +112,11 @@
       "name": "leadsponge.seguranca.origin-permitida",
       "type": "java.lang.String",
       "sourceType": "com.leadsponge.IO.config.property.LeadSpongeApiProperty$Seguranca"
+    },
+    {
+      "name": "leadsponge.seguranca.version",
+      "type": "java.lang.String",
+      "sourceType": "com.leadsponge.IO.config.property.LeadSpongeApiProperty$Seguranca"
     }
   ],
   "hints": []
