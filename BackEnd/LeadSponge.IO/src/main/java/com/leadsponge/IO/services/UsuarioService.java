@@ -21,20 +21,13 @@ import com.leadsponge.IO.storage.Disco;
 public class UsuarioService extends ErroMessage {
 
 	@Autowired
-	private final UsuarioRepository repository;
+	private UsuarioRepository repository;
 
 	@Autowired
-	private final Disco disco;
+	private Disco disco;
 
 	@Autowired
-	private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
-	public UsuarioService(UsuarioRepository repository, Disco disco, BCryptPasswordEncoder bCryptPasswordEncoder) {
-		super();
-		this.repository = repository;
-		this.disco = disco;
-		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-	}
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	public Usuario atualizarUsuarioDTO(Long id, UsuarioDTO usuario) {
 		Usuario usuarioSalvo = buscarUsuarioExistente(id);
