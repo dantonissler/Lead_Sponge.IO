@@ -170,3 +170,9 @@ BackEnd/LeadSponge.IO/target/*
 
 
 *.jpg
+
+BackEnd/LeadSponge.IO/.factorypath
+
+*.json
+
+*.lst

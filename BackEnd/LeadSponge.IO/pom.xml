@@ -6,7 +6,7 @@
 
 	<groupId>com.leadsponge</groupId>
 	<artifactId>leadsponge.IO</artifactId>
-	<version>${leadsponge.seguranca.version}</version>
+	<version>0.0.1</version>
 	<packaging>jar</packaging>
 
 	<name>leadsponge.IO</name>

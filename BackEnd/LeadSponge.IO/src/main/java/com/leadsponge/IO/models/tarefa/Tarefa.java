@@ -1,6 +1,6 @@
 package com.leadsponge.IO.models.tarefa;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -48,13 +48,21 @@ public class Tarefa extends UserDateAudit {
 
 	@NotNull
 	@Size(min = 4, max = 50)
+	@Column(name = "assunto")
 	private String assunto;
 
 	@Size(max = 255)
+	@Column(name = "descricao")
 	private String descricao;
 
 	@Column(name = "hora_vencimento")
-	private Date horaMarcada;
+	private LocalDateTime horaMarcada;
+
+	@Column(name = "realizada")
+	private Boolean realizda;
+
+	@Column(name = "hora_realizada")
+	private LocalDateTime horaRealizada;
 
 	@NotNull
 	@Enumerated(EnumType.STRING)

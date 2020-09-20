@@ -18,6 +18,8 @@ public abstract class Tarefa_ {
 	public static volatile SingularAttribute<Tarefa, LocalDateTime> horaMarcada;
 	public static volatile SingularAttribute<Tarefa, TipoTarefa> tipo;
 	public static volatile SingularAttribute<Tarefa, Usuario> usuario;
+	public static volatile SingularAttribute<Tarefa, Boolean> realizda;
+	public static volatile SingularAttribute<Tarefa, LocalDateTime> horaRealizada;
 
 	public static volatile SingularAttribute<Tarefa, Negociacao> negociacao;
 	public static final String ID = "id";

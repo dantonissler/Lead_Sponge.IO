@@ -124,14 +124,14 @@ class UsuarioEndPoint extends ErroMessage {
 
 	@PostMapping("/foto")
 	@PreAuthorize("hasAuthority('CADASTRAR_USUARIO') and #oauth2.hasScope('write')")
-	public AnexoDTO uploadFoto(@RequestParam MultipartFile foto) {
+	AnexoDTO uploadFoto(@RequestParam MultipartFile foto) {
 		String nome = disco.salvarFoto(foto);
 		return new AnexoDTO(nome, disco.configurarUrlFoto(nome));
 	}
 
 	@GetMapping(value = { "/username/{username}", "/username/{username}/" })
 	@PreAuthorize("hasAuthority('PESQUISAR_USUARIO') and #oauth2.hasScope('read')")
-	public ResponseEntity<Usuario> encontrarPeloNome(@Valid @PathVariable String username) {
+	ResponseEntity<Usuario> encontrarPeloNome(@Valid @PathVariable String username) {
 		return ResponseEntity
 				.ok(repository.findByUsername(username).orElseThrow(() -> notFould(username + "o usuario")));
 	}

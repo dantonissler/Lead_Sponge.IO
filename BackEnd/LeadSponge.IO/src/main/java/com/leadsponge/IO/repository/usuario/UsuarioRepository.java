@@ -12,6 +12,6 @@ import com.leadsponge.IO.models.usuario.Usuario;
 public interface UsuarioRepository extends JpaRepository<Usuario, Long>, UsuarioRepositoryQuery {
 
 	public Optional<Usuario> findByUsername(String username);
-
 	public List<Usuario> findByRoles(String nomeRole);
+	public List<Usuario> findByRolesNome(String permissaoDescricao);
 }

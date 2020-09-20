@@ -55,6 +55,5 @@ public class LeadSpongeApiProperty {
 	public class Seguranca {
 		private String originPermitida;
 		private boolean enableHttps;
-		private String version;
 	}
 }
