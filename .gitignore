@@ -173,6 +173,8 @@ BackEnd/LeadSponge.IO/target/*
 
 BackEnd/LeadSponge.IO/.factorypath
 
-*.json
-
 *.lst
+
+BackEnd/LeadSponge.IO/.classpath
+
+*.iml

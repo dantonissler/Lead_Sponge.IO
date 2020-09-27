@@ -78,9 +78,9 @@
 //	CommandLineRunner initTableUsuario(UsuarioService repository, RoleRepository roleRepository) {
 //		return args -> {
 //			repository.salvar(new Usuario("admin", "Danton Issler Rodrigues", "danton.issler18@gmail.com", "admin", "admin",
+//					new HashSet<>(roleRepository.findAll())));
 //					true, "98ad18d9-d419-4099-864d-6a9317e6ec29_1.jpg",
 //					"/assets/img/perfil/98ad18d9-d419-4099-864d-6a9317e6ec29_1.jpg",
-//					new HashSet<>(roleRepository.findAll())));
 //		};
 //	}
 //
