@@ -9,8 +9,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.leadsponge.IO.LeadSpongeApiApplication;
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes=LeadSpongeApiApplication.class)
-@SpringBootTest(classes={LeadSpongeApiApplication.class})
+@ContextConfiguration(classes = LeadSpongeApiApplication.class)
+@SpringBootTest(classes = { LeadSpongeApiApplication.class })
 class ApplicationTests {
 
 	@Test

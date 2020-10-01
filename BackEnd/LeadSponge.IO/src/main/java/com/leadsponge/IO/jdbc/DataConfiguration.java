@@ -1,4 +1,4 @@
-package com.leadsponge.IO.data;
+package com.leadsponge.IO.jdbc;
 
 import javax.sql.DataSource;
 
