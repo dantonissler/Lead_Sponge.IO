@@ -29,6 +29,7 @@ import com.leadsponge.IO.models.View;
 import com.leadsponge.IO.models.audit.UserDateAudit;
 import com.leadsponge.IO.models.campanha.Campanha;
 import com.leadsponge.IO.models.cliente.Cliente;
+import com.leadsponge.IO.models.enumerate.EstatusNegociacao;
 import com.leadsponge.IO.models.estagioNegociacao.EstagioNegociacao;
 import com.leadsponge.IO.models.fonteNegociacao.FonteNegociacao;
 import com.leadsponge.IO.models.historicoEstagioNegociacao.HistEstagioNegociacao;
@@ -59,7 +60,8 @@ public class Negociacao extends UserDateAudit {
 	private Long id;
 
 	@Column(name = "nome")
-	@Size(min = 4, max = 50)
+	@Size(min = 4, max = 50, message = "{nome.size}")
+	@NotNull(message = "{nome.null}")
 	private String nome;
 
 	@Column(name = "avaliacao")

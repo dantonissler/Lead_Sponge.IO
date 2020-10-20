@@ -1,9 +1,9 @@
-package com.leadsponge.IO.security.implementated;
+package com.leadsponge.IO.config.security.implementated;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import com.leadsponge.IO.security.SecurityService;
+import com.leadsponge.IO.config.security.SecurityService;
 
 @Service
 public class SecurityServiceImpl implements SecurityService{

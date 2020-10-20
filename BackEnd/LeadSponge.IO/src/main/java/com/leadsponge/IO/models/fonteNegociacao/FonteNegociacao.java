@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -42,7 +43,9 @@ public class FonteNegociacao extends UserDateAudit {
 	@GeneratedValue(strategy = GenerationType.TABLE, generator = "fonte_negociacao_id")
 	private Long id;
 
-	@Size(min = 4, max = 50)
+	@Size(min = 4, max = 50, message = "{nome.size}")
+	@NotNull(message = "{nome.null}")
+	@Column(name = "nome")
 	private String nome;
 
 	@JsonIgnoreProperties("fonte")

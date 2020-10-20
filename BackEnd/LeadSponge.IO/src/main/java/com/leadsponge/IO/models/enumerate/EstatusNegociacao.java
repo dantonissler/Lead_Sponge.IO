@@ -1,4 +1,4 @@
-package com.leadsponge.IO.models.negociacao;
+package com.leadsponge.IO.models.enumerate;
 
 public enum EstatusNegociacao {
 	EMANDAMENTO("Em andamento"),

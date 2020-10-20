@@ -46,7 +46,9 @@ public class Produto extends UserDateAudit {
 	@GeneratedValue(strategy = GenerationType.TABLE, generator = "produto_id")
 	private Long id;
 
+	@Column(name = "nome")
 	@Size(min = 4, max = 100, message = "{produto.nome.size}")
+	@NotNull(message = "{nome.null}")
 	private String nome;
 
 	@Size(max = 150, message = "{produto.descricao.size}")

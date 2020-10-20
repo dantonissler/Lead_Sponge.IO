@@ -23,6 +23,7 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -62,6 +63,7 @@ public class Usuario extends UserDateAudit implements UserDetails {
 	private Long id;
 
 	@Column(name = "username", unique = true)
+	@NotNull(message = "{login.null}")
 	@Size(min = 4, max = 32, message = "{login.size}")
 	private String username;
 

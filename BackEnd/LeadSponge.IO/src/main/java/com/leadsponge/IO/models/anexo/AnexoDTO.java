@@ -1,4 +1,4 @@
-package com.leadsponge.IO.dto;
+package com.leadsponge.IO.models.anexo;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

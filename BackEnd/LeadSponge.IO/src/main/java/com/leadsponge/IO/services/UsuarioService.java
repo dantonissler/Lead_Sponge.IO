@@ -9,12 +9,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import com.leadsponge.IO.dto.UsuarioDTO;
 import com.leadsponge.IO.errorValidate.ErroMessage;
 import com.leadsponge.IO.errorValidate.ResourceBadRequestException;
+import com.leadsponge.IO.errorValidate.exception.UsuarioInativaException;
 import com.leadsponge.IO.models.usuario.Usuario;
+import com.leadsponge.IO.models.usuario.UsuarioDTO;
 import com.leadsponge.IO.repository.usuario.UsuarioRepository;
-import com.leadsponge.IO.security.exception.UsuarioInativaException;
 import com.leadsponge.IO.storage.Disco;
 
 @Service

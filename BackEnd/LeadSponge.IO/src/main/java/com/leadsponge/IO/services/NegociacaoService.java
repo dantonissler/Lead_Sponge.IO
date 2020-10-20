@@ -9,14 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.leadsponge.IO.errorValidate.ErroMessage;
+import com.leadsponge.IO.errorValidate.exception.UsuarioInativaException;
+import com.leadsponge.IO.models.enumerate.EstatusNegociacao;
+import com.leadsponge.IO.models.enumerate.TipoReincidencia;
 import com.leadsponge.IO.models.estagioNegociacao.EstagioNegociacao;
 import com.leadsponge.IO.models.motivoPerda.MotivoPerda;
-import com.leadsponge.IO.models.negociacao.EstatusNegociacao;
 import com.leadsponge.IO.models.negociacao.Negociacao;
-import com.leadsponge.IO.models.negociacaoProduto.TipoReincidencia;
 import com.leadsponge.IO.repository.cliente.ClienteRepository;
 import com.leadsponge.IO.repository.negociacao.NegociacaoRepository;
-import com.leadsponge.IO.security.exception.UsuarioInativaException;
 
 @Service
 public class NegociacaoService extends ErroMessage{

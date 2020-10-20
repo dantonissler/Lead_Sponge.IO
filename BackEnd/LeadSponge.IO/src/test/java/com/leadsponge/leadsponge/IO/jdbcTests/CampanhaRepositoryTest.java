@@ -13,7 +13,6 @@ import com.leadsponge.IO.LeadSpongeApiApplication;
 import com.leadsponge.IO.models.campanha.Campanha;
 import com.leadsponge.IO.repository.campanha.CampanhaRepository;
 
-
 @DataJpaTest
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = LeadSpongeApiApplication.class)
@@ -39,4 +38,30 @@ public class CampanhaRepositoryTest {
 		assertThat(repository.findById(campanha.getId())).isEmpty();
 	}
 
+	@Test
+	public void quandoUpdate_eAlterarEPersistirOsDados() {
+		Campanha campanha = new Campanha(null, "Nome de uma campanha", "Descrição de uma campanha");
+		this.repository.save(campanha);
+		campanha = new Campanha(null, "Nome dois", "Descrição dois");
+		this.repository.save(campanha);
+		campanha = repository.findById(campanha.getId()).orElse(null);
+		assertThat(campanha.getNome()).isEqualTo("Nome dois");
+		assertThat(campanha.getDescricao()).isEqualTo("Descrição dois");
+	}
+/**
+ * 	TODO não consegui implementar ainda por que para exibir o erro implementei a classe ValidationErrorDetails
+ */
+//	@Test
+//	public void quandoNomeMenorDe4Letras_dispararExecao() {
+//		Exception exception = assertThrows(ConstraintViolationException.class,
+//				() -> repository.save(new Campanha(null, null, "Descrição")));
+//		assertThat(exception.getCause());
+//	}
+//
+//	@Test
+//	public void quandoNomeMaiorDe50Letras_dispararExecao() {
+//		Exception exception = assertThrows(ConstraintViolationException.class, () -> repository
+//				.save(new Campanha(null, "dsadasdsaadsadasdsaadsadasdsaadsadasdsaadsadasdsaaa", "Descrição")));
+//		assertTrue(exception.getMessage().contains("O nome deve ter entre 4 e 50 caracteres."));
+//	}
 }

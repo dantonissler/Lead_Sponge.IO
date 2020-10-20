@@ -7,9 +7,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.leadsponge.IO.errorValidate.exception.UsuarioInativaException;
 import com.leadsponge.IO.models.cliente.Cliente;
 import com.leadsponge.IO.repository.cliente.ClienteRepository;
-import com.leadsponge.IO.security.exception.UsuarioInativaException;
 
 @Service
 public class ClienteService {

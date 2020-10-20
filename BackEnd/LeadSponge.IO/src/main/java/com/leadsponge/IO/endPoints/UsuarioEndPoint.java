@@ -22,11 +22,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.leadsponge.IO.dto.AnexoDTO;
-import com.leadsponge.IO.dto.UsuarioDTO;
 import com.leadsponge.IO.errorValidate.ErroMessage;
 import com.leadsponge.IO.event.RecursoCriadoEvent;
+import com.leadsponge.IO.models.anexo.AnexoDTO;
 import com.leadsponge.IO.models.usuario.Usuario;
+import com.leadsponge.IO.models.usuario.UsuarioDTO;
 import com.leadsponge.IO.repository.Filter.UsuarioFilter;
 import com.leadsponge.IO.repository.projection.ResumoUsuario;
 import com.leadsponge.IO.repository.usuario.UsuarioRepository;

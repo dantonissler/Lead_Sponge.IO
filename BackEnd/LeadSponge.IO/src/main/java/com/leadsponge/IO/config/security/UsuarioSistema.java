@@ -1,4 +1,4 @@
-package com.leadsponge.IO.security;
+package com.leadsponge.IO.config.security;
 
 import java.util.Collection;
 

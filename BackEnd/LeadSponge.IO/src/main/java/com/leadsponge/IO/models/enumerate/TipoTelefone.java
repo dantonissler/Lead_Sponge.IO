@@ -1,4 +1,4 @@
-package com.leadsponge.IO.models.telefone;
+package com.leadsponge.IO.models.enumerate;
 
 public enum TipoTelefone {
 	

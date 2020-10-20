@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.leadsponge.IO.models.View;
 import com.leadsponge.IO.models.audit.UserDateAudit;
 import com.leadsponge.IO.models.contato.Contato;
+import com.leadsponge.IO.models.enumerate.TipoTelefone;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

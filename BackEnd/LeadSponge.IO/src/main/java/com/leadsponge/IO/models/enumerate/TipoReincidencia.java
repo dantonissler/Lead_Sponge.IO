@@ -1,4 +1,4 @@
-package com.leadsponge.IO.models.negociacaoProduto;
+package com.leadsponge.IO.models.enumerate;
 
 public enum TipoReincidencia {
 	UNICO("Único"), RECORRENTE("Recorrente");

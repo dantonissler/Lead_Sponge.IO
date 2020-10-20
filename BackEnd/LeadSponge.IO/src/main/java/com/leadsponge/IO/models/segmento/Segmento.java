@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -41,7 +42,9 @@ public class Segmento extends UserDateAudit {
 	@GeneratedValue(strategy = GenerationType.TABLE, generator = "segmento_id")
 	private Long id;
 
-	@Size(min = 4, max = 50)
+	@Column(name = "nome")
+	@NotNull(message = "{nome.null}")
+	@Size(min = 4, max = 50, message = "{nome.size}")
 	private String nome;
 
 	@ManyToMany(mappedBy = "segmentos", cascade = CascadeType.ALL)

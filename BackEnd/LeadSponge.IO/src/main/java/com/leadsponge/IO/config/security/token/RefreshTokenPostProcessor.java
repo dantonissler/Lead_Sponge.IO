@@ -1,4 +1,4 @@
-package com.leadsponge.IO.token;
+package com.leadsponge.IO.config.security.token;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;

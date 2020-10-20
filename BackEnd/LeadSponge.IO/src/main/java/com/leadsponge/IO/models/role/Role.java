@@ -11,6 +11,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.springframework.security.core.GrantedAuthority;
 
@@ -42,6 +44,8 @@ public class Role implements GrantedAuthority {
 	private Long id;
 
 	@Column(name = "nome")
+	@Size(min = 4, max = 100, message = "{produto.nome.size}")
+	@NotNull(message = "{nome.null}")
 	private String nome;
 
 	@ManyToMany(mappedBy = "roles")

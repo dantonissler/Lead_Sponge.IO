@@ -44,8 +44,8 @@ public class EstagioNegociacao extends UserDateAudit {
 	private Long id;
 
 	@Column(name = "nome")
-	@NotNull
-	@Size(min = 4, max = 50)
+	@NotNull(message = "{nome.null}")
+	@Size(min = 4, max = 50, message = "{nome.size}")
 	private String nome;
 
 	@Column(name = "apelido")

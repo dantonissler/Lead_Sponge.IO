@@ -6,6 +6,7 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
+import com.leadsponge.IO.models.enumerate.TipoTarefa;
 import com.leadsponge.IO.models.negociacao.Negociacao;
 import com.leadsponge.IO.models.usuario.Usuario;
 

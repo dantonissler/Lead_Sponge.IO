@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.leadsponge.IO.models.View;
 import com.leadsponge.IO.models.audit.UserDateAudit;
+import com.leadsponge.IO.models.enumerate.TipoTarefa;
 import com.leadsponge.IO.models.negociacao.Negociacao;
 import com.leadsponge.IO.models.usuario.Usuario;
 
@@ -46,9 +47,9 @@ public class Tarefa extends UserDateAudit {
 	@GeneratedValue(strategy = GenerationType.TABLE, generator = "tarefa_id")
 	private Long id;
 
-	@NotNull
-	@Size(min = 4, max = 50)
 	@Column(name = "assunto")
+	@NotNull(message = "{assunto.null}")
+	@Size(min = 4, max = 50, message = "{assunto.size}")
 	private String assunto;
 
 	@Size(max = 255)

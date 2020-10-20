@@ -1,17 +1,12 @@
 package com.leadsponge.IO.errorValidate;
 
+import lombok.Getter;
+
+@Getter
 public class ValidationErrorDetails extends ErrorDetails {
 
 	private String field;
 	private String fieldMessage;
-
-	public String getField() {
-		return field;
-	}
-
-	public String getFieldMessage() {
-		return fieldMessage;
-	}
 
 	public static final class Builder {
 		private String title;

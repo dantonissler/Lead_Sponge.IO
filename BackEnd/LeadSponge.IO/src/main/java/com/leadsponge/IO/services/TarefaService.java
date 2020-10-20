@@ -11,12 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import com.leadsponge.IO.errorValidate.exception.UsuarioInativaException;
 import com.leadsponge.IO.mail.Mailer;
 import com.leadsponge.IO.models.tarefa.Tarefa;
 import com.leadsponge.IO.models.usuario.Usuario;
 import com.leadsponge.IO.repository.tarefa.TarefaRepository;
 import com.leadsponge.IO.repository.usuario.UsuarioRepository;
-import com.leadsponge.IO.security.exception.UsuarioInativaException;
 
 @Service
 public class TarefaService {

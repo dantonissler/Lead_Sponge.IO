@@ -2,7 +2,7 @@ package com.leadsponge.IO.repository.projection;
 
 import java.util.Date;
 
-import com.leadsponge.IO.models.tarefa.TipoTarefa;
+import com.leadsponge.IO.models.enumerate.TipoTarefa;
 
 public class ResumoTarefa {
 

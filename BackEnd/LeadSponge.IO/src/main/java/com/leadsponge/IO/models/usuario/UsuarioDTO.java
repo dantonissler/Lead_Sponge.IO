@@ -1,4 +1,4 @@
-package com.leadsponge.IO.dto;
+package com.leadsponge.IO.models.usuario;
 
 import java.util.Set;
 
@@ -10,6 +10,7 @@ import javax.persistence.ManyToMany;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -27,6 +28,7 @@ import lombok.Setter;
 public class UsuarioDTO {
 
 	@Column(name = "username", unique = true)
+	@NotNull(message = "{login.null}")
 	@Size(min = 4, max = 32, message = "{login.size}")
 	private String username;
 

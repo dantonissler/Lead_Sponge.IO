@@ -6,9 +6,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.leadsponge.IO.errorValidate.exception.UsuarioInativaException;
 import com.leadsponge.IO.models.produto.Produto;
 import com.leadsponge.IO.repository.produto.ProdutoRepository;
-import com.leadsponge.IO.security.exception.UsuarioInativaException;
 
 @Service
 public class ProdutoService {

@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -50,34 +51,40 @@ public class Cliente extends UserDateAudit {
 	@GeneratedValue(strategy = GenerationType.TABLE, generator = "cliente_id")
 	private Long id;
 
-	@Size(min = 4, max = 50)
+	@Column(name = "nome")
+	@NotNull(message = "{nome.null}")
+	@Size(min = 4, max = 50, message = "{nome.size}")
 	private String nome;
 
-	@Size(max = 1000)
+	@Size(max = 1024, message = "{descricao.max}")
 	private String url;
 
-	@Size(max = 255)
+	@Size(max = 1024, message = "{descricao.max}")
 	private String resumo;
 
-	@JsonIgnoreProperties("cliente")
 	@Valid
+	@JsonIgnoreProperties("cliente")
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
 	private List<Contato> contato = new ArrayList<>();
 
+	@Valid
 	@JsonIgnoreProperties(value = { "cliente", "clientes", "clientesSeguidos", "roles", "tarefas" })
 	@OneToMany(mappedBy = "cliente")
 	private List<Negociacao> negociacoes;
 
+	@Valid
 	@ManyToMany
 	@JsonIgnoreProperties("clientes")
 	@JoinTable(name = "segmentos_clientes", joinColumns = @JoinColumn(name = "cliente_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "segmento_id", referencedColumnName = "id"))
 	private List<Segmento> segmentos = new ArrayList<>();
 
+	@Valid
 	@ManyToMany
 	@JsonIgnoreProperties(value = { "clientes", "clientesSeguidos", "roles", "tarefas" })
 	@JoinTable(name = "seguidores_clientesSeguidos", joinColumns = @JoinColumn(name = "clientesSeguidos_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "seguidor_id", referencedColumnName = "id"))
 	private List<Usuario> seguidores = new ArrayList<>();
 
+	@Valid
 	@JsonIgnoreProperties(value = { "clientes", "clientesSeguidos", "roles", "tarefas" })
 	@ManyToOne
 	@JoinColumn(name = "responsavel_id")

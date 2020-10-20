@@ -1,4 +1,4 @@
-package com.leadsponge.IO.token;
+package com.leadsponge.IO.config.security.token;
 
 import java.io.IOException;
 import java.util.Map;

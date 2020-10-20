@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonView;
@@ -39,6 +40,8 @@ public class Campanha extends UserDateAudit implements Serializable {
 	@GeneratedValue(strategy = GenerationType.TABLE, generator = "campanha_id")
 	private Long id;
 
+	@Column(name = "nome")
+	@NotNull(message = "{nome.null}")
 	@Size(min = 4, max = 50, message = "{nome.size}")
 	private String nome;
 
