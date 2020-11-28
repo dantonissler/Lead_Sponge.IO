@@ -46,16 +46,12 @@ public class UsuarioRepositoryImpl implements UsuarioRepositoryQuery {
 		CriteriaBuilder builder = manager.getCriteriaBuilder();
 		CriteriaQuery<ResumoUsuario> criteria = builder.createQuery(ResumoUsuario.class);
 		Root<Usuario> root = criteria.from(Usuario.class);
-//		From<Usuario, Role> roleJoin = root.join(Usuario_.roles, JoinType.LEFT);
-
 		criteria.select(builder.construct(ResumoUsuario.class
 				, root.get(Usuario_.id)
 				, root.get(Usuario_.username)
 				, root.get(Usuario_.nomeCompleto)
 				, root.get(Usuario_.email)
-//				, roleJoin.get(Role_.nome)// TODO : Fazer isso funcionar
 				, root.get(Usuario_.enabled)));
-
 		Predicate[] predicates = criarRestricoes(usuarioFilter, builder, root);
 		criteria.where(predicates);
 		TypedQuery<ResumoUsuario> query = manager.createQuery(criteria);

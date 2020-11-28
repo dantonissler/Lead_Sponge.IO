@@ -6,8 +6,6 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-import com.leadsponge.IO.models.enumerate.TipoTarefa;
-import com.leadsponge.IO.models.negociacao.Negociacao;
 import com.leadsponge.IO.models.usuario.Usuario;
 
 @Generated(value = "org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor")
@@ -21,14 +19,4 @@ public abstract class Tarefa_ {
 	public static volatile SingularAttribute<Tarefa, Usuario> usuario;
 	public static volatile SingularAttribute<Tarefa, Boolean> realizda;
 	public static volatile SingularAttribute<Tarefa, LocalDateTime> horaRealizada;
-
-	public static volatile SingularAttribute<Tarefa, Negociacao> negociacao;
-	public static final String ID = "id";
-	public static final String ASSUNTO = "assunto";
-	public static final String DESCRICAO = "descricao";
-	public static final String HORA_MARCADA = "horaMarcada";
-	public static final String TIPO = "tipo";
-	public static final String USUARIO = "usuario";
-	public static final String CLIENTE = "cliente";
-	public static final String NEGOCIACAO = "negociacao";
 }

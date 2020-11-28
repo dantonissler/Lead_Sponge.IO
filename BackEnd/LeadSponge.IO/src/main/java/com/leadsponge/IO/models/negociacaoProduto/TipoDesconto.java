@@ -1,4 +1,4 @@
-package com.leadsponge.IO.models.enumerate;
+package com.leadsponge.IO.models.negociacaoProduto;
 
 public enum TipoDesconto {
 	PORCENTAGEM("porcentagem"), VALOR("valor");

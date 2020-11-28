@@ -1,4 +1,4 @@
-package com.leadsponge.IO.models.enumerate;
+package com.leadsponge.IO.models.tarefa;
 
 public enum TipoTarefa {
 	EMAIL("E-mail"),

@@ -29,7 +29,6 @@ import com.leadsponge.IO.models.View;
 import com.leadsponge.IO.models.audit.UserDateAudit;
 import com.leadsponge.IO.models.campanha.Campanha;
 import com.leadsponge.IO.models.cliente.Cliente;
-import com.leadsponge.IO.models.enumerate.EstatusNegociacao;
 import com.leadsponge.IO.models.estagioNegociacao.EstagioNegociacao;
 import com.leadsponge.IO.models.fonteNegociacao.FonteNegociacao;
 import com.leadsponge.IO.models.historicoEstagioNegociacao.HistEstagioNegociacao;

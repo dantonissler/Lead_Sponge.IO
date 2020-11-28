@@ -1,62 +1,22 @@
 package com.leadsponge.IO.repository.projection;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
-import com.leadsponge.IO.models.enumerate.TipoTarefa;
+import com.leadsponge.IO.models.tarefa.TipoTarefa;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ResumoTarefa {
-
 	private Long id;
 	private String assunto;
-	private Date horaMarcada;
+	private LocalDateTime horaMarcada;
 	private TipoTarefa tipo;
 	private String usuario;
-
-	public ResumoTarefa(Long id, String assunto, Date horaMarcada, TipoTarefa tipo, String usuario) {
-		this.id = id;
-		this.assunto = assunto;
-		this.horaMarcada = horaMarcada;
-		this.tipo = tipo;
-		this.usuario = usuario;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getAssunto() {
-		return assunto;
-	}
-
-	public void setAssunto(String assunto) {
-		this.assunto = assunto;
-	}
-
-	public Date getHoraMarcada() {
-		return horaMarcada;
-	}
-
-	public void setHoraMarcada(Date horaMarcada) {
-		this.horaMarcada = horaMarcada;
-	}
-
-	public TipoTarefa getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(TipoTarefa tipo) {
-		this.tipo = tipo;
-	}
-
-	public String getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
-	}
 }

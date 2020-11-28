@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.leadsponge.IO.errorValidate.ErroMessage;
-import com.leadsponge.IO.models.enumerate.TipoDesconto;
 import com.leadsponge.IO.models.negociacaoProduto.NegociacaoProduto;
+import com.leadsponge.IO.models.negociacaoProduto.TipoDesconto;
 import com.leadsponge.IO.repository.NegociacaoProdutoRepository;
 import com.leadsponge.IO.repository.negociacao.NegociacaoRepository;
 import com.leadsponge.IO.repository.produto.ProdutoRepository;

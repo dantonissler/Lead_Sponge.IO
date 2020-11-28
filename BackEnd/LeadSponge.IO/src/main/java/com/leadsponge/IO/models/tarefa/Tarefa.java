@@ -21,7 +21,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.leadsponge.IO.models.View;
 import com.leadsponge.IO.models.audit.UserDateAudit;
-import com.leadsponge.IO.models.enumerate.TipoTarefa;
 import com.leadsponge.IO.models.negociacao.Negociacao;
 import com.leadsponge.IO.models.usuario.Usuario;
 
@@ -69,16 +68,16 @@ public class Tarefa extends UserDateAudit {
 	@Enumerated(EnumType.STRING)
 	private TipoTarefa tipo;
 
-	@JsonIgnoreProperties(value = { "tarefas", "roles", "clientesSeguidos" })
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "usuario_id")
+	@JsonIgnoreProperties(value = { "tarefas", "roles", "clientesSeguidos" })
 	private Usuario usuario;
 
-	@JsonIgnoreProperties(value = { "cliente", "tarefa" })
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "negociacao_id")
+	@JsonIgnoreProperties(value = { "cliente", "tarefa" })
 	private Negociacao negociacao;
 
 	@JsonIgnore

@@ -16,9 +16,8 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.leadsponge.IO.models.View;
 import com.leadsponge.IO.models.audit.UserDateAudit;
-import com.leadsponge.IO.models.enumerate.TipoDesconto;
-import com.leadsponge.IO.models.enumerate.TipoReincidencia;
 import com.leadsponge.IO.models.negociacao.Negociacao;
+import com.leadsponge.IO.models.negociacao.TipoReincidencia;
 import com.leadsponge.IO.models.produto.Produto;
 
 import lombok.AllArgsConstructor;

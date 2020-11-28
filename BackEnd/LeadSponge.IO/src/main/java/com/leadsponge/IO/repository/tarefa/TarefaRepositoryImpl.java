@@ -32,11 +32,12 @@ public class TarefaRepositoryImpl implements TarefaRepositoryQuery {
 		CriteriaBuilder builder = manager.getCriteriaBuilder();
 		CriteriaQuery<ResumoTarefa> criteria = builder.createQuery(ResumoTarefa.class);
 		Root<Tarefa> root = criteria.from(Tarefa.class);
-
-		criteria.select(builder.construct(ResumoTarefa.class, root.get(Tarefa_.id), root.get(Tarefa_.assunto),
-				root.get(Tarefa_.horaMarcada), root.get(Tarefa_.tipo),
+		criteria.select(builder.construct(ResumoTarefa.class,
+				root.get(Tarefa_.id),
+				root.get(Tarefa_.assunto),
+				root.get(Tarefa_.horaMarcada),
+				root.get(Tarefa_.tipo),
 				root.get(Tarefa_.usuario).get(Usuario_.nomeCompleto)));
-
 		Predicate[] predicates = criarRestricoes(tarefaFilter, builder, root);
 		criteria.where(predicates);
 		TypedQuery<ResumoTarefa> query = manager.createQuery(criteria);

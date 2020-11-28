@@ -5,7 +5,6 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
 import com.leadsponge.IO.models.contato.Contato;
-import com.leadsponge.IO.models.enumerate.TipoTelefone;
 
 @Generated(value = "org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor")
 @StaticMetamodel(Telefone.class)

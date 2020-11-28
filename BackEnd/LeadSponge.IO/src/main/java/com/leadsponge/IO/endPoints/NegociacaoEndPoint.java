@@ -24,9 +24,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.leadsponge.IO.errorValidate.ErroMessage;
 import com.leadsponge.IO.event.RecursoCriadoEvent;
-import com.leadsponge.IO.models.enumerate.EstatusNegociacao;
 import com.leadsponge.IO.models.estagioNegociacao.EstagioNegociacao;
 import com.leadsponge.IO.models.motivoPerda.MotivoPerda;
+import com.leadsponge.IO.models.negociacao.EstatusNegociacao;
 import com.leadsponge.IO.models.negociacao.Negociacao;
 import com.leadsponge.IO.repository.Filter.NegociacaoFilter;
 import com.leadsponge.IO.repository.negociacao.NegociacaoRepository;
