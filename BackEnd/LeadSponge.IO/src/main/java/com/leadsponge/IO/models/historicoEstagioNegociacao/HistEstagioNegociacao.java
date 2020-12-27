@@ -26,8 +26,6 @@ import lombok.Setter;
 
 @Entity
 @Data
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "hist_estagio_negociacao")
