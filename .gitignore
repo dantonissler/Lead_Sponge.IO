@@ -188,3 +188,7 @@ BackEnd/LeadSponge.IO/.settings/
 BackEnd/LeadSponge.IO/idea/
 
 BackEnd/LeadSponge.IO/.idea/
+
+.metadata/.plugins/org.eclipse.ui.workbench/
+
+.metadata/
