@@ -13,7 +13,7 @@ import com.leadsponge.IO.errorValidate.ErroMessage;
 import com.leadsponge.IO.errorValidate.ResourceBadRequestException;
 import com.leadsponge.IO.errorValidate.exception.UsuarioInativaException;
 import com.leadsponge.IO.models.usuario.Usuario;
-import com.leadsponge.IO.models.usuario.UsuarioDTO;
+import com.leadsponge.IO.models.usuario.UsuarioTO;
 import com.leadsponge.IO.repository.usuario.UsuarioRepository;
 import com.leadsponge.IO.storage.Disco;
 
@@ -29,7 +29,7 @@ public class UsuarioService extends ErroMessage {
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-	public Usuario atualizarUsuarioDTO(Long id, UsuarioDTO usuario) {
+	public Usuario atualizarUsuarioDTO(Long id, UsuarioTO usuario) {
 		Usuario usuarioSalvo = buscarUsuarioExistente(id);
 		usuarioSalvo.getRoles().clear();
 		usuarioSalvo.getRoles().addAll(usuario.getRoles());

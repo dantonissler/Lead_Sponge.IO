@@ -8,9 +8,7 @@ import com.leadsponge.IO.models.audit.UserDateAudit;
 import com.leadsponge.IO.models.cliente.Cliente;
 import com.leadsponge.IO.models.role.Role;
 import com.leadsponge.IO.models.tarefa.Tarefa;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

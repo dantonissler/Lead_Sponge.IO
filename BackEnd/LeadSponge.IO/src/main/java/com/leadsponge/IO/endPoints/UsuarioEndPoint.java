@@ -26,7 +26,7 @@ import com.leadsponge.IO.errorValidate.ErroMessage;
 import com.leadsponge.IO.event.RecursoCriadoEvent;
 import com.leadsponge.IO.models.anexo.AnexoDTO;
 import com.leadsponge.IO.models.usuario.Usuario;
-import com.leadsponge.IO.models.usuario.UsuarioDTO;
+import com.leadsponge.IO.models.usuario.UsuarioTO;
 import com.leadsponge.IO.repository.Filter.UsuarioFilter;
 import com.leadsponge.IO.repository.projection.ResumoUsuario;
 import com.leadsponge.IO.repository.usuario.UsuarioRepository;
@@ -163,7 +163,7 @@ class UsuarioEndPoint extends ErroMessage {
 	@PutMapping(value = { "/{id}/atualizar", "/{id}/atualizar/" })
 	@ResponseStatus(HttpStatus.CREATED)
 	@PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
-	ResponseEntity<UsuarioDTO> atualizarUsuarioDTO(@PathVariable Long id, @RequestBody UsuarioDTO usuario) {
+	ResponseEntity<UsuarioTO> atualizarUsuarioDTO(@PathVariable Long id, @RequestBody UsuarioTO usuario) {
 		try {
 			service.atualizarUsuarioDTO(id, usuario);
 			return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
