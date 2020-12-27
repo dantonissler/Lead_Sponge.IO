@@ -166,7 +166,7 @@ FrontEnd/baseline.json
 
 *.original
 
-BackEnd/LeadSponge.IO/target/*
+BackEnd/LeadSponge.IO/target/
 
 
 *.jpg
@@ -178,3 +178,11 @@ BackEnd/LeadSponge.IO/.factorypath
 BackEnd/LeadSponge.IO/.classpath
 
 *.iml
+
+BackEnd/LeadSponge.IO/.attach_pid*
+
+BackEnd/LeadSponge.IO/.project
+
+BackEnd/LeadSponge.IO/.settings/
+
+BackEnd/LeadSponge.IO/idea/
