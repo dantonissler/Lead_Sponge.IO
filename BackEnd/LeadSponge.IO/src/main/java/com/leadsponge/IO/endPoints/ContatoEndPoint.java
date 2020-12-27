@@ -51,6 +51,7 @@ class ContatoEndPoint extends ErroMessage {
 	@ResponseStatus(HttpStatus.OK)
 	@PreAuthorize("hasAuthority('PESQUISAR_CONTATO') and #oauth2.hasScope('read')")
 	Page<Contato> pesquisar(ContatoFilter contatoFilter, Pageable pageable) {
+
 		return repository.filtrar(contatoFilter, pageable);
 	}
 	
