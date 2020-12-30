@@ -1,4 +1,4 @@
-package com.leadsponge.leadsponge.IO.serviceTestes;
+package com.leadsponge.leadsponge.IO.jdbcServiceTestes;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
