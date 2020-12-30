@@ -23,14 +23,10 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
 	@Autowired
 	private LeadSpongeApiProperty property;
-	
+
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
-		http
-			.cors().and()
-			.csrf().disable()
-			.authorizeRequests().anyRequest().authenticated().and()
-			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and();
+		http.cors().and().csrf().disable().authorizeRequests().anyRequest().authenticated().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and();
 	}
 
 	@Override

@@ -42,9 +42,8 @@ public class ClienteRepositoryImpl implements ClienteRepositoryQuery {
 
 	private Predicate[] criarRestricoes(ClienteFilter clienteFilter, CriteriaBuilder builder, Root<Cliente> root) {
 		List<Predicate> predicates = new ArrayList<>();
-		if (!StringUtils.isEmpty(clienteFilter.getNome())) {
-			predicates.add(builder.like(builder.lower(root.get(Cliente_.nome)),
-					"%" + clienteFilter.getNome().toLowerCase() + "%"));
+		if (!StringUtils.hasText(clienteFilter.getNome())) {
+			predicates.add(builder.like(builder.lower(root.get(Cliente_.nome)), "%" + clienteFilter.getNome().toLowerCase() + "%"));
 		}
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}

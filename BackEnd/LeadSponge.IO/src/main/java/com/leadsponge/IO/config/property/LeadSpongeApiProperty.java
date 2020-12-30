@@ -2,11 +2,9 @@ package com.leadsponge.IO.config.property;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 @ConfigurationProperties("leadsponge")
 public class LeadSpongeApiProperty {
 
@@ -16,8 +14,7 @@ public class LeadSpongeApiProperty {
 	private final S3 s3 = new S3();
 	private final BancoMysql bancoMysql = new BancoMysql();
 
-	@Getter
-	@Setter
+	@Data
 	public class BancoMysql {
 		private String username;
 		private String password;
@@ -26,15 +23,13 @@ public class LeadSpongeApiProperty {
 
 	}
 
-	@Getter
-	@Setter
+	@Data
 	public class Disco {
 		private String raiz;
 		private String diretorioFotos;
 	}
 
-	@Getter
-	@Setter
+	@Data
 	public class Mail {
 		private String host;
 		private Integer port;
@@ -42,16 +37,14 @@ public class LeadSpongeApiProperty {
 		private String password;
 	}
 
-	@Getter
-	@Setter
+	@Data
 	public class S3 {
 		private String accessKeyId;
 		private String secretAccessKey;
 		private String bucket;
 	}
 
-	@Getter
-	@Setter
+	@Data
 	public class Seguranca {
 		private String originPermitida;
 		private boolean enableHttps;

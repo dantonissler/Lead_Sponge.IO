@@ -10,12 +10,14 @@ import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 
 import com.leadsponge.IO.config.security.UsuarioSistema;
 
-public class CustomTokenEnhancer implements TokenEnhancer  {
+public class CustomTokenEnhancer implements TokenEnhancer {
 	@Override
 	public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
 		UsuarioSistema usuarioSistema = (UsuarioSistema) authentication.getPrincipal();
 		Map<String, Object> addInfo = new HashMap<>();
 		addInfo.put("nome", usuarioSistema.getUsuario().getNomeCompleto());
+		addInfo.put("foto", usuarioSistema.getUsuario().getFoto());
+		addInfo.put("email", usuarioSistema.getUsuario().getEmail());
 		((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(addInfo);
 		return accessToken;
 	}

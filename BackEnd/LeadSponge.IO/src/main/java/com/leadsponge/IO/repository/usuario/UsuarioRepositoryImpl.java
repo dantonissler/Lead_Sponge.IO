@@ -46,12 +46,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepositoryQuery {
 		CriteriaBuilder builder = manager.getCriteriaBuilder();
 		CriteriaQuery<ResumoUsuario> criteria = builder.createQuery(ResumoUsuario.class);
 		Root<Usuario> root = criteria.from(Usuario.class);
-		criteria.select(builder.construct(ResumoUsuario.class
-				, root.get(Usuario_.id)
-				, root.get(Usuario_.username)
-				, root.get(Usuario_.nomeCompleto)
-				, root.get(Usuario_.email)
-				, root.get(Usuario_.enabled)));
+		criteria.select(builder.construct(ResumoUsuario.class, root.get(Usuario_.id), root.get(Usuario_.username), root.get(Usuario_.nomeCompleto), root.get(Usuario_.email), root.get(Usuario_.enabled)));
 		Predicate[] predicates = criarRestricoes(usuarioFilter, builder, root);
 		criteria.where(predicates);
 		TypedQuery<ResumoUsuario> query = manager.createQuery(criteria);
@@ -61,17 +56,14 @@ public class UsuarioRepositoryImpl implements UsuarioRepositoryQuery {
 
 	private Predicate[] criarRestricoes(UsuarioFilter usuarioFilter, CriteriaBuilder builder, Root<Usuario> root) {
 		List<Predicate> predicates = new ArrayList<>();
-		if (!StringUtils.isEmpty(usuarioFilter.getNomeCompleto())) {
-			predicates.add(builder.like(builder.lower(root.get(Usuario_.nomeCompleto)),
-					"%" + usuarioFilter.getNomeCompleto().toLowerCase() + "%"));
+		if (!StringUtils.hasText(usuarioFilter.getNomeCompleto())) {
+			predicates.add(builder.like(builder.lower(root.get(Usuario_.nomeCompleto)), "%" + usuarioFilter.getNomeCompleto().toLowerCase() + "%"));
 		}
-		if (!StringUtils.isEmpty(usuarioFilter.getUsername())) {
-			predicates.add(builder.like(builder.lower(root.get(Usuario_.username)),
-					"%" + usuarioFilter.getUsername().toLowerCase() + "%"));
+		if (!StringUtils.hasText(usuarioFilter.getUsername())) {
+			predicates.add(builder.like(builder.lower(root.get(Usuario_.username)), "%" + usuarioFilter.getUsername().toLowerCase() + "%"));
 		}
-		if (!StringUtils.isEmpty(usuarioFilter.getEmail())) {
-			predicates.add(builder.like(builder.lower(root.get(Usuario_.email)),
-					"%" + usuarioFilter.getEmail().toLowerCase() + "%"));
+		if (!StringUtils.hasText(usuarioFilter.getEmail())) {
+			predicates.add(builder.like(builder.lower(root.get(Usuario_.email)), "%" + usuarioFilter.getEmail().toLowerCase() + "%"));
 		}
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}

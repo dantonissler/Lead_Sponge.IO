@@ -40,12 +40,10 @@ public class FonteNegociacaoRepositoryImpl implements FonteNegociacaoRepositoryQ
 		return new PageImpl<>(query.getResultList(), pageable, total(fonteNegociacaoFilter));
 	}
 
-	private Predicate[] criarRestricoes(FonteNegociacaoFilter fonteNegociacaoFilter, CriteriaBuilder builder,
-			Root<FonteNegociacao> root) {
+	private Predicate[] criarRestricoes(FonteNegociacaoFilter fonteNegociacaoFilter, CriteriaBuilder builder, Root<FonteNegociacao> root) {
 		List<Predicate> predicates = new ArrayList<>();
-		if (!StringUtils.isEmpty(fonteNegociacaoFilter.getNome())) {
-			predicates.add(builder.like(builder.lower(root.get(FonteNegociacao_.nome)),
-					"%" + fonteNegociacaoFilter.getNome().toLowerCase() + "%"));
+		if (!StringUtils.hasText(fonteNegociacaoFilter.getNome())) {
+			predicates.add(builder.like(builder.lower(root.get(FonteNegociacao_.nome)), "%" + fonteNegociacaoFilter.getNome().toLowerCase() + "%"));
 		}
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}

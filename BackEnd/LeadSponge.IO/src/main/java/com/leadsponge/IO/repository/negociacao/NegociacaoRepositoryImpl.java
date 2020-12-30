@@ -40,12 +40,10 @@ public class NegociacaoRepositoryImpl implements NegociacaoRepositoryQuery {
 		return new PageImpl<>(query.getResultList(), pageable, total(negociacaoFilter));
 	}
 
-	private Predicate[] criarRestricoes(NegociacaoFilter negociacaoFilter, CriteriaBuilder builder,
-			Root<Negociacao> root) {
+	private Predicate[] criarRestricoes(NegociacaoFilter negociacaoFilter, CriteriaBuilder builder, Root<Negociacao> root) {
 		List<Predicate> predicates = new ArrayList<>();
-		if (!StringUtils.isEmpty(negociacaoFilter.getNome())) {
-			predicates.add(builder.like(builder.lower(root.get(Negociacao_.nome)),
-					"%" + negociacaoFilter.getNome().toLowerCase() + "%"));
+		if (!StringUtils.hasText(negociacaoFilter.getNome())) {
+			predicates.add(builder.like(builder.lower(root.get(Negociacao_.nome)), "%" + negociacaoFilter.getNome().toLowerCase() + "%"));
 		}
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}

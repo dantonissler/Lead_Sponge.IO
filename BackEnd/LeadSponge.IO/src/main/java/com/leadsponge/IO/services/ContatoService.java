@@ -1,15 +1,16 @@
 package com.leadsponge.IO.services;
 
+import java.util.Optional;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.leadsponge.IO.errorValidate.ResourceBadRequestException;
 import com.leadsponge.IO.models.cliente.Cliente;
 import com.leadsponge.IO.models.contato.Contato;
 import com.leadsponge.IO.repository.cliente.ClienteRepository;
 import com.leadsponge.IO.repository.contato.ContatoRepository;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class ContatoService {

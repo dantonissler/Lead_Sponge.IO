@@ -40,12 +40,10 @@ public class EstagioNegociacaoRepositoryImpl implements EstagioNegociacaoReposit
 		return new PageImpl<>(query.getResultList(), pageable, total(estagioNegociacaoFilter));
 	}
 
-	private Predicate[] criarRestricoes(EstagioNegociacaoFilter estagioNegociacaoFilter, CriteriaBuilder builder,
-			Root<EstagioNegociacao> root) {
+	private Predicate[] criarRestricoes(EstagioNegociacaoFilter estagioNegociacaoFilter, CriteriaBuilder builder, Root<EstagioNegociacao> root) {
 		List<Predicate> predicates = new ArrayList<>();
-		if (!StringUtils.isEmpty(estagioNegociacaoFilter.getNome())) {
-			predicates.add(builder.like(builder.lower(root.get(EstagioNegociacao_.nome)),
-					"%" + estagioNegociacaoFilter.getNome().toLowerCase() + "%"));
+		if (!StringUtils.hasText(estagioNegociacaoFilter.getNome())) {
+			predicates.add(builder.like(builder.lower(root.get(EstagioNegociacao_.nome)), "%" + estagioNegociacaoFilter.getNome().toLowerCase() + "%"));
 		}
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}

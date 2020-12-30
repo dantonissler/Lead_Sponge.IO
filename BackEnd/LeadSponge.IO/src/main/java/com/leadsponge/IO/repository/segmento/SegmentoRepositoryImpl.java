@@ -20,7 +20,7 @@ import com.leadsponge.IO.models.segmento.Segmento;
 import com.leadsponge.IO.models.segmento.Segmento_;
 import com.leadsponge.IO.repository.Filter.SegmentoFilter;
 
-public class SegmentoRepositoryImpl implements SegmentoRepositoryQuery{
+public class SegmentoRepositoryImpl implements SegmentoRepositoryQuery {
 
 	@PersistenceContext
 	private EntityManager manager;
@@ -40,12 +40,10 @@ public class SegmentoRepositoryImpl implements SegmentoRepositoryQuery{
 		return new PageImpl<>(query.getResultList(), pageable, total(segmentoFilter));
 	}
 
-	private Predicate[] criarRestricoes(SegmentoFilter segmentoFilter, CriteriaBuilder builder,
-			Root<Segmento> root) {
+	private Predicate[] criarRestricoes(SegmentoFilter segmentoFilter, CriteriaBuilder builder, Root<Segmento> root) {
 		List<Predicate> predicates = new ArrayList<>();
-		if (!StringUtils.isEmpty(segmentoFilter.getNome())) {
-			predicates.add(builder.like(builder.lower(root.get(Segmento_.nome)),
-					"%" + segmentoFilter.getNome().toLowerCase() + "%"));
+		if (!StringUtils.hasText(segmentoFilter.getNome())) {
+			predicates.add(builder.like(builder.lower(root.get(Segmento_.nome)), "%" + segmentoFilter.getNome().toLowerCase() + "%"));
 		}
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}

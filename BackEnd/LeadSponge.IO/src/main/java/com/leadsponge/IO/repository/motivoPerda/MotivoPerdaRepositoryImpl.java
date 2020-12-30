@@ -20,7 +20,7 @@ import com.leadsponge.IO.models.motivoPerda.MotivoPerda;
 import com.leadsponge.IO.models.motivoPerda.MotivoPerda_;
 import com.leadsponge.IO.repository.Filter.MotivoPerdaFilter;
 
-public class MotivoPerdaRepositoryImpl implements MotivoPerdaRepositoryQuery{
+public class MotivoPerdaRepositoryImpl implements MotivoPerdaRepositoryQuery {
 
 	@PersistenceContext
 	private EntityManager manager;
@@ -40,12 +40,10 @@ public class MotivoPerdaRepositoryImpl implements MotivoPerdaRepositoryQuery{
 		return new PageImpl<>(query.getResultList(), pageable, total(motivoPerdaFilter));
 	}
 
-	private Predicate[] criarRestricoes(MotivoPerdaFilter motivoPerdaFilter, CriteriaBuilder builder,
-			Root<MotivoPerda> root) {
+	private Predicate[] criarRestricoes(MotivoPerdaFilter motivoPerdaFilter, CriteriaBuilder builder, Root<MotivoPerda> root) {
 		List<Predicate> predicates = new ArrayList<>();
-		if (!StringUtils.isEmpty(motivoPerdaFilter.getNome())) {
-			predicates.add(builder.like(builder.lower(root.get(MotivoPerda_.nome)),
-					"%" + motivoPerdaFilter.getNome().toLowerCase() + "%"));
+		if (!StringUtils.hasText(motivoPerdaFilter.getNome())) {
+			predicates.add(builder.like(builder.lower(root.get(MotivoPerda_.nome)), "%" + motivoPerdaFilter.getNome().toLowerCase() + "%"));
 		}
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}

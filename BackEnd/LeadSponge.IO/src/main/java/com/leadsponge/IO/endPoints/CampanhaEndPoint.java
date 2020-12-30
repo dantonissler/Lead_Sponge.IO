@@ -40,8 +40,7 @@ class CampanhaEndPoint extends ErroMessage {
 	@Autowired
 	private final ApplicationEventPublisher publisher;
 
-	CampanhaEndPoint(CampanhaRepository repository, ApplicationEventPublisher publisher,
-			CampanhaService campanhaService) {
+	CampanhaEndPoint(CampanhaRepository repository, ApplicationEventPublisher publisher, CampanhaService campanhaService) {
 		this.repository = repository;
 		this.publisher = publisher;
 		this.campanhaService = campanhaService;
@@ -64,8 +63,7 @@ class CampanhaEndPoint extends ErroMessage {
 
 	@PutMapping(value = { "/{id}", "/{id}/" })
 	@PreAuthorize("hasAuthority('CADASTRAR_CAMPANHA') and #oauth2.hasScope('write')")
-	ResponseEntity<Campanha> atualizar(@Valid @RequestBody Campanha campanha, @PathVariable Long id,
-			HttpServletResponse response) {
+	ResponseEntity<Campanha> atualizar(@Valid @RequestBody Campanha campanha, @PathVariable Long id, HttpServletResponse response) {
 		try {
 			Campanha novaCampanha = campanhaService.atualizar(id, campanha);
 			publisher.publishEvent(new RecursoCriadoEvent(this, response, novaCampanha.getId()));

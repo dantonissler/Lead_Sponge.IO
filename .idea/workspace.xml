@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="230eca5f-9d2e-4411-93c4-f50ab28eabd8" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/config/property/LeadSpongeApiProperty.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/config/property/LeadSpongeApiProperty.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/config/token/CustomTokenEnhancer.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/config/token/CustomTokenEnhancer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/anexo/AnexoDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/anexo/AnexoDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/audit/DateAudit.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/audit/DateAudit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/audit/UserDateAudit.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/audit/UserDateAudit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/campanha/Campanha.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/campanha/Campanha.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/cliente/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/cliente/Cliente.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/contato/Contato.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/contato/Contato.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/email/Email.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/email/Email.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/estagioNegociacao/EstagioNegociacao.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/estagioNegociacao/EstagioNegociacao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/fonteNegociacao/FonteNegociacao.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/fonteNegociacao/FonteNegociacao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/historicoEstagioNegociacao/HistEstagioNegociacao.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/historicoEstagioNegociacao/HistEstagioNegociacao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/motivoPerda/MotivoPerda.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/motivoPerda/MotivoPerda.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/negociacao/Negociacao.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/negociacao/Negociacao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/negociacaoProduto/NegociacaoProduto.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/negociacaoProduto/NegociacaoProduto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/produto/Produto.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/produto/Produto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/role/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/role/Role.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/segmento/Segmento.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/segmento/Segmento.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/tarefa/Tarefa.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/tarefa/Tarefa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/tarefa/Tarefa_.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/tarefa/Tarefa_.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/telefone/Telefone.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/telefone/Telefone.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/usuario/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/usuario/Usuario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/usuario/UsuarioTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/models/usuario/UsuarioTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/campanha/CampanhaRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/repository/campanha/CampanhaRepositoryImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/services/ContatoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/main/java/com/leadsponge/IO/services/ContatoService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/test/java/com/leadsponge/leadsponge/IO/endPointTests/CampanhaEndPointTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/test/java/com/leadsponge/leadsponge/IO/endPointTests/CampanhaEndPointTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/test/java/com/leadsponge/leadsponge/IO/endPointTests/OAuthTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/LeadSponge.IO/src/test/java/com/leadsponge/leadsponge/IO/endPointTests/OAuthTest.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1mJSwrfTqRI7Y7oaRlrya6TQlN9" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="230eca5f-9d2e-4411-93c4-f50ab28eabd8" name="Default Changelist" comment="" />
+      <created>1609210441606</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1609210441606</updated>
+    </task>
+    <servers />
+  </component>
+</project>

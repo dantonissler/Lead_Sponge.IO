@@ -1,4 +1,4 @@
-package com.leadsponge.leadsponge.IO.jdbcTests;
+package com.leadsponge.leadsponge.IO.jdbcTestes;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -13,16 +13,18 @@ import com.leadsponge.IO.LeadSpongeApiApplication;
 import com.leadsponge.IO.models.campanha.Campanha;
 import com.leadsponge.IO.repository.campanha.CampanhaRepository;
 
+// TODO validar aqui todas as regras que não passam pela service
+
 @DataJpaTest
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = LeadSpongeApiApplication.class)
-public class CampanhaRepositoryTest {
+public class CampanhaRepositoryTestes {
 
 	@Autowired
 	private CampanhaRepository repository;
 
 	@Test
-	public void quandoCriar_ePercistirOsDados() {
+	public void quandoCriar_percistirOsDados() {
 		Campanha campanha = new Campanha(null, "Nome de uma campanha", "Descrição de uma campanha");
 		this.repository.save(campanha);
 		assertThat(campanha.getId()).isNotNull();
@@ -31,7 +33,7 @@ public class CampanhaRepositoryTest {
 	}
 
 	@Test
-	public void quandoRemover_eRemoverOsDados() {
+	public void quandoRemover_removerOsDados() {
 		Campanha campanha = new Campanha(null, "Nome de uma campanha", "Descrição de uma campanha");
 		this.repository.save(campanha);
 		repository.delete(campanha);
@@ -39,7 +41,7 @@ public class CampanhaRepositoryTest {
 	}
 
 	@Test
-	public void quandoUpdate_eAlterarEPersistirOsDados() {
+	public void quandoUpdate_alterarEPersistirOsDados() {
 		Campanha campanha = new Campanha(null, "Nome de uma campanha", "Descrição de uma campanha");
 		this.repository.save(campanha);
 		campanha = new Campanha(null, "Nome dois", "Descrição dois");

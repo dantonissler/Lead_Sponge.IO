@@ -42,9 +42,8 @@ public class ContatoRepositoryImpl implements ContatoRepositoryQuery {
 
 	private Predicate[] criarRestricoes(ContatoFilter contatoFilter, CriteriaBuilder builder, Root<Contato> root) {
 		List<Predicate> predicates = new ArrayList<>();
-		if (!StringUtils.isEmpty(contatoFilter.getNome())) {
-			predicates.add(builder.like(builder.lower(root.get(Contato_.nome)),
-					"%" + contatoFilter.getNome().toLowerCase() + "%"));
+		if (!StringUtils.hasText(contatoFilter.getNome())) {
+			predicates.add(builder.like(builder.lower(root.get(Contato_.nome)), "%" + contatoFilter.getNome().toLowerCase() + "%"));
 		}
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}

@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.util.StringUtils;
+
 import com.leadsponge.IO.models.campanha.Campanha;
 import com.leadsponge.IO.models.campanha.Campanha_;
 import com.leadsponge.IO.repository.Filter.CampanhaFilter;
@@ -41,7 +42,7 @@ public class CampanhaRepositoryImpl implements CampanhaRepositoryQuery{
 	
 	private Predicate[] criarRestricoes(CampanhaFilter campanhaFilter, CriteriaBuilder builder, Root<Campanha> root) {
 		List<Predicate> predicates = new ArrayList<>();
-		if (!StringUtils.isEmpty(campanhaFilter.getNome())) {
+		if (!StringUtils.hasText(campanhaFilter.getNome())) {
 			predicates.add(builder.like(builder.lower(root.get(Campanha_.nome)),
 					"%" + campanhaFilter.getNome().toLowerCase() + "%"));
 		}

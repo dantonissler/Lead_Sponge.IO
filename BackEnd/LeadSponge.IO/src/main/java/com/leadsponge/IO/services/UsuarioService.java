@@ -65,7 +65,7 @@ public class UsuarioService extends ErroMessage {
 		usuarioSalvo.getRoles().clear();
 		usuarioSalvo.getRoles().addAll(usuario.getRoles());
 		usuarioSalvo.setRoles(new HashSet<>(usuarioSalvo.getRoles()));
-		if (StringUtils.isEmpty(usuario.getFoto()) && StringUtils.hasText(usuarioSalvo.getFoto())) {
+		if (StringUtils.hasText(usuario.getFoto()) && StringUtils.hasText(usuarioSalvo.getFoto())) {
 			disco.remover(usuarioSalvo.getUrlFoto());
 		} else if (StringUtils.hasText(usuario.getFoto()) && !usuario.getFoto().equals(usuarioSalvo.getFoto())) {
 			disco.remover(usuario.getUrlFoto());
