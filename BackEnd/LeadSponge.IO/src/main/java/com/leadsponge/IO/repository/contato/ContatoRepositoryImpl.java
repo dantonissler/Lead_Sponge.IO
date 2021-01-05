@@ -11,10 +11,10 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.util.StringUtils;
 
 import com.leadsponge.IO.models.contato.Contato;
 import com.leadsponge.IO.models.contato.Contato_;
@@ -42,7 +42,7 @@ public class ContatoRepositoryImpl implements ContatoRepositoryQuery {
 
 	private Predicate[] criarRestricoes(ContatoFilter contatoFilter, CriteriaBuilder builder, Root<Contato> root) {
 		List<Predicate> predicates = new ArrayList<>();
-		if (!StringUtils.hasText(contatoFilter.getNome())) {
+		if (StringUtils.isNotBlank(contatoFilter.getNome())) {
 			predicates.add(builder.like(builder.lower(root.get(Contato_.nome)), "%" + contatoFilter.getNome().toLowerCase() + "%"));
 		}
 		return predicates.toArray(new Predicate[predicates.size()]);

@@ -25,7 +25,7 @@ import com.leadsponge.IO.event.RecursoCriadoEvent;
 import com.leadsponge.IO.models.fonteNegociacao.FonteNegociacao;
 import com.leadsponge.IO.repository.Filter.FonteNegociacaoFilter;
 import com.leadsponge.IO.repository.fonteNegociacao.FonteNegociacaoRepository;
-import com.leadsponge.IO.services.FonteNegociacaoService;
+import com.leadsponge.IO.services.implementated.FonteNegociacaoServiceImpl;
 
 @RestController
 @RequestMapping("/fontes")
@@ -35,13 +35,13 @@ class FonteNegociacaoEndPoint extends ErroMessage {
 	private final FonteNegociacaoRepository repository;
 
 	@Autowired
-	private final FonteNegociacaoService fonteNegociacaoService;
+	private final FonteNegociacaoServiceImpl fonteNegociacaoService;
 
 	@Autowired
 	private final ApplicationEventPublisher publisher;
 
 	FonteNegociacaoEndPoint(FonteNegociacaoRepository repository, ApplicationEventPublisher publisher,
-			FonteNegociacaoService fonteNegociacaoService) {
+			FonteNegociacaoServiceImpl fonteNegociacaoService) {
 		this.repository = repository;
 		this.publisher = publisher;
 		this.fonteNegociacaoService = fonteNegociacaoService;

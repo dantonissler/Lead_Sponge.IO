@@ -26,7 +26,7 @@ import com.leadsponge.IO.models.tarefa.Tarefa;
 import com.leadsponge.IO.repository.Filter.TarefaFilter;
 import com.leadsponge.IO.repository.projection.ResumoTarefa;
 import com.leadsponge.IO.repository.tarefa.TarefaRepository;
-import com.leadsponge.IO.services.TarefaService;
+import com.leadsponge.IO.services.implementated.TarefaServiceImpl;
 
 @RestController
 @RequestMapping("/tarefas")
@@ -36,12 +36,12 @@ class TarefaEndPoint extends ErroMessage {
 	private final TarefaRepository repository;
 
 	@Autowired
-	private final TarefaService tarefaService;
+	private final TarefaServiceImpl tarefaService;
 
 	@Autowired
 	private final ApplicationEventPublisher publisher;
 
-	TarefaEndPoint(TarefaRepository repository, ApplicationEventPublisher publisher, TarefaService tarefaService) {
+	TarefaEndPoint(TarefaRepository repository, ApplicationEventPublisher publisher, TarefaServiceImpl tarefaService) {
 		this.repository = repository;
 		this.publisher = publisher;
 		this.tarefaService = tarefaService;

@@ -25,7 +25,7 @@ import com.leadsponge.IO.event.RecursoCriadoEvent;
 import com.leadsponge.IO.models.segmento.Segmento;
 import com.leadsponge.IO.repository.Filter.SegmentoFilter;
 import com.leadsponge.IO.repository.segmento.SegmentoRepository;
-import com.leadsponge.IO.services.SegmentoService;
+import com.leadsponge.IO.services.implementated.SegmentoServiceImpl;
 
 @RestController
 @RequestMapping("segmentos")
@@ -35,13 +35,13 @@ class SegmentoEndPoint extends ErroMessage {
 	private final SegmentoRepository repository;
 
 	@Autowired
-	private final SegmentoService segmentoService;
+	private final SegmentoServiceImpl segmentoService;
 
 	@Autowired
 	private final ApplicationEventPublisher publisher;
 
 	SegmentoEndPoint(SegmentoRepository repository, ApplicationEventPublisher publisher,
-			SegmentoService segmentoService) {
+			SegmentoServiceImpl segmentoService) {
 		this.repository = repository;
 		this.publisher = publisher;
 		this.segmentoService = segmentoService;

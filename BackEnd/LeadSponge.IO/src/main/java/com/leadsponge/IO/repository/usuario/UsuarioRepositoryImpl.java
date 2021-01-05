@@ -14,7 +14,7 @@ import javax.persistence.criteria.Root;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import com.leadsponge.IO.models.usuario.Usuario;
 import com.leadsponge.IO.models.usuario.Usuario_;
@@ -56,13 +56,13 @@ public class UsuarioRepositoryImpl implements UsuarioRepositoryQuery {
 
 	private Predicate[] criarRestricoes(UsuarioFilter usuarioFilter, CriteriaBuilder builder, Root<Usuario> root) {
 		List<Predicate> predicates = new ArrayList<>();
-		if (!StringUtils.hasText(usuarioFilter.getNomeCompleto())) {
+		if (StringUtils.isNotBlank(usuarioFilter.getNomeCompleto())) {
 			predicates.add(builder.like(builder.lower(root.get(Usuario_.nomeCompleto)), "%" + usuarioFilter.getNomeCompleto().toLowerCase() + "%"));
 		}
-		if (!StringUtils.hasText(usuarioFilter.getUsername())) {
+		if (StringUtils.isNotBlank(usuarioFilter.getUsername())) {
 			predicates.add(builder.like(builder.lower(root.get(Usuario_.username)), "%" + usuarioFilter.getUsername().toLowerCase() + "%"));
 		}
-		if (!StringUtils.hasText(usuarioFilter.getEmail())) {
+		if (StringUtils.isNotBlank(usuarioFilter.getEmail())) {
 			predicates.add(builder.like(builder.lower(root.get(Usuario_.email)), "%" + usuarioFilter.getEmail().toLowerCase() + "%"));
 		}
 		return predicates.toArray(new Predicate[predicates.size()]);

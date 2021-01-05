@@ -11,10 +11,10 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.util.StringUtils;
 
 import com.leadsponge.IO.models.negociacao.Negociacao;
 import com.leadsponge.IO.models.negociacao.Negociacao_;
@@ -42,7 +42,7 @@ public class NegociacaoRepositoryImpl implements NegociacaoRepositoryQuery {
 
 	private Predicate[] criarRestricoes(NegociacaoFilter negociacaoFilter, CriteriaBuilder builder, Root<Negociacao> root) {
 		List<Predicate> predicates = new ArrayList<>();
-		if (!StringUtils.hasText(negociacaoFilter.getNome())) {
+		if (StringUtils.isNotBlank(negociacaoFilter.getNome())) {
 			predicates.add(builder.like(builder.lower(root.get(Negociacao_.nome)), "%" + negociacaoFilter.getNome().toLowerCase() + "%"));
 		}
 		return predicates.toArray(new Predicate[predicates.size()]);

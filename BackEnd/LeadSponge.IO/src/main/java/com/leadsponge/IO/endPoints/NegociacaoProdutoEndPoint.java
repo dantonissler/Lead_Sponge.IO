@@ -22,8 +22,8 @@ import com.leadsponge.IO.errorValidate.ErroMessage;
 import com.leadsponge.IO.event.RecursoCriadoEvent;
 import com.leadsponge.IO.models.negociacaoProduto.NegociacaoProduto;
 import com.leadsponge.IO.repository.NegociacaoProdutoRepository;
-import com.leadsponge.IO.services.NegociacaoProdutoService;
-import com.leadsponge.IO.services.NegociacaoService;
+import com.leadsponge.IO.services.implementated.NegociacaoProdutoServiceImpl;
+import com.leadsponge.IO.services.implementated.NegociacaoServiceImpl;
 
 @RestController
 @RequestMapping("/negociacaoProduto")
@@ -33,16 +33,16 @@ class NegociacaoProdutoEndPoint extends ErroMessage {
 	private final NegociacaoProdutoRepository repository;
 
 	@Autowired
-	private final NegociacaoProdutoService service;
+	private final NegociacaoProdutoServiceImpl service;
 
 	@Autowired
 	private final ApplicationEventPublisher publisher;
 
 	@Autowired
-	private final NegociacaoService nService;
+	private final NegociacaoServiceImpl nService;
 
-	public NegociacaoProdutoEndPoint(NegociacaoProdutoRepository repository, NegociacaoProdutoService service,
-			ApplicationEventPublisher publisher, NegociacaoService nService) {
+	public NegociacaoProdutoEndPoint(NegociacaoProdutoRepository repository, NegociacaoProdutoServiceImpl service,
+			ApplicationEventPublisher publisher, NegociacaoServiceImpl nService) {
 		this.repository = repository;
 		this.service = service;
 		this.publisher = publisher;

@@ -30,7 +30,7 @@ import com.leadsponge.IO.models.negociacao.EstatusNegociacao;
 import com.leadsponge.IO.models.negociacao.Negociacao;
 import com.leadsponge.IO.repository.Filter.NegociacaoFilter;
 import com.leadsponge.IO.repository.negociacao.NegociacaoRepository;
-import com.leadsponge.IO.services.NegociacaoService;
+import com.leadsponge.IO.services.implementated.NegociacaoServiceImpl;
 
 @RestController
 @RequestMapping("/negociacoes")
@@ -40,13 +40,13 @@ class NegociacaoEndPoint extends ErroMessage {
 	private final NegociacaoRepository repository;
 
 	@Autowired
-	private final NegociacaoService negociacaoService;
+	private final NegociacaoServiceImpl negociacaoService;
 
 	@Autowired
 	private final ApplicationEventPublisher publisher;
 
 	public NegociacaoEndPoint(NegociacaoRepository repository, ApplicationEventPublisher publisher,
-			NegociacaoService negociacaoService) {
+			NegociacaoServiceImpl negociacaoService) {
 		this.publisher = publisher;
 		this.repository = repository;
 		this.negociacaoService = negociacaoService;

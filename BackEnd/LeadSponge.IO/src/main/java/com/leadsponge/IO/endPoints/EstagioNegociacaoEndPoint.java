@@ -25,7 +25,7 @@ import com.leadsponge.IO.event.RecursoCriadoEvent;
 import com.leadsponge.IO.models.estagioNegociacao.EstagioNegociacao;
 import com.leadsponge.IO.repository.Filter.EstagioNegociacaoFilter;
 import com.leadsponge.IO.repository.estagioNegociacao.EstagioNegociacaoRepository;
-import com.leadsponge.IO.services.EstagioNegociacaoService;
+import com.leadsponge.IO.services.implementated.EstagioNegociacaoServiceImpl;
 
 @RestController
 @RequestMapping("/estagios")
@@ -35,13 +35,13 @@ class EstagioNegociacaoEndPoint extends ErroMessage {
 	private final EstagioNegociacaoRepository repository;
 
 	@Autowired
-	private final EstagioNegociacaoService estagioNegociacaoService;
+	private final EstagioNegociacaoServiceImpl estagioNegociacaoService;
 
 	@Autowired
 	private final ApplicationEventPublisher publisher;
 
 	EstagioNegociacaoEndPoint(EstagioNegociacaoRepository repository, ApplicationEventPublisher publisher,
-			EstagioNegociacaoService estagioNegociacaoService) {
+			EstagioNegociacaoServiceImpl estagioNegociacaoService) {
 		this.repository = repository;
 		this.publisher = publisher;
 		this.estagioNegociacaoService = estagioNegociacaoService;

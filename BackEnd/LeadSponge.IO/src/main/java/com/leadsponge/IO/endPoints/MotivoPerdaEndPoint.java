@@ -25,7 +25,7 @@ import com.leadsponge.IO.event.RecursoCriadoEvent;
 import com.leadsponge.IO.models.motivoPerda.MotivoPerda;
 import com.leadsponge.IO.repository.Filter.MotivoPerdaFilter;
 import com.leadsponge.IO.repository.motivoPerda.MotivoPerdaRepository;
-import com.leadsponge.IO.services.MotivoPerdaService;
+import com.leadsponge.IO.services.implementated.MotivoPerdaServiceImpl;
 
 @RestController
 @RequestMapping("/motivoperda")
@@ -35,13 +35,13 @@ class MotivoPerdaEndPoint extends ErroMessage {
 	private final MotivoPerdaRepository repository;
 
 	@Autowired
-	private final MotivoPerdaService motivoPerdaService;
+	private final MotivoPerdaServiceImpl motivoPerdaService;
 
 	@Autowired
 	private final ApplicationEventPublisher publisher;
 
 	MotivoPerdaEndPoint(MotivoPerdaRepository repository, ApplicationEventPublisher publisher,
-			MotivoPerdaService motivoPerdaService) {
+			MotivoPerdaServiceImpl motivoPerdaService) {
 		this.repository = repository;
 		this.publisher = publisher;
 		this.motivoPerdaService = motivoPerdaService;

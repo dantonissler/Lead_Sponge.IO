@@ -30,7 +30,7 @@ import com.leadsponge.IO.models.usuario.UsuarioTO;
 import com.leadsponge.IO.repository.Filter.UsuarioFilter;
 import com.leadsponge.IO.repository.projection.ResumoUsuario;
 import com.leadsponge.IO.repository.usuario.UsuarioRepository;
-import com.leadsponge.IO.services.UsuarioService;
+import com.leadsponge.IO.services.implementated.UsuarioServiceImpl;
 import com.leadsponge.IO.storage.Disco;
 //import com.leadsponge.IO.storage.S3;
 
@@ -42,7 +42,7 @@ class UsuarioEndPoint extends ErroMessage {
 	private UsuarioRepository repository;
 
 	@Autowired
-	private UsuarioService service;
+	private UsuarioServiceImpl service;
 
 	@Autowired
 	private ApplicationEventPublisher publisher;

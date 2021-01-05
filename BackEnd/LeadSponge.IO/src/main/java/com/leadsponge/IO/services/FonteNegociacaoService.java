@@ -1,43 +1,12 @@
 package com.leadsponge.IO.services;
 
-import java.util.Optional;
-
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.leadsponge.IO.errorValidate.exception.UsuarioInativaException;
 import com.leadsponge.IO.models.fonteNegociacao.FonteNegociacao;
-import com.leadsponge.IO.repository.fonteNegociacao.FonteNegociacaoRepository;
 
 @Service
-public class FonteNegociacaoService {
+public interface FonteNegociacaoService {
+	public FonteNegociacao save(FonteNegociacao fonteNegociacao);
 
-	@Autowired
-	private FonteNegociacaoRepository fonteNegociacaoRepository;
-	
-	public FonteNegociacao save(FonteNegociacao fonteNegociacao) {
-		fonteNegociacaoValidar(fonteNegociacao);
-		return fonteNegociacaoRepository.save(fonteNegociacao);
-	}
-	
-	public FonteNegociacao atualizar(Long id, FonteNegociacao fonteNegociacao) {
-		FonteNegociacao fonteNegociacaoSalvo = buscarCampanhaExistente(id);
-		BeanUtils.copyProperties(fonteNegociacao, fonteNegociacaoSalvo, "id");
-		return fonteNegociacaoRepository.save(fonteNegociacaoSalvo);
-	}
-	
-	private FonteNegociacao buscarCampanhaExistente(Long id) {
-		Optional<FonteNegociacao> fonteNegociacaoSalvo = fonteNegociacaoRepository.findById(id);
-		if (!fonteNegociacaoSalvo.isPresent()) {
-			throw new IllegalArgumentException();
-		}
-		return fonteNegociacaoSalvo.get();
-	}
-	
-	private void fonteNegociacaoValidar(FonteNegociacao fonteNegociacao) {
-		if (fonteNegociacao == null) {
-			throw new UsuarioInativaException();
-		}
-	}
+	public FonteNegociacao atualizar(Long id, FonteNegociacao fonteNegociacao);
 }

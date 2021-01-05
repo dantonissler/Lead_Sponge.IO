@@ -8,12 +8,12 @@ import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 
-import com.leadsponge.IO.config.security.UsuarioSistema;
+import com.leadsponge.IO.models.usuario.UsuarioSistemaTO;
 
 public class CustomTokenEnhancer implements TokenEnhancer {
 	@Override
 	public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
-		UsuarioSistema usuarioSistema = (UsuarioSistema) authentication.getPrincipal();
+		UsuarioSistemaTO usuarioSistema = (UsuarioSistemaTO) authentication.getPrincipal();
 		Map<String, Object> addInfo = new HashMap<>();
 		addInfo.put("nome", usuarioSistema.getUsuario().getNomeCompleto());
 		addInfo.put("foto", usuarioSistema.getUsuario().getFoto());

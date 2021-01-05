@@ -11,10 +11,10 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.util.StringUtils;
 
 import com.leadsponge.IO.models.produto.Produto;
 import com.leadsponge.IO.models.produto.Produto_;
@@ -42,10 +42,10 @@ public class ProdutoRepositoryImpl implements ProdutoRepositoryQuery {
 
 	private Predicate[] criarRestricoes(ProdutoFilter produtoFilter, CriteriaBuilder builder, Root<Produto> root) {
 		List<Predicate> predicates = new ArrayList<>();
-		if (!StringUtils.hasText(produtoFilter.getNome())) {
+		if (StringUtils.isNotBlank(produtoFilter.getNome())) {
 			predicates.add(builder.like(builder.lower(root.get(Produto_.nome)), "%" + produtoFilter.getNome().toLowerCase() + "%"));
 		}
-		if (!StringUtils.hasText(produtoFilter.getDescricao())) {
+		if (StringUtils.isNotBlank(produtoFilter.getDescricao())) {
 			predicates.add(builder.like(builder.lower(root.get(Produto_.descricao)), "%" + produtoFilter.getDescricao().toLowerCase() + "%"));
 		}
 		return predicates.toArray(new Predicate[predicates.size()]);

@@ -1,4 +1,4 @@
-package com.leadsponge.IO.config.security.implementated;
+package com.leadsponge.IO.services.implementated;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -14,8 +14,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.common.exceptions.UserDeniedAuthorizationException;
 import org.springframework.stereotype.Service;
 
-import com.leadsponge.IO.config.security.UsuarioSistema;
 import com.leadsponge.IO.models.usuario.Usuario;
+import com.leadsponge.IO.models.usuario.UsuarioSistemaTO;
 import com.leadsponge.IO.repository.usuario.UsuarioRepository;
 
 @Service
@@ -31,7 +31,7 @@ public class UsuarioDetailsServiceImpl implements UserDetailsService {
 		if (!usuario.isEnabled()) {
 			throw new UserDeniedAuthorizationException("Usuário inativo");
 		}
-		return new UsuarioSistema(usuario, getRoles(usuario));
+		return new UsuarioSistemaTO(usuario, getRoles(usuario));
 		
 	}
 	

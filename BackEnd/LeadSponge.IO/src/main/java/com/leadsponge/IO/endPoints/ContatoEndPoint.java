@@ -25,7 +25,7 @@ import com.leadsponge.IO.event.RecursoCriadoEvent;
 import com.leadsponge.IO.models.contato.Contato;
 import com.leadsponge.IO.repository.Filter.ContatoFilter;
 import com.leadsponge.IO.repository.contato.ContatoRepository;
-import com.leadsponge.IO.services.ContatoService;
+import com.leadsponge.IO.services.implementated.ContatoServiceImpl;
 
 @RestController
 @RequestMapping("/contatos")
@@ -35,12 +35,12 @@ class ContatoEndPoint extends ErroMessage {
 	private final ContatoRepository repository;
 	
 	@Autowired
-	private final ContatoService contatoService;
+	private final ContatoServiceImpl contatoService;
 	
 	@Autowired
 	private final ApplicationEventPublisher publisher;
 	
-	ContatoEndPoint(ContatoRepository repository, ContatoService contatoService, 
+	ContatoEndPoint(ContatoRepository repository, ContatoServiceImpl contatoService, 
 			ApplicationEventPublisher publisher) {
 		this.publisher = publisher;
 		this.repository = repository;

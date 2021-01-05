@@ -25,7 +25,7 @@ import com.leadsponge.IO.event.RecursoCriadoEvent;
 import com.leadsponge.IO.models.produto.Produto;
 import com.leadsponge.IO.repository.Filter.ProdutoFilter;
 import com.leadsponge.IO.repository.produto.ProdutoRepository;
-import com.leadsponge.IO.services.ProdutoService;
+import com.leadsponge.IO.services.implementated.ProdutoServiceImpl;
 
 @RestController
 @RequestMapping("/produtos")
@@ -35,13 +35,13 @@ class ProdutoEndPoint extends ErroMessage {
 	private final ProdutoRepository repository;
 
 	@Autowired
-	private final ProdutoService produtoService;
+	private final ProdutoServiceImpl produtoService;
 
 	@Autowired
 	private final ApplicationEventPublisher publisher;
 
 	ProdutoEndPoint(ProdutoRepository repository, ApplicationEventPublisher publisher,
-			ProdutoService produtoService) {
+			ProdutoServiceImpl produtoService) {
 		this.repository = repository;
 		this.publisher = publisher;
 		this.produtoService = produtoService;

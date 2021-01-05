@@ -9,4 +9,8 @@ public abstract class ErroMessage{
 	protected ResourceNotFoundException notFould(String nome) {
 		return new ResourceNotFoundException("Não foi possivel encontrar "+nome);
 	}
+	
+	protected ResourceNotFoundException notFouldError() {
+		return new ResourceNotFoundException("Erro diverso, favor entrar em contato com o administrador da ferramenta.");
+	}
 }

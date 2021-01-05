@@ -24,39 +24,32 @@ import com.leadsponge.IO.errorValidate.ErroMessage;
 import com.leadsponge.IO.event.RecursoCriadoEvent;
 import com.leadsponge.IO.models.campanha.Campanha;
 import com.leadsponge.IO.repository.Filter.CampanhaFilter;
-import com.leadsponge.IO.repository.campanha.CampanhaRepository;
 import com.leadsponge.IO.services.CampanhaService;
 
+import lombok.AllArgsConstructor;
+
 @RestController
+@AllArgsConstructor
 @RequestMapping("/campanhas")
 class CampanhaEndPoint extends ErroMessage {
 
 	@Autowired
-	private final CampanhaRepository repository;
-
-	@Autowired
-	private final CampanhaService campanhaService;
+	private final CampanhaService service;
 
 	@Autowired
 	private final ApplicationEventPublisher publisher;
-
-	CampanhaEndPoint(CampanhaRepository repository, ApplicationEventPublisher publisher, CampanhaService campanhaService) {
-		this.repository = repository;
-		this.publisher = publisher;
-		this.campanhaService = campanhaService;
-	}
 
 	@GetMapping(value = { "", "/" })
 	@ResponseStatus(HttpStatus.OK)
 	@PreAuthorize("hasAuthority('PESQUISAR_CAMPANHA') and #oauth2.hasScope('read')")
 	Page<Campanha> pesquisar(CampanhaFilter campanhaFilter, Pageable pageable) {
-		return repository.filtrar(campanhaFilter, pageable);
+		return service.filtrar(campanhaFilter, pageable);
 	}
 
 	@PostMapping(value = { "", "/" })
 	@PreAuthorize("hasAuthority('CADASTRAR_CAMPANHA') and #oauth2.hasScope('write')")
 	ResponseEntity<Campanha> cadastrar(@Valid @RequestBody Campanha campanha, HttpServletResponse response) {
-		Campanha criarCliente = campanhaService.save(campanha);
+		Campanha criarCliente = service.salvar(campanha);
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, criarCliente.getId()));
 		return ResponseEntity.status(HttpStatus.CREATED).body(criarCliente);
 	}
@@ -65,7 +58,7 @@ class CampanhaEndPoint extends ErroMessage {
 	@PreAuthorize("hasAuthority('CADASTRAR_CAMPANHA') and #oauth2.hasScope('write')")
 	ResponseEntity<Campanha> atualizar(@Valid @RequestBody Campanha campanha, @PathVariable Long id, HttpServletResponse response) {
 		try {
-			Campanha novaCampanha = campanhaService.atualizar(id, campanha);
+			Campanha novaCampanha = service.atualizar(id, campanha);
 			publisher.publishEvent(new RecursoCriadoEvent(this, response, novaCampanha.getId()));
 			return ResponseEntity.status(HttpStatus.CREATED).body(novaCampanha);
 		} catch (IllegalArgumentException e) {
@@ -76,17 +69,18 @@ class CampanhaEndPoint extends ErroMessage {
 	@DeleteMapping(value = { "/{id}", "/{id}/" })
 	@PreAuthorize("hasAuthority('REMOVER_CAMPANHA') and #oauth2.hasScope('write')")
 	ResponseEntity<Campanha> remover(@PathVariable Long id) {
-		try {
-			repository.deleteById(id);
+		if (service.deletar(id))
 			return ResponseEntity.ok().build();
-		} catch (Exception e) {
-			throw notFouldId(id, "a campanha");
+		else {
+			notFouldError();
+			return null;
 		}
 	}
 
 	@GetMapping(value = { "/{id}", "/{id}/" })
 	@PreAuthorize("hasAuthority('PESQUISAR_CAMPANHA') and #oauth2.hasScope('read')")
-	ResponseEntity<Campanha> detalhar(@Valid @PathVariable("id") Long id) {
-		return ResponseEntity.ok(repository.findById(id).orElseThrow(() -> notFouldId(id, "a campanha")));
+	ResponseEntity<Campanha> detalhar(@Valid @PathVariable("id") Long id, HttpServletResponse response) {
+		publisher.publishEvent(new RecursoCriadoEvent(this, response, id));
+		return ResponseEntity.ok(service.detalhar(id));
 	}
 }

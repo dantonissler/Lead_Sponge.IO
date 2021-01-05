@@ -1,4 +1,4 @@
-package com.leadsponge.IO.config.security.util;
+package com.leadsponge.IO.config.security;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 

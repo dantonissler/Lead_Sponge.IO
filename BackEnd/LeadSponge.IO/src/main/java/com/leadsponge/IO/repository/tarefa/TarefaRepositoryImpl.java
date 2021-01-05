@@ -11,10 +11,10 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.util.StringUtils;
 
 import com.leadsponge.IO.models.tarefa.Tarefa;
 import com.leadsponge.IO.models.tarefa.Tarefa_;
@@ -57,7 +57,7 @@ public class TarefaRepositoryImpl implements TarefaRepositoryQuery {
 
 	private Predicate[] criarRestricoes(TarefaFilter tarefaFilter, CriteriaBuilder builder, Root<Tarefa> root) {
 		List<Predicate> predicates = new ArrayList<>();
-		if (!StringUtils.hasText(tarefaFilter.getAssunto())) {
+		if (StringUtils.isNotBlank(tarefaFilter.getAssunto())) {
 			predicates.add(builder.like(builder.lower(root.get(Tarefa_.assunto)), "%" + tarefaFilter.getAssunto().toLowerCase() + "%"));
 		}
 		return predicates.toArray(new Predicate[predicates.size()]);

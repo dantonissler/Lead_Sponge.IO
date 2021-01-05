@@ -11,10 +11,10 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.util.StringUtils;
 
 import com.leadsponge.IO.models.motivoPerda.MotivoPerda;
 import com.leadsponge.IO.models.motivoPerda.MotivoPerda_;
@@ -42,7 +42,7 @@ public class MotivoPerdaRepositoryImpl implements MotivoPerdaRepositoryQuery {
 
 	private Predicate[] criarRestricoes(MotivoPerdaFilter motivoPerdaFilter, CriteriaBuilder builder, Root<MotivoPerda> root) {
 		List<Predicate> predicates = new ArrayList<>();
-		if (!StringUtils.hasText(motivoPerdaFilter.getNome())) {
+		if (StringUtils.isNotBlank(motivoPerdaFilter.getNome())) {
 			predicates.add(builder.like(builder.lower(root.get(MotivoPerda_.nome)), "%" + motivoPerdaFilter.getNome().toLowerCase() + "%"));
 		}
 		return predicates.toArray(new Predicate[predicates.size()]);
