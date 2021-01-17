@@ -10,8 +10,12 @@ import com.leadsponge.IO.repository.Filter.CampanhaFilter;
 @Service
 public interface CampanhaService {
 	public Campanha salvar(Campanha campanha);
+
 	public Campanha atualizar(Long id, Campanha campanha);
-	public Boolean deletar(Long id);
+
+	public Campanha deletar(Long id);
+
 	public Campanha detalhar(Long id);
+
 	public Page<Campanha> filtrar(CampanhaFilter campanhaFilter, Pageable pageable);
 }

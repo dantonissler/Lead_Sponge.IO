@@ -49,32 +49,23 @@ class CampanhaEndPoint extends ErroMessage {
 	@PostMapping(value = { "", "/" })
 	@PreAuthorize("hasAuthority('CADASTRAR_CAMPANHA') and #oauth2.hasScope('write')")
 	ResponseEntity<Campanha> cadastrar(@Valid @RequestBody Campanha campanha, HttpServletResponse response) {
-		Campanha criarCliente = service.salvar(campanha);
-		publisher.publishEvent(new RecursoCriadoEvent(this, response, criarCliente.getId()));
-		return ResponseEntity.status(HttpStatus.CREATED).body(criarCliente);
+		Campanha criar = service.salvar(campanha);
+		publisher.publishEvent(new RecursoCriadoEvent(this, response, criar.getId()));
+		return ResponseEntity.status(HttpStatus.CREATED).body(criar);
 	}
 
 	@PutMapping(value = { "/{id}", "/{id}/" })
 	@PreAuthorize("hasAuthority('CADASTRAR_CAMPANHA') and #oauth2.hasScope('write')")
 	ResponseEntity<Campanha> atualizar(@Valid @RequestBody Campanha campanha, @PathVariable Long id, HttpServletResponse response) {
-		try {
-			Campanha novaCampanha = service.atualizar(id, campanha);
-			publisher.publishEvent(new RecursoCriadoEvent(this, response, novaCampanha.getId()));
-			return ResponseEntity.status(HttpStatus.CREATED).body(novaCampanha);
-		} catch (IllegalArgumentException e) {
-			throw notFouldId(id, "a campanha");
-		}
+		Campanha novaCampanha = service.atualizar(id, campanha);
+		publisher.publishEvent(new RecursoCriadoEvent(this, response, novaCampanha.getId()));
+		return ResponseEntity.status(HttpStatus.CREATED).body(novaCampanha);
 	}
 
 	@DeleteMapping(value = { "/{id}", "/{id}/" })
 	@PreAuthorize("hasAuthority('REMOVER_CAMPANHA') and #oauth2.hasScope('write')")
-	ResponseEntity<Campanha> remover(@PathVariable Long id) {
-		if (service.deletar(id))
-			return ResponseEntity.ok().build();
-		else {
-			notFouldError();
-			return null;
-		}
+	ResponseEntity<Campanha> deletar(@PathVariable Long id) {
+		return ResponseEntity.ok(service.deletar(id));
 	}
 
 	@GetMapping(value = { "/{id}", "/{id}/" })

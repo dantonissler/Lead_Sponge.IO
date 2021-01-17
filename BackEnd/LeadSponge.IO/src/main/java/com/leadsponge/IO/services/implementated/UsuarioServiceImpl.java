@@ -12,8 +12,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.leadsponge.IO.errorValidate.ErroMessage;
-import com.leadsponge.IO.errorValidate.ResourceBadRequestException;
-import com.leadsponge.IO.errorValidate.exception.UsuarioInativaException;
 import com.leadsponge.IO.models.usuario.Usuario;
 import com.leadsponge.IO.models.usuario.UsuarioTO;
 import com.leadsponge.IO.repository.usuario.UsuarioRepository;
@@ -60,7 +58,7 @@ public class UsuarioServiceImpl extends ErroMessage implements UsuarioService {
 
 	@Override
 	public Usuario salvar(Usuario usuario) {
-		usuariovalidar(usuario);
+		validar(usuario);
 		usuario.setPassword(bCryptPasswordEncoder.encode(usuario.getPassword()));
 		usuario.setRoles(new HashSet<>(usuario.getRoles()));
 		return repository.save(usuario);
@@ -102,17 +100,15 @@ public class UsuarioServiceImpl extends ErroMessage implements UsuarioService {
 	private Usuario buscarUsuarioExistente(Long id) {
 		Optional<Usuario> usuarioSalvo = repository.findById(id);
 		if (!usuarioSalvo.isPresent()) {
-			throw notFould("o usuario");
+			throw notFouldId(id, "o usuario");
 		}
 		return usuarioSalvo.get();
 	}
 
-	private void usuariovalidar(Usuario usuario) {
-		if (usuario == null) {
-			throw new UsuarioInativaException();
-		}
-		if (!usuario.getConfirmarPassword().equals(usuario.getPassword())) {
-			throw new ResourceBadRequestException("O campo de senha não corresponde com o confirmar senha.");
-		}
+	private void validar(Usuario usuario) {
+		if (!usuario.getConfirmarPassword().equals(usuario.getPassword()))
+			throw otherMensagemBadRequest("O campo de senha não corresponde com o confirmar senha.");
+		else if (repository.findByUsername(usuario.getUsername()).isPresent())
+			throw otherMensagemBadRequest("O nome de usuario já existe.");
 	}
 }

@@ -1,4 +1,4 @@
-package com.leadsponge.leadsponge.IO.util;
+package com.leadsponge.leadsponge.IO;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
@@ -17,8 +17,8 @@ public class Util {
 			else
 				return "";
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
 			throw new Exception();
 		}
 	}
+	// Converter uma string para base64: new String(Base64Utils.encode(("string para converter").getBytes()))
 }

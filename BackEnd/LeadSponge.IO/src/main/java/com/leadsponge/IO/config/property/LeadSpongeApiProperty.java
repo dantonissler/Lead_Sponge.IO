@@ -12,16 +12,6 @@ public class LeadSpongeApiProperty {
 	private final Mail mail = new Mail();
 	private final Disco disco = new Disco();
 	private final S3 s3 = new S3();
-	private final BancoMysql bancoMysql = new BancoMysql();
-
-	@Data
-	public class BancoMysql {
-		private String username;
-		private String password;
-		private String host;
-		private String port;
-
-	}
 
 	@Data
 	public class Disco {
