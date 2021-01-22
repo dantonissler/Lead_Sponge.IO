@@ -14,19 +14,18 @@ import com.leadsponge.IO.repository.campanha.CampanhaRepository;
 import com.leadsponge.IO.services.CampanhaService;
 
 @Service
+@Transactional
 public class CampanhaServiceImpl extends ErroMessage implements CampanhaService {
 
 	@Autowired
 	private CampanhaRepository repository;
 
 	@Override
-	@Transactional
 	public Page<Campanha> filtrar(CampanhaFilter campanhaFilter, Pageable pageable) {
 		return repository.filtrar(campanhaFilter, pageable);
 	}
 
 	@Override
-	@Transactional
 	public Campanha salvar(Campanha campanha) {
 		if (repository.existsById(campanha.getId())) {
 			throw notFouldId(campanha.getId(), "a campanha");
@@ -35,7 +34,6 @@ public class CampanhaServiceImpl extends ErroMessage implements CampanhaService 
 	}
 
 	@Override
-	@Transactional
 	public Campanha atualizar(Long id, Campanha campanha) {
 		Campanha campanhaSalvo = repository.findById(id).orElseThrow(() -> notFouldId(id, "a campanha"));
 		BeanUtils.copyProperties(campanha, campanhaSalvo, "id");
@@ -43,7 +41,6 @@ public class CampanhaServiceImpl extends ErroMessage implements CampanhaService 
 	}
 
 	@Override
-	@Transactional
 	public Campanha deletar(Long id) {
 		Campanha campanhaSalvo = repository.findById(id).orElseThrow(() -> notFouldId(id, "a campanha"));
 		repository.deleteById(id);

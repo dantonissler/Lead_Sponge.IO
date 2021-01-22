@@ -24,81 +24,54 @@ import com.leadsponge.IO.errorValidate.ErroMessage;
 import com.leadsponge.IO.event.RecursoCriadoEvent;
 import com.leadsponge.IO.models.cliente.Cliente;
 import com.leadsponge.IO.repository.Filter.ClienteFilter;
-import com.leadsponge.IO.repository.cliente.ClienteRepository;
 import com.leadsponge.IO.services.ClienteService;
 
+import lombok.AllArgsConstructor;
+
 @RestController
+@AllArgsConstructor
 @RequestMapping("/clientes")
 class ClienteEndPoint extends ErroMessage {
 
 	@Autowired
-	private final ClienteRepository repository;
-
-	@Autowired
-	private final ClienteService clienteService;
+	private final ClienteService service;
 
 	@Autowired
 	private final ApplicationEventPublisher publisher;
-
-	ClienteEndPoint(ClienteRepository repository, ApplicationEventPublisher publisher, ClienteService clienteService) {
-		this.repository = repository;
-		this.publisher = publisher;
-		this.clienteService = clienteService;
-	}
-
-	@GetMapping(value = { "listar", "listar/" })
-	@PreAuthorize("hasAuthority('PESQUISAR_CLIENTE') and #oauth2.hasScope('read')")
-	ResponseEntity<Iterable<?>> listar() {
-		Iterable<Cliente> cliente = repository.findAll();
-		if (cliente == null) {
-			return ResponseEntity.notFound().build();
-		} else {
-			return ResponseEntity.ok(cliente);
-		}
-	}
 
 	@GetMapping(value = { "", "/" })
 	@ResponseStatus(HttpStatus.OK)
 	@PreAuthorize("hasAuthority('PESQUISAR_CLIENTE') and #oauth2.hasScope('read')")
 	Page<Cliente> pesquisar(ClienteFilter clienteFilter, Pageable pageable) {
-		return repository.filtrar(clienteFilter, pageable);
+		return service.filtrar(clienteFilter, pageable);
 	}
 
 	@PostMapping(value = { "", "/" })
 	@PreAuthorize("hasAuthority('CADASTRAR_CLIENTE') and #oauth2.hasScope('write')")
 	ResponseEntity<Cliente> cadastrar(@Valid @RequestBody Cliente cliente, HttpServletResponse response) {
-		Cliente criarCliente = clienteService.salvar(cliente);
+		Cliente criarCliente = service.salvar(cliente);
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, criarCliente.getId()));
 		return ResponseEntity.status(HttpStatus.CREATED).body(criarCliente);
 	}
 
 	@PutMapping(value = { "/{id}", "/{id}/" })
 	@PreAuthorize("hasAuthority('CADASTRAR_CLIENTE') and #oauth2.hasScope('write')")
-	ResponseEntity<Cliente> atualizar(@Valid @RequestBody Cliente cliente, @PathVariable Long id,
-			HttpServletResponse response) {
-		try {
-			Cliente novoCliente = clienteService.atualizar(id, cliente);
-			publisher.publishEvent(new RecursoCriadoEvent(this, response, novoCliente.getId()));
-			return ResponseEntity.status(HttpStatus.CREATED).body(novoCliente);
-		} catch (IllegalArgumentException e) {
-			throw notFouldId(id, "o cliente");
-		}
+	ResponseEntity<Cliente> atualizar(@Valid @RequestBody Cliente cliente, @PathVariable Long id, HttpServletResponse response) {
+		Cliente novoCliente = service.atualizar(id, cliente);
+		publisher.publishEvent(new RecursoCriadoEvent(this, response, novoCliente.getId()));
+		return ResponseEntity.status(HttpStatus.CREATED).body(novoCliente);
 	}
 
 	@DeleteMapping(value = { "/{id}", "/{id}/" })
 	@PreAuthorize("hasAuthority('REMOVER_CLIENTE') and #oauth2.hasScope('write')")
-	ResponseEntity<Cliente> remover(@PathVariable Long id) {
-		try {
-			repository.deleteById(id);
-			return ResponseEntity.ok().build();
-		} catch (Exception e) {
-			throw notFouldId(id, "o cliente");
-		}
+	ResponseEntity<Cliente> deletar(@PathVariable Long id) {
+		return ResponseEntity.ok(service.deletar(id));
 	}
 
 	@GetMapping(value = { "/{id}", "/{id}/" })
 	@PreAuthorize("hasAuthority('PESQUISAR_CLIENTE') and #oauth2.hasScope('read')")
-	ResponseEntity<Cliente> detalhar(@Valid @PathVariable("id") Long id) {
-		return ResponseEntity.ok(repository.findById(id).orElseThrow(() -> notFouldId(id, "o cliente")));
+	ResponseEntity<Cliente> detalhar(@Valid @PathVariable("id") Long id, HttpServletResponse response) {
+		publisher.publishEvent(new RecursoCriadoEvent(this, response, id));
+		return ResponseEntity.ok(service.detalhar(id));
 	}
 }

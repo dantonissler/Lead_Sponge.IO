@@ -5,27 +5,34 @@ import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.leadsponge.IO.errorValidate.exception.UsuarioInativaException;
+import com.leadsponge.IO.errorValidate.ErroMessage;
 import com.leadsponge.IO.models.cliente.Cliente;
+import com.leadsponge.IO.repository.Filter.ClienteFilter;
 import com.leadsponge.IO.repository.cliente.ClienteRepository;
 import com.leadsponge.IO.services.ClienteService;
 
 @Service
-public class ClienteServiceImpl implements ClienteService {
+@Transactional
+public class ClienteServiceImpl extends ErroMessage implements ClienteService {
 	@Autowired
-	private ClienteRepository clienteRepository;
+	private ClienteRepository repository;
 
 	@Override
 	public Cliente salvar(Cliente cliente) {
-		clienteValidar(cliente);
+		if (repository.existsById(cliente.getId())) {
+			throw notFouldId(cliente.getId(), " o cliente ");
+		}
 		cliente.setSegmentos(new ArrayList<>(cliente.getSegmentos()));
 		cliente.getContato().forEach(c -> c.setCliente(cliente));
 		cliente.getContato().forEach(contato -> contato.getTelefone().forEach(telefone -> telefone.setContato(contato)));
 		cliente.getContato().forEach(contato -> contato.getEmail().forEach(email -> email.setContato(contato)));
 		cliente.setSeguidores(new ArrayList<>(cliente.getSeguidores()));
-		return clienteRepository.save(cliente);
+		return repository.save(cliente);
 	}
 
 	@Override
@@ -44,21 +51,31 @@ public class ClienteServiceImpl implements ClienteService {
 		clienteSalvo.getContato().forEach(contato -> contato.getTelefone().forEach(telefone -> telefone.setContato(contato)));
 		clienteSalvo.getContato().forEach(contato -> contato.getEmail().forEach(email -> email.setContato(contato)));
 		BeanUtils.copyProperties(cliente, clienteSalvo, "id", "segmentos", "contatos");
-		return clienteRepository.save(clienteSalvo);
+		return repository.save(clienteSalvo);
+	}
 
+	@Override
+	public Page<Cliente> filtrar(ClienteFilter campanhaFilter, Pageable pageable) {
+		return repository.filtrar(campanhaFilter, pageable);
+	}
+
+	@Override
+	public Cliente deletar(Long id) {
+		Cliente campanhaSalvo = repository.findById(id).orElseThrow(() -> notFouldId(id, "a campanha"));
+		repository.deleteById(id);
+		return campanhaSalvo;
+	}
+
+	@Override
+	public Cliente detalhar(Long id) {
+		return repository.findById(id).orElseThrow(() -> notFouldId(id, "a campanha"));
 	}
 
 	private Cliente buscarClienteExistente(Long id) {
-		Optional<Cliente> clienteSalvo = clienteRepository.findById(id);
+		Optional<Cliente> clienteSalvo = repository.findById(id);
 		if (!clienteSalvo.isPresent()) {
 			throw new IllegalArgumentException();
 		}
 		return clienteSalvo.get();
-	}
-
-	private void clienteValidar(Cliente Cliente) {
-		if (Cliente == null) {
-			throw new UsuarioInativaException();
-		}
 	}
 }

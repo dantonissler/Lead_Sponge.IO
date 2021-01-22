@@ -85,6 +85,8 @@ public class Cliente extends UserDateAudit {
     @ManyToOne
     @JoinColumn(name = "responsavel_id")
     private Usuario responsavel;
+    
+    
 
     @Override
     public boolean equals(Object obj) {

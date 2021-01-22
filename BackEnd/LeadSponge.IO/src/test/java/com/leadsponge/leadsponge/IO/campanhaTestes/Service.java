@@ -11,7 +11,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
@@ -37,9 +36,6 @@ public class Service {
 
 	@Autowired
 	private CampanhaRepository repository;
-
-	@Mock
-	private Page<Campanha> campanhaPage;
 
 	@AfterEach
 	private void setUp() {
@@ -135,7 +131,6 @@ public class Service {
 		assertEquals("Descrição2", campanha.getDescricao());
 	}
 
-	// TODO validar anotações.
 	@Test
 	@Rollback(true)
 	@DisplayName("Criar Campanha com nome e descrição, percistir os dados.")

@@ -45,6 +45,12 @@ public class ClienteRepositoryImpl implements ClienteRepositoryQuery {
 		if (StringUtils.isNotBlank(clienteFilter.getNome())) {
 			predicates.add(builder.like(builder.lower(root.get(Cliente_.nome)), "%" + clienteFilter.getNome().toLowerCase() + "%"));
 		}
+		if (StringUtils.isNotBlank(clienteFilter.getUrl())) {
+			predicates.add(builder.like(builder.lower(root.get(Cliente_.url)), "%" + clienteFilter.getUrl().toLowerCase() + "%"));
+		}
+		if (StringUtils.isNotBlank(clienteFilter.getResumo())) {
+			predicates.add(builder.like(builder.lower(root.get(Cliente_.resumo)), "%" + clienteFilter.getResumo().toLowerCase() + "%"));
+		}
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}
 
