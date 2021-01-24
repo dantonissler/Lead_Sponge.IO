@@ -22,47 +22,38 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.leadsponge.IO.errorValidate.ErroMessage;
 import com.leadsponge.IO.event.RecursoCriadoEvent;
 import com.leadsponge.IO.models.estagioNegociacao.EstagioNegociacao;
 import com.leadsponge.IO.models.motivoPerda.MotivoPerda;
 import com.leadsponge.IO.models.negociacao.EstatusNegociacao;
 import com.leadsponge.IO.models.negociacao.Negociacao;
 import com.leadsponge.IO.repository.Filter.NegociacaoFilter;
-import com.leadsponge.IO.repository.negociacao.NegociacaoRepository;
-import com.leadsponge.IO.services.implementated.NegociacaoServiceImpl;
+import com.leadsponge.IO.services.NegociacaoService;
+
+import lombok.AllArgsConstructor;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/negociacoes")
-class NegociacaoEndPoint extends ErroMessage {
+class NegociacaoEndPoint {
 
 	@Autowired
-	private final NegociacaoRepository repository;
-
-	@Autowired
-	private final NegociacaoServiceImpl negociacaoService;
+	private final NegociacaoService service;
 
 	@Autowired
 	private final ApplicationEventPublisher publisher;
-
-	public NegociacaoEndPoint(NegociacaoRepository repository, ApplicationEventPublisher publisher,
-			NegociacaoServiceImpl negociacaoService) {
-		this.publisher = publisher;
-		this.repository = repository;
-		this.negociacaoService = negociacaoService;
-	}
 
 	@GetMapping(value = { "", "/" })
 	@ResponseStatus(HttpStatus.OK)
 	@PreAuthorize("hasAuthority('PESQUISAR_NEGOCIACAO') and #oauth2.hasScope('read')")
 	Page<Negociacao> pesquisar(NegociacaoFilter negociacaoFilter, Pageable pageable) {
-		return repository.filtrar(negociacaoFilter, pageable);
+		return service.filtrar(negociacaoFilter, pageable);
 	}
 
 	@PostMapping(value = { "", "/" })
 	@PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
 	ResponseEntity<Negociacao> cadastrar(@Valid @RequestBody Negociacao negociacao, HttpServletResponse response) {
-		Negociacao criarNegociacao = negociacaoService.save(negociacao);
+		Negociacao criarNegociacao = service.salvar(negociacao);
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, criarNegociacao.getId()));
 		return ResponseEntity.status(HttpStatus.CREATED).body(criarNegociacao);
 	}
@@ -70,56 +61,44 @@ class NegociacaoEndPoint extends ErroMessage {
 	@GetMapping(value = { "/{id}", "/{id}/" })
 	@PreAuthorize("hasAuthority('PESQUISAR_NEGOCIACAO') and #oauth2.hasScope('read')")
 	ResponseEntity<Negociacao> detalhar(@Valid @PathVariable("id") Long id) {
-		return ResponseEntity.ok(repository.findById(id).orElseThrow(() -> notFouldId(id, "a negociação")));
+		return ResponseEntity.ok(service.detalhar(id));
 	}
 
 	@PutMapping(value = { "/{id}", "/{id}/" })
 	@PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
-	ResponseEntity<Negociacao> atualizar(@RequestBody Negociacao negociacao, @PathVariable Long id,
-			HttpServletResponse response) {
-		try {
-			Negociacao novonegociacao = negociacaoService.atualizar(id, negociacao);
-			publisher.publishEvent(new RecursoCriadoEvent(this, response, novonegociacao.getId()));
-			return ResponseEntity.status(HttpStatus.CREATED).body(novonegociacao);
-		} catch (IllegalArgumentException e) {
-			throw notFouldId(id, "a negociacao");
-		}
+	ResponseEntity<Negociacao> atualizar(@RequestBody Negociacao negociacao, @PathVariable Long id, HttpServletResponse response) {
+		Negociacao novonegociacao = service.atualizar(id, negociacao);
+		publisher.publishEvent(new RecursoCriadoEvent(this, response, novonegociacao.getId()));
+		return ResponseEntity.status(HttpStatus.CREATED).body(novonegociacao);
 	}
 
 	@DeleteMapping(value = { "/{id}", "/{id}/" })
 	@PreAuthorize("hasAuthority('REMOVER_NEGOCIACAO') and #oauth2.hasScope('write')")
-	ResponseEntity<Negociacao> remover(@PathVariable Long id) {
-		try {
-			repository.deleteById(id);
-			return ResponseEntity.noContent().build();
-		} catch (Exception e) {
-			throw notFouldId(id, "a negociacao");
-		}
+	ResponseEntity<Negociacao> deletar(@PathVariable Long id) {
+		return ResponseEntity.ok(service.deletar(id));
 	}
 
 	@PutMapping("/{id}/avaliacao")
 	@ResponseStatus(HttpStatus.CREATED)
 	@PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
 	ResponseEntity<Negociacao> atualizarPropriedadeEnabled(@PathVariable Long id, @RequestBody Integer avaliacao) {
-		negociacaoService.atualizarPropriedadeAvaliacao(id, avaliacao);
+		service.atualizarPropriedadeAvaliacao(id, avaliacao);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 
 	@PutMapping("/{id}/estagio")
 	@ResponseStatus(HttpStatus.CREATED)
 	@PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
-	ResponseEntity<Negociacao> atualizarPropriedadeEstagio(@PathVariable Long id,
-			@RequestBody EstagioNegociacao estagio) {
-		negociacaoService.atualizarPropriedadeEstagio(id, estagio);
+	ResponseEntity<Negociacao> atualizarPropriedadeEstagio(@PathVariable Long id, @RequestBody EstagioNegociacao estagio) {
+		service.atualizarPropriedadeEstagio(id, estagio);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 
 	@PutMapping("/{id}/estatus")
 	@ResponseStatus(HttpStatus.CREATED)
 	@PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
-	ResponseEntity<Negociacao> atualizarPropriedadeEstatus(@PathVariable Long id,
-			@RequestBody EstatusNegociacao estatus) {
-		negociacaoService.atualizarPropriedadeEstatus(id, estatus);
+	ResponseEntity<Negociacao> atualizarPropriedadeEstatus(@PathVariable Long id, @RequestBody EstatusNegociacao estatus) {
+		service.atualizarPropriedadeEstatus(id, estatus);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 
@@ -127,7 +106,7 @@ class NegociacaoEndPoint extends ErroMessage {
 	@ResponseStatus(HttpStatus.CREATED)
 	@PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
 	ResponseEntity<Negociacao> atualizarPropriedadeDataFim(@PathVariable Long id, @RequestBody Date data) {
-		negociacaoService.atualizarPropriedadeDataFim(id, data);
+		service.atualizarPropriedadeDataFim(id, data);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 
@@ -135,7 +114,7 @@ class NegociacaoEndPoint extends ErroMessage {
 	@ResponseStatus(HttpStatus.CREATED)
 	@PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
 	ResponseEntity<Negociacao> atribuirMotivoPerda(@PathVariable Long id, @RequestBody MotivoPerda morivoPerda) {
-		negociacaoService.atribuirPropMP(id, morivoPerda);
+		service.atribuirPropMP(id, morivoPerda);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 

@@ -20,76 +20,56 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.leadsponge.IO.errorValidate.ErroMessage;
 import com.leadsponge.IO.event.RecursoCriadoEvent;
 import com.leadsponge.IO.models.estagioNegociacao.EstagioNegociacao;
 import com.leadsponge.IO.repository.Filter.EstagioNegociacaoFilter;
-import com.leadsponge.IO.repository.estagioNegociacao.EstagioNegociacaoRepository;
-import com.leadsponge.IO.services.implementated.EstagioNegociacaoServiceImpl;
+import com.leadsponge.IO.services.EstagioNegociacaoService;
+
+import lombok.AllArgsConstructor;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/estagios")
-class EstagioNegociacaoEndPoint extends ErroMessage {
+class EstagioNegociacaoEndPoint {
 
 	@Autowired
-	private final EstagioNegociacaoRepository repository;
-
-	@Autowired
-	private final EstagioNegociacaoServiceImpl estagioNegociacaoService;
+	private final EstagioNegociacaoService service;
 
 	@Autowired
 	private final ApplicationEventPublisher publisher;
-
-	EstagioNegociacaoEndPoint(EstagioNegociacaoRepository repository, ApplicationEventPublisher publisher,
-			EstagioNegociacaoServiceImpl estagioNegociacaoService) {
-		this.repository = repository;
-		this.publisher = publisher;
-		this.estagioNegociacaoService = estagioNegociacaoService;
-	}
 
 	@GetMapping(value = { "", "/" })
 	@ResponseStatus(HttpStatus.OK)
 	@PreAuthorize("hasAuthority('PESQUISAR_ESTAGIO') and #oauth2.hasScope('read')")
 	Page<EstagioNegociacao> pesquisar(EstagioNegociacaoFilter estagioNegociacaoFilter, Pageable pageable) {
-		return repository.filtrar(estagioNegociacaoFilter, pageable);
+		return service.filtrar(estagioNegociacaoFilter, pageable);
 	}
 
 	@PostMapping(value = { "", "/" })
 	@PreAuthorize("hasAuthority('CADASTRAR_ESTAGIO') and #oauth2.hasScope('write')")
-	ResponseEntity<EstagioNegociacao> cadastrar(@Valid @RequestBody EstagioNegociacao estagioNegociacao,
-			HttpServletResponse response) {
-		EstagioNegociacao criarEstagioNegociacao = estagioNegociacaoService.save(estagioNegociacao);
+	ResponseEntity<EstagioNegociacao> cadastrar(@Valid @RequestBody EstagioNegociacao estagioNegociacao, HttpServletResponse response) {
+		EstagioNegociacao criarEstagioNegociacao = service.salvar(estagioNegociacao);
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, criarEstagioNegociacao.getId()));
 		return ResponseEntity.status(HttpStatus.CREATED).body(criarEstagioNegociacao);
 	}
 
 	@PutMapping(value = { "/{id}", "/{id}/" })
 	@PreAuthorize("hasAuthority('CADASTRAR_ESTAGIO') and #oauth2.hasScope('write')")
-	ResponseEntity<EstagioNegociacao> atualizar(@Valid @RequestBody EstagioNegociacao estagioNegociacao,
-			@PathVariable Long id, HttpServletResponse response) {
-		try {
-			EstagioNegociacao novaEstagioNegociacao = estagioNegociacaoService.atualizar(id, estagioNegociacao);
-			publisher.publishEvent(new RecursoCriadoEvent(this, response, novaEstagioNegociacao.getId()));
-			return ResponseEntity.status(HttpStatus.CREATED).body(novaEstagioNegociacao);
-		} catch (IllegalArgumentException e) {
-			throw notFouldId(id, "a estagio de negociação");
-		}
+	ResponseEntity<EstagioNegociacao> atualizar(@Valid @RequestBody EstagioNegociacao estagioNegociacao, @PathVariable Long id, HttpServletResponse response) {
+		EstagioNegociacao novaEstagioNegociacao = service.atualizar(id, estagioNegociacao);
+		publisher.publishEvent(new RecursoCriadoEvent(this, response, novaEstagioNegociacao.getId()));
+		return ResponseEntity.status(HttpStatus.CREATED).body(novaEstagioNegociacao);
 	}
 
 	@DeleteMapping(value = { "/{id}", "/{id}/" })
 	@PreAuthorize("hasAuthority('REMOVER_ESTAGIO') and #oauth2.hasScope('write')")
-	ResponseEntity<EstagioNegociacao> remover(@PathVariable Long id) {
-		try {
-			repository.deleteById(id);
-			return ResponseEntity.ok().build();
-		} catch (Exception e) {
-			throw notFouldId(id, "a estagio de negociação");
-		}
+	ResponseEntity<EstagioNegociacao> deletar(@PathVariable Long id) {
+		return ResponseEntity.ok(service.deletar(id));
 	}
 
 	@GetMapping(value = { "/{id}", "/{id}/" })
 	@PreAuthorize("hasAuthority('PESQUISAR_ESTAGIO') and #oauth2.hasScope('read')")
 	public ResponseEntity<EstagioNegociacao> detalhar(@Valid @PathVariable("id") Long id) {
-		return ResponseEntity.ok(repository.findById(id).orElseThrow(() -> notFouldId(id, "a estagio de negociação")));
+		return ResponseEntity.ok(service.detalhar(id));
 	}
 }

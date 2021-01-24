@@ -24,80 +24,61 @@ import com.leadsponge.IO.errorValidate.ErroMessage;
 import com.leadsponge.IO.event.RecursoCriadoEvent;
 import com.leadsponge.IO.models.produto.Produto;
 import com.leadsponge.IO.repository.Filter.ProdutoFilter;
-import com.leadsponge.IO.repository.produto.ProdutoRepository;
-import com.leadsponge.IO.services.implementated.ProdutoServiceImpl;
+import com.leadsponge.IO.services.ProdutoService;
+
+import lombok.AllArgsConstructor;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/produtos")
 class ProdutoEndPoint extends ErroMessage {
 
 	@Autowired
-	private final ProdutoRepository repository;
-
-	@Autowired
-	private final ProdutoServiceImpl produtoService;
+	private final ProdutoService service;
 
 	@Autowired
 	private final ApplicationEventPublisher publisher;
-
-	ProdutoEndPoint(ProdutoRepository repository, ApplicationEventPublisher publisher,
-			ProdutoServiceImpl produtoService) {
-		this.repository = repository;
-		this.publisher = publisher;
-		this.produtoService = produtoService;
-	}
 
 	@GetMapping(value = { "", "/" })
 	@ResponseStatus(HttpStatus.OK)
 	@PreAuthorize("hasAuthority('PESQUISAR_PRODUTO') and #oauth2.hasScope('read')")
 	public Page<Produto> pesquisar(ProdutoFilter produtoFilter, Pageable pageable) {
-		return repository.filtrar(produtoFilter, pageable);
+		return service.filtrar(produtoFilter, pageable);
 	}
 
 	@PostMapping(value = { "", "/" })
 	@PreAuthorize("hasAuthority('CADASTRAR_PRODUTO') and #oauth2.hasScope('write')")
-	public ResponseEntity<Produto> cadastrar(@Valid @RequestBody Produto produto,
-			HttpServletResponse response) {
-		Produto criarProduto = produtoService.save(produto);
+	public ResponseEntity<Produto> cadastrar(@Valid @RequestBody Produto produto, HttpServletResponse response) {
+		Produto criarProduto = service.salvar(produto);
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, criarProduto.getId()));
 		return ResponseEntity.status(HttpStatus.CREATED).body(criarProduto);
 	}
 
 	@PutMapping(value = { "/{id}", "/{id}/" })
 	@PreAuthorize("hasAuthority('CADASTRAR_PRODUTO') and #oauth2.hasScope('write')")
-	ResponseEntity<Produto> atualizar(@Valid @RequestBody Produto produto,
-			@PathVariable Long id, HttpServletResponse response) {
-		try {
-			Produto novaProduto = produtoService.atualizar(id, produto);
-			publisher.publishEvent(new RecursoCriadoEvent(this, response, novaProduto.getId()));
-			return ResponseEntity.status(HttpStatus.CREATED).body(novaProduto);
-		} catch (IllegalArgumentException e) {
-			throw notFouldId(id, "o produto");
-		}
+	ResponseEntity<Produto> atualizar(@Valid @RequestBody Produto produto, @PathVariable Long id, HttpServletResponse response) {
+		Produto novaProduto = service.atualizar(id, produto);
+		publisher.publishEvent(new RecursoCriadoEvent(this, response, novaProduto.getId()));
+		return ResponseEntity.status(HttpStatus.CREATED).body(novaProduto);
 	}
 
 	@DeleteMapping(value = { "/{id}", "/{id}/" })
 	@PreAuthorize("hasAuthority('REMOVER_PRODUTO') and #oauth2.hasScope('write')")
-	public ResponseEntity<Produto> remover(@PathVariable Long id) {
-		try {
-			repository.deleteById(id);
-			return ResponseEntity.ok().build();
-		} catch (Exception e) {
-			throw notFouldId(id, "o produto");
-		}
+	public ResponseEntity<Produto> deletar(@PathVariable Long id) {
+		return ResponseEntity.ok(service.deletar(id));
 	}
 
 	@GetMapping(value = { "/{id}", "/{id}/" })
 	@PreAuthorize("hasAuthority('PESQUISAR_PRODUTO') and #oauth2.hasScope('read')")
 	public ResponseEntity<Produto> detalhar(@Valid @PathVariable("id") Long id) {
-		return ResponseEntity.ok(repository.findById(id).orElseThrow(() -> notFouldId(id, "o produto")));
+		return ResponseEntity.ok(service.deletar(id));
 	}
-	
+
 	@PutMapping("/{id}/vasivel")
 	@ResponseStatus(HttpStatus.CREATED)
 	@PreAuthorize("hasAuthority('CADASTRAR_USUARIO') and #oauth2.hasScope('write')")
 	public ResponseEntity<Produto> atualizarPropriedadeVisibilidade(@PathVariable Long id, @RequestBody Boolean visibilidade) {
-		produtoService.atualizarPropriedadeVisibilidade(id, visibilidade);
+		service.atualizarPropriedadeVisibilidade(id, visibilidade);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 }

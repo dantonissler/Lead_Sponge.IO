@@ -1,4 +1,4 @@
-package com.leadsponge.IO.repository.contato;
+package com.leadsponge.IO.repository.email;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,37 +16,34 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
-import com.leadsponge.IO.models.contato.Contato;
-import com.leadsponge.IO.models.contato.Contato_;
-import com.leadsponge.IO.repository.Filter.ContatoFilter;
+import com.leadsponge.IO.models.email.Email;
+import com.leadsponge.IO.models.email.Email_;
+import com.leadsponge.IO.repository.Filter.EmailFilter;
 
-public class ContatoRepositoryImpl implements ContatoRepositoryQuery {
+public class EmailRepositoryImpl implements EmailRepositoryQuery {
 
 	@PersistenceContext
 	private EntityManager manager;
 
 	@Override
-	public Page<Contato> filtrar(ContatoFilter contatoFilter, Pageable pageable) {
+	public Page<Email> filtrar(EmailFilter emailFilter, Pageable pageable) {
 		CriteriaBuilder builder = manager.getCriteriaBuilder();
-		CriteriaQuery<Contato> criteria = builder.createQuery(Contato.class);
-		Root<Contato> root = criteria.from(Contato.class);
+		CriteriaQuery<Email> criteria = builder.createQuery(Email.class);
+		Root<Email> root = criteria.from(Email.class);
 
-		Predicate[] predicates = criarRestricoes(contatoFilter, builder, root);
+		Predicate[] predicates = criarRestricoes(emailFilter, builder, root);
 		criteria.where(predicates);
 
-		TypedQuery<Contato> query = manager.createQuery(criteria);
+		TypedQuery<Email> query = manager.createQuery(criteria);
 		adicionarRestricoesDePaginacao(query, pageable);
 
-		return new PageImpl<>(query.getResultList(), pageable, total(contatoFilter));
+		return new PageImpl<>(query.getResultList(), pageable, total(emailFilter));
 	}
 
-	private Predicate[] criarRestricoes(ContatoFilter contatoFilter, CriteriaBuilder builder, Root<Contato> root) {
+	private Predicate[] criarRestricoes(EmailFilter emailFilter, CriteriaBuilder builder, Root<Email> root) {
 		List<Predicate> predicates = new ArrayList<>();
-		if (StringUtils.isNotBlank(contatoFilter.getNome())) {
-			predicates.add(builder.like(builder.lower(root.get(Contato_.nome)), "%" + contatoFilter.getNome().toLowerCase() + "%"));
-		}
-		if (StringUtils.isNotBlank(contatoFilter.getCargo())) {
-			predicates.add(builder.like(builder.lower(root.get(Contato_.cargo)), "%" + contatoFilter.getCargo().toLowerCase() + "%"));
+		if (StringUtils.isNotBlank(emailFilter.getEmail())) {
+			predicates.add(builder.like(builder.lower(root.get(Email_.email)), "%" + emailFilter.getEmail().toLowerCase() + "%"));
 		}
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}
@@ -59,11 +56,11 @@ public class ContatoRepositoryImpl implements ContatoRepositoryQuery {
 		query.setMaxResults(totalRegistrosPorPagina);
 	}
 
-	private Long total(ContatoFilter ContatoFilter) {
+	private Long total(EmailFilter emailFilter) {
 		CriteriaBuilder builder = manager.getCriteriaBuilder();
 		CriteriaQuery<Long> criteria = builder.createQuery(Long.class);
-		Root<Contato> root = criteria.from(Contato.class);
-		Predicate[] predicates = criarRestricoes(ContatoFilter, builder, root);
+		Root<Email> root = criteria.from(Email.class);
+		Predicate[] predicates = criarRestricoes(emailFilter, builder, root);
 		criteria.where(predicates);
 		criteria.select(builder.count(root));
 		return manager.createQuery(criteria).getSingleResult();

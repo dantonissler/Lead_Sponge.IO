@@ -1,11 +1,12 @@
 package com.leadsponge.IO.services.implementated;
 
 import java.util.HashSet;
-import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Service;
 import com.leadsponge.IO.errorValidate.ErroMessage;
 import com.leadsponge.IO.models.usuario.Usuario;
 import com.leadsponge.IO.models.usuario.UsuarioTO;
+import com.leadsponge.IO.repository.Filter.UsuarioFilter;
+import com.leadsponge.IO.repository.projection.ResumoUsuario;
 import com.leadsponge.IO.repository.usuario.UsuarioRepository;
 import com.leadsponge.IO.services.UsuarioService;
 import com.leadsponge.IO.storage.Disco;
@@ -32,16 +35,16 @@ public class UsuarioServiceImpl extends ErroMessage implements UsuarioService {
 
 	@Override
 	public Usuario atualizarUsuarioDTO(Long id, UsuarioTO usuario) {
-		Usuario usuarioSalvo = buscarUsuarioExistente(id);
-		usuarioSalvo.getRoles().clear();
-		usuarioSalvo.getRoles().addAll(usuario.getRoles());
-		BeanUtils.copyProperties(usuario, usuarioSalvo, "id", "roles");
-		return repository.save(usuarioSalvo);
+		Usuario usuarioSalva = repository.findById(id).orElseThrow(() -> notFouldId(id, "o usuario"));
+		usuarioSalva.getRoles().clear();
+		usuarioSalva.getRoles().addAll(usuario.getRoles());
+		BeanUtils.copyProperties(usuario, usuarioSalva, "id", "roles");
+		return repository.save(usuarioSalva);
 	}
 
 	@Override
 	public void removerImg(Long id) {
-		Usuario usuarioSalva = buscarUsuarioExistente(id);
+		Usuario usuarioSalva = repository.findById(id).orElseThrow(() -> notFouldId(id, "o usuario"));
 		disco.remover(usuarioSalva.getUrlFoto());
 		usuarioSalva.setFoto(null);
 		usuarioSalva.setUrlFoto(null);
@@ -50,7 +53,7 @@ public class UsuarioServiceImpl extends ErroMessage implements UsuarioService {
 
 	@Override
 	public void atualizarImg(Long id, String foto) {
-		Usuario usuarioSalva = buscarUsuarioExistente(id);
+		Usuario usuarioSalva = repository.findById(id).orElseThrow(() -> notFouldId(id, "o usuario"));
 		usuarioSalva.setFoto(foto);
 		usuarioSalva.setUrlFoto(disco.configurarUrlFoto(foto));
 		repository.save(usuarioSalva);
@@ -58,7 +61,10 @@ public class UsuarioServiceImpl extends ErroMessage implements UsuarioService {
 
 	@Override
 	public Usuario salvar(Usuario usuario) {
-		validar(usuario);
+		if (!usuario.getConfirmarPassword().equals(usuario.getPassword()))
+			throw otherMensagemBadRequest("O campo de senha não corresponde com o confirmar senha.");
+		else if (repository.findByUsername(usuario.getUsername()).isPresent())
+			throw otherMensagemBadRequest("O nome de usuario já existe.");
 		usuario.setPassword(bCryptPasswordEncoder.encode(usuario.getPassword()));
 		usuario.setRoles(new HashSet<>(usuario.getRoles()));
 		return repository.save(usuario);
@@ -66,24 +72,23 @@ public class UsuarioServiceImpl extends ErroMessage implements UsuarioService {
 
 	@Override
 	public Usuario atualizar(Long id, Usuario usuario) {
-		Usuario usuarioSalvo = buscarUsuarioExistente(id);
+		Usuario usuarioSalva = repository.findById(id).orElseThrow(() -> notFouldId(id, "o usuario"));
 		usuario.setPassword(bCryptPasswordEncoder.encode(usuario.getPassword()));
-		usuarioSalvo.getRoles().clear();
-		usuarioSalvo.getRoles().addAll(usuario.getRoles());
-		usuarioSalvo.setRoles(new HashSet<>(usuarioSalvo.getRoles()));
-		if (StringUtils.isBlank(usuario.getFoto()) && StringUtils.isBlank(usuarioSalvo.getFoto())) {
-			disco.remover(usuarioSalvo.getUrlFoto());
-		} else if (StringUtils.isBlank(usuario.getFoto()) && !usuario.getFoto().equals(usuarioSalvo.getFoto())) {
+		usuarioSalva.getRoles().clear();
+		usuarioSalva.getRoles().addAll(usuario.getRoles());
+		usuarioSalva.setRoles(new HashSet<>(usuarioSalva.getRoles()));
+		if (StringUtils.isBlank(usuario.getFoto()) && StringUtils.isBlank(usuarioSalva.getFoto())) {
+			disco.remover(usuarioSalva.getUrlFoto());
+		} else if (StringUtils.isBlank(usuario.getFoto()) && !usuario.getFoto().equals(usuarioSalva.getFoto())) {
 			disco.remover(usuario.getUrlFoto());
 		}
-
-		BeanUtils.copyProperties(usuario, usuarioSalvo, "id", "roles");
-		return repository.save(usuarioSalvo);
+		BeanUtils.copyProperties(usuario, usuarioSalva, "id", "roles");
+		return repository.save(usuarioSalva);
 	}
 
 	@Override
 	public void atualizarPropriedadeEnabled(Long id, Boolean enabled) {
-		Usuario usuarioSalva = buscarUsuarioExistente(id);
+		Usuario usuarioSalva = repository.findById(id).orElseThrow(() -> notFouldId(id, "a produto"));
 		usuarioSalva.setEnabled(enabled);
 		repository.save(usuarioSalva);
 	}
@@ -97,18 +102,30 @@ public class UsuarioServiceImpl extends ErroMessage implements UsuarioService {
 		return null;
 	}
 
-	private Usuario buscarUsuarioExistente(Long id) {
-		Optional<Usuario> usuarioSalvo = repository.findById(id);
-		if (!usuarioSalvo.isPresent()) {
-			throw notFouldId(id, "o usuario");
-		}
-		return usuarioSalvo.get();
+	@Override
+	public Page<Usuario> filtrar(UsuarioFilter usuarioFilter, Pageable pageable) {
+		return repository.filtrar(usuarioFilter, pageable);
 	}
 
-	private void validar(Usuario usuario) {
-		if (!usuario.getConfirmarPassword().equals(usuario.getPassword()))
-			throw otherMensagemBadRequest("O campo de senha não corresponde com o confirmar senha.");
-		else if (repository.findByUsername(usuario.getUsername()).isPresent())
-			throw otherMensagemBadRequest("O nome de usuario já existe.");
+	@Override
+	public Usuario deletar(Long id) {
+		Usuario usuarioSalvo = repository.findById(id).orElseThrow(() -> notFouldId(id, "a produto"));
+		repository.deleteById(id);
+		return usuarioSalvo;
+	}
+
+	@Override
+	public Usuario detalhar(Long id) {
+		return repository.findById(id).orElseThrow(() -> notFouldId(id, "a produto"));
+	}
+
+	@Override
+	public Page<ResumoUsuario> resumir(UsuarioFilter usuarioFilter, Pageable pageable) {
+		return repository.resumir(usuarioFilter, pageable);
+	}
+
+	@Override
+	public Usuario findByNome(String username) {
+		return repository.findByUsername(username).orElseThrow(() -> notFould("o usuario"));
 	}
 }

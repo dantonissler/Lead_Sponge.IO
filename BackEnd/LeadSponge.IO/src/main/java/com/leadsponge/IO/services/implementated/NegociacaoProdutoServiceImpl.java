@@ -4,15 +4,19 @@ import java.math.BigDecimal;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.leadsponge.IO.errorValidate.ErroMessage;
 import com.leadsponge.IO.models.negociacaoProduto.NegociacaoProduto;
 import com.leadsponge.IO.models.negociacaoProduto.TipoDesconto;
-import com.leadsponge.IO.repository.NegociacaoProdutoRepository;
+import com.leadsponge.IO.repository.Filter.NegociacaoProdutoFilter;
 import com.leadsponge.IO.repository.negociacao.NegociacaoRepository;
+import com.leadsponge.IO.repository.negociacaoProduto.NegociacaoProdutoRepository;
 import com.leadsponge.IO.repository.produto.ProdutoRepository;
 import com.leadsponge.IO.services.NegociacaoProdutoService;
+import com.leadsponge.IO.services.NegociacaoService;
 
 @Service
 public class NegociacaoProdutoServiceImpl extends ErroMessage implements NegociacaoProdutoService {
@@ -26,24 +30,25 @@ public class NegociacaoProdutoServiceImpl extends ErroMessage implements Negocia
 	@Autowired
 	private NegociacaoRepository negociacaoR;
 
+	@Autowired
+	private NegociacaoService nService;
+
 	@Override
 	public NegociacaoProduto salvar(NegociacaoProduto nProduto) {
 		produtoR.findById(nProduto.getProduto().getId()).orElseThrow(() -> notFouldId(nProduto.getProduto().getId(), "o produto"));
-		negociacaoR.findById(nProduto.getNegociacao().getId()).orElseThrow(() -> notFouldId(nProduto.getNegociacao().getId(), "a negociação"));
+		negociacaoR.findById(nProduto.getNegociacao().getId()).orElseThrow(() -> notFouldId(nProduto.getNegociacao().getId(), "a negociação do produto"));
 		valorTotal(nProduto);
+		nService.calculo(nProduto.getNegociacao().getId());
 		return repository.save(nProduto);
 	}
 
 	@Override
 	public NegociacaoProduto atualizar(Long id, NegociacaoProduto negociacaoProduto) {
-		NegociacaoProduto fonteNegociacaoProduto = buscarNegociacaoProdutoExistente(id);
+		NegociacaoProduto fonteNegociacaoProduto = repository.findById(id).orElseThrow(() -> notFouldId(id, "a negociação do produto"));
 		valorTotal(negociacaoProduto);
 		BeanUtils.copyProperties(negociacaoProduto, fonteNegociacaoProduto, "id");
+		nService.calculo(negociacaoProduto.getNegociacao().getId());
 		return repository.save(fonteNegociacaoProduto);
-	}
-
-	private NegociacaoProduto buscarNegociacaoProdutoExistente(Long id) {
-		return repository.findById(id).orElseThrow(() -> notFouldId(id, "o produto"));
 	}
 
 	private NegociacaoProduto valorTotal(NegociacaoProduto negociacaoProduto) {
@@ -65,5 +70,23 @@ public class NegociacaoProdutoServiceImpl extends ErroMessage implements Negocia
 			throw notFould("o produto");
 		}
 		return negociacaoProduto;
+	}
+
+	@Override
+	public NegociacaoProduto deletar(Long id) {
+		NegociacaoProduto megociacaoProduto = repository.findById(id).orElseThrow(() -> notFouldId(id, "a negociação do produto"));
+		repository.deleteById(id);
+		return megociacaoProduto;
+	}
+
+	@Override
+	public NegociacaoProduto detalhar(Long id) {
+		// TODO fazer as devidas validações
+		return repository.findById(id).orElseThrow(() -> notFouldId(id, "a negociação do produto"));
+	}
+
+	@Override
+	public Page<NegociacaoProduto> filtrar(NegociacaoProdutoFilter negociacaoProdutoFilter, Pageable pageable) {
+		return repository.filtrar(negociacaoProdutoFilter, pageable);
 	}
 }

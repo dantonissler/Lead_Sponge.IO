@@ -22,55 +22,50 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.leadsponge.IO.errorValidate.ErroMessage;
 import com.leadsponge.IO.event.RecursoCriadoEvent;
 import com.leadsponge.IO.models.anexo.AnexoDTO;
 import com.leadsponge.IO.models.usuario.Usuario;
 import com.leadsponge.IO.models.usuario.UsuarioTO;
 import com.leadsponge.IO.repository.Filter.UsuarioFilter;
 import com.leadsponge.IO.repository.projection.ResumoUsuario;
-import com.leadsponge.IO.repository.usuario.UsuarioRepository;
-import com.leadsponge.IO.services.implementated.UsuarioServiceImpl;
+import com.leadsponge.IO.services.UsuarioService;
 import com.leadsponge.IO.storage.Disco;
 //import com.leadsponge.IO.storage.S3;
 
+import lombok.AllArgsConstructor;
+
 @RestController
+@AllArgsConstructor
 @RequestMapping("/usuarios")
-class UsuarioEndPoint extends ErroMessage {
+class UsuarioEndPoint {
 
 	@Autowired
-	private UsuarioRepository repository;
+	private final UsuarioService service;
 
 	@Autowired
-	private UsuarioServiceImpl service;
+	private final ApplicationEventPublisher publisher;
 
 	@Autowired
-	private ApplicationEventPublisher publisher;
-
-//	@Autowired
-//	private S3 s3;
-
-	@Autowired
-	private Disco disco;
+	private final Disco disco;
 
 	@GetMapping
 	@PreAuthorize("hasAuthority('PESQUISAR_USUARIO') and #oauth2.hasScope('read')")
 	public Page<Usuario> pesquisar(UsuarioFilter usuarioFilter, Pageable pageable) {
-		return repository.filtrar(usuarioFilter, pageable);
+		return service.filtrar(usuarioFilter, pageable);
 	}
 
 	@GetMapping(params = "resumo")
 	@PreAuthorize("hasAuthority('PESQUISAR_USUARIO') and #oauth2.hasScope('read')")
 	public Page<ResumoUsuario> resumir(UsuarioFilter usuarioFilter, Pageable pageable) {
-		return repository.resumir(usuarioFilter, pageable);
+		return service.resumir(usuarioFilter, pageable);
 	}
 
 	@PostMapping(value = { "", "/" })
 	@ResponseStatus(HttpStatus.CREATED)
 	@PreAuthorize("hasAuthority('CADASTRAR_USUARIO') and #oauth2.hasScope('write')")
 	ResponseEntity<Usuario> cadastrar(@Valid @RequestBody Usuario usuario, HttpServletResponse response) {
-		Usuario usuarioSalvar = service.salvar(usuario);
 //		usuarioService.autoLogin(usuario.getUsername(), usuario.getPassword());
+		Usuario usuarioSalvar = service.salvar(usuario);
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, usuarioSalvar.getId()));
 		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioSalvar);
 	}
@@ -78,33 +73,23 @@ class UsuarioEndPoint extends ErroMessage {
 	@GetMapping(value = { "/{id}", "/{id}/" })
 	@PreAuthorize("hasAuthority('PESQUISAR_USUARIO') and #oauth2.hasScope('read')")
 	public ResponseEntity<Usuario> detalhar(@Valid @PathVariable("id") Long id) {
-		return ResponseEntity.ok(repository.findById(id).orElseThrow(() -> notFouldId(id, "o usuario")));
+		return ResponseEntity.ok(service.detalhar(id));
 	}
 
 	@PutMapping(value = { "/{id}", "/{id}/" })
 	@ResponseStatus(HttpStatus.CREATED)
 	@PreAuthorize("hasAuthority('CADASTRAR_USUARIO') and #oauth2.hasScope('write')")
-	ResponseEntity<Usuario> atualizar(@Valid @RequestBody Usuario novoUsuario, @PathVariable Long id,
-			HttpServletResponse response) {
-		try {
-			Usuario usuario = service.atualizar(id, novoUsuario);
-			publisher.publishEvent(new RecursoCriadoEvent(this, response, usuario.getId()));
-			return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
-		} catch (IllegalArgumentException e) {
-			throw notFouldId(id, "o usuario");
-		}
+	ResponseEntity<Usuario> atualizar(@Valid @RequestBody Usuario usuario, @PathVariable Long id, HttpServletResponse response) {
+		Usuario novaUsuario = service.atualizar(id, usuario);
+		publisher.publishEvent(new RecursoCriadoEvent(this, response, novaUsuario.getId()));
+		return ResponseEntity.status(HttpStatus.CREATED).body(novaUsuario);
 	}
 
 	@DeleteMapping(value = { "/{id}", "/{id}/" })
 	@ResponseStatus(HttpStatus.OK)
 	@PreAuthorize("hasAuthority('REMOVER_USUARIO') and #oauth2.hasScope('write')")
 	public ResponseEntity<Usuario> remover(@PathVariable Long id) {
-		try {
-			repository.deleteById(id);
-			return ResponseEntity.ok().build();
-		} catch (Exception e) {
-			throw notFouldId(id, "o usuario");
-		}
+		return ResponseEntity.ok(service.deletar(id));
 	}
 
 	@PutMapping(value = { "/{id}/ativo", "/{id}/ativo/" })
@@ -132,45 +117,32 @@ class UsuarioEndPoint extends ErroMessage {
 	@GetMapping(value = { "/username/{username}", "/username/{username}/" })
 	@PreAuthorize("hasAuthority('PESQUISAR_USUARIO') and #oauth2.hasScope('read')")
 	ResponseEntity<Usuario> encontrarPeloNome(@Valid @PathVariable String username) {
-		return ResponseEntity
-				.ok(repository.findByUsername(username).orElseThrow(() -> notFould(username + "o usuario")));
+		return ResponseEntity.ok(service.findByNome(username));
 	}
 
 	@PutMapping(value = { "/{id}/foto", "/{id}/foto/" })
 	@ResponseStatus(HttpStatus.CREATED)
 	@PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
 	ResponseEntity<Usuario> atualizarImg(@PathVariable Long id, @RequestBody String foto) {
-		try {
-			service.atualizarImg(id, foto);
-			return ResponseEntity.status(HttpStatus.CREATED).build();
-		} catch (IllegalArgumentException e) {
-			throw notFouldId(id, "o usuario");
-		}
+		service.atualizarImg(id, foto);
+		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 
 	@PutMapping(value = { "/{id}/removerFoto", "/{id}/removerFoto/" })
 	@ResponseStatus(HttpStatus.CREATED)
 	@PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
 	ResponseEntity<Usuario> removerImg(@PathVariable Long id) {
-		try {
-			service.removerImg(id);
-			return ResponseEntity.ok().build();
-		} catch (IllegalArgumentException e) {
-			throw notFouldId(id, "o usuario");
-		}
+		service.removerImg(id);
+		return ResponseEntity.ok().build();
 	}
 
 	@PutMapping(value = { "/{id}/atualizar", "/{id}/atualizar/" })
 	@ResponseStatus(HttpStatus.CREATED)
 	@PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
-	ResponseEntity<UsuarioTO> atualizarUsuarioDTO(@PathVariable Long id, @RequestBody UsuarioTO usuario) {
-		try {
-			service.atualizarUsuarioDTO(id, usuario);
-			return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
-			
-		} catch (IllegalArgumentException e) {
-			throw notFouldId(id, "o usuario");
-		}
+	ResponseEntity<Usuario> atualizarUsuarioDTO(@PathVariable Long id, @RequestBody UsuarioTO usuario, HttpServletResponse response) {
+		Usuario novoUsuario = service.atualizarUsuarioDTO(id, usuario);
+		publisher.publishEvent(new RecursoCriadoEvent(this, response, novoUsuario.getId()));
+		return ResponseEntity.status(HttpStatus.CREATED).body(novoUsuario);
 	}
 
 }

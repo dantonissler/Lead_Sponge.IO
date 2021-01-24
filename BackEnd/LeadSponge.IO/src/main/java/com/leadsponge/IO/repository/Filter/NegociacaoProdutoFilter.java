@@ -1,17 +1,16 @@
 package com.leadsponge.IO.repository.Filter;
 
+import java.math.BigDecimal;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class NegociacaoProdutoFilter {
-	private String nome;
-	
-	public NegociacaoProdutoFilter(String nome) {
-		this.nome = nome;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+	private Integer quantidade;
+	private BigDecimal valor;
+	private BigDecimal total;
 }

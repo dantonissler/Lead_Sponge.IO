@@ -85,8 +85,7 @@ public class EstagioNegociacao extends UserDateAudit {
 		return super.hashCode();
 	}
 
-	public EstagioNegociacao(@NotNull @Size(min = 4, max = 50) String nome, @NotNull @Size(max = 10) String apelido,
-			@NotNull Integer posicao) {
+	public EstagioNegociacao(@NotNull @Size(min = 4, max = 50) String nome, @NotNull @Size(max = 10) String apelido, @NotNull Integer posicao) {
 		super();
 		this.nome = nome;
 		this.apelido = apelido;

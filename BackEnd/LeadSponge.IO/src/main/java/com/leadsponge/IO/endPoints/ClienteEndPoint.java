@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.leadsponge.IO.errorValidate.ErroMessage;
 import com.leadsponge.IO.event.RecursoCriadoEvent;
 import com.leadsponge.IO.models.cliente.Cliente;
 import com.leadsponge.IO.repository.Filter.ClienteFilter;
@@ -31,7 +30,7 @@ import lombok.AllArgsConstructor;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/clientes")
-class ClienteEndPoint extends ErroMessage {
+class ClienteEndPoint {
 
 	@Autowired
 	private final ClienteService service;

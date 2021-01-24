@@ -8,19 +8,24 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import com.leadsponge.IO.errorValidate.ErroMessage;
 import com.leadsponge.IO.errorValidate.exception.UsuarioInativaException;
 import com.leadsponge.IO.mail.Mailer;
 import com.leadsponge.IO.models.tarefa.Tarefa;
 import com.leadsponge.IO.models.usuario.Usuario;
+import com.leadsponge.IO.repository.Filter.TarefaFilter;
+import com.leadsponge.IO.repository.projection.ResumoTarefa;
 import com.leadsponge.IO.repository.tarefa.TarefaRepository;
 import com.leadsponge.IO.repository.usuario.UsuarioRepository;
 import com.leadsponge.IO.services.TarefaService;
 
 @Service
-public class TarefaServiceImpl implements TarefaService {
+public class TarefaServiceImpl extends ErroMessage implements TarefaService {
 
 	private static final String DESTINATARIOS = "PESQUISAR_TAREFA";
 
@@ -57,7 +62,7 @@ public class TarefaServiceImpl implements TarefaService {
 	}
 
 	@Override
-	public Tarefa save(Tarefa tarefa) {
+	public Tarefa salvar(Tarefa tarefa) {
 		tarefaValidar(tarefa);
 		return repository.save(tarefa);
 	}
@@ -81,5 +86,27 @@ public class TarefaServiceImpl implements TarefaService {
 		if (tarefa == null) {
 			throw new UsuarioInativaException();
 		}
+	}
+
+	@Override
+	public Page<Tarefa> filtrar(TarefaFilter tarefaFilter, Pageable pageable) {
+		return repository.filtrar(tarefaFilter, pageable);
+	}
+
+	@Override
+	public Tarefa deletar(Long id) {
+		Tarefa tarefaSalvo = repository.findById(id).orElseThrow(() -> notFouldId(id, "a campanha"));
+		repository.deleteById(id);
+		return tarefaSalvo;
+	}
+
+	@Override
+	public Tarefa detalhar(Long id) {
+		return repository.findById(id).orElseThrow(() -> notFouldId(id, "a campanha"));
+	}
+
+	@Override
+	public Page<ResumoTarefa> resumir(TarefaFilter tarefaFilter, Pageable pageable) {
+		return repository.resumir(tarefaFilter, pageable);
 	}
 }

@@ -1,18 +1,14 @@
 package com.leadsponge.IO.repository.Filter;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ContatoFilter {
 	private String nome;
-	
-	public ContatoFilter(String nome) {
-		this.nome = nome;
-	}
+	private String cargo;
 
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-	
 }

@@ -5,6 +5,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -12,67 +14,62 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.leadsponge.IO.errorValidate.ErroMessage;
 import com.leadsponge.IO.event.RecursoCriadoEvent;
 import com.leadsponge.IO.models.email.Email;
-import com.leadsponge.IO.repository.EmailRepository;
+import com.leadsponge.IO.repository.Filter.EmailFilter;
+import com.leadsponge.IO.services.EmailService;
+
+import lombok.AllArgsConstructor;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/emails")
-class EmailEndPoint extends ErroMessage {
-	
+class EmailEndPoint {
+
 	@Autowired
-	private final EmailRepository repository;
-	
+	private final EmailService service;
+
 	@Autowired
 	private final ApplicationEventPublisher publisher;
 
-	EmailEndPoint(EmailRepository repository, ApplicationEventPublisher publisher) {
-		this.repository = repository;
-		this.publisher = publisher;
-	}
-
 	@GetMapping(value = { "", "/" })
+	@ResponseStatus(HttpStatus.OK)
 	@PreAuthorize("hasAuthority('PESQUISAR_CLIENTE') and #oauth2.hasScope('read')")
-	ResponseEntity<Iterable<?>> listar() {
-		Iterable<Email> email = repository.findAll();
-		if (email == null) {
-			return ResponseEntity.notFound().build();
-		} else {
-			return ResponseEntity.ok(email);
-		}
+	Page<Email> pesquisar(EmailFilter emailFilter, Pageable pageable) {
+		return service.filtrar(emailFilter, pageable);
 	}
 
 	@PostMapping(value = { "", "/" })
 	@PreAuthorize("hasAuthority('CADASTRAR_CLIENTE') and #oauth2.hasScope('write')")
 	ResponseEntity<Email> cadastrar(@Valid @RequestBody Email email, HttpServletResponse response) {
-		Email criarEmail = repository.save(email);
-		if (criarEmail == null) {
-			return ResponseEntity.notFound().build();
-		} else {
-			publisher.publishEvent(new RecursoCriadoEvent(this, response, criarEmail.getId()));
-			return ResponseEntity.status(HttpStatus.CREATED).body(criarEmail);
-		}
+		Email criarEmail = service.salvar(email);
+		publisher.publishEvent(new RecursoCriadoEvent(this, response, criarEmail.getId()));
+		return ResponseEntity.status(HttpStatus.CREATED).body(criarEmail);
+	}
+
+	@PutMapping(value = { "/{id}", "/{id}/" })
+	@PreAuthorize("hasAuthority('CADASTRAR_CLIENTE') and #oauth2.hasScope('write')")
+	ResponseEntity<Email> atualizar(@Valid @RequestBody Email email, @PathVariable Long id, HttpServletResponse response) {
+		Email novaEmail = service.atualizar(id, email);
+		publisher.publishEvent(new RecursoCriadoEvent(this, response, novaEmail.getId()));
+		return ResponseEntity.status(HttpStatus.CREATED).body(novaEmail);
 	}
 
 	@GetMapping(value = { "/{id}", "/{id}/" })
 	@PreAuthorize("hasAuthority('PESQUISAR_CLIENTE') and #oauth2.hasScope('read')")
 	ResponseEntity<Email> detalhar(@PathVariable("id") Long id) {
-		return ResponseEntity.ok(repository.findById(id).orElseThrow(() -> notFouldId(id, "o email")));
+		return ResponseEntity.ok(service.detalhar(id));
 	}
 
 	@DeleteMapping(value = { "/{id}", "/{id}/" })
 	@PreAuthorize("hasAuthority('REMOVER_CLIENTE') and #oauth2.hasScope('write')")
 	ResponseEntity<Email> remover(@PathVariable Long id) {
-		try {
-			repository.deleteById(id);
-			return ResponseEntity.noContent().build();
-		} catch (Exception e) {
-			throw notFouldId(id, "o email");
-		}
+		return ResponseEntity.ok(service.deletar(id));
 	}
 }

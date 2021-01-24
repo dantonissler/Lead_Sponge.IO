@@ -1,17 +1,12 @@
 package com.leadsponge.IO.repository.Filter;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class FonteNegociacaoFilter {
 	private String nome;
-	
-	public FonteNegociacaoFilter(String nome) {
-		this.nome = nome;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
 }

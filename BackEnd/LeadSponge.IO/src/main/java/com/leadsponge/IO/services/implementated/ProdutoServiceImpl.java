@@ -1,53 +1,56 @@
 package com.leadsponge.IO.services.implementated;
 
-import java.util.Optional;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.leadsponge.IO.errorValidate.exception.UsuarioInativaException;
+import com.leadsponge.IO.errorValidate.ErroMessage;
 import com.leadsponge.IO.models.produto.Produto;
+import com.leadsponge.IO.repository.Filter.ProdutoFilter;
 import com.leadsponge.IO.repository.produto.ProdutoRepository;
 import com.leadsponge.IO.services.ProdutoService;
 
 @Service
-public class ProdutoServiceImpl implements ProdutoService {
+public class ProdutoServiceImpl extends ErroMessage implements ProdutoService {
 
 	@Autowired
-	private ProdutoRepository produtoRepository;
+	private ProdutoRepository repository;
 
 	@Override
-	public Produto save(Produto produto) {
-		produtoValidar(produto);
-		return produtoRepository.save(produto);
+	public Produto salvar(Produto produto) {
+		return repository.save(produto);
 	}
 
 	@Override
 	public void atualizarPropriedadeVisibilidade(Long id, Boolean visibilidade) {
-		Produto produtoSalva = buscarProdutoExistente(id);
+		Produto produtoSalva = repository.findById(id).orElseThrow(() -> notFouldId(id, "a produto"));
 		produtoSalva.setVisibilidade(visibilidade);
-		produtoRepository.save(produtoSalva);
+		repository.save(produtoSalva);
 	}
 
 	@Override
 	public Produto atualizar(Long id, Produto produto) {
-		Produto fonteProduto = buscarProdutoExistente(id);
-		BeanUtils.copyProperties(produto, fonteProduto, "id");
-		return produtoRepository.save(fonteProduto);
+		Produto produtoSalva = repository.findById(id).orElseThrow(() -> notFouldId(id, "a produto"));
+		BeanUtils.copyProperties(produto, produtoSalva, "id");
+		return repository.save(produtoSalva);
 	}
 
-	private Produto buscarProdutoExistente(Long id) {
-		Optional<Produto> produtoSalvo = produtoRepository.findById(id);
-		if (!produtoSalvo.isPresent()) {
-			throw new IllegalArgumentException();
-		}
-		return produtoSalvo.get();
+	@Override
+	public Page<Produto> filtrar(ProdutoFilter produtoFilter, Pageable pageable) {
+		return repository.filtrar(produtoFilter, pageable);
 	}
 
-	private void produtoValidar(Produto produto) {
-		if (produto == null) {
-			throw new UsuarioInativaException();
-		}
+	@Override
+	public Produto deletar(Long id) {
+		Produto produtoSalvo = repository.findById(id).orElseThrow(() -> notFouldId(id, "a produto"));
+		repository.deleteById(id);
+		return produtoSalvo;
+	}
+
+	@Override
+	public Produto detalhar(Long id) {
+		return repository.findById(id).orElseThrow(() -> notFouldId(id, "a produto"));
 	}
 }

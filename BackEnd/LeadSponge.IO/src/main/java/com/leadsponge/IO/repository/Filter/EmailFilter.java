@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SegmentoFilter {
-	private String nome;
+public class EmailFilter {
+	private String email;
+
 }

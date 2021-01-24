@@ -45,6 +45,18 @@ public class NegociacaoRepositoryImpl implements NegociacaoRepositoryQuery {
 		if (StringUtils.isNotBlank(negociacaoFilter.getNome())) {
 			predicates.add(builder.like(builder.lower(root.get(Negociacao_.nome)), "%" + negociacaoFilter.getNome().toLowerCase() + "%"));
 		}
+		if (StringUtils.isNotBlank(negociacaoFilter.getAvaliacao().toString())) {
+			predicates.add(builder.equal(root.get(Negociacao_.avaliacao), negociacaoFilter.getAvaliacao()));
+		}
+		if (StringUtils.isNotBlank(negociacaoFilter.getValorTotal().toString())) {
+			predicates.add(builder.equal(root.get(Negociacao_.valorTotal), negociacaoFilter.getValorTotal()));
+		}
+		if (StringUtils.isNotBlank(negociacaoFilter.getValorMensal().toString())) {
+			predicates.add(builder.equal(root.get(Negociacao_.valorMensal), negociacaoFilter.getValorMensal()));
+		}
+		if (StringUtils.isNotBlank(negociacaoFilter.getValorUnico().toString())) {
+			predicates.add(builder.equal(root.get(Negociacao_.valorUnico), negociacaoFilter.getValorUnico()));
+		}
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}
 

@@ -20,75 +20,56 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.leadsponge.IO.errorValidate.ErroMessage;
 import com.leadsponge.IO.event.RecursoCriadoEvent;
 import com.leadsponge.IO.models.motivoPerda.MotivoPerda;
 import com.leadsponge.IO.repository.Filter.MotivoPerdaFilter;
-import com.leadsponge.IO.repository.motivoPerda.MotivoPerdaRepository;
-import com.leadsponge.IO.services.implementated.MotivoPerdaServiceImpl;
+import com.leadsponge.IO.services.MotivoPerdaService;
+
+import lombok.AllArgsConstructor;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/motivoperda")
-class MotivoPerdaEndPoint extends ErroMessage {
+class MotivoPerdaEndPoint {
 
 	@Autowired
-	private final MotivoPerdaRepository repository;
-
-	@Autowired
-	private final MotivoPerdaServiceImpl motivoPerdaService;
+	private final MotivoPerdaService service;
 
 	@Autowired
 	private final ApplicationEventPublisher publisher;
-
-	MotivoPerdaEndPoint(MotivoPerdaRepository repository, ApplicationEventPublisher publisher,
-			MotivoPerdaServiceImpl motivoPerdaService) {
-		this.repository = repository;
-		this.publisher = publisher;
-		this.motivoPerdaService = motivoPerdaService;
-	}
 
 	@GetMapping(value = { "", "/" })
 	@ResponseStatus(HttpStatus.OK)
 	@PreAuthorize("hasAuthority('PESQUISAR_CAMPANHA') and #oauth2.hasScope('read')")
 	Page<MotivoPerda> pesquisar(MotivoPerdaFilter motivoPerdaFilter, Pageable pageable) {
-		return repository.filtrar(motivoPerdaFilter, pageable);
+		return service.filtrar(motivoPerdaFilter, pageable);
 	}
 
 	@PostMapping(value = { "", "/" })
 	@PreAuthorize("hasAuthority('CADASTRAR_CAMPANHA') and #oauth2.hasScope('write')")
 	ResponseEntity<MotivoPerda> cadastrar(@Valid @RequestBody MotivoPerda motivoPerda, HttpServletResponse response) {
-		MotivoPerda criarMotivoPerda = motivoPerdaService.save(motivoPerda);
+		MotivoPerda criarMotivoPerda = service.salvar(motivoPerda);
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, criarMotivoPerda.getId()));
 		return ResponseEntity.status(HttpStatus.CREATED).body(criarMotivoPerda);
 	}
 
 	@PutMapping(value = { "/{id}", "/{id}/" })
 	@PreAuthorize("hasAuthority('CADASTRAR_CAMPANHA') and #oauth2.hasScope('write')")
-	ResponseEntity<MotivoPerda> atualizar(@Valid @RequestBody MotivoPerda motivoPerda, @PathVariable Long id,
-			HttpServletResponse response) {
-		try {
-			MotivoPerda novaMotivoPerda = motivoPerdaService.atualizar(id, motivoPerda);
-			publisher.publishEvent(new RecursoCriadoEvent(this, response, novaMotivoPerda.getId()));
-			return ResponseEntity.status(HttpStatus.CREATED).body(novaMotivoPerda);
-		} catch (IllegalArgumentException e) {
-			throw notFouldId(id, "o motivo da perda");
-		}
+	ResponseEntity<MotivoPerda> atualizar(@Valid @RequestBody MotivoPerda motivoPerda, @PathVariable Long id, HttpServletResponse response) {
+		MotivoPerda novoMotivoPerda = service.atualizar(id, motivoPerda);
+		publisher.publishEvent(new RecursoCriadoEvent(this, response, novoMotivoPerda.getId()));
+		return ResponseEntity.status(HttpStatus.CREATED).body(novoMotivoPerda);
 	}
 
 	@DeleteMapping(value = { "/{id}", "/{id}/" })
 	@PreAuthorize("hasAuthority('REMOVER_CAMPANHA') and #oauth2.hasScope('write')")
-	ResponseEntity<MotivoPerda> remover(@PathVariable Long id) {
-		try {
-			repository.deleteById(id);
-			return ResponseEntity.ok().build();
-		} catch (Exception e) {
-			throw notFouldId(id, "o motivo da perda");
-		}
+	ResponseEntity<MotivoPerda> deletar(@PathVariable Long id) {
+		return ResponseEntity.ok(service.deletar(id));
 	}
 
 	@GetMapping(value = { "/{id}", "/{id}/" })
 	@PreAuthorize("hasAuthority('PESQUISAR_CAMPANHA') and #oauth2.hasScope('read')")
 	ResponseEntity<MotivoPerda> detalhar(@Valid @PathVariable("id") Long id) {
-		return ResponseEntity.ok(repository.findById(id).orElseThrow(() -> notFouldId(id, "o motivo da perda")));
+		return ResponseEntity.ok(service.detalhar(id));
 	}
 }

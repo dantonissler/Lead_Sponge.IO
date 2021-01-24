@@ -449,7 +449,7 @@ public class EndPoint {
 	@Test
 	@DisplayName("Criar Cliente informando um nome abaixo de 4 caracteres, retornar mensagem de erro e status 400.")
 	public void criarNomeAbaixo4Caracteres() throws Exception {
-		Cliente cliente = new Cliente(null, "Nome campanha, nome Cliente, nome cliente e nomes nome", "url", "resumo", null, null, null, null, null);
+		Cliente cliente = new Cliente(null, "Nom", "url", "resumo", null, null, null, null, null);
 		when(service.salvar(Mockito.any(Cliente.class))).thenReturn(cliente);
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonString = mapper.writeValueAsString(cliente);
@@ -462,7 +462,7 @@ public class EndPoint {
 	@Test
 	@DisplayName("Atualizar Cliente informando um nome abaixo 4 caracteres, retornar mensagem de erro e status 400.")
 	public void atualizarNomeAbaixo4Caracteres() throws Exception {
-		Cliente cliente = new Cliente(null, "Nome campanha, nome Cliente, nome cliente e nomes nome", "url", "resumo", null, null, null, null, null);
+		Cliente cliente = new Cliente(null, "Nom", "url", "resumo", null, null, null, null, null);
 		when(service.atualizar(1L, cliente)).thenReturn(cliente);
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonString = mapper.writeValueAsString(cliente);

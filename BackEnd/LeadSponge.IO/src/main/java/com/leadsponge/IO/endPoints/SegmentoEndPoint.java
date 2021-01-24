@@ -20,77 +20,57 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.leadsponge.IO.errorValidate.ErroMessage;
 import com.leadsponge.IO.event.RecursoCriadoEvent;
 import com.leadsponge.IO.models.segmento.Segmento;
 import com.leadsponge.IO.repository.Filter.SegmentoFilter;
-import com.leadsponge.IO.repository.segmento.SegmentoRepository;
-import com.leadsponge.IO.services.implementated.SegmentoServiceImpl;
+import com.leadsponge.IO.services.SegmentoService;
+
+import lombok.AllArgsConstructor;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("segmentos")
-class SegmentoEndPoint extends ErroMessage {
+class SegmentoEndPoint {
 
 	@Autowired
-	private final SegmentoRepository repository;
-
-	@Autowired
-	private final SegmentoServiceImpl segmentoService;
+	private final SegmentoService service;
 
 	@Autowired
 	private final ApplicationEventPublisher publisher;
 
-	SegmentoEndPoint(SegmentoRepository repository, ApplicationEventPublisher publisher,
-			SegmentoServiceImpl segmentoService) {
-		this.repository = repository;
-		this.publisher = publisher;
-		this.segmentoService = segmentoService;
-	}
-	
 	@GetMapping(value = { "", "/" })
 	@ResponseStatus(HttpStatus.OK)
 	@PreAuthorize("hasAuthority('PESQUISAR_SEGMENTO') and #oauth2.hasScope('read')")
 	public Page<Segmento> pesquisar(SegmentoFilter segmentoFilter, Pageable pageable) {
-		return repository.filtrar(segmentoFilter, pageable);
+		return service.filtrar(segmentoFilter, pageable);
 	}
 
 	@PostMapping(value = { "", "/" })
 	@PreAuthorize("hasAuthority('CADASTRAR_SEGMENTO') and #oauth2.hasScope('write')")
-	public ResponseEntity<Segmento> cadastrar(@Valid @RequestBody Segmento segmento,
-			HttpServletResponse response) {
-		Segmento criarSegmento = segmentoService.save(segmento);
+	public ResponseEntity<Segmento> cadastrar(@Valid @RequestBody Segmento segmento, HttpServletResponse response) {
+		Segmento criarSegmento = service.save(segmento);
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, criarSegmento.getId()));
 		return ResponseEntity.status(HttpStatus.CREATED).body(criarSegmento);
 	}
 
 	@PutMapping(value = { "/{id}", "/{id}/" })
 	@PreAuthorize("hasAuthority('CADASTRAR_SEGMENTO') and #oauth2.hasScope('write')")
-	ResponseEntity<Segmento> atualizar(@Valid @RequestBody Segmento segmento,
-			@PathVariable Long id, HttpServletResponse response) {
-		try {
-			Segmento novaSegmento = segmentoService.atualizar(id, segmento);
-			publisher.publishEvent(new RecursoCriadoEvent(this, response, novaSegmento.getId()));
-			return ResponseEntity.status(HttpStatus.CREATED).body(novaSegmento);
-		} catch (IllegalArgumentException e) {
-			throw notFouldId(id, "a estagio de negociação");
-		}
+	ResponseEntity<Segmento> atualizar(@Valid @RequestBody Segmento segmento, @PathVariable Long id, HttpServletResponse response) {
+		Segmento novaSegmento = service.atualizar(id, segmento);
+		publisher.publishEvent(new RecursoCriadoEvent(this, response, novaSegmento.getId()));
+		return ResponseEntity.status(HttpStatus.CREATED).body(novaSegmento);
 	}
 
 	@DeleteMapping(value = { "/{id}", "/{id}/" })
 	@PreAuthorize("hasAuthority('REMOVER_SEGMENTO') and #oauth2.hasScope('write')")
-	public ResponseEntity<Segmento> remover(@PathVariable Long id) {
-		try {
-			repository.deleteById(id);
-			return ResponseEntity.ok().build();
-		} catch (Exception e) {
-			throw notFouldId(id, "a estagio de negociação");
-		}
+	public ResponseEntity<Segmento> deletar(@PathVariable Long id) {
+		return ResponseEntity.ok(service.deletar(id));
 	}
 
 	@GetMapping(value = { "/{id}", "/{id}/" })
 	@PreAuthorize("hasAuthority('PESQUISAR_SEGMENTO') and #oauth2.hasScope('read')")
 	public ResponseEntity<Segmento> detalhar(@Valid @PathVariable("id") Long id) {
-		return ResponseEntity.ok(repository.findById(id).orElseThrow(() -> notFouldId(id, "a estagio de negociação")));
+		return ResponseEntity.ok(service.detalhar(id));
 	}
 
 }

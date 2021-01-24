@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.leadsponge.IO.errorValidate.ErroMessage;
 import com.leadsponge.IO.models.campanha.Campanha;
@@ -14,7 +13,6 @@ import com.leadsponge.IO.repository.campanha.CampanhaRepository;
 import com.leadsponge.IO.services.CampanhaService;
 
 @Service
-@Transactional
 public class CampanhaServiceImpl extends ErroMessage implements CampanhaService {
 
 	@Autowired
@@ -27,9 +25,6 @@ public class CampanhaServiceImpl extends ErroMessage implements CampanhaService 
 
 	@Override
 	public Campanha salvar(Campanha campanha) {
-		if (repository.existsById(campanha.getId())) {
-			throw notFouldId(campanha.getId(), "a campanha");
-		}
 		return repository.save(campanha);
 	}
 

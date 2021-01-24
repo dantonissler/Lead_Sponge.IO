@@ -1,14 +1,12 @@
 package com.leadsponge.IO.services.implementated;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.leadsponge.IO.errorValidate.ErroMessage;
 import com.leadsponge.IO.models.cliente.Cliente;
@@ -17,16 +15,12 @@ import com.leadsponge.IO.repository.cliente.ClienteRepository;
 import com.leadsponge.IO.services.ClienteService;
 
 @Service
-@Transactional
 public class ClienteServiceImpl extends ErroMessage implements ClienteService {
 	@Autowired
 	private ClienteRepository repository;
 
 	@Override
 	public Cliente salvar(Cliente cliente) {
-		if (repository.existsById(cliente.getId())) {
-			throw notFouldId(cliente.getId(), " o cliente ");
-		}
 		cliente.setSegmentos(new ArrayList<>(cliente.getSegmentos()));
 		cliente.getContato().forEach(c -> c.setCliente(cliente));
 		cliente.getContato().forEach(contato -> contato.getTelefone().forEach(telefone -> telefone.setContato(contato)));
@@ -37,7 +31,7 @@ public class ClienteServiceImpl extends ErroMessage implements ClienteService {
 
 	@Override
 	public Cliente atualizar(Long id, Cliente cliente) {
-		Cliente clienteSalvo = buscarClienteExistente(id);
+		Cliente clienteSalvo = repository.findById(id).orElseThrow(() -> notFouldId(id, "a campanha"));
 		clienteSalvo.getSegmentos().clear();
 		clienteSalvo.getSegmentos().addAll(cliente.getSegmentos());
 		clienteSalvo.setSegmentos(new ArrayList<>(clienteSalvo.getSegmentos()));
@@ -61,21 +55,13 @@ public class ClienteServiceImpl extends ErroMessage implements ClienteService {
 
 	@Override
 	public Cliente deletar(Long id) {
-		Cliente campanhaSalvo = repository.findById(id).orElseThrow(() -> notFouldId(id, "a campanha"));
+		Cliente campanhaSalvo = repository.findById(id).orElseThrow(() -> notFouldId(id, "o cliente"));
 		repository.deleteById(id);
 		return campanhaSalvo;
 	}
 
 	@Override
 	public Cliente detalhar(Long id) {
-		return repository.findById(id).orElseThrow(() -> notFouldId(id, "a campanha"));
-	}
-
-	private Cliente buscarClienteExistente(Long id) {
-		Optional<Cliente> clienteSalvo = repository.findById(id);
-		if (!clienteSalvo.isPresent()) {
-			throw new IllegalArgumentException();
-		}
-		return clienteSalvo.get();
+		return repository.findById(id).orElseThrow(() -> notFouldId(id, "o cliente"));
 	}
 }

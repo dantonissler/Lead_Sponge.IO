@@ -1,5 +1,7 @@
 package com.leadsponge.IO.repository.Filter;
 
+import com.leadsponge.IO.models.telefone.TipoTelefone;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SegmentoFilter {
-	private String nome;
+public class TelefoneFilter {
+	private String numero;
+	private TipoTelefone tipo;
 }

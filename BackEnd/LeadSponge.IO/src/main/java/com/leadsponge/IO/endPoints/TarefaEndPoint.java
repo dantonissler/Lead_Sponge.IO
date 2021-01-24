@@ -25,76 +25,59 @@ import com.leadsponge.IO.event.RecursoCriadoEvent;
 import com.leadsponge.IO.models.tarefa.Tarefa;
 import com.leadsponge.IO.repository.Filter.TarefaFilter;
 import com.leadsponge.IO.repository.projection.ResumoTarefa;
-import com.leadsponge.IO.repository.tarefa.TarefaRepository;
-import com.leadsponge.IO.services.implementated.TarefaServiceImpl;
+import com.leadsponge.IO.services.TarefaService;
+
+import lombok.AllArgsConstructor;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/tarefas")
 class TarefaEndPoint extends ErroMessage {
 
 	@Autowired
-	private final TarefaRepository repository;
-
-	@Autowired
-	private final TarefaServiceImpl tarefaService;
+	private final TarefaService service;
 
 	@Autowired
 	private final ApplicationEventPublisher publisher;
-
-	TarefaEndPoint(TarefaRepository repository, ApplicationEventPublisher publisher, TarefaServiceImpl tarefaService) {
-		this.repository = repository;
-		this.publisher = publisher;
-		this.tarefaService = tarefaService;
-	}
 
 	@GetMapping(value = { "", "/" })
 	@ResponseStatus(HttpStatus.OK)
 	@PreAuthorize("hasAuthority('PESQUISAR_TAREFA') and #oauth2.hasScope('read')")
 	Page<Tarefa> pesquisar(TarefaFilter tarefaFilter, Pageable pageable) {
-		return repository.filtrar(tarefaFilter, pageable);
+		return service.filtrar(tarefaFilter, pageable);
 	}
-	
+
 	@GetMapping(params = "resumo")
 	@PreAuthorize("hasAuthority('PESQUISAR_TAREFA') and #oauth2.hasScope('read')")
 	Page<ResumoTarefa> resumir(TarefaFilter tarefaFilter, Pageable pageable) {
-		return repository.resumir(tarefaFilter, pageable);
+		return service.resumir(tarefaFilter, pageable);
 	}
 
 	@PostMapping(value = { "", "/" })
 	@PreAuthorize("hasAuthority('CADASTRAR_TAREFA') and #oauth2.hasScope('write')")
 	ResponseEntity<Tarefa> cadastrar(@Valid @RequestBody Tarefa tarefa, HttpServletResponse response) {
-		Tarefa criarTarefa = tarefaService.save(tarefa);
+		Tarefa criarTarefa = service.salvar(tarefa);
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, criarTarefa.getId()));
 		return ResponseEntity.status(HttpStatus.CREATED).body(criarTarefa);
 	}
 
 	@PutMapping(value = { "/{id}", "/{id}/" })
 	@PreAuthorize("hasAuthority('CADASTRAR_TAREFA') and #oauth2.hasScope('write')")
-	ResponseEntity<Tarefa> atualizar(@Valid @RequestBody Tarefa tarefa, @PathVariable Long id,
-			HttpServletResponse response) {
-		try {
-			Tarefa novaTarefa = tarefaService.atualizar(id, tarefa);
-			publisher.publishEvent(new RecursoCriadoEvent(this, response, novaTarefa.getId()));
-			return ResponseEntity.status(HttpStatus.CREATED).body(novaTarefa);
-		} catch (IllegalArgumentException e) {
-			throw notFouldId(id, "a tarefa");
-		}
+	ResponseEntity<Tarefa> atualizar(@Valid @RequestBody Tarefa tarefa, @PathVariable Long id, HttpServletResponse response) {
+		Tarefa novaTarefa = service.atualizar(id, tarefa);
+		publisher.publishEvent(new RecursoCriadoEvent(this, response, novaTarefa.getId()));
+		return ResponseEntity.status(HttpStatus.CREATED).body(novaTarefa);
 	}
 
 	@DeleteMapping(value = { "/{id}", "/{id}/" })
 	@PreAuthorize("hasAuthority('REMOVER_TAREFA') and #oauth2.hasScope('write')")
 	ResponseEntity<Tarefa> remover(@PathVariable Long id) {
-		try {
-			repository.deleteById(id);
-			return ResponseEntity.ok().build();
-		} catch (Exception e) {
-			throw notFouldId(id, "a tarefa");
-		}
+		return ResponseEntity.ok(service.deletar(id));
 	}
 
 	@GetMapping(value = { "/{id}", "/{id}/" })
 	@PreAuthorize("hasAuthority('PESQUISAR_TAREFA') and #oauth2.hasScope('read')")
 	ResponseEntity<Tarefa> detalhar(@Valid @PathVariable("id") Long id) {
-		return ResponseEntity.ok(repository.findById(id).orElseThrow(() -> notFouldId(id, "a tarefa")));
+		return ResponseEntity.ok(service.detalhar(id));
 	}
 }

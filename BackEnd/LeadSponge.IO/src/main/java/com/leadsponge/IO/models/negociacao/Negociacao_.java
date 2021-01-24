@@ -22,7 +22,7 @@ import com.leadsponge.IO.models.tarefa.Tarefa;
 public abstract class Negociacao_ {
 	public static volatile SingularAttribute<Negociacao, Long> id;
 	public static volatile SingularAttribute<Negociacao, String> nome;
-	public static volatile SingularAttribute<Negociacao, String> estatus;
+	public static volatile SingularAttribute<Negociacao, EstatusNegociacao> estatus;
 	public static volatile SingularAttribute<Negociacao, MotivoPerda> motivoPerda;
 	public static volatile SingularAttribute<Negociacao, Campanha> campanha;
 	public static volatile ListAttribute<Negociacao, NegociacaoProduto> negociacaoProdutos;

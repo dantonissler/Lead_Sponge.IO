@@ -1,19 +1,13 @@
 package com.leadsponge.IO.models.tarefa;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public enum TipoTarefa {
-	EMAIL("E-mail"),
-	REUNIAO("Reunião"),
-	VISITA("Visita"),
-	TAREFA("Tarefa"),
-	ALMOCO("Almoço");
-	
+	EMAIL("E-mail"), REUNIAO("Reunião"), VISITA("Visita"), TAREFA("Tarefa"), ALMOCO("Almoço");
+
 	private final String descricao;
-	
-	TipoTarefa(String descricao) {
-		this.descricao = descricao;
-	}
-	
-	public String getDescricao() {
-		return descricao;
-	}
+
 }

@@ -1,45 +1,51 @@
 package com.leadsponge.IO.services.implementated;
 
-import java.util.Optional;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.leadsponge.IO.errorValidate.exception.UsuarioInativaException;
+import com.leadsponge.IO.errorValidate.ErroMessage;
 import com.leadsponge.IO.models.segmento.Segmento;
+import com.leadsponge.IO.repository.Filter.SegmentoFilter;
 import com.leadsponge.IO.repository.segmento.SegmentoRepository;
 import com.leadsponge.IO.services.SegmentoService;
 
 @Service
-public class SegmentoServiceImpl implements SegmentoService {
+public class SegmentoServiceImpl extends ErroMessage implements SegmentoService {
 	@Autowired
-	private SegmentoRepository segmentoRepository;
+	private SegmentoRepository repository;
 
 	@Override
 	public Segmento save(Segmento segmento) {
-		segmentoValidar(segmento);
-		return segmentoRepository.save(segmento);
+		return repository.save(segmento);
 	}
 
 	@Override
 	public Segmento atualizar(Long id, Segmento segmento) {
-		Segmento fonteSegmento = buscarSegmentoExistente(id);
+		Segmento fonteSegmento = repository.findById(id).orElseThrow(() -> notFouldId(id, "a segmento"));
 		BeanUtils.copyProperties(segmento, fonteSegmento, "id");
-		return segmentoRepository.save(fonteSegmento);
+		return repository.save(fonteSegmento);
 	}
 
-	private Segmento buscarSegmentoExistente(Long id) {
-		Optional<Segmento> segmentoSalvo = segmentoRepository.findById(id);
-		if (!segmentoSalvo.isPresent()) {
-			throw new IllegalArgumentException();
-		}
-		return segmentoSalvo.get();
+	@Override
+	public Page<Segmento> filtrar(SegmentoFilter segmentoFilter, Pageable pageable) {
+		return repository.filtrar(segmentoFilter, pageable);
 	}
 
-	private void segmentoValidar(Segmento segmento) {
-		if (segmento == null) {
-			throw new UsuarioInativaException();
-		}
+	@Override
+	public Segmento deletar(Long id) {
+		Segmento segmentoSalvo = repository.findById(id).orElseThrow(() -> notFouldId(id, "a campanha"));
+		repository.deleteById(id);
+		return segmentoSalvo;
 	}
+
+	@Override
+	public Segmento detalhar(Long id) {
+		return repository.findById(id).orElseThrow(() -> notFouldId(id, "a campanha"));
+	}
+	
+	
+
 }
