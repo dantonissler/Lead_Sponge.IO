@@ -1,6 +1,6 @@
 package com.leadsponge.IO.models.email;
 
-		import javax.persistence.Column;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonView;
@@ -35,6 +36,7 @@ public class Email extends UserDateAudit {
 	private Long id;
 
 	@NotNull(message = "{email.null}")
+	@NotBlank(message = "{email.not.blank}")
 	@javax.validation.constraints.Email(message = "{email.not.valid}")
 	private String email;
 

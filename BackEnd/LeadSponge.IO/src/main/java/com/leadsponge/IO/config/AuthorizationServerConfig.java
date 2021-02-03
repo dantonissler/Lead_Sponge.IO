@@ -10,6 +10,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
@@ -19,14 +20,14 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.web.filter.CorsFilter;
 
+import com.leadsponge.IO.config.property.LeadSpongeApiProperty;
 import com.leadsponge.IO.config.token.CustomTokenEnhancer;
 
 @Profile("oauth-security")
 @Configuration
+@EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
-	static final String CLIEN_ID = "danton";
-	static final String CLIENT_SECRET = "$2a$10$N2cqne1wEXFSN1mX9XFtpezPOsA3O08ScTXyY2bcJk/xoUb6pLJnu";//214255kjukii
 	static final String GRANT_TYPE_PASSWORD = "password";
 	static final String AUTHORIZATION_CODE = "authorization_code";
 	static final String REFRESH_TOKEN = "refresh_token";
@@ -34,47 +35,42 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	static final String SCOPE_READ = "read";
 	static final String SCOPE_WRITE = "write";
 	static final String TRUST = "trust";
-	static final int ACCESS_TOKEN_VALIDITY_SECONDS = 1*60*60;
-	static final int FREFRESH_TOKEN_VALIDITY_SECONDS = 6*60*60;
+
+	@Autowired
+	private LeadSpongeApiProperty property;
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
-	
+
 	@Autowired
 	private CorsFilter corsFilter;
-	
+
 	@Autowired
 	private UserDetailsService userDetailsService;
 
 	@Bean
 	public JwtAccessTokenConverter accessTokenConverter() {
-		final JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
-	    jwtAccessTokenConverter.setSigningKey("leadSpongeSecret");
-	    return jwtAccessTokenConverter;
+		JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+		converter.setSigningKey(property.getOauth2().getPrivateKey());
+		return converter;
 	}
-	
+
 	@Bean
 	public TokenStore tokenStore() {
 		return new JwtTokenStore(accessTokenConverter());
 	}
-	
+
 	@Bean
 	public TokenEnhancer tokenEnhancer() {
-	    return new CustomTokenEnhancer();
+		return new CustomTokenEnhancer();
 	}
 
 	@Override
 	public void configure(ClientDetailsServiceConfigurer configurer) throws Exception {
-		configurer
-				.inMemory()
-				.withClient(CLIEN_ID)
-				.secret(CLIENT_SECRET)
-				.authorizedGrantTypes(GRANT_TYPE_PASSWORD, AUTHORIZATION_CODE, REFRESH_TOKEN, IMPLICIT )
-				.scopes(SCOPE_READ, SCOPE_WRITE, TRUST)
-				.accessTokenValiditySeconds(ACCESS_TOKEN_VALIDITY_SECONDS).
-				refreshTokenValiditySeconds(FREFRESH_TOKEN_VALIDITY_SECONDS);
+		configurer.inMemory().withClient(property.getOauth2().getClientId()).secret(property.getOauth2().getClientSecret()).authorizedGrantTypes(GRANT_TYPE_PASSWORD, AUTHORIZATION_CODE, REFRESH_TOKEN, IMPLICIT)
+				.scopes(SCOPE_READ, SCOPE_WRITE, TRUST).accessTokenValiditySeconds(property.getOauth2().getTokenTimeout()).refreshTokenValiditySeconds(property.getOauth2().getRefreshTokenTimeout());
 	}
-	
+
 	@Override
 	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
 		security.addTokenEndpointAuthenticationFilter(this.corsFilter);
@@ -84,11 +80,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
 		TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
 		tokenEnhancerChain.setTokenEnhancers(Arrays.asList(tokenEnhancer(), accessTokenConverter()));
-		endpoints.tokenStore(tokenStore())
-		.tokenEnhancer(tokenEnhancerChain)
-		.reuseRefreshTokens(false)
-		.userDetailsService(userDetailsService)
-		.authenticationManager(authenticationManager);
+		endpoints.tokenStore(tokenStore()).tokenEnhancer(tokenEnhancerChain).reuseRefreshTokens(false).userDetailsService(userDetailsService).authenticationManager(authenticationManager);
 	}
 
 }

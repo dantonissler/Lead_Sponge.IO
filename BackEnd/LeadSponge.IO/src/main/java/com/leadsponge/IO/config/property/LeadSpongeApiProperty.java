@@ -12,6 +12,7 @@ public class LeadSpongeApiProperty {
 	private final Mail mail = new Mail();
 	private final Disco disco = new Disco();
 	private final S3 s3 = new S3();
+	private final Oauth2 oauth2 = new Oauth2();
 
 	@Data
 	public class Disco {
@@ -38,5 +39,16 @@ public class LeadSpongeApiProperty {
 	public class Seguranca {
 		private String originPermitida;
 		private boolean enableHttps;
+	}
+
+	@Data
+	public class Oauth2 {
+		private String clientId;
+		private String clientSecret;
+		private int tokenTimeout;
+		private int refreshTokenTimeout;
+		private String privateKey;
+		private String publicKey;
+		private String accessTokenUri;
 	}
 }

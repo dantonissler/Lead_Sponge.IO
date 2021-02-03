@@ -14,11 +14,11 @@
 //import com.leadsponge.IO.models.role.Role;
 //import com.leadsponge.IO.models.segmento.Segmento;
 //import com.leadsponge.IO.models.usuario.Usuario;
-//import com.leadsponge.IO.repository.RoleRepository;
 //import com.leadsponge.IO.repository.campanha.CampanhaRepository;
 //import com.leadsponge.IO.repository.estagioNegociacao.EstagioNegociacaoRepository;
 //import com.leadsponge.IO.repository.fonteNegociacao.FonteNegociacaoRepository;
-//import com.leadsponge.IO.services.MotivoPerdaService;
+//import com.leadsponge.IO.repository.motivoPerda.MotivoPerdaRepository;
+//import com.leadsponge.IO.repository.role.RoleRepository;
 //import com.leadsponge.IO.services.SegmentoService;
 //import com.leadsponge.IO.services.UsuarioService;
 //
@@ -118,7 +118,7 @@
 //	}
 //
 //	@Bean
-//	CommandLineRunner initTablePerda(MotivoPerdaService repository) {
+//	CommandLineRunner initTablePerda(MotivoPerdaRepository repository) {
 //		return args -> {
 //			repository.save(new MotivoPerda("Cliente optou por não realizar o projeto"));
 //			repository.save(new MotivoPerda("Demora no follow"));

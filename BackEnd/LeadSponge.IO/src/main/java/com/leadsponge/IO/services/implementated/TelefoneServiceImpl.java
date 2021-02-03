@@ -4,6 +4,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import com.leadsponge.IO.errorValidate.ErroMessage;
 import com.leadsponge.IO.models.telefone.Telefone;
@@ -11,6 +12,7 @@ import com.leadsponge.IO.repository.Filter.TelefoneFilter;
 import com.leadsponge.IO.repository.telefone.TelefoneRepository;
 import com.leadsponge.IO.services.TelefoneService;
 
+@Service
 public class TelefoneServiceImpl extends ErroMessage implements TelefoneService {
 
 	@Autowired

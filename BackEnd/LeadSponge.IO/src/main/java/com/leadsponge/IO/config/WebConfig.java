@@ -14,6 +14,7 @@ import com.leadsponge.IO.config.property.LeadSpongeApiProperty;
 @Configuration
 @EnableScheduling
 public class WebConfig {
+
 	@Autowired
 	private LeadSpongeApiProperty property;
 

@@ -355,7 +355,7 @@ public class EndPoint {
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonString = mapper.writeValueAsString(campanha);
 		mockMvc.perform(post("/campanhas").header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc)).accept(MediaType.APPLICATION_JSON).content(jsonString).contentType(MediaType.APPLICATION_JSON))
-				.andExpect(content().contentType(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest()).andDo(print()).andExpect(jsonPath("$.field").value("nome")).andExpect(jsonPath("$.fieldMessage").value("Não pode ser null"))
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest()).andDo(print()).andExpect(jsonPath("$.field").value("nome")).andExpect(jsonPath("$.fieldMessage").value("O nome não pode ser null"))
 				.andExpect(jsonPath("$.field").value("nome"));
 		verify(service, times(0)).salvar(campanha);
 	}
@@ -368,7 +368,7 @@ public class EndPoint {
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonString = mapper.writeValueAsString(campanha);
 		mockMvc.perform(put("/campanhas/{id}", 1L).header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc)).accept(MediaType.APPLICATION_JSON).content(jsonString).contentType(MediaType.APPLICATION_JSON))
-				.andExpect(content().contentType(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest()).andDo(print()).andExpect(jsonPath("$.field").value("nome")).andExpect(jsonPath("$.fieldMessage").value("Não pode ser null"))
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest()).andDo(print()).andExpect(jsonPath("$.field").value("nome")).andExpect(jsonPath("$.fieldMessage").value("O nome não pode ser null"))
 				.andExpect(jsonPath("$.field").value("nome"));
 		verify(service, times(0)).atualizar(1L, campanha);
 	}
