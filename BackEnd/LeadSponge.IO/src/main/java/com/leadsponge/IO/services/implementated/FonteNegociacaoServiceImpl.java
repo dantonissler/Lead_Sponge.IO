@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.leadsponge.IO.errorValidate.ErroMessage;
 import com.leadsponge.IO.models.fonteNegociacao.FonteNegociacao;
@@ -14,7 +13,6 @@ import com.leadsponge.IO.repository.fonteNegociacao.FonteNegociacaoRepository;
 import com.leadsponge.IO.services.FonteNegociacaoService;
 
 @Service
-@Transactional
 public class FonteNegociacaoServiceImpl extends ErroMessage implements FonteNegociacaoService {
 
 	@Autowired
