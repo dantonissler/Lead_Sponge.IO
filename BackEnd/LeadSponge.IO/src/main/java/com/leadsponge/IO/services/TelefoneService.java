@@ -9,14 +9,14 @@ import com.leadsponge.IO.repository.Filter.TelefoneFilter;
 
 @Service
 public interface TelefoneService {
-	public Telefone salvar(Telefone contato);
+	Telefone salvar(Telefone contato);
 
-	public Telefone atualizar(Long id, Telefone contato);
+	Telefone atualizar(Long id, Telefone contato);
 
-	public Telefone deletar(Long id);
+	Telefone deletar(Long id);
 
-	public Telefone detalhar(Long id);
+	Telefone detalhar(Long id);
 
-	public Page<Telefone> filtrar(TelefoneFilter telefoneFilter, Pageable pageable);
+	Page<Telefone> filtrar(TelefoneFilter telefoneFilter, Pageable pageable);
 
 }

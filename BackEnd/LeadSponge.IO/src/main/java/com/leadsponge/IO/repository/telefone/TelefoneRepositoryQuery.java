@@ -9,5 +9,5 @@ import com.leadsponge.IO.repository.Filter.TelefoneFilter;
 
 @Repository
 public interface TelefoneRepositoryQuery {
-	public Page<Telefone> filtrar(TelefoneFilter telefoneFilter, Pageable pageable);
+	Page<Telefone> filtrar(TelefoneFilter telefoneFilter, Pageable pageable);
 }

@@ -9,13 +9,13 @@ import com.leadsponge.IO.repository.Filter.EmailFilter;
 
 @Service
 public interface EmailService {
-	public Email salvar(Email contato);
+	Email salvar(Email contato);
 
-	public Email atualizar(Long id, Email contato);
+	Email atualizar(Long id, Email contato);
 
-	public Email deletar(Long id);
+	Email deletar(Long id);
 
-	public Email detalhar(Long id);
+	Email detalhar(Long id);
 
-	public Page<Email> filtrar(EmailFilter clienteFilter, Pageable pageable);
+	Page<Email> filtrar(EmailFilter clienteFilter, Pageable pageable);
 }

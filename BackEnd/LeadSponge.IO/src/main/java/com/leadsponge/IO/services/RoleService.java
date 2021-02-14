@@ -10,8 +10,8 @@ import com.leadsponge.IO.repository.Filter.RoleFilter;
 @Service
 public interface RoleService {
 
-	public Role detalhar(Long id);
+	Role detalhar(Long id);
 
-	public Page<Role> filtrar(RoleFilter roleFilter, Pageable pageable);
+	Page<Role> filtrar(RoleFilter roleFilter, Pageable pageable);
 
 }

@@ -10,18 +10,18 @@ import com.leadsponge.IO.repository.projection.ResumoTarefa;
 
 @Service
 public interface TarefaService {
-	public void avisarSobreTarefasVencidos();
+	void avisarSobreTarefasVencidos();
 
-	public Tarefa salvar(Tarefa tarefa);
+	Tarefa salvar(Tarefa tarefa);
 
-	public Tarefa atualizar(Long id, Tarefa tarefa);
+	Tarefa atualizar(Long id, Tarefa tarefa);
 
-	public Tarefa deletar(Long id);
+	Tarefa deletar(Long id);
 
-	public Tarefa detalhar(Long id);
+	Tarefa detalhar(Long id);
 
-	public Page<Tarefa> filtrar(TarefaFilter tarefaFilter, Pageable pageable);
+	Page<Tarefa> filtrar(TarefaFilter tarefaFilter, Pageable pageable);
 
-	public Page<ResumoTarefa> resumir(TarefaFilter tarefaFilter, Pageable pageable);
+	Page<ResumoTarefa> resumir(TarefaFilter tarefaFilter, Pageable pageable);
 
 }

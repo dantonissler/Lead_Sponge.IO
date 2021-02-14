@@ -9,13 +9,13 @@ import com.leadsponge.IO.repository.Filter.FonteNegociacaoFilter;
 
 @Service
 public interface FonteNegociacaoService {
-	public FonteNegociacao salvar(FonteNegociacao fonteNegociacao);
+	FonteNegociacao salvar(FonteNegociacao fonteNegociacao);
 
-	public FonteNegociacao atualizar(Long id, FonteNegociacao fonteNegociacao);
+	FonteNegociacao atualizar(Long id, FonteNegociacao fonteNegociacao);
 
-	public FonteNegociacao deletar(Long id);
+	FonteNegociacao deletar(Long id);
 
-	public FonteNegociacao detalhar(Long id);
+	FonteNegociacao detalhar(Long id);
 
-	public Page<FonteNegociacao> filtrar(FonteNegociacaoFilter fonteNegociacaoFilter, Pageable pageable);
+	Page<FonteNegociacao> filtrar(FonteNegociacaoFilter fonteNegociacaoFilter, Pageable pageable);
 }

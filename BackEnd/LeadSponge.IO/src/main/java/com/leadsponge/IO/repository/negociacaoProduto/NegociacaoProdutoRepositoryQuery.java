@@ -7,5 +7,5 @@ import com.leadsponge.IO.models.negociacaoProduto.NegociacaoProduto;
 import com.leadsponge.IO.repository.Filter.NegociacaoProdutoFilter;
 
 public interface NegociacaoProdutoRepositoryQuery {
-	public Page<NegociacaoProduto> filtrar(NegociacaoProdutoFilter negociacaoFilter, Pageable pageable);
+	Page<NegociacaoProduto> filtrar(NegociacaoProdutoFilter negociacaoFilter, Pageable pageable);
 }

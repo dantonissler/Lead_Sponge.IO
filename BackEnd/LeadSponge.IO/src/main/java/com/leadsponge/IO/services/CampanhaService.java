@@ -9,13 +9,13 @@ import com.leadsponge.IO.repository.Filter.CampanhaFilter;
 
 @Service
 public interface CampanhaService {
-	public Campanha salvar(Campanha campanha);
+	Campanha salvar(Campanha campanha);
 
-	public Campanha atualizar(Long id, Campanha campanha);
+	Campanha atualizar(Long id, Campanha campanha);
 
-	public Campanha deletar(Long id);
+	Campanha deletar(Long id);
 
-	public Campanha detalhar(Long id);
+	Campanha detalhar(Long id);
 
-	public Page<Campanha> filtrar(CampanhaFilter campanhaFilter, Pageable pageable);
+	Page<Campanha> filtrar(CampanhaFilter campanhaFilter, Pageable pageable);
 }

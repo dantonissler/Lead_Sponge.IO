@@ -14,26 +14,26 @@ import com.leadsponge.IO.repository.Filter.NegociacaoFilter;
 
 @Service
 public interface NegociacaoService {
-	public void calculo(Long id);
+	void calculo(Long id);
 
-	public void atribuirPropMP(Long id, MotivoPerda motivoPerda);
+	void atribuirPropMP(Long id, MotivoPerda motivoPerda);
 
-	public void atualizarPropriedadeEstatus(Long id, EstatusNegociacao estatus);
+	void atualizarPropriedadeEstatus(Long id, EstatusNegociacao estatus);
 
-	public void atualizarPropriedadeDataFim(Long id, Date data);
+	void atualizarPropriedadeDataFim(Long id, Date data);
 
-	public void atualizarPropriedadeEstagio(Long id, EstagioNegociacao estagio);
+	void atualizarPropriedadeEstagio(Long id, EstagioNegociacao estagio);
 
-	public void atualizarPropriedadeAvaliacao(Long id, Integer avaliacao);
+	void atualizarPropriedadeAvaliacao(Long id, Integer avaliacao);
 
-	public Negociacao salvar(Negociacao negociacao);
+	Negociacao salvar(Negociacao negociacao);
 
-	public Negociacao atualizar(Long id, Negociacao negociacao);
+	Negociacao atualizar(Long id, Negociacao negociacao);
 
-	public Negociacao deletar(Long id);
+	Negociacao deletar(Long id);
 
-	public Negociacao detalhar(Long id);
+	Negociacao detalhar(Long id);
 
-	public Page<Negociacao> filtrar(NegociacaoFilter negociacaoFilter, Pageable pageable);
+	Page<Negociacao> filtrar(NegociacaoFilter negociacaoFilter, Pageable pageable);
 
 }

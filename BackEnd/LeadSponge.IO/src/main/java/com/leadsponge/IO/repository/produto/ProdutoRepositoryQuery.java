@@ -9,5 +9,5 @@ import com.leadsponge.IO.repository.Filter.ProdutoFilter;
 
 @Repository
 public interface ProdutoRepositoryQuery {
-	public Page<Produto> filtrar(ProdutoFilter produtoFilter, Pageable pageable);
+	Page<Produto> filtrar(ProdutoFilter produtoFilter, Pageable pageable);
 }

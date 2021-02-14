@@ -11,27 +11,27 @@ import com.leadsponge.IO.repository.projection.ResumoUsuario;
 
 @Service
 public interface UsuarioService {
-	public Usuario atualizarUsuarioDTO(Long id, UsuarioTO usuario);
+	Usuario atualizarUsuarioDTO(Long id, UsuarioTO usuario);
 
-	public void removerImg(Long id);
+	void removerImg(Long id);
 
-	public void atualizarImg(Long id, String foto);
+	void atualizarImg(Long id, String foto);
 
-	public Usuario salvar(Usuario usuario);
+	Usuario salvar(Usuario usuario);
 
-	public Usuario atualizar(Long id, Usuario usuario);
+	Usuario atualizar(Long id, Usuario usuario);
 
-	public void atualizarPropriedadeEnabled(Long id, Boolean enabled);
+	void atualizarPropriedadeEnabled(Long id, Boolean enabled);
 
-	public String findLoggedInLogin();
+	String findLoggedInLogin();
 
-	public Usuario deletar(Long id);
+	Usuario deletar(Long id);
 
-	public Usuario detalhar(Long id);
+	Usuario detalhar(Long id);
 
-	public Page<Usuario> filtrar(UsuarioFilter usuarioFilter, Pageable pageable);
+	Page<Usuario> filtrar(UsuarioFilter usuarioFilter, Pageable pageable);
 	
-	public Page<ResumoUsuario> resumir(UsuarioFilter usuarioFilter, Pageable pageable);
+	Page<ResumoUsuario> resumir(UsuarioFilter usuarioFilter, Pageable pageable);
 	
-	public Usuario findByNome(String username);
+	Usuario findByNome(String username);
 }

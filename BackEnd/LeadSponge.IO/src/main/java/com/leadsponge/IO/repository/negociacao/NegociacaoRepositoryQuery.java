@@ -9,5 +9,5 @@ import com.leadsponge.IO.repository.Filter.NegociacaoFilter;
 
 @Repository
 public interface NegociacaoRepositoryQuery {
-	public Page<Negociacao> filtrar(NegociacaoFilter negociacaoFilter, Pageable pageable);
+	Page<Negociacao> filtrar(NegociacaoFilter negociacaoFilter, Pageable pageable);
 }

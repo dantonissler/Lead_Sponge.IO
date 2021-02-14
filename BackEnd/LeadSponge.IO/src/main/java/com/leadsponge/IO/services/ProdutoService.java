@@ -9,15 +9,15 @@ import com.leadsponge.IO.repository.Filter.ProdutoFilter;
 
 @Service
 public interface ProdutoService {
-	public Produto salvar(Produto produto);
+	Produto salvar(Produto produto);
 
-	public void atualizarPropriedadeVisibilidade(Long id, Boolean visibilidade);
+	void atualizarPropriedadeVisibilidade(Long id, Boolean visibilidade);
 
-	public Produto atualizar(Long id, Produto produto);
+	Produto atualizar(Long id, Produto produto);
 
-	public Produto deletar(Long id);
+	Produto deletar(Long id);
 
-	public Produto detalhar(Long id);
+	Produto detalhar(Long id);
 
-	public Page<Produto> filtrar(ProdutoFilter negociacaoFilter, Pageable pageable);
+	Page<Produto> filtrar(ProdutoFilter negociacaoFilter, Pageable pageable);
 }

@@ -9,13 +9,13 @@ import com.leadsponge.IO.repository.Filter.ContatoFilter;
 
 @Service
 public interface ContatoService {
-	public Contato salvar(Contato contato);
+	Contato salvar(Contato contato);
 
-	public Contato atualizar(Long id, Contato contato);
+	Contato atualizar(Long id, Contato contato);
 
-	public Contato deletar(Long id);
+	Contato deletar(Long id);
 
-	public Contato detalhar(Long id);
+	Contato detalhar(Long id);
 
-	public Page<Contato> filtrar(ContatoFilter clienteFilter, Pageable pageable);
+	Page<Contato> filtrar(ContatoFilter clienteFilter, Pageable pageable);
 }

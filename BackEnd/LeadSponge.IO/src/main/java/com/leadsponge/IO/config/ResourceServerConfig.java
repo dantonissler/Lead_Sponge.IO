@@ -17,7 +17,6 @@ import org.springframework.web.filter.CorsFilter;
 
 import com.leadsponge.IO.config.property.LeadSpongeApiProperty;
 
-@Profile("oauth-security")
 @Configuration
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 

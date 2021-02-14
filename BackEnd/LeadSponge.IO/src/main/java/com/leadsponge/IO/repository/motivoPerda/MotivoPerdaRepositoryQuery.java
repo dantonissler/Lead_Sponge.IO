@@ -9,5 +9,5 @@ import com.leadsponge.IO.repository.Filter.MotivoPerdaFilter;
 
 @Repository
 public interface MotivoPerdaRepositoryQuery {
-	public Page<MotivoPerda> filtrar(MotivoPerdaFilter motivoPerdaFilter, Pageable pageable);
+	Page<MotivoPerda> filtrar(MotivoPerdaFilter motivoPerdaFilter, Pageable pageable);
 }

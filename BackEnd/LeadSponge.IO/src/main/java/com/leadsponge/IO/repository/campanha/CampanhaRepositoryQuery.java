@@ -9,5 +9,5 @@ import com.leadsponge.IO.repository.Filter.CampanhaFilter;
 
 @Repository
 public interface CampanhaRepositoryQuery {
-	public Page<Campanha> filtrar(CampanhaFilter campanhaFilter, Pageable pageable);
+	Page<Campanha> filtrar(CampanhaFilter campanhaFilter, Pageable pageable);
 }

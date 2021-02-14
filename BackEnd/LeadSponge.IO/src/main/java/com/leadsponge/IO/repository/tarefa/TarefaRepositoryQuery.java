@@ -10,6 +10,7 @@ import com.leadsponge.IO.repository.projection.ResumoTarefa;
 
 @Repository
 public interface TarefaRepositoryQuery {
-	public Page<Tarefa> filtrar(TarefaFilter tarefaFilter, Pageable pageable);
-	public Page<ResumoTarefa> resumir(TarefaFilter tarefaFilter, Pageable pageable);
+    Page<Tarefa> filtrar(TarefaFilter tarefaFilter, Pageable pageable);
+
+    Page<ResumoTarefa> resumir(TarefaFilter tarefaFilter, Pageable pageable);
 }

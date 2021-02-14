@@ -7,5 +7,5 @@ import com.leadsponge.IO.models.role.Role;
 import com.leadsponge.IO.repository.Filter.RoleFilter;
 
 public interface RoleRepositoryQuery {
-	public Page<Role> filtrar(RoleFilter produtoFilter, Pageable pageable);
+	Page<Role> filtrar(RoleFilter produtoFilter, Pageable pageable);
 }

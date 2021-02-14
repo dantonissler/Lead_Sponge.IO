@@ -11,7 +11,7 @@ import com.leadsponge.IO.repository.projection.ResumoUsuario;
 @Repository
 public interface UsuarioRepositoryQuery {
 
-	public Page<Usuario> filtrar(UsuarioFilter usuarioFilter, Pageable pageable);
+	Page<Usuario> filtrar(UsuarioFilter usuarioFilter, Pageable pageable);
 
-	public Page<ResumoUsuario> resumir(UsuarioFilter usuarioFilter, Pageable pageable);
+	Page<ResumoUsuario> resumir(UsuarioFilter usuarioFilter, Pageable pageable);
 }

@@ -9,6 +9,6 @@ import com.leadsponge.IO.repository.Filter.FonteNegociacaoFilter;
 
 @Repository
 public interface FonteNegociacaoRepositoryQuery {
-	public Page<FonteNegociacao> filtrar(FonteNegociacaoFilter fonteNegociacaoFilter, Pageable pageable);
+	Page<FonteNegociacao> filtrar(FonteNegociacaoFilter fonteNegociacaoFilter, Pageable pageable);
 
 }

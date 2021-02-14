@@ -9,5 +9,5 @@ import com.leadsponge.IO.repository.Filter.ClienteFilter;
 
 @Repository
 public interface ClienteRepositoryQuery {
-	public Page<Cliente> filtrar(ClienteFilter lancamentoFilter, Pageable pageable);
+	Page<Cliente> filtrar(ClienteFilter lancamentoFilter, Pageable pageable);
 }

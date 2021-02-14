@@ -9,5 +9,5 @@ import com.leadsponge.IO.repository.Filter.SegmentoFilter;
 
 @Repository
 public interface SegmentoRepositoryQuery {
-	public Page<Segmento> filtrar(SegmentoFilter segmentoFilter, Pageable pageable);
+	Page<Segmento> filtrar(SegmentoFilter segmentoFilter, Pageable pageable);
 }

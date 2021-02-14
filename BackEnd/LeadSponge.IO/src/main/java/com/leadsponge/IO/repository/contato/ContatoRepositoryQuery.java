@@ -9,5 +9,5 @@ import com.leadsponge.IO.repository.Filter.ContatoFilter;
 
 @Repository
 public interface ContatoRepositoryQuery {
-	public Page<Contato> filtrar(ContatoFilter contatoFilter, Pageable pageable);
+	Page<Contato> filtrar(ContatoFilter contatoFilter, Pageable pageable);
 }

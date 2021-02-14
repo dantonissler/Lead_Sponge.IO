@@ -9,13 +9,13 @@ import com.leadsponge.IO.repository.Filter.MotivoPerdaFilter;
 
 @Service
 public interface MotivoPerdaService {
-	public MotivoPerda salvar(MotivoPerda motivoPerda);
+	MotivoPerda salvar(MotivoPerda motivoPerda);
 
-	public MotivoPerda atualizar(Long id, MotivoPerda motivoPerda);
+	MotivoPerda atualizar(Long id, MotivoPerda motivoPerda);
 
-	public MotivoPerda deletar(Long id);
+	MotivoPerda deletar(Long id);
 
-	public MotivoPerda detalhar(Long id);
+	MotivoPerda detalhar(Long id);
 
-	public Page<MotivoPerda> filtrar(MotivoPerdaFilter motivoPerdaFilter, Pageable pageable);
+	Page<MotivoPerda> filtrar(MotivoPerdaFilter motivoPerdaFilter, Pageable pageable);
 }

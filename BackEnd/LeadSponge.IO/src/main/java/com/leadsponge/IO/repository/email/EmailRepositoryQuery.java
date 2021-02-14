@@ -7,5 +7,5 @@ import com.leadsponge.IO.models.email.Email;
 import com.leadsponge.IO.repository.Filter.EmailFilter;
 
 public interface EmailRepositoryQuery {
-	public Page<Email> filtrar(EmailFilter emailFilter, Pageable pageable);
+	Page<Email> filtrar(EmailFilter emailFilter, Pageable pageable);
 }

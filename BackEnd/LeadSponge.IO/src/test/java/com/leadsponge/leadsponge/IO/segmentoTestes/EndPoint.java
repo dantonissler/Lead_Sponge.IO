@@ -44,10 +44,10 @@ public class EndPoint {
 	@Mock
 	private Page<Segmento> segmentoPage;
 
-	private MediaType contentType = new MediaType("application", "json");
+	private final MediaType contentType = new MediaType("application", "json");
 
 	@Before
-	private void setUp() {
+	public void setUp() {
 		mockMvc = MockMvcBuilders.webAppContextSetup(context).addFilter(springSecurityFilterChain).build();
 	}
 

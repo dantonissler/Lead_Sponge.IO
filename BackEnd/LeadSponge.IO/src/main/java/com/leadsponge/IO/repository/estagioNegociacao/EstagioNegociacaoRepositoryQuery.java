@@ -7,5 +7,5 @@ import com.leadsponge.IO.models.estagioNegociacao.EstagioNegociacao;
 import com.leadsponge.IO.repository.Filter.EstagioNegociacaoFilter;
 
 public interface EstagioNegociacaoRepositoryQuery {
-	public Page<EstagioNegociacao> filtrar(EstagioNegociacaoFilter estagioNegociacaoFilter, Pageable pageable);
+	Page<EstagioNegociacao> filtrar(EstagioNegociacaoFilter estagioNegociacaoFilter, Pageable pageable);
 }
