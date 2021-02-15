@@ -24,8 +24,4 @@ public abstract class NegociacaoProduto_ {
 	public static volatile SingularAttribute<NegociacaoProduto, BigDecimal> desconto;
 	public static volatile SingularAttribute<NegociacaoProduto, Produto> produto;
 	public static volatile SingularAttribute<NegociacaoProduto, Negociacao> negociacao;
-	public static final String ID = "id";
-	public static final String QUANTIDADE_PRODUTOS = "quantidadeProdutos";
-	public static final String PRODUTO = "produto";
-	public static final String NEGOCIACAO = "negociacao";
 }

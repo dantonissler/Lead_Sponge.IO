@@ -1,34 +1,5 @@
 package com.leadsponge.IO.models.usuario;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.TableGenerator;
-import javax.persistence.Transient;
-import javax.persistence.UniqueConstraint;
-import javax.validation.Valid;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -37,10 +8,22 @@ import com.leadsponge.IO.models.audit.UserDateAudit;
 import com.leadsponge.IO.models.cliente.Cliente;
 import com.leadsponge.IO.models.role.Role;
 import com.leadsponge.IO.models.tarefa.Tarefa;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -51,6 +34,19 @@ import lombok.NoArgsConstructor;
 public class Usuario extends UserDateAudit implements UserDetails {
 
     private static final long serialVersionUID = 1L;
+
+    public Usuario(String username, String nomeCompleto, String email, String password, String confirmarPassword,
+                   Boolean enabled, String foto, String urlFoto, Set<Role> roles) {
+        this.username = username;
+        this.nomeCompleto = nomeCompleto;
+        this.email = email;
+        this.password = password;
+        this.confirmarPassword = confirmarPassword;
+        this.enabled = enabled;
+        this.foto = foto;
+        this.urlFoto = urlFoto;
+        this.roles = roles;
+    }
 
     @Id
     @Column(name = "id")
@@ -139,11 +135,8 @@ public class Usuario extends UserDateAudit implements UserDetails {
             return false;
         Usuario other = (Usuario) obj;
         if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
-            return false;
-        return true;
+            return other.id == null;
+        } else return id.equals(other.id);
     }
 
     @Override
@@ -155,18 +148,4 @@ public class Usuario extends UserDateAudit implements UserDetails {
     public int hashCode() {
         return super.hashCode();
     }
-
-    public Usuario(String username, String nomeCompleto, String email, String password, String confirmarPassword,
-                   Boolean enabled, String foto, String urlFoto, Set<Role> roles) {
-        this.username = username;
-        this.nomeCompleto = nomeCompleto;
-        this.email = email;
-        this.password = password;
-        this.confirmarPassword = confirmarPassword;
-        this.enabled = enabled;
-        this.foto = foto;
-        this.urlFoto = urlFoto;
-        this.roles = roles;
-    }
-
 }

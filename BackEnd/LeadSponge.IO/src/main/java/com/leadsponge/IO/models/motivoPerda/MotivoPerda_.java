@@ -13,7 +13,4 @@ public abstract class MotivoPerda_ {
 	public static volatile SingularAttribute<MotivoPerda, Long> id;
 	public static volatile SingularAttribute<MotivoPerda, String> nome;
 	public static volatile ListAttribute<MotivoPerda, Negociacao> negociacoes;
-	public static final String ID = "id";
-	public static final String NOME = "nome";
-	public static final String NEGOCIACAO = "negociacao";
 }

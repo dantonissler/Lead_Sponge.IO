@@ -59,11 +59,8 @@ public class FonteNegociacao extends UserDateAudit {
 			return false;
 		FonteNegociacao other = (FonteNegociacao) obj;
 		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
+			return other.id == null;
+		} else return id.equals(other.id);
 	}
 
 	@Override

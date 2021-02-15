@@ -1,25 +1,5 @@
 package com.leadsponge.IO.models.cliente;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.TableGenerator;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.leadsponge.IO.models.View;
@@ -28,10 +8,16 @@ import com.leadsponge.IO.models.contato.Contato;
 import com.leadsponge.IO.models.negociacao.Negociacao;
 import com.leadsponge.IO.models.segmento.Segmento;
 import com.leadsponge.IO.models.usuario.Usuario;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -85,8 +71,7 @@ public class Cliente extends UserDateAudit {
     @ManyToOne
     @JoinColumn(name = "responsavel_id")
     private Usuario responsavel;
-    
-    
+
 
     @Override
     public boolean equals(Object obj) {
@@ -98,11 +83,8 @@ public class Cliente extends UserDateAudit {
             return false;
         Cliente other = (Cliente) obj;
         if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
-            return false;
-        return true;
+            return other.id == null;
+        } else return id.equals(other.id);
     }
 
     @Override

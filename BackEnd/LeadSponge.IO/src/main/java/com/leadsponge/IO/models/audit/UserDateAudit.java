@@ -40,8 +40,7 @@ public abstract class UserDateAudit extends DateAudit {
 
 	@PreUpdate
 	public void preUpdate() {
-		String modifiedByUser = getUsernameOfAuthenticatedUser();
-		this.modifiedByUser = modifiedByUser;
+		this.modifiedByUser = getUsernameOfAuthenticatedUser();
 	}
 
 	private String getUsernameOfAuthenticatedUser() {
@@ -50,8 +49,7 @@ public abstract class UserDateAudit extends DateAudit {
 				|| authentication instanceof AnonymousAuthenticationToken) {
 			return "Sistema";
 		}
-		String username = authentication.getName();
-		return username;
+		return authentication.getName();
 	}
 
 }

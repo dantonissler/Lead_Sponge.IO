@@ -22,12 +22,4 @@ public abstract class Cliente_ {
 	public static volatile ListAttribute<Cliente, Segmento> segmentos;
 	public static volatile SingularAttribute<Cliente, Usuario> responsavel;
 	public static volatile ListAttribute<Cliente, Usuario> seguidores;
-	public static final String ID = "id";
-	public static final String NOME = "nome";
-	public static final String URL = "url";
-	public static final String RESUMO = "resumo";
-	public static final String NEGOCIACOES = "negociacoes";
-	public static final String CONTATO = "contatos";
-	public static final String SEGENTO = "segmentos";
-	public static final String TAREFAS = "tarefas";
 }

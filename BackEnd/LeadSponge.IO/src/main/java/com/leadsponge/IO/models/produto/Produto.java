@@ -11,7 +11,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
@@ -52,7 +51,6 @@ public class Produto extends UserDateAudit {
     @JsonIgnore
     @JsonIgnoreProperties(value = {"negociacao", "produto"})
     @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @Valid
     private List<NegociacaoProduto> negociacaoProdutos;
 
     @Override
@@ -65,11 +63,8 @@ public class Produto extends UserDateAudit {
             return false;
         Produto other = (Produto) obj;
         if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
-            return false;
-        return true;
+            return other.id == null;
+        } else return id.equals(other.id);
     }
 
     @Override

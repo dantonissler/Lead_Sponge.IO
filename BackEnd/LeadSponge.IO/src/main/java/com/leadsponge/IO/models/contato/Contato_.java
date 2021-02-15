@@ -18,10 +18,4 @@ public abstract class Contato_ {
 	public static volatile ListAttribute<Contato, Telefone> telefone;
 	public static volatile ListAttribute<Contato, Email> email;
 	public static volatile SingularAttribute<Contato, Cliente> cliente;
-	public static final String ID = "id";
-	public static final String NOME = "nome";
-	public static final String CARGO = "cargo";
-	public static final String TELEFONE = "telefone";
-	public static final String EMAIL = "email";
-	public static final String CLIENTE = "cliente";
 }

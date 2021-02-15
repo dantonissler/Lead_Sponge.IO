@@ -15,8 +15,4 @@ public abstract class EstagioNegociacao_ {
 	public static volatile SingularAttribute<EstagioNegociacao, String> apelido;
 	public static volatile SingularAttribute<EstagioNegociacao, Integer> posicao;
 	public static volatile ListAttribute<EstagioNegociacao, Negociacao> negociacoes;
-	public static final String ID = "id";
-	public static final String NOME = "nome";
-	public static final String APELIDO = "apelido";
-	public static final String NEGOCIACAO = "negociacao";
 }
