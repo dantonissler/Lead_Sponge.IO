@@ -46,14 +46,8 @@ public class MotivoPerda extends UserDateAudit {
 	private String nome;
 
 	@JsonIgnoreProperties("motivoPerda")
-	@Valid
 	@OneToMany(mappedBy = "motivoPerda", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Negociacao> negociacoes;
-
-	public MotivoPerda(@Size(min = 4, max = 50, message = "{nome.size}") String nome) {
-		super();
-		this.nome = nome;
-	}
 
 	@Override
 	public boolean equals(Object obj) {

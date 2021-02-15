@@ -122,12 +122,12 @@ class LoadDatabase {
     @Bean
     CommandLineRunner initTablePerda(MotivoPerdaRepository repository) {
         return args -> {
-            repository.save(new MotivoPerda("Cliente optou por não realizar o projeto"));
-            repository.save(new MotivoPerda("Demora no follow"));
-            repository.save(new MotivoPerda("Fechou com outra empresa"));
-            repository.save(new MotivoPerda("Não gostou do produto/serviço"));
-            repository.save(new MotivoPerda("Outros"));
-            repository.save(new MotivoPerda("Preço"));
+            repository.save(new MotivoPerda(null,"Cliente optou por não realizar o projeto",null));
+            repository.save(new MotivoPerda(null,"Demora no follow",null));
+            repository.save(new MotivoPerda(null,"Fechou com outra empresa",null));
+            repository.save(new MotivoPerda(null,"Não gostou do produto/serviço",null));
+            repository.save(new MotivoPerda(null,"Outros",null));
+            repository.save(new MotivoPerda(null,"Preço",null));
         };
     }
 

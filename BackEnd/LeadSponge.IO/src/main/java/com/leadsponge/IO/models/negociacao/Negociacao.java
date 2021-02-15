@@ -48,6 +48,10 @@ import lombok.NoArgsConstructor;
 @TableGenerator(name = "negociacao_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "negociacoes", allocationSize = 1, initialValue = 0)
 public class Negociacao extends UserDateAudit {
 
+	public Negociacao(Long id){
+		this.id = id;
+	}
+
 	@Id
 	@Column(name = "id")
 	@JsonView(View.Negociacao.class)

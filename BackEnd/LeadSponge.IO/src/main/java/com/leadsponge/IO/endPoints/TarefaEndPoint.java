@@ -1,8 +1,12 @@
 package com.leadsponge.IO.endPoints;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
-
+import com.leadsponge.IO.errorValidate.ErroMessage;
+import com.leadsponge.IO.event.RecursoCriadoEvent;
+import com.leadsponge.IO.models.tarefa.Tarefa;
+import com.leadsponge.IO.repository.Filter.TarefaFilter;
+import com.leadsponge.IO.repository.projection.ResumoTarefa;
+import com.leadsponge.IO.services.TarefaService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
@@ -10,74 +14,60 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.leadsponge.IO.errorValidate.ErroMessage;
-import com.leadsponge.IO.event.RecursoCriadoEvent;
-import com.leadsponge.IO.models.tarefa.Tarefa;
-import com.leadsponge.IO.repository.Filter.TarefaFilter;
-import com.leadsponge.IO.repository.projection.ResumoTarefa;
-import com.leadsponge.IO.services.TarefaService;
-
-import lombok.AllArgsConstructor;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("/tarefas")
 class TarefaEndPoint extends ErroMessage {
 
-	@Autowired
-	private final TarefaService service;
+    @Autowired
+    private final TarefaService service;
 
-	@Autowired
-	private final ApplicationEventPublisher publisher;
+    @Autowired
+    private final ApplicationEventPublisher publisher;
 
-	@GetMapping(value = { "", "/" })
-	@ResponseStatus(HttpStatus.OK)
-	@PreAuthorize("hasAuthority('PESQUISAR_TAREFA') and #oauth2.hasScope('read')")
-	Page<Tarefa> pesquisar(TarefaFilter tarefaFilter, Pageable pageable) {
-		return service.filtrar(tarefaFilter, pageable);
-	}
+    @GetMapping(value = {""})
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('PESQUISAR_TAREFA') and #oauth2.hasScope('read')")
+    Page<Tarefa> pesquisar(TarefaFilter tarefaFilter, Pageable pageable) {
+        return service.filtrar(tarefaFilter, pageable);
+    }
 
-	@GetMapping(params = "resumo")
-	@PreAuthorize("hasAuthority('PESQUISAR_TAREFA') and #oauth2.hasScope('read')")
-	Page<ResumoTarefa> resumir(TarefaFilter tarefaFilter, Pageable pageable) {
-		return service.resumir(tarefaFilter, pageable);
-	}
+    @GetMapping(params = "resumo")
+    @PreAuthorize("hasAuthority('PESQUISAR_TAREFA') and #oauth2.hasScope('read')")
+    Page<ResumoTarefa> resumir(TarefaFilter tarefaFilter, Pageable pageable) {
+        return service.resumir(tarefaFilter, pageable);
+    }
 
-	@PostMapping(value = { "", "/" })
-	@PreAuthorize("hasAuthority('CADASTRAR_TAREFA') and #oauth2.hasScope('write')")
-	ResponseEntity<Tarefa> cadastrar(@Valid @RequestBody Tarefa tarefa, HttpServletResponse response) {
-		Tarefa criarTarefa = service.salvar(tarefa);
-		publisher.publishEvent(new RecursoCriadoEvent(this, response, criarTarefa.getId()));
-		return ResponseEntity.status(HttpStatus.CREATED).body(criarTarefa);
-	}
+    @PostMapping(value = {""})
+    @PreAuthorize("hasAuthority('CADASTRAR_TAREFA') and #oauth2.hasScope('write')")
+    ResponseEntity<Tarefa> cadastrar(@Valid @RequestBody Tarefa tarefa, HttpServletResponse response) {
+        Tarefa criarTarefa = service.salvar(tarefa);
+        publisher.publishEvent(new RecursoCriadoEvent(this, response, criarTarefa.getId()));
+        return ResponseEntity.status(HttpStatus.CREATED).body(criarTarefa);
+    }
 
-	@PutMapping(value = { "/{id}", "/{id}/" })
-	@PreAuthorize("hasAuthority('CADASTRAR_TAREFA') and #oauth2.hasScope('write')")
-	ResponseEntity<Tarefa> atualizar(@Valid @RequestBody Tarefa tarefa, @PathVariable Long id, HttpServletResponse response) {
-		Tarefa novaTarefa = service.atualizar(id, tarefa);
-		publisher.publishEvent(new RecursoCriadoEvent(this, response, novaTarefa.getId()));
-		return ResponseEntity.status(HttpStatus.CREATED).body(novaTarefa);
-	}
+    @PutMapping(value = {"/{id}"})
+    @PreAuthorize("hasAuthority('CADASTRAR_TAREFA') and #oauth2.hasScope('write')")
+    ResponseEntity<Tarefa> atualizar(@Valid @RequestBody Tarefa tarefa, @PathVariable Long id, HttpServletResponse response) {
+        Tarefa novaTarefa = service.atualizar(id, tarefa);
+        publisher.publishEvent(new RecursoCriadoEvent(this, response, novaTarefa.getId()));
+        return ResponseEntity.status(HttpStatus.CREATED).body(novaTarefa);
+    }
 
-	@DeleteMapping(value = { "/{id}", "/{id}/" })
-	@PreAuthorize("hasAuthority('REMOVER_TAREFA') and #oauth2.hasScope('write')")
-	ResponseEntity<Tarefa> remover(@PathVariable Long id) {
-		return ResponseEntity.ok(service.deletar(id));
-	}
+    @DeleteMapping(value = {"/{id}"})
+    @PreAuthorize("hasAuthority('REMOVER_TAREFA') and #oauth2.hasScope('write')")
+    ResponseEntity<Tarefa> remover(@PathVariable Long id) {
+        return ResponseEntity.ok(service.deletar(id));
+    }
 
-	@GetMapping(value = { "/{id}", "/{id}/" })
-	@PreAuthorize("hasAuthority('PESQUISAR_TAREFA') and #oauth2.hasScope('read')")
-	ResponseEntity<Tarefa> detalhar(@Valid @PathVariable("id") Long id) {
-		return ResponseEntity.ok(service.detalhar(id));
-	}
+    @GetMapping(value = {"/{id}"})
+    @PreAuthorize("hasAuthority('PESQUISAR_TAREFA') and #oauth2.hasScope('read')")
+    ResponseEntity<Tarefa> detalhar(@Valid @PathVariable("id") Long id) {
+        return ResponseEntity.ok(service.detalhar(id));
+    }
 }

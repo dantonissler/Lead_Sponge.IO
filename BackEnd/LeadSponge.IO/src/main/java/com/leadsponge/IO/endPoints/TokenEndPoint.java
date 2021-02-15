@@ -18,21 +18,21 @@ import com.leadsponge.IO.config.property.LeadSpongeApiProperty;
 @RequestMapping("/tokens")
 class TokenEndPoint {
 
-	@Autowired
-	private final LeadSpongeApiProperty leadSpongeApiProperty;
-	
-	public TokenEndPoint(LeadSpongeApiProperty leadSpongeApiProperty) {
-		this.leadSpongeApiProperty = leadSpongeApiProperty;
-	}
+    @Autowired
+    private final LeadSpongeApiProperty leadSpongeApiProperty;
 
-	@DeleteMapping("/revoke")
-	public void revoke(HttpServletRequest req, HttpServletResponse resp) {
-		Cookie cookie = new Cookie("refreshToken", null);
-		cookie.setHttpOnly(true);
-		cookie.setSecure(leadSpongeApiProperty.getSeguranca().isEnableHttps());
-		cookie.setPath(req.getContextPath() + "/oauth/token");
-		cookie.setMaxAge(0);
-		resp.addCookie(cookie);
-		resp.setStatus(HttpStatus.NO_CONTENT.value());
-	}
+    public TokenEndPoint(LeadSpongeApiProperty leadSpongeApiProperty) {
+        this.leadSpongeApiProperty = leadSpongeApiProperty;
+    }
+
+    @DeleteMapping("/revoke")
+    public void revoke(HttpServletRequest req, HttpServletResponse resp) {
+        Cookie cookie = new Cookie("refreshToken", null);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(leadSpongeApiProperty.getSeguranca().isEnableHttps());
+        cookie.setPath(req.getContextPath() + "/oauth/token");
+        cookie.setMaxAge(0);
+        resp.addCookie(cookie);
+        resp.setStatus(HttpStatus.NO_CONTENT.value());
+    }
 }

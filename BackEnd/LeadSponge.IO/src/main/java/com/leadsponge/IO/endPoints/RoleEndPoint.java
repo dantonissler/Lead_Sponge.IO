@@ -32,13 +32,13 @@ class RoleEndPoint {
 	@Autowired
 	private final ApplicationEventPublisher publisher;
 
-	@GetMapping
+	@GetMapping(value = {""})
 	@PreAuthorize("hasAuthority('PESQUISAR_USUARIO') and #oauth2.hasScope('read')")
 	public Page<Role> pesquisar(RoleFilter usuarioFilter, Pageable pageable) {
 		return service.filtrar(usuarioFilter, pageable);
 	}
 
-	@GetMapping(value = { "/{id}", "/{id}/" })
+	@GetMapping(value = { "/{id}"})
 	@PreAuthorize("hasAuthority('PESQUISAR_CAMPANHA') and #oauth2.hasScope('read')")
 	ResponseEntity<Role> detalhar(@Valid @PathVariable("id") Long id, HttpServletResponse response) {
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, id));

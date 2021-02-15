@@ -32,44 +32,44 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/emails")
 class EmailEndPoint {
 
-	@Autowired
-	private final EmailService service;
+    @Autowired
+    private final EmailService service;
 
-	@Autowired
-	private final ApplicationEventPublisher publisher;
+    @Autowired
+    private final ApplicationEventPublisher publisher;
 
-	@GetMapping(value = { "", "/" })
-	@ResponseStatus(HttpStatus.OK)
-	@PreAuthorize("hasAuthority('PESQUISAR_CLIENTE') and #oauth2.hasScope('read')")
-	Page<Email> pesquisar(EmailFilter emailFilter, Pageable pageable) {
-		return service.filtrar(emailFilter, pageable);
-	}
+    @GetMapping(value = {""})
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('PESQUISAR_CLIENTE') and #oauth2.hasScope('read')")
+    Page<Email> pesquisar(EmailFilter emailFilter, Pageable pageable) {
+        return service.filtrar(emailFilter, pageable);
+    }
 
-	@PostMapping(value = { "", "/" })
-	@PreAuthorize("hasAuthority('CADASTRAR_CLIENTE') and #oauth2.hasScope('write')")
-	ResponseEntity<Email> cadastrar(@Valid @RequestBody Email email, HttpServletResponse response) {
-		Email criarEmail = service.salvar(email);
-		publisher.publishEvent(new RecursoCriadoEvent(this, response, criarEmail.getId()));
-		return ResponseEntity.status(HttpStatus.CREATED).body(criarEmail);
-	}
+    @PostMapping(value = {""})
+    @PreAuthorize("hasAuthority('CADASTRAR_CLIENTE') and #oauth2.hasScope('write')")
+    ResponseEntity<Email> cadastrar(@Valid @RequestBody Email email, HttpServletResponse response) {
+        Email criarEmail = service.salvar(email);
+        publisher.publishEvent(new RecursoCriadoEvent(this, response, criarEmail.getId()));
+        return ResponseEntity.status(HttpStatus.CREATED).body(criarEmail);
+    }
 
-	@PutMapping(value = { "/{id}", "/{id}/" })
-	@PreAuthorize("hasAuthority('CADASTRAR_CLIENTE') and #oauth2.hasScope('write')")
-	ResponseEntity<Email> atualizar(@Valid @RequestBody Email email, @PathVariable Long id, HttpServletResponse response) {
-		Email novaEmail = service.atualizar(id, email);
-		publisher.publishEvent(new RecursoCriadoEvent(this, response, novaEmail.getId()));
-		return ResponseEntity.status(HttpStatus.CREATED).body(novaEmail);
-	}
+    @PutMapping(value = {"/{id}"})
+    @PreAuthorize("hasAuthority('CADASTRAR_CLIENTE') and #oauth2.hasScope('write')")
+    ResponseEntity<Email> atualizar(@Valid @RequestBody Email email, @PathVariable Long id, HttpServletResponse response) {
+        Email novaEmail = service.atualizar(id, email);
+        publisher.publishEvent(new RecursoCriadoEvent(this, response, novaEmail.getId()));
+        return ResponseEntity.status(HttpStatus.CREATED).body(novaEmail);
+    }
 
-	@GetMapping(value = { "/{id}", "/{id}/" })
-	@PreAuthorize("hasAuthority('PESQUISAR_CLIENTE') and #oauth2.hasScope('read')")
-	ResponseEntity<Email> detalhar(@PathVariable("id") Long id) {
-		return ResponseEntity.ok(service.detalhar(id));
-	}
+    @GetMapping(value = {"/{id}"})
+    @PreAuthorize("hasAuthority('PESQUISAR_CLIENTE') and #oauth2.hasScope('read')")
+    ResponseEntity<Email> detalhar(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(service.detalhar(id));
+    }
 
-	@DeleteMapping(value = { "/{id}", "/{id}/" })
-	@PreAuthorize("hasAuthority('REMOVER_CLIENTE') and #oauth2.hasScope('write')")
-	ResponseEntity<Email> remover(@PathVariable Long id) {
-		return ResponseEntity.ok(service.deletar(id));
-	}
+    @DeleteMapping(value = {"/{id}"})
+    @PreAuthorize("hasAuthority('REMOVER_CLIENTE') and #oauth2.hasScope('write')")
+    ResponseEntity<Email> remover(@PathVariable Long id) {
+        return ResponseEntity.ok(service.deletar(id));
+    }
 }

@@ -1,16 +1,15 @@
 package com.leadsponge.leadsponge.IO;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-
 import org.json.JSONObject;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.util.Base64Utils;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 public class Util {
     public static String getAccessToken(final String username, final String password, final MockMvc mockMvc) throws Exception {
         try {
-            MockHttpServletResponse response = mockMvc.perform(post("/oauth/token").header("Authorization", "Basic QExlYWRfU3BvbmdlMTIz").param("username", username).param("password", password).param("grant_type", "password"))
+            MockHttpServletResponse response = mockMvc.perform(post("/oauth/token").header("Authorization", "Basic bGVhZHNwb25nOkBMZWFkX1Nwb25nZTEyMw==").param("username", username).param("password", password).param("grant_type", "password"))
                     .andReturn().getResponse();
             JSONObject obj = new JSONObject(response.getContentAsString());
             if (obj.has("access_token"))
@@ -21,5 +20,5 @@ public class Util {
             throw new Exception();
         }
     }
-    // Converter uma string para base64: new String(Base64Utils.encode(("@Lead_Sponge123").getBytes()))
+    // Converter uma string para base64: new String(Base64Utils.encode(("$2a$10$/vFGy5cceE5lLFVHn4lIO.N4NmHyMZyGn3odMCU4g3/BnCeBunVOa").getBytes()))
 }
