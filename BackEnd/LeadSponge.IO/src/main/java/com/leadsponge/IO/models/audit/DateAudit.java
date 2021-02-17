@@ -1,5 +1,6 @@
 package com.leadsponge.IO.models.audit;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -22,9 +23,9 @@ public abstract class DateAudit {
 
 	@CreatedDate
 	@Column(nullable = false, updatable = false)
-	private Date createdAt;
+	private LocalDateTime createdAt;
 
 	@LastModifiedDate
 	@Column(nullable = false)
-	private Date updatedAt;
+	private LocalDateTime updatedAt;
 }

@@ -9,10 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ResumoUsuario {
-	private Long id;
-	private String username;
-	private String nomeCompleto;
-	private String email;
-	private Boolean enabled;
+public class RoleResumo {
+    private Long id;
+    private String nome;
 }

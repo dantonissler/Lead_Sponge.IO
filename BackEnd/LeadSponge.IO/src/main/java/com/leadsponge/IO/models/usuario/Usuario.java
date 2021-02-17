@@ -30,11 +30,14 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "usuarios", uniqueConstraints = {@UniqueConstraint(columnNames = {"username"})})
-@TableGenerator(name = "usuario_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "usuarios", allocationSize = 1, initialValue = 0)
+@TableGenerator(name = "usuario_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "usuarios", allocationSize = 1)
 public class Usuario extends UserDateAudit implements UserDetails {
 
     private static final long serialVersionUID = 1L;
 
+    public Usuario(Long id){
+        this.id = id;
+    }
     public Usuario(String username, String nomeCompleto, String email, String password, String confirmarPassword,
                    Boolean enabled, String foto, String urlFoto, Set<Role> roles) {
         this.username = username;
@@ -101,7 +104,7 @@ public class Usuario extends UserDateAudit implements UserDetails {
     @Override
     @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return (Collection<? extends GrantedAuthority>) this.roles;
+        return this.roles;
     }
 
     @Override

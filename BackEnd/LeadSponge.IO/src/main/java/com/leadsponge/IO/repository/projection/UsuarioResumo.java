@@ -1,9 +1,5 @@
 package com.leadsponge.IO.repository.projection;
 
-import java.time.LocalDateTime;
-
-import com.leadsponge.IO.models.tarefa.TipoTarefa;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,10 +9,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ResumoTarefa {
+public class UsuarioResumo {
 	private Long id;
-	private String assunto;
-	private LocalDateTime horaMarcada;
-	private TipoTarefa tipo;
-	private String usuario;
+	private String username;
+	private String nomeCompleto;
+	private String email;
+	private Boolean enabled;
 }

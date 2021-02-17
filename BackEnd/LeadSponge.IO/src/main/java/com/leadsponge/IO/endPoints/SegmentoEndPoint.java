@@ -38,7 +38,7 @@ class SegmentoEndPoint {
     @PostMapping(value = {""})
     @PreAuthorize("hasAuthority('CADASTRAR_SEGMENTO') and #oauth2.hasScope('write')")
     public ResponseEntity<Segmento> cadastrar(@Valid @RequestBody Segmento segmento, HttpServletResponse response) {
-        Segmento criarSegmento = service.save(segmento);
+        Segmento criarSegmento = service.salvar(segmento);
         publisher.publishEvent(new RecursoCriadoEvent(this, response, criarSegmento.getId()));
         return ResponseEntity.status(HttpStatus.CREATED).body(criarSegmento);
     }

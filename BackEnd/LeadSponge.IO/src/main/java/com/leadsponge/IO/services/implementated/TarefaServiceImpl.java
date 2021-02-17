@@ -19,7 +19,7 @@ import com.leadsponge.IO.mail.Mailer;
 import com.leadsponge.IO.models.tarefa.Tarefa;
 import com.leadsponge.IO.models.usuario.Usuario;
 import com.leadsponge.IO.repository.Filter.TarefaFilter;
-import com.leadsponge.IO.repository.projection.ResumoTarefa;
+import com.leadsponge.IO.repository.projection.TarefaResumo;
 import com.leadsponge.IO.repository.tarefa.TarefaRepository;
 import com.leadsponge.IO.repository.usuario.UsuarioRepository;
 import com.leadsponge.IO.services.TarefaService;
@@ -106,7 +106,7 @@ public class TarefaServiceImpl extends ErroMessage implements TarefaService {
 	}
 
 	@Override
-	public Page<ResumoTarefa> resumir(TarefaFilter tarefaFilter, Pageable pageable) {
+	public Page<TarefaResumo> resumir(TarefaFilter tarefaFilter, Pageable pageable) {
 		return repository.resumir(tarefaFilter, pageable);
 	}
 }

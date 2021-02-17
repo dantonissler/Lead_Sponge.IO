@@ -18,7 +18,7 @@ public class SegmentoServiceImpl extends ErroMessage implements SegmentoService 
 	private SegmentoRepository repository;
 
 	@Override
-	public Segmento save(Segmento segmento) {
+	public Segmento salvar(Segmento segmento) {
 		return repository.save(segmento);
 	}
 

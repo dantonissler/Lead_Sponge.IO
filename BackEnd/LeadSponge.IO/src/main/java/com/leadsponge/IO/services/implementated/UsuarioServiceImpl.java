@@ -16,7 +16,7 @@ import com.leadsponge.IO.errorValidate.ErroMessage;
 import com.leadsponge.IO.models.usuario.Usuario;
 import com.leadsponge.IO.models.usuario.UsuarioTO;
 import com.leadsponge.IO.repository.Filter.UsuarioFilter;
-import com.leadsponge.IO.repository.projection.ResumoUsuario;
+import com.leadsponge.IO.repository.projection.UsuarioResumo;
 import com.leadsponge.IO.repository.usuario.UsuarioRepository;
 import com.leadsponge.IO.services.UsuarioService;
 import com.leadsponge.IO.storage.Disco;
@@ -120,7 +120,7 @@ public class UsuarioServiceImpl extends ErroMessage implements UsuarioService {
 	}
 
 	@Override
-	public Page<ResumoUsuario> resumir(UsuarioFilter usuarioFilter, Pageable pageable) {
+	public Page<UsuarioResumo> resumir(UsuarioFilter usuarioFilter, Pageable pageable) {
 		return repository.resumir(usuarioFilter, pageable);
 	}
 

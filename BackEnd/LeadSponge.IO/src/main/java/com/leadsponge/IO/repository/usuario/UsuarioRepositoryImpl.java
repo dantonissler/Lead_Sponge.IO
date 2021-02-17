@@ -19,7 +19,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.leadsponge.IO.models.usuario.Usuario;
 import com.leadsponge.IO.models.usuario.Usuario_;
 import com.leadsponge.IO.repository.Filter.UsuarioFilter;
-import com.leadsponge.IO.repository.projection.ResumoUsuario;
+import com.leadsponge.IO.repository.projection.UsuarioResumo;
 
 public class UsuarioRepositoryImpl implements UsuarioRepositoryQuery {
 
@@ -42,14 +42,14 @@ public class UsuarioRepositoryImpl implements UsuarioRepositoryQuery {
 	}
 
 	@Override
-	public Page<ResumoUsuario> resumir(UsuarioFilter usuarioFilter, Pageable pageable) {
+	public Page<UsuarioResumo> resumir(UsuarioFilter usuarioFilter, Pageable pageable) {
 		CriteriaBuilder builder = manager.getCriteriaBuilder();
-		CriteriaQuery<ResumoUsuario> criteria = builder.createQuery(ResumoUsuario.class);
+		CriteriaQuery<UsuarioResumo> criteria = builder.createQuery(UsuarioResumo.class);
 		Root<Usuario> root = criteria.from(Usuario.class);
-		criteria.select(builder.construct(ResumoUsuario.class, root.get(Usuario_.id), root.get(Usuario_.username), root.get(Usuario_.nomeCompleto), root.get(Usuario_.email), root.get(Usuario_.enabled)));
+		criteria.select(builder.construct(UsuarioResumo.class, root.get(Usuario_.id), root.get(Usuario_.username), root.get(Usuario_.nomeCompleto), root.get(Usuario_.email), root.get(Usuario_.enabled)));
 		Predicate[] predicates = criarRestricoes(usuarioFilter, builder, root);
 		criteria.where(predicates);
-		TypedQuery<ResumoUsuario> query = manager.createQuery(criteria);
+		TypedQuery<UsuarioResumo> query = manager.createQuery(criteria);
 		adicionarRestricoesDePaginacao(query, pageable);
 		return new PageImpl<>(query.getResultList(), pageable, total(usuarioFilter));
 	}

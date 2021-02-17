@@ -45,7 +45,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "negociacoes")
-@TableGenerator(name = "negociacao_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "negociacoes", allocationSize = 1, initialValue = 0)
+@TableGenerator(name = "negociacao_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "negociacoes", allocationSize = 1)
 public class Negociacao extends UserDateAudit {
 
 	public Negociacao(Long id){
@@ -67,7 +67,7 @@ public class Negociacao extends UserDateAudit {
 	@NotNull
 	private Integer avaliacao;
 
-	@Column(name = "dataPrevistaEncerramento")
+	@Column(name = "data_prevista_encerramento")
 	private Date dataPrevistaEncerramento;
 
 	@NotNull

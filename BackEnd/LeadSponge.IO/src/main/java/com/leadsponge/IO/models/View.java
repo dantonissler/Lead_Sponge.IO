@@ -1,50 +1,48 @@
 package com.leadsponge.IO.models;
 
 public class View {
-	public static interface Campanha {
+	public interface Campanha {
 	}
 
-	public static interface Cliente {
+	public interface Cliente {
 	}
 
-	public static interface Contato {
+	public interface Contato {
 	}
 
-	public static interface Email {
+	public interface Email {
 	}
 
-	public static interface Fonte {
+	public interface FonteNegociacao {
 	}
 
-	public static interface Negociacao {
+	public interface Negociacao {
 	}
 
-	public static interface Produto {
+	public interface Produto {
 	}
 
-	public static interface Segmento {
+	public interface Segmento {
 	}
 
-	public static interface Tarefa {
+	public interface Tarefa {
 	}
 
-	public static interface Telefone {
+	public interface Telefone {
 	}
 
-	public static interface Usuario {
+	public interface Usuario {
 	}
 
-	public static interface NegociacaoProduto {
-
+	public interface NegociacaoProduto {
 	}
 
-	public static interface EstagioNegociacao {
+	public interface EstagioNegociacao {
 	}
 
-	public static interface HistEstagioNegociacao {
-		
+	public interface HistEstagioNegociacao {
 	}
-	public static interface MotivoPerda{
-		
+
+	public interface MotivoPerda {
 	}
 }

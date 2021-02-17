@@ -4,7 +4,7 @@ import com.leadsponge.IO.errorValidate.ErroMessage;
 import com.leadsponge.IO.event.RecursoCriadoEvent;
 import com.leadsponge.IO.models.tarefa.Tarefa;
 import com.leadsponge.IO.repository.Filter.TarefaFilter;
-import com.leadsponge.IO.repository.projection.ResumoTarefa;
+import com.leadsponge.IO.repository.projection.TarefaResumo;
 import com.leadsponge.IO.services.TarefaService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ class TarefaEndPoint extends ErroMessage {
 
     @GetMapping(params = "resumo")
     @PreAuthorize("hasAuthority('PESQUISAR_TAREFA') and #oauth2.hasScope('read')")
-    Page<ResumoTarefa> resumir(TarefaFilter tarefaFilter, Pageable pageable) {
+    Page<TarefaResumo> resumir(TarefaFilter tarefaFilter, Pageable pageable) {
         return service.resumir(tarefaFilter, pageable);
     }
 

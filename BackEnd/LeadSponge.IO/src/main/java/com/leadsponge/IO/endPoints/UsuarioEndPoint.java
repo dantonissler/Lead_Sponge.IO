@@ -5,7 +5,7 @@ import com.leadsponge.IO.models.anexo.AnexoDTO;
 import com.leadsponge.IO.models.usuario.Usuario;
 import com.leadsponge.IO.models.usuario.UsuarioTO;
 import com.leadsponge.IO.repository.Filter.UsuarioFilter;
-import com.leadsponge.IO.repository.projection.ResumoUsuario;
+import com.leadsponge.IO.repository.projection.UsuarioResumo;
 import com.leadsponge.IO.services.UsuarioService;
 import com.leadsponge.IO.storage.Disco;
 import lombok.AllArgsConstructor;
@@ -44,7 +44,7 @@ class UsuarioEndPoint {
 
     @GetMapping(params = "resumo")
     @PreAuthorize("hasAuthority('PESQUISAR_USUARIO') and #oauth2.hasScope('read')")
-    public Page<ResumoUsuario> resumir(UsuarioFilter usuarioFilter, Pageable pageable) {
+    public Page<UsuarioResumo> resumir(UsuarioFilter usuarioFilter, Pageable pageable) {
         return service.resumir(usuarioFilter, pageable);
     }
 

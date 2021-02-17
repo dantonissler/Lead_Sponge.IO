@@ -11,6 +11,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import com.leadsponge.IO.repository.projection.RoleResumo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -40,6 +41,19 @@ public class RoleRepositoryImpl implements RoleRepositoryQuery {
 		adicionarRestricoesDePaginacao(query, pageable);
 
 		return new PageImpl<>(query.getResultList(), pageable, total(roleFilter));
+	}
+
+	@Override
+	public Page<RoleResumo> resumir(RoleFilter usuarioFilter, Pageable pageable) {
+		CriteriaBuilder builder = manager.getCriteriaBuilder();
+		CriteriaQuery<RoleResumo> criteria = builder.createQuery(RoleResumo.class);
+		Root<Role> root = criteria.from(Role.class);
+		criteria.select(builder.construct(RoleResumo.class, root.get(Role_.id), root.get(Role_.nome)));
+		Predicate[] predicates = criarRestricoes(usuarioFilter, builder, root);
+		criteria.where(predicates);
+		TypedQuery<RoleResumo> query = manager.createQuery(criteria);
+		adicionarRestricoesDePaginacao(query, pageable);
+		return new PageImpl<>(query.getResultList(), pageable, total(usuarioFilter));
 	}
 
 	private Predicate[] criarRestricoes(RoleFilter roleFilter, CriteriaBuilder builder, Root<Role> root) {

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.leadsponge.IO.models.tarefa.Tarefa;
 import com.leadsponge.IO.repository.Filter.TarefaFilter;
-import com.leadsponge.IO.repository.projection.ResumoTarefa;
+import com.leadsponge.IO.repository.projection.TarefaResumo;
 
 @Service
 public interface TarefaService {
@@ -22,6 +22,6 @@ public interface TarefaService {
 
 	Page<Tarefa> filtrar(TarefaFilter tarefaFilter, Pageable pageable);
 
-	Page<ResumoTarefa> resumir(TarefaFilter tarefaFilter, Pageable pageable);
+	Page<TarefaResumo> resumir(TarefaFilter tarefaFilter, Pageable pageable);
 
 }

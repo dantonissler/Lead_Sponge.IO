@@ -64,7 +64,8 @@ public class EndPoint {
 
     @Before
     public void setUp() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(context).addFilter(springSecurityFilterChain).build();
+        mockMvc = MockMvcBuilders.webAppContextSetup(context)
+                .addFilter(springSecurityFilterChain).build();
     }
 
     @Test
@@ -73,8 +74,13 @@ public class EndPoint {
         NegociacaoProdutoFilter negociacaoProdutoFilter = new NegociacaoProdutoFilter();
         Pageable pageable = PageRequest.of(0, 10);
         when(service.filtrar(negociacaoProdutoFilter, pageable)).thenReturn(page);
-        mockMvc.perform(get("/negociacaoProdutos").header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc)).accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andDo(print());
-        verify(service, times(1)).filtrar(negociacaoProdutoFilter, pageable);
+        mockMvc.perform(get("/negociacaoProdutos")
+                .header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
+        verify(service, times(1))
+                .filtrar(negociacaoProdutoFilter, pageable);
     }
 
     @Test
@@ -83,8 +89,13 @@ public class EndPoint {
         NegociacaoProdutoFilter negociacaoProdutoFilter = new NegociacaoProdutoFilter(1, null, null);
         Pageable pageable = PageRequest.of(0, 10);
         when(service.filtrar(negociacaoProdutoFilter, pageable)).thenReturn(page);
-        mockMvc.perform(get("/negociacaoProdutos?quantidade=1").header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc)).accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andDo(print());
-        verify(service, times(1)).filtrar(negociacaoProdutoFilter, pageable);
+        mockMvc.perform(get("/negociacaoProdutos?quantidade=1")
+                .header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
+        verify(service, times(1))
+                .filtrar(negociacaoProdutoFilter, pageable);
     }
 
     @Test
@@ -93,8 +104,13 @@ public class EndPoint {
         NegociacaoProdutoFilter negociacaoProdutoFilter = new NegociacaoProdutoFilter(null, new BigDecimal(1), null);
         Pageable pageable = PageRequest.of(0, 10);
         when(service.filtrar(negociacaoProdutoFilter, pageable)).thenReturn(page);
-        mockMvc.perform(get("/negociacaoProdutos?valor=1").header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc)).accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andDo(print());
-        verify(service, times(1)).filtrar(negociacaoProdutoFilter, pageable);
+        mockMvc.perform(get("/negociacaoProdutos?valor=1")
+                .header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
+        verify(service, times(1))
+                .filtrar(negociacaoProdutoFilter, pageable);
     }
 
     @Test
@@ -103,8 +119,13 @@ public class EndPoint {
         NegociacaoProdutoFilter negociacaoProdutoFilter = new NegociacaoProdutoFilter(null, null, new BigDecimal(1));
         Pageable pageable = PageRequest.of(0, 10);
         when(service.filtrar(negociacaoProdutoFilter, pageable)).thenReturn(page);
-        mockMvc.perform(get("/negociacaoProdutos?total=1").header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc)).accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andDo(print());
-        verify(service, times(1)).filtrar(negociacaoProdutoFilter, pageable);
+        mockMvc.perform(get("/negociacaoProdutos?total=1")
+                .header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
+        verify(service, times(1))
+                .filtrar(negociacaoProdutoFilter, pageable);
     }
 
     @Test
@@ -113,15 +134,24 @@ public class EndPoint {
         NegociacaoProdutoFilter negociacaoProdutoFilter = new NegociacaoProdutoFilter(1, new BigDecimal(1), new BigDecimal(1));
         Pageable pageable = PageRequest.of(0, 10);
         when(service.filtrar(negociacaoProdutoFilter, pageable)).thenReturn(page);
-        mockMvc.perform(get("/negociacaoProdutos?quantidade=1&valor=1&total=1").header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc)).accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andDo(print());
-        verify(service, times(1)).filtrar(negociacaoProdutoFilter, pageable);
+        mockMvc.perform(get("/negociacaoProdutos?quantidade=1&valor=1&total=1")
+                .header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
+        verify(service, times(1))
+                .filtrar(negociacaoProdutoFilter, pageable);
     }
 
 
     @Test
     @DisplayName("Deletar Negociacao Produtos, retornar a NegociacaoProduto e status 200")
     public void deletar() throws Exception {
-        mockMvc.perform(delete("/negociacaoProdutos/{id}", 3L).header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc)).accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andDo(print());
+        mockMvc.perform(delete("/negociacaoProdutos/{id}", 3L)
+                .header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
         verify(service, times(1)).deletar(3L);
     }
 
@@ -132,8 +162,16 @@ public class EndPoint {
         when(service.salvar(negociacaoProduto)).thenReturn(negociacaoProduto);
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(negociacaoProduto);
-        mockMvc.perform(post("/negociacaoProdutos").header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc)).accept(MediaType.APPLICATION_JSON).content(jsonString).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().contentType(contentType)).andExpect(status().isCreated()).andDo(print()).andExpect(jsonPath("$.quantidade").value(1)).andExpect(jsonPath("$.valor").value(1));
+        mockMvc.perform(post("/negociacaoProdutos")
+                .header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc))
+                .accept(MediaType.APPLICATION_JSON)
+                .content(jsonString)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(contentType))
+                .andExpect(status().isCreated())
+                .andDo(print())
+                .andExpect(jsonPath("$.quantidade").value(1))
+                .andExpect(jsonPath("$.valor").value(1));
         verify(service, times(1)).salvar(Mockito.any(NegociacaoProduto.class));
     }
 
@@ -144,9 +182,18 @@ public class EndPoint {
         when(service.atualizar(1L, negociacaoProduto)).thenReturn(negociacaoProduto);
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(negociacaoProduto);
-        mockMvc.perform(put("/negociacaoProdutos/{id}", 1L).header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc)).accept(MediaType.APPLICATION_JSON).content(jsonString).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().contentType(contentType)).andExpect(status().isCreated()).andDo(print()).andExpect(jsonPath("$.quantidade").value(1)).andExpect(jsonPath("$.valor").value(1));
-        verify(service, times(1)).atualizar(1L, negociacaoProduto);
+        mockMvc.perform(put("/negociacaoProdutos/{id}", 1L)
+                .header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc))
+                .accept(MediaType.APPLICATION_JSON)
+                .content(jsonString)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(contentType))
+                .andExpect(status().isCreated())
+                .andDo(print())
+                .andExpect(jsonPath("$.quantidade").value(1))
+                .andExpect(jsonPath("$.valor").value(1));
+        verify(service, times(1))
+                .atualizar(1L, negociacaoProduto);
     }
 
     // Permissão de acesso
@@ -157,8 +204,14 @@ public class EndPoint {
         NegociacaoProdutoFilter negociacaoProdutoFilter = new NegociacaoProdutoFilter();
         Pageable pageable = PageRequest.of(0, 10);
         when(service.filtrar(negociacaoProdutoFilter, pageable)).thenReturn(page);
-        mockMvc.perform(get("/negociacaoProdutos").header("Authorization", "Bearer " + Util.getAccessToken("user", "123321", mockMvc)).accept(MediaType.APPLICATION_JSON)).andExpect(status().isForbidden()).andDo(print());
-        verify(service, times(0)).filtrar(negociacaoProdutoFilter, pageable);
+        mockMvc.perform(get("/negociacaoProdutos")
+                .header("Authorization", "Bearer " + Util.getAccessToken("user", "123321", mockMvc))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden())
+                .andDo(print())
+                .andExpect(jsonPath("$.error").value("access_denied"));
+        verify(service, times(0))
+                .filtrar(negociacaoProdutoFilter, pageable);
     }
 
     @Test
@@ -167,8 +220,14 @@ public class EndPoint {
         NegociacaoProdutoFilter negociacaoProdutoFilter = new NegociacaoProdutoFilter(1, null, null);
         Pageable pageable = PageRequest.of(0, 10);
         when(service.filtrar(negociacaoProdutoFilter, pageable)).thenReturn(page);
-        mockMvc.perform(get("/negociacaoProdutos?quantidade=1").header("Authorization", "Bearer " + Util.getAccessToken("user", "123321", mockMvc)).accept(MediaType.APPLICATION_JSON)).andExpect(status().isForbidden()).andDo(print());
-        verify(service, times(0)).filtrar(negociacaoProdutoFilter, pageable);
+        mockMvc.perform(get("/negociacaoProdutos?quantidade=1")
+                .header("Authorization", "Bearer " + Util.getAccessToken("user", "123321", mockMvc))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden())
+                .andDo(print())
+                .andExpect(jsonPath("$.error").value("access_denied"));
+        verify(service, times(0))
+                .filtrar(negociacaoProdutoFilter, pageable);
     }
 
     @Test
@@ -177,8 +236,13 @@ public class EndPoint {
         NegociacaoProdutoFilter campanhaFilter = new NegociacaoProdutoFilter(null, new BigDecimal(1), null);
         Pageable pageable = PageRequest.of(0, 10);
         when(service.filtrar(campanhaFilter, pageable)).thenReturn(page);
-        mockMvc.perform(get("/negociacaoProdutos?valor=1").header("Authorization", "Bearer " + Util.getAccessToken("user", "123321", mockMvc)).accept(MediaType.APPLICATION_JSON)).andExpect(status().isForbidden()).andDo(print());
-        verify(service, times(0)).filtrar(campanhaFilter, pageable);
+        mockMvc.perform(get("/negociacaoProdutos?valor=1")
+                .header("Authorization", "Bearer " + Util.getAccessToken("user", "123321", mockMvc))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden())
+                .andDo(print());
+        verify(service, times(0))
+                .filtrar(campanhaFilter, pageable);
     }
 
     @Test
@@ -187,8 +251,14 @@ public class EndPoint {
         NegociacaoProdutoFilter campanhaFilter = new NegociacaoProdutoFilter(null, null, new BigDecimal(1));
         Pageable pageable = PageRequest.of(0, 10);
         when(service.filtrar(campanhaFilter, pageable)).thenReturn(page);
-        mockMvc.perform(get("/negociacaoProdutos?total=1").header("Authorization", "Bearer " + Util.getAccessToken("user", "123321", mockMvc)).accept(MediaType.APPLICATION_JSON)).andExpect(status().isForbidden()).andDo(print());
-        verify(service, times(0)).filtrar(campanhaFilter, pageable);
+        mockMvc.perform(get("/negociacaoProdutos?total=1")
+                .header("Authorization", "Bearer " + Util.getAccessToken("user", "123321", mockMvc))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden())
+                .andDo(print())
+                .andExpect(jsonPath("$.error").value("access_denied"));
+        verify(service, times(0))
+                .filtrar(campanhaFilter, pageable);
     }
 
     @Test
@@ -196,15 +266,24 @@ public class EndPoint {
     public void permissaoBuscar() throws Exception {
         NegociacaoProduto negociacaoProduto = new NegociacaoProduto(3L, 1, new BigDecimal(1), TipoReincidencia.RECORRENTE, null, null, null, null, Mockito.mock(Produto.class), Mockito.mock(Negociacao.class));
         when(service.detalhar(3L)).thenReturn(negociacaoProduto);
-        mockMvc.perform(get("/negociacaoProdutos/{id}", 3L).header("Authorization", "Bearer " + Util.getAccessToken("user", "123321", mockMvc)).accept(MediaType.APPLICATION_JSON)).andExpect(content().contentType(contentType))
-                .andExpect(status().isForbidden()).andDo(print());
+        mockMvc.perform(get("/negociacaoProdutos/{id}", 3L)
+                .header("Authorization", "Bearer " + Util.getAccessToken("user", "123321", mockMvc))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(contentType))
+                .andExpect(status().isForbidden())
+                .andDo(print())
+                .andExpect(jsonPath("$.error").value("access_denied"));
         verify(service, times(0)).detalhar(3L);
     }
 
     @Test
     @DisplayName("Deletar Negociacao Produto sem permissão de acesso, retornar a NegociacaoProduto e status 403")
     public void permissaoDeletar() throws Exception {
-        mockMvc.perform(delete("/negociacaoProdutos/{id}", 3L).header("Authorization", "Bearer " + Util.getAccessToken("user", "123321", mockMvc)).accept(MediaType.APPLICATION_JSON)).andExpect(status().isForbidden()).andDo(print());
+        mockMvc.perform(delete("/negociacaoProdutos/{id}", 3L)
+                .header("Authorization", "Bearer " + Util.getAccessToken("user", "123321", mockMvc))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden())
+                .andDo(print());
         verify(service, times(0)).deletar(3L);
     }
 
@@ -215,8 +294,15 @@ public class EndPoint {
         when(service.salvar(negociacaoProduto)).thenReturn(negociacaoProduto);
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(negociacaoProduto);
-        mockMvc.perform(post("/negociacaoProdutos").header("Authorization", "Bearer " + Util.getAccessToken("user", "123321", mockMvc)).accept(MediaType.APPLICATION_JSON).content(jsonString).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().contentType(contentType)).andExpect(status().isForbidden()).andDo(print());
+        mockMvc.perform(post("/negociacaoProdutos")
+                .header("Authorization", "Bearer " + Util.getAccessToken("user", "123321", mockMvc))
+                .accept(MediaType.APPLICATION_JSON)
+                .content(jsonString)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(contentType))
+                .andExpect(status().isForbidden())
+                .andDo(print())
+                .andExpect(jsonPath("$.error").value("access_denied"));
         verify(service, times(0)).salvar(Mockito.any(NegociacaoProduto.class));
     }
 
@@ -227,9 +313,17 @@ public class EndPoint {
         when(service.atualizar(1L, negociacaoProduto)).thenReturn(negociacaoProduto);
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(negociacaoProduto);
-        mockMvc.perform(put("/negociacaoProdutos/{id}", 3L).header("Authorization", "Bearer " + Util.getAccessToken("user", "123321", mockMvc)).accept(MediaType.APPLICATION_JSON).content(jsonString).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().contentType(contentType)).andExpect(status().isForbidden()).andDo(print());
-        verify(service, times(0)).atualizar(3L, negociacaoProduto);
+        mockMvc.perform(put("/negociacaoProdutos/{id}", 3L)
+                .header("Authorization", "Bearer " + Util.getAccessToken("user", "123321", mockMvc))
+                .accept(MediaType.APPLICATION_JSON)
+                .content(jsonString)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(contentType))
+                .andExpect(status().isForbidden())
+                .andDo(print())
+                .andExpect(jsonPath("$.error").value("access_denied"));
+        verify(service, times(0))
+                .atualizar(3L, negociacaoProduto);
     }
 
     // testando o Token de acesso
@@ -240,9 +334,15 @@ public class EndPoint {
         NegociacaoProdutoFilter negociacaoProdutoFilter = new NegociacaoProdutoFilter();
         Pageable pageable = PageRequest.of(0, 10);
         when(service.filtrar(negociacaoProdutoFilter, pageable)).thenReturn(page);
-        mockMvc.perform(get("/negociacaoProdutos").header("Authorization", "Bearer " + Util.getAccessToken("a", "a", mockMvc)).accept(MediaType.APPLICATION_JSON)).andExpect(content().contentType(contentType)).andExpect(status().isUnauthorized())
-                .andDo(print()).andExpect(jsonPath("$.error").value("invalid_token"));
-        verify(service, times(0)).filtrar(negociacaoProdutoFilter, pageable);
+        mockMvc.perform(get("/negociacaoProdutos")
+                .header("Authorization", "Bearer " + Util.getAccessToken("a", "a", mockMvc))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(contentType))
+                .andExpect(status().isUnauthorized())
+                .andDo(print())
+                .andExpect(jsonPath("$.error").value("invalid_token"));
+        verify(service, times(0))
+                .filtrar(negociacaoProdutoFilter, pageable);
     }
 
     @Test
@@ -250,8 +350,13 @@ public class EndPoint {
     public void buscarTokenIncorreto() throws Exception {
         NegociacaoProduto negociacaoProduto = new NegociacaoProduto(3L, 1, new BigDecimal(1), TipoReincidencia.RECORRENTE, null, null, null, null, Mockito.mock(Produto.class), Mockito.mock(Negociacao.class));
         when(service.detalhar(3L)).thenReturn(negociacaoProduto);
-        mockMvc.perform(get("/negociacaoProdutos/{id}", 3L).header("Authorization", "Bearer " + Util.getAccessToken("a", "a", mockMvc)).accept(MediaType.APPLICATION_JSON)).andExpect(content().contentType(contentType))
-                .andExpect(status().isUnauthorized()).andDo(print()).andExpect(jsonPath("$.error").value("invalid_token"));
+        mockMvc.perform(get("/negociacaoProdutos/{id}", 3L)
+                .header("Authorization", "Bearer " + Util.getAccessToken("a", "a", mockMvc))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(contentType))
+                .andExpect(status().isUnauthorized())
+                .andDo(print())
+                .andExpect(jsonPath("$.error").value("invalid_token"));
         verify(service, times(0)).detalhar(3L);
     }
 
@@ -260,8 +365,13 @@ public class EndPoint {
     public void deletarTokenIncorreto() throws Exception {
         NegociacaoProduto negociacaoProduto = new NegociacaoProduto(3L, 1, new BigDecimal(1), TipoReincidencia.RECORRENTE, null, null, null, null, Mockito.mock(Produto.class), Mockito.mock(Negociacao.class));
         when(service.deletar(3L)).thenReturn(negociacaoProduto);
-        mockMvc.perform(delete("/negociacaoProdutos/3").header("Authorization", "Bearer " + Util.getAccessToken("a", "a", mockMvc)).accept(MediaType.APPLICATION_JSON)).andExpect(content().contentType(contentType)).andExpect(status().isUnauthorized())
-                .andDo(print()).andExpect(jsonPath("$.error").value("invalid_token"));
+        mockMvc.perform(delete("/negociacaoProdutos/3")
+                .header("Authorization", "Bearer " + Util.getAccessToken("a", "a", mockMvc))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(contentType))
+                .andExpect(status().isUnauthorized())
+                .andDo(print())
+                .andExpect(jsonPath("$.error").value("invalid_token"));
         verify(service, times(0)).deletar(3L);
     }
 
@@ -272,9 +382,17 @@ public class EndPoint {
         when(service.salvar(negociacaoProduto)).thenReturn(negociacaoProduto);
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(negociacaoProduto);
-        mockMvc.perform(post("/negociacaoProdutos").header("Authorization", "Bearer " + Util.getAccessToken("a", "a", mockMvc)).accept(MediaType.APPLICATION_JSON).content(jsonString).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().contentType(contentType)).andExpect(status().isUnauthorized()).andDo(print()).andExpect(jsonPath("$.error").value("invalid_token"));
-        verify(service, times(0)).atualizar(1L, negociacaoProduto);
+        mockMvc.perform(post("/negociacaoProdutos")
+                .header("Authorization", "Bearer " + Util.getAccessToken("a", "a", mockMvc))
+                .accept(MediaType.APPLICATION_JSON)
+                .content(jsonString)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(contentType))
+                .andExpect(status().isUnauthorized())
+                .andDo(print())
+                .andExpect(jsonPath("$.error").value("invalid_token"));
+        verify(service, times(0))
+                .atualizar(1L, negociacaoProduto);
     }
 
     @Test
@@ -284,9 +402,17 @@ public class EndPoint {
         when(service.atualizar(1L, negociacaoProduto)).thenReturn(negociacaoProduto);
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(negociacaoProduto);
-        mockMvc.perform(put("/negociacaoProdutos/{id}", 1L).header("Authorization", "Bearer " + Util.getAccessToken("a", "a", mockMvc)).accept(MediaType.APPLICATION_JSON).content(jsonString).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().contentType(contentType)).andExpect(status().isUnauthorized()).andDo(print()).andExpect(jsonPath("$.error").value("invalid_token"));
-        verify(service, times(0)).atualizar(1L, negociacaoProduto);
+        mockMvc.perform(put("/negociacaoProdutos/{id}", 1L)
+                .header("Authorization", "Bearer " + Util.getAccessToken("a", "a", mockMvc))
+                .accept(MediaType.APPLICATION_JSON)
+                .content(jsonString)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(contentType))
+                .andExpect(status().isUnauthorized())
+                .andDo(print())
+                .andExpect(jsonPath("$.error").value("invalid_token"));
+        verify(service, times(0))
+                .atualizar(1L, negociacaoProduto);
     }
 
     @Test
@@ -295,8 +421,13 @@ public class EndPoint {
         NegociacaoProdutoFilter negociacaoProdutoFilter = new NegociacaoProdutoFilter();
         Pageable pageable = PageRequest.of(0, 10);
         when(service.filtrar(negociacaoProdutoFilter, pageable)).thenReturn(page);
-        mockMvc.perform(get("/negociacaoProdutos")).andExpect(content().contentType(contentType)).andExpect(status().isUnauthorized()).andDo(print()).andExpect(jsonPath("$.error").value("unauthorized"));
-        verify(service, times(0)).filtrar(negociacaoProdutoFilter, pageable);
+        mockMvc.perform(get("/negociacaoProdutos"))
+                .andExpect(content().contentType(contentType))
+                .andExpect(status().isUnauthorized())
+                .andDo(print())
+                .andExpect(jsonPath("$.error").value("unauthorized"));
+        verify(service, times(0))
+                .filtrar(negociacaoProdutoFilter, pageable);
     }
 
     @Test
@@ -304,7 +435,11 @@ public class EndPoint {
     public void buscarSemToken() throws Exception {
         NegociacaoProduto negociacaoProduto = new NegociacaoProduto(3L, 1, new BigDecimal(1), TipoReincidencia.RECORRENTE, null, null, null, null, Mockito.mock(Produto.class), Mockito.mock(Negociacao.class));
         when(service.detalhar(3L)).thenReturn(negociacaoProduto);
-        mockMvc.perform(get("/negociacaoProdutos/{id}", 3L)).andExpect(content().contentType(contentType)).andExpect(status().isUnauthorized()).andDo(print()).andExpect(jsonPath("$.error").value("unauthorized"));
+        mockMvc.perform(get("/negociacaoProdutos/{id}", 3L))
+                .andExpect(content().contentType(contentType))
+                .andExpect(status().isUnauthorized())
+                .andDo(print())
+                .andExpect(jsonPath("$.error").value("unauthorized"));
         verify(service, times(0)).detalhar(3L);
     }
 
@@ -312,7 +447,11 @@ public class EndPoint {
     @DisplayName("Deletar Negociacao Produto sem token, retornar status 401")
     public void deletarSemToken() throws Exception {
         when(service.deletar(3L)).thenReturn(negociacaoProduto);
-        mockMvc.perform(delete("/negociacaoProdutos/1")).andExpect(content().contentType(contentType)).andExpect(status().isUnauthorized()).andDo(print()).andExpect(jsonPath("$.error").value("unauthorized"));
+        mockMvc.perform(delete("/negociacaoProdutos/1"))
+                .andExpect(content().contentType(contentType))
+                .andExpect(status().isUnauthorized())
+                .andDo(print())
+                .andExpect(jsonPath("$.error").value("unauthorized"));
         verify(service, times(0)).deletar(1L);
     }
 
@@ -323,7 +462,13 @@ public class EndPoint {
         when(service.salvar(negociacaoProduto)).thenReturn(negociacaoProduto);
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(negociacaoProduto);
-        mockMvc.perform(post("/negociacaoProdutos").accept(MediaType.APPLICATION_JSON).content(jsonString).contentType(MediaType.APPLICATION_JSON)).andExpect(content().contentType(contentType)).andExpect(status().isUnauthorized()).andDo(print())
+        mockMvc.perform(post("/negociacaoProdutos")
+                .accept(MediaType.APPLICATION_JSON)
+                .content(jsonString)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(contentType))
+                .andExpect(status().isUnauthorized())
+                .andDo(print())
                 .andExpect(jsonPath("$.error").value("unauthorized"));
         verify(service, times(0)).salvar(negociacaoProduto);
     }
@@ -335,9 +480,16 @@ public class EndPoint {
         when(service.atualizar(1L, negociacaoProduto)).thenReturn(negociacaoProduto);
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(negociacaoProduto);
-        mockMvc.perform(put("/negociacaoProdutos/{id}", 3L).accept(MediaType.APPLICATION_JSON).content(jsonString).contentType(MediaType.APPLICATION_JSON)).andExpect(content().contentType(contentType)).andExpect(status().isUnauthorized()).andDo(print())
+        mockMvc.perform(put("/negociacaoProdutos/{id}", 3L)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(jsonString)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(contentType))
+                .andExpect(status().isUnauthorized())
+                .andDo(print())
                 .andExpect(jsonPath("$.error").value("unauthorized"));
-        verify(service, times(0)).atualizar(3L, negociacaoProduto);
+        verify(service, times(0))
+                .atualizar(3L, negociacaoProduto);
     }
 
     @Test
@@ -347,8 +499,16 @@ public class EndPoint {
         when(service.salvar(negociacaoProduto)).thenReturn(negociacaoProduto);
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(negociacaoProduto);
-        mockMvc.perform(post("/negociacaoProdutos").header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc)).accept(MediaType.APPLICATION_JSON).content(jsonString).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest()).andDo(print()).andExpect(jsonPath("$.field").value("quantidade")).andExpect(jsonPath("$.fieldMessage").value("A quantidade não pode ser null."));
+        mockMvc.perform(post("/negociacaoProdutos")
+                .header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc))
+                .accept(MediaType.APPLICATION_JSON)
+                .content(jsonString)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andDo(print())
+                .andExpect(jsonPath("$.field").value("quantidade"))
+                .andExpect(jsonPath("$.fieldMessage").value("A quantidade não pode ser null."));
         verify(service, times(0)).salvar(negociacaoProduto);
     }
 
@@ -359,8 +519,16 @@ public class EndPoint {
         when(service.salvar(Mockito.any(NegociacaoProduto.class))).thenReturn(negociacaoProduto);
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(negociacaoProduto);
-        mockMvc.perform(post("/negociacaoProdutos").header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc)).accept(MediaType.APPLICATION_JSON).content(jsonString).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest()).andDo(print()).andExpect(jsonPath("$.field").value("valor")).andExpect(jsonPath("$.fieldMessage").value("O valor não pode ser null."));
+        mockMvc.perform(post("/negociacaoProdutos")
+                .header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc))
+                .accept(MediaType.APPLICATION_JSON)
+                .content(jsonString)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andDo(print())
+                .andExpect(jsonPath("$.field").value("valor"))
+                .andExpect(jsonPath("$.fieldMessage").value("O valor não pode ser null."));
         verify(service, times(0)).salvar(negociacaoProduto);
     }
 
@@ -371,8 +539,16 @@ public class EndPoint {
         when(service.salvar(Mockito.any(NegociacaoProduto.class))).thenReturn(negociacaoProduto);
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(negociacaoProduto);
-        mockMvc.perform(post("/negociacaoProdutos").header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc)).accept(MediaType.APPLICATION_JSON).content(jsonString).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest()).andDo(print()).andExpect(jsonPath("$.field").value("reincidencia")).andExpect(jsonPath("$.fieldMessage").value("A reicidência não pode ser null."));
+        mockMvc.perform(post("/negociacaoProdutos")
+                .header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc))
+                .accept(MediaType.APPLICATION_JSON)
+                .content(jsonString)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andDo(print())
+                .andExpect(jsonPath("$.field").value("reincidencia"))
+                .andExpect(jsonPath("$.fieldMessage").value("A reicidência não pode ser null."));
         verify(service, times(0)).salvar(negociacaoProduto);
     }
 
@@ -383,8 +559,16 @@ public class EndPoint {
         when(service.salvar(Mockito.any(NegociacaoProduto.class))).thenReturn(negociacaoProduto);
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(negociacaoProduto);
-        mockMvc.perform(post("/negociacaoProdutos").header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc)).accept(MediaType.APPLICATION_JSON).content(jsonString).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest()).andDo(print()).andExpect(jsonPath("$.field").value("produto")).andExpect(jsonPath("$.fieldMessage").value("É necessário ter um Produto vinculado."));
+        mockMvc.perform(post("/negociacaoProdutos")
+                .header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc))
+                .accept(MediaType.APPLICATION_JSON)
+                .content(jsonString)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andDo(print())
+                .andExpect(jsonPath("$.field").value("produto"))
+                .andExpect(jsonPath("$.fieldMessage").value("É necessário ter um Produto vinculado."));
         verify(service, times(0)).salvar(negociacaoProduto);
     }
 
@@ -395,8 +579,16 @@ public class EndPoint {
         when(service.salvar(Mockito.any(NegociacaoProduto.class))).thenReturn(negociacaoProduto);
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(negociacaoProduto);
-        mockMvc.perform(post("/negociacaoProdutos").header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc)).accept(MediaType.APPLICATION_JSON).content(jsonString).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest()).andDo(print()).andExpect(jsonPath("$.field").value("negociacao")).andExpect(jsonPath("$.fieldMessage").value("É necessário ter uma Negociação vinculada."));
+        mockMvc.perform(post("/negociacaoProdutos")
+                .header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc))
+                .accept(MediaType.APPLICATION_JSON)
+                .content(jsonString)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andDo(print())
+                .andExpect(jsonPath("$.field").value("negociacao"))
+                .andExpect(jsonPath("$.fieldMessage").value("É necessário ter uma Negociação vinculada."));
         verify(service, times(0)).salvar(negociacaoProduto);
     }
 }

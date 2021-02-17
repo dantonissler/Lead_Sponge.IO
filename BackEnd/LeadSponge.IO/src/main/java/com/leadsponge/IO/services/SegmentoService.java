@@ -9,7 +9,7 @@ import com.leadsponge.IO.repository.Filter.SegmentoFilter;
 
 @Service
 public interface SegmentoService {
-	Segmento save(Segmento segmento);
+	Segmento salvar(Segmento segmento);
 
 	Segmento atualizar(Long id, Segmento segmento);
 

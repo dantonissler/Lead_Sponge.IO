@@ -20,7 +20,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "negociacao_produto")
-@TableGenerator(name = "negociacao_produto_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "negociacao_produto", allocationSize = 1, initialValue = 0)
+@TableGenerator(name = "negociacao_produto_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "negociacao_produto", allocationSize = 1)
 public class NegociacaoProduto extends UserDateAudit {
 
     public NegociacaoProduto(Long id, @NotNull Integer quantidade, @NotNull BigDecimal valor, @NotNull TipoReincidencia reincidencia, @NotNull Produto produto, @NotNull Negociacao negociacao) {

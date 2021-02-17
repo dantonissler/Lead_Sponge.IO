@@ -59,7 +59,8 @@ public class EndPoint {
 
     @Before
     public void setUp() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(context).addFilter(springSecurityFilterChain).build();
+        mockMvc = MockMvcBuilders.webAppContextSetup(context)
+                .addFilter(springSecurityFilterChain).build();
     }
 
     @Test
@@ -68,8 +69,13 @@ public class EndPoint {
         MotivoPerdaFilter motivoPerdaFilter = new MotivoPerdaFilter();
         Pageable pageable = PageRequest.of(0, 10);
         when(service.filtrar(motivoPerdaFilter, pageable)).thenReturn(page);
-        mockMvc.perform(get("/motivoperda").header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc)).accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andDo(print());
-        verify(service, times(1)).filtrar(motivoPerdaFilter, pageable);
+        mockMvc.perform(get("/motivoperda")
+                .header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
+        verify(service, times(1))
+                .filtrar(motivoPerdaFilter, pageable);
     }
 
     @Test
@@ -78,8 +84,13 @@ public class EndPoint {
         MotivoPerdaFilter motivoPerdaFilter = new MotivoPerdaFilter("nome");
         Pageable pageable = PageRequest.of(0, 10);
         when(service.filtrar(motivoPerdaFilter, pageable)).thenReturn(page);
-        mockMvc.perform(get("/motivoperda?nome=nome").header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc)).accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andDo(print());
-        verify(service, times(1)).filtrar(motivoPerdaFilter, pageable);
+        mockMvc.perform(get("/motivoperda?nome=nome")
+                .header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
+        verify(service, times(1))
+                .filtrar(motivoPerdaFilter, pageable);
     }
 
     @Test
@@ -87,15 +98,24 @@ public class EndPoint {
     public void buscar() throws Exception {
         MotivoPerda motivoPerda = new MotivoPerda(3L, "nome", null);
         when(service.detalhar(3L)).thenReturn(motivoPerda);
-        mockMvc.perform(get("/motivoperda/{id}", 3L).header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc)).accept(MediaType.APPLICATION_JSON)).andExpect(content().contentType(contentType))
-                .andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.nome").value("nome"));
+        mockMvc.perform(get("/motivoperda/{id}", 3L)
+                .header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(contentType))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.nome").value("nome"));
         verify(service, times(1)).detalhar(3L);
     }
 
     @Test
     @DisplayName("Deletar Motivo Perdas, retornar a MotivoPerda e status 200")
     public void deletar() throws Exception {
-        mockMvc.perform(delete("/motivoperda/{id}", 3L).header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc)).accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andDo(print());
+        mockMvc.perform(delete("/motivoperda/{id}", 3L)
+                .header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
         verify(service, times(1)).deletar(3L);
     }
 
@@ -106,8 +126,15 @@ public class EndPoint {
         when(service.salvar(motivoPerda)).thenReturn(motivoPerda);
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(motivoPerda);
-        mockMvc.perform(post("/motivoperda").header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc)).accept(MediaType.APPLICATION_JSON).content(jsonString).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().contentType(contentType)).andExpect(status().isCreated()).andDo(print()).andExpect(jsonPath("$.nome").value("nome"));
+        mockMvc.perform(post("/motivoperda")
+                .header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc))
+                .accept(MediaType.APPLICATION_JSON)
+                .content(jsonString)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(contentType))
+                .andExpect(status().isCreated())
+                .andDo(print())
+                .andExpect(jsonPath("$.nome").value("nome"));
         verify(service, times(1)).salvar(Mockito.any(MotivoPerda.class));
     }
 
@@ -118,9 +145,17 @@ public class EndPoint {
         when(service.atualizar(1L, motivoPerda)).thenReturn(motivoPerda);
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(motivoPerda);
-        mockMvc.perform(put("/motivoperda/{id}", 1L).header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc)).accept(MediaType.APPLICATION_JSON).content(jsonString).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().contentType(contentType)).andExpect(status().isCreated()).andDo(print()).andExpect(jsonPath("$.nome").value("nome"));
-        verify(service, times(1)).atualizar(1L, motivoPerda);
+        mockMvc.perform(put("/motivoperda/{id}", 1L)
+                .header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc))
+                .accept(MediaType.APPLICATION_JSON)
+                .content(jsonString)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(contentType))
+                .andExpect(status().isCreated())
+                .andDo(print())
+                .andExpect(jsonPath("$.nome").value("nome"));
+        verify(service, times(1))
+                .atualizar(1L, motivoPerda);
     }
 
     // Permissão de acesso
@@ -131,8 +166,14 @@ public class EndPoint {
         MotivoPerdaFilter motivoPerdaFilter = new MotivoPerdaFilter();
         Pageable pageable = PageRequest.of(0, 10);
         when(service.filtrar(motivoPerdaFilter, pageable)).thenReturn(page);
-        mockMvc.perform(get("/motivoperda").header("Authorization", "Bearer " + Util.getAccessToken("user", "123321", mockMvc)).accept(MediaType.APPLICATION_JSON)).andExpect(status().isForbidden()).andDo(print());
-        verify(service, times(0)).filtrar(motivoPerdaFilter, pageable);
+        mockMvc.perform(get("/motivoperda")
+                .header("Authorization", "Bearer " + Util.getAccessToken("user", "123321", mockMvc))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden())
+                .andDo(print())
+                .andExpect(jsonPath("$.error").value("access_denied"));
+        verify(service, times(0))
+                .filtrar(motivoPerdaFilter, pageable);
     }
 
     @Test
@@ -141,8 +182,14 @@ public class EndPoint {
         MotivoPerdaFilter motivoPerdaFilter = new MotivoPerdaFilter("nome");
         Pageable pageable = PageRequest.of(0, 10);
         when(service.filtrar(motivoPerdaFilter, pageable)).thenReturn(page);
-        mockMvc.perform(get("/motivoperda?nome=nome").header("Authorization", "Bearer " + Util.getAccessToken("user", "123321", mockMvc)).accept(MediaType.APPLICATION_JSON)).andExpect(status().isForbidden()).andDo(print());
-        verify(service, times(0)).filtrar(motivoPerdaFilter, pageable);
+        mockMvc.perform(get("/motivoperda?nome=nome")
+                .header("Authorization", "Bearer " + Util.getAccessToken("user", "123321", mockMvc))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden())
+                .andDo(print())
+                .andExpect(jsonPath("$.error").value("access_denied"));
+        verify(service, times(0))
+                .filtrar(motivoPerdaFilter, pageable);
     }
 
     @Test
@@ -150,15 +197,25 @@ public class EndPoint {
     public void permissaoBuscar() throws Exception {
         MotivoPerda motivoPerda = new MotivoPerda(3L, "nome", null);
         when(service.detalhar(3L)).thenReturn(motivoPerda);
-        mockMvc.perform(get("/motivoperda/{id}", 3L).header("Authorization", "Bearer " + Util.getAccessToken("user", "123321", mockMvc)).accept(MediaType.APPLICATION_JSON)).andExpect(content().contentType(contentType))
-                .andExpect(status().isForbidden()).andDo(print());
+        mockMvc.perform(get("/motivoperda/{id}", 3L)
+                .header("Authorization", "Bearer " + Util.getAccessToken("user", "123321", mockMvc))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(contentType))
+                .andExpect(status().isForbidden())
+                .andDo(print())
+                .andExpect(jsonPath("$.error").value("access_denied"));
         verify(service, times(0)).detalhar(3L);
     }
 
     @Test
     @DisplayName("Deletar Motivo Perda sem permissão de acesso, retornar a MotivoPerda e status 403")
     public void permissaoDeletar() throws Exception {
-        mockMvc.perform(delete("/motivoperda/{id}", 3L).header("Authorization", "Bearer " + Util.getAccessToken("user", "123321", mockMvc)).accept(MediaType.APPLICATION_JSON)).andExpect(status().isForbidden()).andDo(print());
+        mockMvc.perform(delete("/motivoperda/{id}", 3L)
+                .header("Authorization", "Bearer " + Util.getAccessToken("user", "123321", mockMvc))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden())
+                .andDo(print())
+                .andExpect(jsonPath("$.error").value("access_denied"));
         verify(service, times(0)).deletar(3L);
     }
 
@@ -169,8 +226,15 @@ public class EndPoint {
         when(service.salvar(motivoPerda)).thenReturn(motivoPerda);
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(motivoPerda);
-        mockMvc.perform(post("/motivoperda").header("Authorization", "Bearer " + Util.getAccessToken("user", "123321", mockMvc)).accept(MediaType.APPLICATION_JSON).content(jsonString).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().contentType(contentType)).andExpect(status().isForbidden()).andDo(print());
+        mockMvc.perform(post("/motivoperda")
+                .header("Authorization", "Bearer " + Util.getAccessToken("user", "123321", mockMvc))
+                .accept(MediaType.APPLICATION_JSON)
+                .content(jsonString)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(contentType))
+                .andExpect(status().isForbidden())
+                .andDo(print())
+                .andExpect(jsonPath("$.error").value("access_denied"));
         verify(service, times(0)).salvar(Mockito.any(MotivoPerda.class));
     }
 
@@ -181,9 +245,17 @@ public class EndPoint {
         when(service.atualizar(1L, motivoPerda)).thenReturn(motivoPerda);
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(motivoPerda);
-        mockMvc.perform(put("/motivoperda/{id}", 1L).header("Authorization", "Bearer " + Util.getAccessToken("user", "123321", mockMvc)).accept(MediaType.APPLICATION_JSON).content(jsonString).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().contentType(contentType)).andExpect(status().isForbidden()).andDo(print());
-        verify(service, times(0)).atualizar(1L, motivoPerda);
+        mockMvc.perform(put("/motivoperda/{id}", 1L)
+                .header("Authorization", "Bearer " + Util.getAccessToken("user", "123321", mockMvc))
+                .accept(MediaType.APPLICATION_JSON)
+                .content(jsonString)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(contentType))
+                .andExpect(status().isForbidden())
+                .andDo(print())
+                .andExpect(jsonPath("$.error").value("access_denied"));
+        verify(service, times(0))
+                .atualizar(1L, motivoPerda);
     }
 
     // testando o Token de acesso
@@ -194,9 +266,15 @@ public class EndPoint {
         MotivoPerdaFilter motivoPerdaFilter = new MotivoPerdaFilter();
         Pageable pageable = PageRequest.of(0, 10);
         when(service.filtrar(motivoPerdaFilter, pageable)).thenReturn(page);
-        mockMvc.perform(get("/motivoperda").header("Authorization", "Bearer " + Util.getAccessToken("a", "a", mockMvc)).accept(MediaType.APPLICATION_JSON)).andExpect(content().contentType(contentType)).andExpect(status().isUnauthorized())
-                .andDo(print()).andExpect(jsonPath("$.error").value("invalid_token"));
-        verify(service, times(0)).filtrar(motivoPerdaFilter, pageable);
+        mockMvc.perform(get("/motivoperda")
+                .header("Authorization", "Bearer " + Util.getAccessToken("a", "a", mockMvc))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(contentType))
+                .andExpect(status().isUnauthorized())
+                .andDo(print())
+                .andExpect(jsonPath("$.error").value("invalid_token"));
+        verify(service, times(0))
+                .filtrar(motivoPerdaFilter, pageable);
     }
 
     @Test
@@ -204,8 +282,13 @@ public class EndPoint {
     public void buscarTokenIncorreto() throws Exception {
         MotivoPerda motivoPerda = new MotivoPerda(1L, "nome", null);
         when(service.detalhar(3L)).thenReturn(motivoPerda);
-        mockMvc.perform(get("/motivoperda/{id}", 3L).header("Authorization", "Bearer " + Util.getAccessToken("a", "a", mockMvc)).accept(MediaType.APPLICATION_JSON)).andExpect(content().contentType(contentType))
-                .andExpect(status().isUnauthorized()).andDo(print()).andExpect(jsonPath("$.error").value("invalid_token"));
+        mockMvc.perform(get("/motivoperda/{id}", 3L)
+                .header("Authorization", "Bearer " + Util.getAccessToken("a", "a", mockMvc))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(contentType))
+                .andExpect(status().isUnauthorized())
+                .andDo(print())
+                .andExpect(jsonPath("$.error").value("invalid_token"));
         verify(service, times(0)).detalhar(3L);
     }
 
@@ -214,8 +297,13 @@ public class EndPoint {
     public void deletarTokenIncorreto() throws Exception {
         MotivoPerda motivoPerda = new MotivoPerda(1L, "nome", null);
         when(service.deletar(3L)).thenReturn(motivoPerda);
-        mockMvc.perform(delete("/motivoperda/1").header("Authorization", "Bearer " + Util.getAccessToken("a", "a", mockMvc)).accept(MediaType.APPLICATION_JSON)).andExpect(content().contentType(contentType)).andExpect(status().isUnauthorized())
-                .andDo(print()).andExpect(jsonPath("$.error").value("invalid_token"));
+        mockMvc.perform(delete("/motivoperda/1")
+                .header("Authorization", "Bearer " + Util.getAccessToken("a", "a", mockMvc))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(contentType))
+                .andExpect(status().isUnauthorized())
+                .andDo(print())
+                .andExpect(jsonPath("$.error").value("invalid_token"));
         verify(service, times(0)).deletar(1L);
     }
 
@@ -226,9 +314,17 @@ public class EndPoint {
         when(service.salvar(motivoPerda)).thenReturn(motivoPerda);
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(motivoPerda);
-        mockMvc.perform(post("/motivoperda").header("Authorization", "Bearer " + Util.getAccessToken("a", "a", mockMvc)).accept(MediaType.APPLICATION_JSON).content(jsonString).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().contentType(contentType)).andExpect(status().isUnauthorized()).andDo(print()).andExpect(jsonPath("$.error").value("invalid_token"));
-        verify(service, times(0)).atualizar(1L, motivoPerda);
+        mockMvc.perform(post("/motivoperda")
+                .header("Authorization", "Bearer " + Util.getAccessToken("a", "a", mockMvc))
+                .accept(MediaType.APPLICATION_JSON)
+                .content(jsonString)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(contentType))
+                .andExpect(status().isUnauthorized())
+                .andDo(print())
+                .andExpect(jsonPath("$.error").value("invalid_token"));
+        verify(service, times(0))
+                .atualizar(1L, motivoPerda);
     }
 
     @Test
@@ -238,9 +334,17 @@ public class EndPoint {
         when(service.atualizar(1L, motivoPerda)).thenReturn(motivoPerda);
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(motivoPerda);
-        mockMvc.perform(put("/motivoperda/1").header("Authorization", "Bearer " + Util.getAccessToken("a", "a", mockMvc)).accept(MediaType.APPLICATION_JSON).content(jsonString).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().contentType(contentType)).andExpect(status().isUnauthorized()).andDo(print()).andExpect(jsonPath("$.error").value("invalid_token"));
-        verify(service, times(0)).atualizar(1L, motivoPerda);
+        mockMvc.perform(put("/motivoperda/1")
+                .header("Authorization", "Bearer " + Util.getAccessToken("a", "a", mockMvc))
+                .accept(MediaType.APPLICATION_JSON)
+                .content(jsonString)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(contentType))
+                .andExpect(status().isUnauthorized())
+                .andDo(print())
+                .andExpect(jsonPath("$.error").value("invalid_token"));
+        verify(service, times(0))
+                .atualizar(1L, motivoPerda);
     }
 
     @Test
@@ -249,8 +353,13 @@ public class EndPoint {
         MotivoPerdaFilter motivoPerdaFilter = new MotivoPerdaFilter();
         Pageable pageable = PageRequest.of(0, 10);
         when(service.filtrar(motivoPerdaFilter, pageable)).thenReturn(page);
-        mockMvc.perform(get("/motivoperda")).andExpect(content().contentType(contentType)).andExpect(status().isUnauthorized()).andDo(print()).andExpect(jsonPath("$.error").value("unauthorized"));
-        verify(service, times(0)).filtrar(motivoPerdaFilter, pageable);
+        mockMvc.perform(get("/motivoperda"))
+                .andExpect(content().contentType(contentType))
+                .andExpect(status().isUnauthorized())
+                .andDo(print())
+                .andExpect(jsonPath("$.error").value("unauthorized"));
+        verify(service, times(0))
+                .filtrar(motivoPerdaFilter, pageable);
     }
 
     @Test
@@ -258,7 +367,12 @@ public class EndPoint {
     public void buscarSemToken() throws Exception {
         MotivoPerda motivoPerda = new MotivoPerda(1L, "nome", null);
         when(service.detalhar(3L)).thenReturn(motivoPerda);
-        mockMvc.perform(get("/motivoperda/{id}", 3L)).andExpect(content().contentType(contentType)).andExpect(status().isUnauthorized()).andDo(print()).andExpect(jsonPath("$.error").value("unauthorized"));
+        mockMvc.perform(get("/motivoperda/{id}", 3L))
+                .andExpect(content()
+                        .contentType(contentType))
+                .andExpect(status().isUnauthorized())
+                .andDo(print())
+                .andExpect(jsonPath("$.error").value("unauthorized"));
         verify(service, times(0)).detalhar(3L);
     }
 
@@ -266,7 +380,11 @@ public class EndPoint {
     @DisplayName("Deletar Motivo Perda sem token, retornar status 401")
     public void deletarSemToken() throws Exception {
         when(service.deletar(3L)).thenReturn(motivoPerda);
-        mockMvc.perform(delete("/motivoperda/1")).andExpect(content().contentType(contentType)).andExpect(status().isUnauthorized()).andDo(print()).andExpect(jsonPath("$.error").value("unauthorized"));
+        mockMvc.perform(delete("/motivoperda/1"))
+                .andExpect(content().contentType(contentType))
+                .andExpect(status().isUnauthorized())
+                .andDo(print())
+                .andExpect(jsonPath("$.error").value("unauthorized"));
         verify(service, times(0)).deletar(1L);
     }
 
@@ -277,7 +395,13 @@ public class EndPoint {
         when(service.salvar(motivoPerda)).thenReturn(motivoPerda);
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(motivoPerda);
-        mockMvc.perform(post("/motivoperda").accept(MediaType.APPLICATION_JSON).content(jsonString).contentType(MediaType.APPLICATION_JSON)).andExpect(content().contentType(contentType)).andExpect(status().isUnauthorized()).andDo(print())
+        mockMvc.perform(post("/motivoperda")
+                .accept(MediaType.APPLICATION_JSON)
+                .content(jsonString)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(contentType))
+                .andExpect(status().isUnauthorized())
+                .andDo(print())
                 .andExpect(jsonPath("$.error").value("unauthorized"));
         verify(service, times(0)).salvar(motivoPerda);
     }
@@ -289,9 +413,16 @@ public class EndPoint {
         when(service.atualizar(1L, motivoPerda)).thenReturn(motivoPerda);
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(motivoPerda);
-        mockMvc.perform(put("/motivoperda/1").accept(MediaType.APPLICATION_JSON).content(jsonString).contentType(MediaType.APPLICATION_JSON)).andExpect(content().contentType(contentType)).andExpect(status().isUnauthorized()).andDo(print())
+        mockMvc.perform(put("/motivoperda/1")
+                .accept(MediaType.APPLICATION_JSON)
+                .content(jsonString)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(contentType))
+                .andExpect(status().isUnauthorized())
+                .andDo(print())
                 .andExpect(jsonPath("$.error").value("unauthorized"));
-        verify(service, times(0)).atualizar(1L, motivoPerda);
+        verify(service, times(0))
+                .atualizar(1L, motivoPerda);
     }
 
     // validar a entidade ate aqui
@@ -302,10 +433,18 @@ public class EndPoint {
         when(service.atualizar(1L, motivoPerda)).thenReturn(motivoPerda);
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(motivoPerda);
-        mockMvc.perform(put("/motivoperda/{id}", 1L).header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc)).accept(MediaType.APPLICATION_JSON).content(jsonString).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest()).andDo(print()).andExpect(jsonPath("$.field").value("nome")).andExpect(jsonPath("$.fieldMessage").value("O nome não pode ser null"))
-                .andExpect(jsonPath("$.field").value("nome"));
-        verify(service, times(0)).atualizar(1L, motivoPerda);
+        mockMvc.perform(put("/motivoperda/{id}", 1L)
+                .header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc))
+                .accept(MediaType.APPLICATION_JSON)
+                .content(jsonString)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andDo(print())
+                .andExpect(jsonPath("$.field").value("nome"))
+                .andExpect(jsonPath("$.fieldMessage").value("O nome não pode ser null"));
+        verify(service, times(0))
+                .atualizar(1L, motivoPerda);
     }
 
     @Test
@@ -315,10 +454,18 @@ public class EndPoint {
         when(service.atualizar(1L, motivoPerda)).thenReturn(motivoPerda);
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(motivoPerda);
-        mockMvc.perform(put("/motivoperda/{id}", 1L).header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc)).accept(MediaType.APPLICATION_JSON).content(jsonString).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest()).andDo(print()).andExpect(jsonPath("$.field").value("nome"))
-                .andExpect(jsonPath("$.fieldMessage").value("O nome deve ter entre 4 e 50 caracteres.")).andExpect(jsonPath("$.field").value("nome"));
-        verify(service, times(0)).atualizar(1L, motivoPerda);
+        mockMvc.perform(put("/motivoperda/{id}", 1L)
+                .header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc))
+                .accept(MediaType.APPLICATION_JSON)
+                .content(jsonString)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andDo(print())
+                .andExpect(jsonPath("$.field").value("nome"))
+                .andExpect(jsonPath("$.fieldMessage").value("O nome deve ter entre 4 e 50 caracteres."));
+        verify(service, times(0))
+                .atualizar(1L, motivoPerda);
     }
 
     @Test
@@ -328,10 +475,18 @@ public class EndPoint {
         when(service.atualizar(1L, motivoPerda)).thenReturn(motivoPerda);
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(motivoPerda);
-        mockMvc.perform(put("/motivoperda/{id}", 1L).header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc)).accept(MediaType.APPLICATION_JSON).content(jsonString).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest()).andDo(print()).andExpect(jsonPath("$.field").value("nome"))
-                .andExpect(jsonPath("$.fieldMessage").value("O nome deve ter entre 4 e 50 caracteres.")).andExpect(jsonPath("$.field").value("nome"));
-        verify(service, times(0)).atualizar(1L, motivoPerda);
+        mockMvc.perform(put("/motivoperda/{id}", 1L)
+                .header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc))
+                .accept(MediaType.APPLICATION_JSON)
+                .content(jsonString)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andDo(print())
+                .andExpect(jsonPath("$.field").value("nome"))
+                .andExpect(jsonPath("$.fieldMessage").value("O nome deve ter entre 4 e 50 caracteres."));
+        verify(service, times(0))
+                .atualizar(1L, motivoPerda);
     }
 
     @Test
@@ -341,10 +496,18 @@ public class EndPoint {
         when(service.atualizar(1L, motivoPerda)).thenReturn(motivoPerda);
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(motivoPerda);
-        mockMvc.perform(put("/motivoperda/{id}", 1L).header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc)).accept(MediaType.APPLICATION_JSON).content(jsonString).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest()).andDo(print()).andExpect(jsonPath("$.field").value("nome"))
-                .andExpect(jsonPath("$.fieldMessage").value("O nome deve ter entre 4 e 50 caracteres.")).andExpect(jsonPath("$.field").value("nome"));
-        verify(service, times(0)).atualizar(1L, motivoPerda);
+        mockMvc.perform(put("/motivoperda/{id}", 1L)
+                .header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc))
+                .accept(MediaType.APPLICATION_JSON)
+                .content(jsonString)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andDo(print())
+                .andExpect(jsonPath("$.field").value("nome"))
+                .andExpect(jsonPath("$.fieldMessage").value("O nome deve ter entre 4 e 50 caracteres."));
+        verify(service, times(0))
+                .atualizar(1L, motivoPerda);
 
     }
 }

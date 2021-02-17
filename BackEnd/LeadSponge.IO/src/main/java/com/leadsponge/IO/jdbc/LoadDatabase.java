@@ -89,9 +89,7 @@ class LoadDatabase {
 
     @Bean
     CommandLineRunner initTableCampanha(CampanhaRepository repository) {
-        return args -> {
-            repository.save(new Campanha(null, "Sem Campanha", ""));
-        };
+        return args -> repository.save(new Campanha(null, "Sem Campanha", ""));
     }
 
     @Bean
@@ -113,10 +111,8 @@ class LoadDatabase {
 
     @Bean
     CommandLineRunner initTableEstagio(EstagioNegociacaoRepository repository) {
-        return args -> {
-            repository.saveAll(Arrays.asList(new EstagioNegociacao("Sem contato", "SC", 1), new EstagioNegociacao("Contrato Feito", "CF", 2), new EstagioNegociacao("Identificação de Interece", "IDI", 3),
-                    new EstagioNegociacao("Apresentação", "A", 4), new EstagioNegociacao("Proposta Enviada", "PE", 5)));
-        };
+        return args -> repository.saveAll(Arrays.asList(new EstagioNegociacao("Sem contato", "SC", 1), new EstagioNegociacao("Contrato Feito", "CF", 2), new EstagioNegociacao("Identificação de Interece", "IDI", 3),
+                new EstagioNegociacao("Apresentação", "A", 4), new EstagioNegociacao("Proposta Enviada", "PE", 5)));
     }
 
     @Bean
@@ -134,35 +130,35 @@ class LoadDatabase {
     @Bean
     CommandLineRunner initTableSegmento(SegmentoService repository) {
         return args -> {
-            repository.save(new Segmento("Advocacia"));
-            repository.save(new Segmento("Agropecuária"));
-            repository.save(new Segmento("Arquitetura"));
-            repository.save(new Segmento("Bancos"));
-            repository.save(new Segmento("Blogs e Sites Pessoais"));
-            repository.save(new Segmento("Clinicas / Saúde"));
-            repository.save(new Segmento("Concessionárias de Veículos"));
-            repository.save(new Segmento("Contabilidade"));
-            repository.save(new Segmento("Demolição e terraplanagem"));
-            repository.save(new Segmento("Distribuidoras / Atacadistas"));
-            repository.save(new Segmento("Engenharia"));
-            repository.save(new Segmento("Esoterismo"));
-            repository.save(new Segmento("Eventos e Entretenimento"));
-            repository.save(new Segmento("Fotografia"));
-            repository.save(new Segmento("Gráfica"));
-            repository.save(new Segmento("Indústria"));
-            repository.save(new Segmento("Instituições Religiosas"));
-            repository.save(new Segmento("Músicos e Bandas"));
-            repository.save(new Segmento("Pessoa física"));
-            repository.save(new Segmento("Pet Shop"));
-            repository.save(new Segmento("Poder público"));
-            repository.save(new Segmento("Publicidade"));
-            repository.save(new Segmento("Serviços"));
-            repository.save(new Segmento("Shoppings e Feiras Comerciais"));
-            repository.save(new Segmento("Sindicato Patronal"));
-            repository.save(new Segmento("Tecnologia"));
-            repository.save(new Segmento("Telefonia"));
-            repository.save(new Segmento("Terceiro Setor"));
-            repository.save(new Segmento("Turismo"));
+            repository.salvar(new Segmento("Advocacia"));
+            repository.salvar(new Segmento("Agropecuária"));
+            repository.salvar(new Segmento("Arquitetura"));
+            repository.salvar(new Segmento("Bancos"));
+            repository.salvar(new Segmento("Blogs e Sites Pessoais"));
+            repository.salvar(new Segmento("Clinicas / Saúde"));
+            repository.salvar(new Segmento("Concessionárias de Veículos"));
+            repository.salvar(new Segmento("Contabilidade"));
+            repository.salvar(new Segmento("Demolição e terraplanagem"));
+            repository.salvar(new Segmento("Distribuidoras / Atacadistas"));
+            repository.salvar(new Segmento("Engenharia"));
+            repository.salvar(new Segmento("Esoterismo"));
+            repository.salvar(new Segmento("Eventos e Entretenimento"));
+            repository.salvar(new Segmento("Fotografia"));
+            repository.salvar(new Segmento("Gráfica"));
+            repository.salvar(new Segmento("Indústria"));
+            repository.salvar(new Segmento("Instituições Religiosas"));
+            repository.salvar(new Segmento("Músicos e Bandas"));
+            repository.salvar(new Segmento("Pessoa física"));
+            repository.salvar(new Segmento("Pet Shop"));
+            repository.salvar(new Segmento("Poder público"));
+            repository.salvar(new Segmento("Publicidade"));
+            repository.salvar(new Segmento("Serviços"));
+            repository.salvar(new Segmento("Shoppings e Feiras Comerciais"));
+            repository.salvar(new Segmento("Sindicato Patronal"));
+            repository.salvar(new Segmento("Tecnologia"));
+            repository.salvar(new Segmento("Telefonia"));
+            repository.salvar(new Segmento("Terceiro Setor"));
+            repository.salvar(new Segmento("Turismo"));
         };
     }
 }

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import com.leadsponge.IO.models.usuario.Usuario;
 import com.leadsponge.IO.models.usuario.UsuarioTO;
 import com.leadsponge.IO.repository.Filter.UsuarioFilter;
-import com.leadsponge.IO.repository.projection.ResumoUsuario;
+import com.leadsponge.IO.repository.projection.UsuarioResumo;
 
 @Service
 public interface UsuarioService {
@@ -31,7 +31,7 @@ public interface UsuarioService {
 
 	Page<Usuario> filtrar(UsuarioFilter usuarioFilter, Pageable pageable);
 	
-	Page<ResumoUsuario> resumir(UsuarioFilter usuarioFilter, Pageable pageable);
+	Page<UsuarioResumo> resumir(UsuarioFilter usuarioFilter, Pageable pageable);
 	
 	Usuario findByNome(String username);
 }
