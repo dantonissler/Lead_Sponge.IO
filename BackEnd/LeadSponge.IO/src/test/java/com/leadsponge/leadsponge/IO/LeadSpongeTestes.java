@@ -1803,6 +1803,7 @@ class LeadSpongeTestes {
         }
     }
 
+    // TODO: Falta fazer os testes de service e repository
     @Nested
     @DisplayName("Contato")
     class ContatoTestes {
@@ -2471,6 +2472,7 @@ class LeadSpongeTestes {
         }
     }
 
+    // TODO: Falta fazer os testes de service e repository
     @Nested
     @DisplayName("Email")
     class EmailTestes {
@@ -3028,6 +3030,7 @@ class LeadSpongeTestes {
         }
     }
 
+    // TODO: Falta fazer os testes de service e repository
     @Nested
     @DisplayName("Estagio Negociação")
     class EstagioNegociacaoTestes {
@@ -3775,6 +3778,7 @@ class LeadSpongeTestes {
         }
     }
 
+    // TODO: Falta fazer os testes de service e repository
     @Nested
     @DisplayName("Fonte Negociação")
     class FonteNegociacaoTestes {
@@ -4356,6 +4360,7 @@ class LeadSpongeTestes {
         }
     }
 
+    // TODO: Falta fazer os testes de service e repository
     @Nested
     @DisplayName("Negociação Produto")
     class NegociacaoProdutoTestes {
@@ -5033,6 +5038,7 @@ class LeadSpongeTestes {
         }
     }
 
+    // TODO: Falta fazer os testes de service e repository
     @Nested
     @DisplayName("Motivo Perda")
     class MotivoPerdaTestes {
@@ -5622,6 +5628,7 @@ class LeadSpongeTestes {
         }
     }
 
+    // TODO: Falta fazer os testes de service e repository
     @Nested
     @DisplayName("Produto")
     class ProdutoTestes {
@@ -6302,6 +6309,7 @@ class LeadSpongeTestes {
         }
     }
 
+    // TODO: Falta fazer os testes de service e repository
     @Nested
     @DisplayName("Role")
     class RoleTestes {
@@ -6477,6 +6485,7 @@ class LeadSpongeTestes {
         }
     }
 
+    // TODO: Falta fazer os testes de service e repository
     @Nested
     @DisplayName("Segmento")
     class SegmentoTestes {
@@ -7048,7 +7057,7 @@ class LeadSpongeTestes {
         }
     }
 
-
+    // TODO: Falta fazer os testes de service e repository
     @Nested
     @DisplayName("Telefone")
     class TelefoneTestes {
