@@ -5,7 +5,9 @@ import com.leadsponge.IO.repository.Filter.RoleFilter;
 import com.leadsponge.IO.repository.projection.RoleResumo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface RoleRepositoryQuery {
     Page<Role> filtrar(RoleFilter produtoFilter, Pageable pageable);
 

@@ -1,17 +1,18 @@
 package com.leadsponge.IO.services.implementated;
 
+import com.leadsponge.IO.errorValidate.ErroMessage;
+import com.leadsponge.IO.models.campanha.Campanha;
+import com.leadsponge.IO.repository.Filter.CampanhaFilter;
+import com.leadsponge.IO.repository.campanha.CampanhaRepository;
+import com.leadsponge.IO.services.CampanhaService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.leadsponge.IO.errorValidate.ErroMessage;
-import com.leadsponge.IO.models.campanha.Campanha;
-import com.leadsponge.IO.repository.Filter.CampanhaFilter;
-import com.leadsponge.IO.repository.campanha.CampanhaRepository;
-import com.leadsponge.IO.services.CampanhaService;
-
+@Slf4j // TODO: criar um log para os metodos
 @Service
 public class CampanhaServiceImpl extends ErroMessage implements CampanhaService {
 

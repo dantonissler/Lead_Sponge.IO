@@ -28,14 +28,14 @@ class EstagioNegociacaoEndPoint {
     @Autowired
     private final ApplicationEventPublisher publisher;
 
-    @GetMapping(value = {"", "/"})
+    @GetMapping(value = {""})
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('PESQUISAR_ESTAGIO') and #oauth2.hasScope('read')")
     Page<EstagioNegociacao> pesquisar(EstagioNegociacaoFilter estagioNegociacaoFilter, Pageable pageable) {
         return service.filtrar(estagioNegociacaoFilter, pageable);
     }
 
-    @PostMapping(value = {"", "/"})
+    @PostMapping(value = {""})
     @PreAuthorize("hasAuthority('CADASTRAR_ESTAGIO') and #oauth2.hasScope('write')")
     ResponseEntity<EstagioNegociacao> cadastrar(@Valid @RequestBody EstagioNegociacao estagioNegociacao, HttpServletResponse response) {
         EstagioNegociacao criarEstagioNegociacao = service.salvar(estagioNegociacao);
@@ -43,7 +43,7 @@ class EstagioNegociacaoEndPoint {
         return ResponseEntity.status(HttpStatus.CREATED).body(criarEstagioNegociacao);
     }
 
-    @PutMapping(value = {"/{id}", "/{id}/"})
+    @PutMapping(value = {"/{id}"})
     @PreAuthorize("hasAuthority('CADASTRAR_ESTAGIO') and #oauth2.hasScope('write')")
     ResponseEntity<EstagioNegociacao> atualizar(@Valid @RequestBody EstagioNegociacao estagioNegociacao, @PathVariable Long id, HttpServletResponse response) {
         EstagioNegociacao novaEstagioNegociacao = service.atualizar(id, estagioNegociacao);
@@ -51,13 +51,13 @@ class EstagioNegociacaoEndPoint {
         return ResponseEntity.status(HttpStatus.CREATED).body(novaEstagioNegociacao);
     }
 
-    @DeleteMapping(value = {"/{id}", "/{id}/"})
+    @DeleteMapping(value = {"/{id}"})
     @PreAuthorize("hasAuthority('REMOVER_ESTAGIO') and #oauth2.hasScope('write')")
     ResponseEntity<EstagioNegociacao> deletar(@PathVariable Long id) {
         return ResponseEntity.ok(service.deletar(id));
     }
 
-    @GetMapping(value = {"/{id}", "/{id}/"})
+    @GetMapping(value = {"/{id}"})
     @PreAuthorize("hasAuthority('PESQUISAR_ESTAGIO') and #oauth2.hasScope('read')")
     public ResponseEntity<EstagioNegociacao> detalhar(@Valid @PathVariable("id") Long id) {
         return ResponseEntity.ok(service.detalhar(id));

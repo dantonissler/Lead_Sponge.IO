@@ -28,12 +28,13 @@ public class Telefone extends UserDateAudit {
     private Long id;
 
     @Column(name = "numero")
-    @NotNull(message = "{telefone.numero.null}")
-    @Size(min = 11, max = 11, message = "{telefone.numero.size}")
+    @NotNull(message = "{numero.null}")
+    @Size(min = 10, max = 20, message = "{numero.size}")
     private String numero;
 
     @Column(name = "tipo")
     @Enumerated(EnumType.STRING)
+    @NotNull(message = "{tipo.null}")
     private TipoTelefone tipo;
 
     @ManyToOne

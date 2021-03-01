@@ -60,8 +60,9 @@ class ProdutoEndPoint extends ErroMessage {
 
     @GetMapping(value = {"/{id}"})
     @PreAuthorize("hasAuthority('PESQUISAR_PRODUTO') and #oauth2.hasScope('read')")
-    public ResponseEntity<Produto> detalhar(@Valid @PathVariable("id") Long id) {
-        return ResponseEntity.ok(service.deletar(id));
+    public ResponseEntity<Produto> detalhar(@Valid @PathVariable("id") Long id, HttpServletResponse response) {
+        publisher.publishEvent(new RecursoCriadoEvent(this, response, id));
+        return ResponseEntity.ok(service.detalhar(id));
     }
 
     @PutMapping("/{id}/vasivel")

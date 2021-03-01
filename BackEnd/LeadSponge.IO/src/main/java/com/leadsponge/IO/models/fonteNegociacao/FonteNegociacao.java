@@ -35,7 +35,6 @@ public class FonteNegociacao extends UserDateAudit {
 	private String nome;
 
 	@JsonIgnoreProperties("fonte")
-	@Valid
 	@OneToMany(mappedBy = "fonte", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Negociacao> negociacoes;
 

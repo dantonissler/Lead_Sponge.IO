@@ -42,10 +42,10 @@ public class Produto extends UserDateAudit {
     @Size(max = 150, message = "{produto.descricao.size}")
     private String descricao;
 
-    @NotNull
+    @NotNull(message = "{valor.null}")
     private BigDecimal valor;
 
-    @NotNull
+    @NotNull(message = "{visibilidade.null}")
     private Boolean visibilidade;
 
     @JsonIgnore

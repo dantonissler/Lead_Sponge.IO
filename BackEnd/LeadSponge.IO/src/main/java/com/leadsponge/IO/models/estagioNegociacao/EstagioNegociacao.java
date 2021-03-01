@@ -1,29 +1,18 @@
 package com.leadsponge.IO.models.estagioNegociacao;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.TableGenerator;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.leadsponge.IO.models.View;
 import com.leadsponge.IO.models.audit.UserDateAudit;
 import com.leadsponge.IO.models.negociacao.Negociacao;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Data
@@ -32,6 +21,14 @@ import lombok.NoArgsConstructor;
 @Table(name = "estagio_negociacao")
 @TableGenerator(name = "estagio_negociacao_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "estagio_negociacao", allocationSize = 1)
 public class EstagioNegociacao extends UserDateAudit {
+
+	private static final long serialVersionUID = 1L;
+
+	public EstagioNegociacao(@NotNull @Size(min = 4, max = 50) String nome, @NotNull @Size(max = 10) String apelido, @NotNull Integer posicao) {
+		this.nome = nome;
+		this.apelido = apelido;
+		this.posicao = posicao;
+	}
 
 	@Id
 	@Column(name = "id")
@@ -45,16 +42,15 @@ public class EstagioNegociacao extends UserDateAudit {
 	private String nome;
 
 	@Column(name = "apelido")
-	@NotNull
-	@Size(max = 10)
+	@NotNull(message = "{apelido.null}")
+	@Size(max = 10, message = "{apelido.size}")
 	private String apelido;
 
 	@Column(name = "posicao")
-	@NotNull
+	@NotNull(message = "{posicao.null}")
 	private Integer posicao;
 
 	@JsonIgnoreProperties("estagio")
-	@Valid
 	@OneToMany(mappedBy = "estagio", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Negociacao> negociacoes;
 
@@ -80,12 +76,5 @@ public class EstagioNegociacao extends UserDateAudit {
 	@Override
 	public int hashCode() {
 		return super.hashCode();
-	}
-
-	public EstagioNegociacao(@NotNull @Size(min = 4, max = 50) String nome, @NotNull @Size(max = 10) String apelido, @NotNull Integer posicao) {
-		super();
-		this.nome = nome;
-		this.apelido = apelido;
-		this.posicao = posicao;
 	}
 }

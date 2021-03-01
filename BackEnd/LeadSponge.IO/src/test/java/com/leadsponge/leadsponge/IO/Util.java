@@ -9,7 +9,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 public class Util {
     public static String getAccessToken(final String username, final String password, final MockMvc mockMvc) throws Exception {
         try {
-            MockHttpServletResponse response = mockMvc.perform(post("/oauth/token").header("Authorization", "Basic bGVhZHNwb25nOkBMZWFkX1Nwb25nZTEyMw==").param("username", username).param("password", password).param("grant_type", "password"))
+            MockHttpServletResponse response = mockMvc.perform(post("/oauth/token")
+                            .header("Authorization", "Basic bGVhZHNwb25nOkBMZWFkX1Nwb25nZTEyMw==")
+                            .param("username", username).param("password", password)
+                            .param("grant_type", "password"))
                     .andReturn().getResponse();
             JSONObject obj = new JSONObject(response.getContentAsString());
             if (obj.has("access_token"))

@@ -3,6 +3,7 @@ package com.leadsponge.IO.endPoints;
 import com.leadsponge.IO.event.RecursoCriadoEvent;
 import com.leadsponge.IO.models.fonteNegociacao.FonteNegociacao;
 import com.leadsponge.IO.repository.Filter.FonteNegociacaoFilter;
+import com.leadsponge.IO.services.FonteNegociacaoService;
 import com.leadsponge.IO.services.implementated.FonteNegociacaoServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ import javax.validation.Valid;
 class FonteNegociacaoEndPoint {
 
     @Autowired
-    private final FonteNegociacaoServiceImpl service;
+    private final FonteNegociacaoService service;
 
     @Autowired
     private final ApplicationEventPublisher publisher;

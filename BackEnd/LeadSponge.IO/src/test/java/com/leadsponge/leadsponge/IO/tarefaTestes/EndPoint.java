@@ -9,7 +9,7 @@ import com.leadsponge.IO.models.usuario.Usuario;
 import com.leadsponge.IO.repository.Filter.TarefaFilter;
 import com.leadsponge.IO.services.TarefaService;
 import com.leadsponge.leadsponge.IO.Util;
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,11 +23,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
-import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import java.time.LocalDateTime;
 
@@ -45,12 +42,6 @@ public class EndPoint {
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private WebApplicationContext context;
-
-    @Autowired
-    private FilterChainProxy springSecurityFilterChain;
-
     @MockBean
     private TarefaService service;
 
@@ -60,19 +51,21 @@ public class EndPoint {
     @Mock
     private Page<Tarefa> page;
 
-    private final MediaType contentType = new MediaType("application", "json");
+    String nulo = null;
+    private static MediaType contentType;
+    private static Pageable pageable;
 
-    @Before
-    public void setUp() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(context)
-                .addFilter(springSecurityFilterChain).build();
+    @BeforeAll
+    static void setUp() {
+        contentType = new MediaType("application", "json");
+        pageable = PageRequest.of(0, 10);
     }
 
     @Test
     @DisplayName("Listar Tarefas, retornar a Tarefas e status 200")
     public void listar() throws Exception {
         TarefaFilter tarefaFilter = new TarefaFilter();
-        Pageable pageable = PageRequest.of(0, 10);
+        
         when(service.filtrar(tarefaFilter, pageable)).thenReturn(page);
         mockMvc.perform(get("/tarefas")
                 .header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc))
@@ -87,7 +80,7 @@ public class EndPoint {
     @DisplayName("Listar Tarefas usando filtro pelo assunto, retornar a Tarefas e status 200")
     public void listarAssunto() throws Exception {
         TarefaFilter tarefaFilter = new TarefaFilter("assunto", null, null, null, null, null);
-        Pageable pageable = PageRequest.of(0, 10);
+        
         when(service.filtrar(tarefaFilter, pageable)).thenReturn(page);
         mockMvc.perform(get("/tarefas?assunto=assunto")
                 .header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc))
@@ -102,7 +95,7 @@ public class EndPoint {
     @DisplayName("Listar Tarefas usando filtro pela descrição, retornar a Tarefas e status 200")
     public void listarDescricao() throws Exception {
         TarefaFilter tarefaFilter = new TarefaFilter(null, "descricao", null, null, null, null);
-        Pageable pageable = PageRequest.of(0, 10);
+        
         when(service.filtrar(tarefaFilter, pageable)).thenReturn(page);
         mockMvc.perform(get("/tarefas?descricao=descricao")
                 .header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc))
@@ -118,7 +111,7 @@ public class EndPoint {
     public void listarHoraMarcada() throws Exception {
         LocalDateTime data = LocalDateTime.now();
         TarefaFilter tarefaFilter = new TarefaFilter(null, null, data, null, null, null);
-        Pageable pageable = PageRequest.of(0, 10);
+        
         when(service.filtrar(tarefaFilter, pageable)).thenReturn(page);
         mockMvc.perform(get("/tarefas?horaMarcada={data}", data)
                 .header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc))
@@ -133,7 +126,7 @@ public class EndPoint {
     @DisplayName("Listar Tarefas usando filtro pela realizada, retornar a Tarefas e status 200")
     public void listarRealizada() throws Exception {
         TarefaFilter tarefaFilter = new TarefaFilter(null, null, null, true, null, null);
-        Pageable pageable = PageRequest.of(0, 10);
+        
         when(service.filtrar(tarefaFilter, pageable)).thenReturn(page);
         mockMvc.perform(get("/tarefas?Realizada=true")
                 .header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc))
@@ -149,7 +142,7 @@ public class EndPoint {
     public void listarHoraRealizada() throws Exception {
         LocalDateTime data = LocalDateTime.now();
         TarefaFilter tarefaFilter = new TarefaFilter(null, null, null, null, data, null);
-        Pageable pageable = PageRequest.of(0, 10);
+        
         when(service.filtrar(tarefaFilter, pageable)).thenReturn(page);
         mockMvc.perform(get("/tarefas?horaRealizada={data}", data)
                 .header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc))
@@ -164,7 +157,7 @@ public class EndPoint {
     @DisplayName("Listar Tarefas usando filtro pela tipo, retornar a Tarefas e status 200")
     public void listarTipo() throws Exception {
         TarefaFilter tarefaFilter = new TarefaFilter(null, null, null, null, null, TipoTarefa.TAREFA);
-        Pageable pageable = PageRequest.of(0, 10);
+        
         when(service.filtrar(tarefaFilter, pageable)).thenReturn(page);
         mockMvc.perform(get("/tarefas?tipo={tipo}", TipoTarefa.TAREFA)
                 .header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc))
@@ -252,7 +245,7 @@ public class EndPoint {
     @DisplayName("Listar Tarefas sem permissão de acesso, retornar o status 403")
     public void permissaoListar() throws Exception {
         TarefaFilter tarefaFilter = new TarefaFilter();
-        Pageable pageable = PageRequest.of(0, 10);
+        
         when(service.filtrar(tarefaFilter, pageable)).thenReturn(page);
         mockMvc.perform(get("/tarefas")
                 .header("Authorization", "Bearer " + Util.getAccessToken("user", "123321", mockMvc))
@@ -268,7 +261,7 @@ public class EndPoint {
     @DisplayName("Listar Tarefas usando filtro pelo assunto sem permissão de acesso, retornar o status 403")
     public void permissaoListarsassunto() throws Exception {
         TarefaFilter tarefaFilter = new TarefaFilter("assunto", null, null, null, null, null);
-        Pageable pageable = PageRequest.of(0, 10);
+        
         when(service.filtrar(tarefaFilter, pageable)).thenReturn(page);
         mockMvc.perform(get("/tarefas?assunto=assunto")
                 .header("Authorization", "Bearer " + Util.getAccessToken("user", "123321", mockMvc))
@@ -284,7 +277,7 @@ public class EndPoint {
     @DisplayName("Listar Tarefas usando filtro pela descrição sem permissão de acesso, retornar o status 403")
     public void permissaoListarDescricao() throws Exception {
         TarefaFilter tarefaFilter = new TarefaFilter(null, "descrição", null, null, null, null);
-        Pageable pageable = PageRequest.of(0, 10);
+        
         when(service.filtrar(tarefaFilter, pageable)).thenReturn(page);
         mockMvc.perform(get("/tarefas?descricao=descricao")
                 .header("Authorization", "Bearer " + Util.getAccessToken("user", "123321", mockMvc))
@@ -301,7 +294,7 @@ public class EndPoint {
     public void permissaoListarHoraMarcada() throws Exception {
         LocalDateTime data = LocalDateTime.now();
         TarefaFilter tarefaFilter = new TarefaFilter(null, null, data, null, null, null);
-        Pageable pageable = PageRequest.of(0, 10);
+        
         when(service.filtrar(tarefaFilter, pageable)).thenReturn(page);
         mockMvc.perform(get("/tarefas?descricao=descricao")
                 .header("Authorization", "Bearer " + Util.getAccessToken("user", "123321", mockMvc))
@@ -317,7 +310,7 @@ public class EndPoint {
     @DisplayName("Listar Tarefas usando filtro pela descricao sem permissão de acesso, retornar o status 403")
     public void permissaoListarRealizada() throws Exception {
         TarefaFilter tarefaFilter = new TarefaFilter(null, null, null, true, null, null);
-        Pageable pageable = PageRequest.of(0, 10);
+        
         when(service.filtrar(tarefaFilter, pageable)).thenReturn(page);
         mockMvc.perform(get("/tarefas?descricao=descricao")
                 .header("Authorization", "Bearer " + Util.getAccessToken("user", "123321", mockMvc))
@@ -334,7 +327,7 @@ public class EndPoint {
     public void permissaoListarHoraRealizada() throws Exception {
         LocalDateTime data = LocalDateTime.now();
         TarefaFilter tarefaFilter = new TarefaFilter(null, null, null, null, data, null);
-        Pageable pageable = PageRequest.of(0, 10);
+        
         when(service.filtrar(tarefaFilter, pageable)).thenReturn(page);
         mockMvc.perform(get("/tarefas?descricao=descricao")
                 .header("Authorization", "Bearer " + Util.getAccessToken("user", "123321", mockMvc))
@@ -350,7 +343,7 @@ public class EndPoint {
     @DisplayName("Listar Tarefas usando filtro pela descricao sem permissão de acesso, retornar o status 403")
     public void permissaoListarTipo() throws Exception {
         TarefaFilter tarefaFilter = new TarefaFilter(null, null, null, null, null, TipoTarefa.TAREFA);
-        Pageable pageable = PageRequest.of(0, 10);
+        
         when(service.filtrar(tarefaFilter, pageable)).thenReturn(page);
         mockMvc.perform(get("/tarefas?descricao=descricao")
                 .header("Authorization", "Bearer " + Util.getAccessToken("user", "123321", mockMvc))
@@ -437,7 +430,7 @@ public class EndPoint {
     @DisplayName("Listar Tarefa com usuario e senha incorretos, retornar status 401")
     public void listamosTokenIncorreto() throws Exception {
         TarefaFilter tarefaFilter = new TarefaFilter();
-        Pageable pageable = PageRequest.of(0, 10);
+        
         when(service.filtrar(tarefaFilter, pageable)).thenReturn(page);
         mockMvc.perform(get("/tarefas")
                 .header("Authorization", "Bearer " + Util.getAccessToken("a", "a", mockMvc))
@@ -528,7 +521,7 @@ public class EndPoint {
     @DisplayName("Listar Tarefas sem token, retornar status 401")
     public void listamosSemToken() throws Exception {
         TarefaFilter tarefaFilter = new TarefaFilter();
-        Pageable pageable = PageRequest.of(0, 10);
+        
         when(service.filtrar(tarefaFilter, pageable)).thenReturn(page);
         mockMvc.perform(get("/tarefas"))
                 .andExpect(content().contentType(contentType))

@@ -1,19 +1,18 @@
 package com.leadsponge.IO;
 
+import com.leadsponge.IO.config.property.LeadSpongeApiProperty;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.ApplicationContext;
 
-import com.leadsponge.IO.config.property.LeadSpongeApiProperty;
-
 @SpringBootApplication
 @EnableConfigurationProperties(LeadSpongeApiProperty.class)
 public class LeadSpongeApiApplication extends SpringBootServletInitializer {
 	private static ApplicationContext APPLICATION_CONTEXT;
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 		APPLICATION_CONTEXT = SpringApplication.run(LeadSpongeApiApplication.class, args);
 	}
 

@@ -55,14 +55,12 @@ public class CampanhaEndPoint {
 
     @DeleteMapping(value = {"/{id}"})
     @PreAuthorize("hasAuthority('REMOVER_CAMPANHA') and #oauth2.hasScope('write')")
-
     public ResponseEntity<Campanha> deletar(@PathVariable Long id) {
         return ResponseEntity.ok(service.deletar(id));
     }
 
     @GetMapping(value = {"/{id}"})
     @PreAuthorize("hasAuthority('PESQUISAR_CAMPANHA') and #oauth2.hasScope('read')")
-
     public ResponseEntity<Campanha> detalhar(@Valid @PathVariable("id") Long id, HttpServletResponse response) {
         publisher.publishEvent(new RecursoCriadoEvent(this, response, id));
         return ResponseEntity.ok(service.detalhar(id));
