@@ -23,7 +23,7 @@ import com.leadsponge.IO.services.SegmentoService;
 import com.leadsponge.IO.services.UsuarioService;
 import org.springframework.context.annotation.Profile;
 
-@Profile("teste")
+@Profile("dev")
 @Configuration
 class LoadDatabase {
     @Bean

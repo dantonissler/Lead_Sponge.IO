@@ -86,18 +86,15 @@ public class Usuario extends UserDateAudit implements UserDetails {
     private boolean enabled;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @Valid
     @JsonIgnoreProperties("usuarios")
     @JoinTable(name = "roles_usuarios", joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Set<Role> roles;
 
     @JsonIgnoreProperties("usuario")
-    @Valid
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<Tarefa> tarefas = new ArrayList<>();
 
     @ManyToMany(mappedBy = "seguidores", cascade = CascadeType.ALL)
-    @Valid
     @JsonIgnoreProperties("seguidores")
     private List<Cliente> clientesSeguidos;
 

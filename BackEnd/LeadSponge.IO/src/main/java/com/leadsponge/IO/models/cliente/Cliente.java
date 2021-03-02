@@ -13,7 +13,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
@@ -44,34 +43,28 @@ public class Cliente extends UserDateAudit {
     @Size(max = 1024, message = "{descricao.max}")
     private String resumo;
 
-    @Valid
     @JsonIgnoreProperties("cliente")
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cliente")
     private List<Contato> contato = new ArrayList<>();
 
-    @Valid
     @JsonIgnoreProperties(value = {"cliente", "clientes", "clientesSeguidos", "roles", "tarefas"})
     @OneToMany(mappedBy = "cliente")
     private List<Negociacao> negociacoes;
 
-    @Valid
     @ManyToMany
     @JsonIgnoreProperties("clientes")
     @JoinTable(name = "segmentos_clientes", joinColumns = @JoinColumn(name = "cliente_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "segmento_id", referencedColumnName = "id"))
     private List<Segmento> segmentos = new ArrayList<>();
 
-    @Valid
     @ManyToMany
     @JsonIgnoreProperties(value = {"clientes", "clientesSeguidos", "roles", "tarefas"})
     @JoinTable(name = "seguidores_clientes_seguidos", joinColumns = @JoinColumn(name = "clientes_seguidos_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "seguidor_id", referencedColumnName = "id"))
     private List<Usuario> seguidores = new ArrayList<>();
 
-    @Valid
-    @JsonIgnoreProperties(value = {"clientes", "clientesSeguidos", "roles", "tarefas"})
     @ManyToOne
+    @JsonIgnoreProperties(value = {"clientes", "clientesSeguidos", "roles", "tarefas"})
     @JoinColumn(name = "responsavel_id")
     private Usuario responsavel;
-
 
     @Override
     public boolean equals(Object obj) {

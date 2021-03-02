@@ -42,6 +42,7 @@ import org.springframework.transaction.TransactionSystemException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -729,12 +730,7 @@ class LeadSpongeTestes {
             @Test
             @DisplayName("Salva todas as entidades fornecidas.")
             public void salvarTodosEntidades() {
-                Campanha campanha1 = new Campanha(null, "Nome1", "Descrição1");
-                Campanha campanha2 = new Campanha(null, "Nome2", "Descrição2");
-                List<Campanha> campanhas = new ArrayList<>();
-                campanhas.add(campanha1);
-                campanhas.add(campanha2);
-                List<Campanha> campanhaSalvas = this.repository.saveAll(campanhas);
+                List<Campanha> campanhaSalvas = this.repository.saveAll(new ArrayList<>(Arrays.asList(new Campanha(null, "Nome1", "Descrição1"), new Campanha(null, "Nome2", "Descrição2"))));
                 assertThat(campanhaSalvas.get(0).getId()).isNotNull();
                 assertThat(campanhaSalvas.get(0).getNome()).isEqualTo("Nome1");
                 assertThat(campanhaSalvas.get(0).getDescricao()).isEqualTo("Descrição1");
@@ -763,11 +759,10 @@ class LeadSpongeTestes {
 
             @Test
             @DisplayName("Exclui todas as entidades gerenciadas pelo repositório.")
-            @Disabled("Falta ajustar")
             public void deletarTudo() {
                 List<Campanha> campanhas = Arrays.asList(new Campanha(1L, "Nome1", "Descrição1"), new Campanha(2L, "Nome2", "Descrição2"), new Campanha(3L, "Nome3", "Descrição3"));
                 this.repository.saveAll(campanhas);
-                this.repository.deleteAll();// TODO consertar está dando erro
+                this.repository.deleteAll();
                 assertThat(repository.findById(1L)).isEmpty();
                 assertThat(repository.findById(2L)).isEmpty();
                 assertThat(repository.findById(3L)).isEmpty();
@@ -775,11 +770,10 @@ class LeadSpongeTestes {
 
             @Test
             @DisplayName("Retorna todas as instâncias do tipo.")
-            @Disabled("Falta ajustar")
             public void buscarTodosEntidades() {
                 List<Campanha> campanhas = Arrays.asList(new Campanha(null, "Nome1", "Descrição1"), new Campanha(null, "Nome2", "Descrição2"));
                 this.repository.saveAll(campanhas);
-                List<Campanha> campanhaBusca = this.repository.findAll(); // TODO consertar está dando erro
+                List<Campanha> campanhaBusca = this.repository.findAll();
                 assertThat(campanhaBusca.get(0).getId()).isNotNull();
                 assertThat(campanhaBusca.get(0).getNome()).isEqualTo("Nome1");
                 assertThat(campanhaBusca.get(0).getDescricao()).isEqualTo("Descrição1");
@@ -789,12 +783,10 @@ class LeadSpongeTestes {
             }
 
             @Test
-            @DisplayName("Retorna se uma entidade com o ID fornecido existe.")
-            @Disabled("Falta ajustar")
+            @DisplayName("Seleciona varias entidades fornecendo os IDs existe.")
             public void buscarCIds() {
-                this.repository.saveAll(Arrays.asList(new Campanha(null, "Nome1", "Descrição1"), new Campanha(null, "Nome2", "Descrição2")));
-                List<Long> ids = Arrays.asList(1L, 2L);
-                List<Campanha> campanhas = this.repository.findAllById(ids);// TODO consertar está dando erro
+                List<Campanha> campanhasSalvas = this.repository.saveAll(Arrays.asList(new Campanha(1L, "Nome1", "Descrição1"), new Campanha(2L, "Nome2", "Descrição2")));
+                List<Campanha> campanhas = this.repository.findAllById(Arrays.asList(campanhasSalvas.get(0).getId(), campanhasSalvas.get(1).getId()));
                 assertThat(campanhas.get(0).getId()).isNotNull();
                 assertThat(campanhas.get(0).getNome()).isEqualTo("Nome1");
                 assertThat(campanhas.get(0).getDescricao()).isEqualTo("Descrição1");
@@ -804,11 +796,10 @@ class LeadSpongeTestes {
             }
 
             @Test
-            @DisplayName("Retorna se uma entidade com o ID fornecido existe.") // TODO renomear
-            @Disabled("Falta ajustar")
+            @DisplayName("Verificar se exite o ID fornecido.")
             public void verificarSeExistePorId() {
                 Campanha campanha = this.repository.save(new Campanha(1L, "Nome", "Descrição"));
-                assertTrue(this.repository.existsById(campanha.getId())); // TODO consertar está dando erro
+                assertTrue(this.repository.existsById(campanha.getId()));
             }
         }
 
@@ -1617,10 +1608,8 @@ class LeadSpongeTestes {
             @Test
             @DisplayName("Atualizar uma CLiente e persistir os dados, retorno: id, nome e descrição")
             public void atualizar() {
-                Cliente cliente = new Cliente(3L, "nome", "url", "resumo", null, null, null, null, null);
-                cliente = this.repository.save(cliente);
-                Cliente clienteAtualizado = new Cliente(3L, "nomeNovo", "urlNovo", "resumoNovo", null, null, null, null, null);
-                cliente = this.repository.save(clienteAtualizado);
+                Cliente cliente = this.repository.save(new Cliente(3L, "nome", "url", "resumo", null, null, null, null, null));
+                Cliente clienteAtualizado = this.repository.save(new Cliente(3L, "nomeNovo", "urlNovo", "resumoNovo", null, null, null, null, null));
                 assertThat(clienteAtualizado.getNome()).isEqualTo("nomeNovo");
                 assertThat(clienteAtualizado.getUrl()).isEqualTo("urlNovo");
                 assertThat(clienteAtualizado.getResumo()).isEqualTo("resumoNovo");
@@ -1669,6 +1658,56 @@ class LeadSpongeTestes {
                 assertThat(repository.findById(1L)).isEmpty();
                 assertThat(repository.findById(2L)).isEmpty();
             }
+
+
+            @Test
+            @DisplayName("Exclui todas as entidades gerenciadas pelo repositório.")
+            public void deletarTudo() {
+                List<Cliente> clientes = Arrays.asList(new Cliente(1L, "nome1", "url1", "resumo1", null, null, null, null, null), new Cliente(2L, "nome2", "url2", "resumo2", null, null, null, null, null));
+                this.repository.saveAll(clientes);
+                this.repository.deleteAll();
+                assertThat(repository.findById(1L)).isEmpty();
+                assertThat(repository.findById(2L)).isEmpty();
+                assertThat(repository.findById(3L)).isEmpty();
+            }
+
+            @Test
+            @DisplayName("Retorna todas as instâncias do tipo.")
+            public void buscarTodosEntidades() {
+                List<Cliente> clientes = Arrays.asList(new Cliente(1L, "nome1", "url1", "resumo1", null, null, null, null, null), new Cliente(2L, "nome2", "url2", "resumo2", null, null, null, null, null));
+                this.repository.saveAll(clientes);
+                List<Cliente> clientesBusca = this.repository.findAll();
+                assertThat(clientesBusca.get(0).getId()).isNotNull();
+                assertThat(clientesBusca.get(0).getNome()).isEqualTo("nome1");
+                assertThat(clientesBusca.get(0).getUrl()).isEqualTo("url1");
+                assertThat(clientesBusca.get(0).getResumo()).isEqualTo("resumo1");
+                assertThat(clientesBusca.get(1).getId()).isNotNull();
+                assertThat(clientesBusca.get(1).getNome()).isEqualTo("nome2");
+                assertThat(clientesBusca.get(1).getUrl()).isEqualTo("url2");
+                assertThat(clientesBusca.get(1).getResumo()).isEqualTo("resumo2");
+            }
+
+            @Test
+            @DisplayName("Seleciona varias entidades fornecendo os IDs existe.")
+            public void buscarCIds() {
+                List<Cliente> clientesSalvas = this.repository.saveAll(Arrays.asList(new Cliente(1L, "nome1", "url1", "resumo1", null, null, null, null, null), new Cliente(2L, "nome2", "url2", "resumo2", null, null, null, null, null)));
+                List<Cliente> clientes = this.repository.findAllById(Arrays.asList(clientesSalvas.get(0).getId(), clientesSalvas.get(1).getId()));
+                assertThat(clientes.get(0).getId()).isNotNull();
+                assertThat(clientes.get(0).getNome()).isEqualTo("nome1");
+                assertThat(clientes.get(0).getUrl()).isEqualTo("url1");
+                assertThat(clientes.get(0).getResumo()).isEqualTo("resumo1");
+                assertThat(clientes.get(1).getId()).isNotNull();
+                assertThat(clientes.get(1).getNome()).isEqualTo("nome2");
+                assertThat(clientes.get(1).getUrl()).isEqualTo("url2");
+                assertThat(clientes.get(1).getResumo()).isEqualTo("resumo2");
+            }
+
+            @Test
+            @DisplayName("Verificar se exite o ID fornecido.")
+            public void verificarSeExistePorId() {
+                Cliente cliente = this.repository.save(new Cliente(3L, "nome", "url", "resumo", null, null, null, null, null));
+                assertTrue(this.repository.existsById(cliente.getId()));
+            }
         }
 
         @Nested
@@ -1688,7 +1727,7 @@ class LeadSpongeTestes {
             @Test
             @DisplayName("Criar Campanha com nome, url e resumo, percistir os dados.")
             public void Criar() {
-                Cliente cliente = this.service.salvar(new Cliente(1L, "nome", "url", "resumo", new ArrayList<Contato>(), new ArrayList<Negociacao>(), new ArrayList<Segmento>(), new ArrayList<Usuario>(), new Usuario(1L)));
+                Cliente cliente = this.service.salvar(new Cliente(1L, "nome", "url", "resumo", new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new Usuario(1L)));
                 assertThat(cliente.getId()).isNotNull();
                 assertEquals("nome", cliente.getNome());
                 assertEquals("url", cliente.getUrl());
@@ -1698,7 +1737,7 @@ class LeadSpongeTestes {
             @Test
             @DisplayName("Deletar verificar se foi removido.")
             public void deletar() {
-                Cliente cliente = this.service.salvar(new Cliente(1L, "nome", "url", "resumo", new ArrayList<Contato>(), new ArrayList<Negociacao>(), new ArrayList<Segmento>(), new ArrayList<Usuario>(), new Usuario(1L)));
+                Cliente cliente = this.service.salvar(new Cliente(1L, "nome", "url", "resumo", new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new Usuario(1L)));
                 service.deletar(cliente.getId());
                 assertThat(repository.findById(cliente.getId())).isEmpty();
             }
@@ -1780,12 +1819,9 @@ class LeadSpongeTestes {
 
             @Test
             @DisplayName("Atualizar uma entidade de cliente por id.")
-            @Disabled("Falta ajustar")
             public void atualizar() {
-                Cliente clienteSalva = this.repository.save(new Cliente(1L, "nome", "url", "resumo", null, null, null, null, null));
-                // TODO: Não consegui utilizar o método de ataulizar. é por conta do clienteSalvo.getSegmentos().clear(); na service.atualizar
-                Cliente cliente = this.service.atualizar(clienteSalva.getId(),
-                        new Cliente(clienteSalva.getId(), "nome2", "url2", "resumo2", null, null, null, null, null));
+                Cliente clienteSalva = this.service.salvar(new Cliente(1L, "nome", "url", "resumo", new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new Usuario(1L)));
+                Cliente cliente = this.service.atualizar(clienteSalva.getId(), new Cliente(clienteSalva.getId(), "nome2", "url2", "resumo2", null,null,null,null,null));
                 assertThat(cliente.getId()).isNotNull();
                 assertEquals("nome2", cliente.getNome());
                 assertEquals("url2", cliente.getUrl());
@@ -4521,10 +4557,6 @@ class LeadSpongeTestes {
             private final MediaType contentType = new MediaType("application", "json");
             private final Pageable pageable = PageRequest.of(0, 10);
             private final NegociacaoProdutoFilter filter = new NegociacaoProdutoFilter();
-            private final NegociacaoProdutoFilter quantidadeFilter = new NegociacaoProdutoFilter(1, null, null);
-            private final NegociacaoProdutoFilter valorFilter = new NegociacaoProdutoFilter(null, new BigDecimal(1), null);
-            private final NegociacaoProdutoFilter totalFilter = new NegociacaoProdutoFilter(null, null, new BigDecimal(1));
-            private final NegociacaoProdutoFilter filterCarregado = new NegociacaoProdutoFilter(1, new BigDecimal(1), new BigDecimal(1));
             private final NegociacaoProduto negociacaoProduto = new NegociacaoProduto(3L, 1, new BigDecimal(1), TipoReincidencia.RECORRENTE, new Produto(1L), new Negociacao(1L));
 
             private ObjectMapper mapper;
@@ -4700,7 +4732,6 @@ class LeadSpongeTestes {
             private final NegociacaoProdutoFilter quantidadeFilter = new NegociacaoProdutoFilter(1, null, null);
             private final NegociacaoProdutoFilter valorFilter = new NegociacaoProdutoFilter(null, new BigDecimal(1), null);
             private final NegociacaoProdutoFilter totalFilter = new NegociacaoProdutoFilter(null, null, new BigDecimal(1));
-            private final NegociacaoProdutoFilter filterCarregado = new NegociacaoProdutoFilter(1, new BigDecimal(1), new BigDecimal(1));
             private final NegociacaoProduto negociacaoProduto = new NegociacaoProduto(3L, 1, new BigDecimal(1), TipoReincidencia.RECORRENTE, new Produto(1L), new Negociacao(1L));
 
             private ObjectMapper mapper;
@@ -7491,15 +7522,7 @@ class LeadSpongeTestes {
             private MockMvc mockMvc;
             @MockBean
             private TelefoneService service;
-            @Mock
-            private Page<Telefone> page;
 
-            private final MediaType contentType = new MediaType("application", "json");
-            private final Pageable pageable = PageRequest.of(0, 10);
-            private final TelefoneFilter filter = new TelefoneFilter();
-            private final TelefoneFilter filterNumero = new TelefoneFilter("+999 (99) 99999-9999", null);
-            private final TelefoneFilter filterTipo = new TelefoneFilter(null, TipoTelefone.COMERCIAL);
-            private final Telefone telefone = new Telefone(3L, "+999 (99) 99999-9999", TipoTelefone.COMERCIAL, new Contato(1L));
             private final Telefone numeroNull = new Telefone(1L, null, TipoTelefone.COMERCIAL, null);
             private final Telefone numeroVazio = new Telefone(1L, "", TipoTelefone.COMERCIAL, null);
             private final Telefone tipoNull = new Telefone(1L, "+999 (99) 99999-9999", null, null);

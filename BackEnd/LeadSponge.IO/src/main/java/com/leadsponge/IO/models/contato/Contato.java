@@ -10,7 +10,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
@@ -45,12 +44,10 @@ public class Contato extends UserDateAudit {
 	private Cliente cliente;
 
 	@JsonIgnoreProperties("contato")
-	@Valid
 	@OneToMany(mappedBy = "contato", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Telefone> telefone;
 
 	@JsonIgnoreProperties("contato")
-	@Valid
 	@OneToMany(mappedBy = "contato", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Email> email;
 
