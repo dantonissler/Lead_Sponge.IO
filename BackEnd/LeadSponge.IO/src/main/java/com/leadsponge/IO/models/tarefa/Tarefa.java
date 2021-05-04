@@ -81,6 +81,18 @@ public class Tarefa extends UserDateAudit {
 		return TipoTarefa.EMAIL.equals(tipo);
 	}
 
+	public Tarefa(Long id, @NotNull(message = "{assunto.null}") @Size(min = 4, max = 50, message = "{assunto.size}") String assunto, @Size(max = 255) String descricao, String horaMarcada, Boolean realizda, String horaRealizada, @NotNull TipoTarefa tipo, @NotNull Usuario usuario, @NotNull Negociacao negociacao) {
+		this.id = id;
+		this.assunto = assunto;
+		this.descricao = descricao;
+//		this.horaMarcada = horaMarcada;
+		this.realizda = realizda;
+//		this.horaRealizada = horaRealizada;
+		this.tipo = tipo;
+		this.usuario = usuario;
+		this.negociacao = negociacao;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

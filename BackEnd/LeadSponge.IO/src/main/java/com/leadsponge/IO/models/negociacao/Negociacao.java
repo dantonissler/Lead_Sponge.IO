@@ -83,27 +83,28 @@ public class Negociacao extends UserDateAudit {
 	@Column(name = "valor_unico")
 	private BigDecimal valorUnico;
 
+	@NotNull
 	@ManyToOne
 	@JsonIgnoreProperties("negociacoes")
-	@NotNull
 	@JoinColumn(name = "campanha_id")
 	private Campanha campanha;
 
+	@NotNull
 	@ManyToOne
 	@JsonIgnoreProperties(value = { "negociacoes", "tarefas", "contato", "segmentos", "seguidores",
 			"responsavel" }, allowSetters = true)
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
 
+	@NotNull
 	@ManyToOne
 	@JsonIgnoreProperties("negociacoes")
-	@NotNull
 	@JoinColumn(name = "estagio_id")
 	private EstagioNegociacao estagio;
 
+	@NotNull
 	@ManyToOne
 	@JsonIgnoreProperties("negociacoes")
-	@NotNull
 	@JoinColumn(name = "fonte_id")
 	private FonteNegociacao fonte;
 
@@ -114,17 +115,14 @@ public class Negociacao extends UserDateAudit {
 
 	@OneToMany(mappedBy = "negociacao", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonIgnoreProperties(value = { "negociacao" })
-	@Valid
 	private List<NegociacaoProduto> negociacaoProdutos;
 
 	@OneToMany(mappedBy = "negociacao", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonIgnoreProperties("negociacao")
-	@Valid
 	private List<HistEstagioNegociacao> histEstagioNegociacoes;
 
 	@OneToMany(mappedBy = "negociacao", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonIgnoreProperties("negociacao")
-	@Valid
 	private List<Tarefa> tarefas;
 
 	@JsonIgnore

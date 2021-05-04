@@ -39,8 +39,17 @@ public class ClienteServiceImpl extends ErroMessage implements ClienteService {
 			clienteSalvo.getContato().clear();
 			clienteSalvo.setContato(cliente.getContato());
 		}
-		// TODO:seguidores responsavel negociacoes
-		
+		if (cliente.getSeguidores() != null) {
+			clienteSalvo.getSeguidores().clear();
+			clienteSalvo.setSeguidores(cliente.getSeguidores());
+		}
+		if (cliente.getResponsavel() != null) {
+			clienteSalvo.setResponsavel(cliente.getResponsavel());
+		}
+		if (cliente.getNegociacoes() != null) {
+			clienteSalvo.getNegociacoes().clear();
+			clienteSalvo.setNegociacoes(cliente.getNegociacoes());
+		}
 //		clienteSalvo.getContato().forEach(contato -> contato.getEmail().clear());
 //		clienteSalvo.getContato().forEach(contato -> contato.getTelefone().clear());
 //		clienteSalvo.getContato().addAll(cliente.getContato());
@@ -50,7 +59,6 @@ public class ClienteServiceImpl extends ErroMessage implements ClienteService {
 //		clienteSalvo.getContato().forEach(contato -> contato.getTelefone().forEach(telefone -> telefone.setContato(contato)));
 //		clienteSalvo.getContato().forEach(contato -> contato.getEmail().forEach(email -> email.setContato(contato)));
 		BeanUtils.copyProperties(cliente, clienteSalvo, "id", "segmentos", "contatos");
-
 		return repository.save(clienteSalvo);
 	}
 

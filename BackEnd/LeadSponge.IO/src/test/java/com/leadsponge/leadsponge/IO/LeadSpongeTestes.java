@@ -15,6 +15,8 @@ import com.leadsponge.IO.models.negociacaoProduto.NegociacaoProduto;
 import com.leadsponge.IO.models.produto.Produto;
 import com.leadsponge.IO.models.role.Role;
 import com.leadsponge.IO.models.segmento.Segmento;
+import com.leadsponge.IO.models.tarefa.Tarefa;
+import com.leadsponge.IO.models.tarefa.TipoTarefa;
 import com.leadsponge.IO.models.telefone.Telefone;
 import com.leadsponge.IO.models.telefone.TipoTelefone;
 import com.leadsponge.IO.models.usuario.Usuario;
@@ -40,9 +42,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.TransactionSystemException;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -1608,7 +1610,6 @@ class LeadSpongeTestes {
             @Test
             @DisplayName("Atualizar uma CLiente e persistir os dados, retorno: id, nome e descrição")
             public void atualizar() {
-                Cliente cliente = this.repository.save(new Cliente(3L, "nome", "url", "resumo", null, null, null, null, null));
                 Cliente clienteAtualizado = this.repository.save(new Cliente(3L, "nomeNovo", "urlNovo", "resumoNovo", null, null, null, null, null));
                 assertThat(clienteAtualizado.getNome()).isEqualTo("nomeNovo");
                 assertThat(clienteAtualizado.getUrl()).isEqualTo("urlNovo");
@@ -7738,16 +7739,30 @@ class LeadSpongeTestes {
         @Nested
         @DisplayName("Testando End Point")
         public class EndPoint {
-            private ObjectMapper mapper;
+            @Autowired
+            private MockMvc mockMvc;
+            @MockBean
+            private TarefaService service;
+            @Mock
+            private Page<Tarefa> page;
+            private final ObjectMapper mapper = new ObjectMapper();
+            private final MediaType contentType = new MediaType("application", "json");
+            private final Pageable pageable = PageRequest.of(0, 10);
+            private final LocalDateTime data = LocalDateTime.now();
+            private final TarefaFilter tarefaFilter = new TarefaFilter();
+//            private final TarefaFilter tarefaFilterAssunto = new TarefaFilter("assunto", null, null, null, null, null);
+//            private final TarefaFilter tarefaFilterDescricao = new TarefaFilter(null, "descricao", null, null, null, null);
+//            private final TarefaFilter tarefaFilterHoraMarcada = new TarefaFilter(null, null, data, null, null, null);
+//            private final TarefaFilter tarefaFilterRealizada = new TarefaFilter(null, null, null, true, null, null);
+//            private final TarefaFilter tarefaFilterHoraRealizada = new TarefaFilter(null, null, null, null, data, null);
+//            private final TarefaFilter tarefaFilterTipo = new TarefaFilter(null, null, null, null, null, TipoTarefa.TAREFA);
 
-            @BeforeEach
-            void init() {
-                mapper = new ObjectMapper();
-            }
+            private final Tarefa tarefa = new Tarefa(3L, "assunto", "descricao", data, true, data, TipoTarefa.TAREFA, null, null);
 
             @Nested
             @DisplayName("Testando o token valido.")
             class TokenValido {
+
             }
 
             @Nested
@@ -7763,6 +7778,7 @@ class LeadSpongeTestes {
             @Nested
             @DisplayName("Testando as validações da entidade.")
             class ValidacoesEntidade {
+
             }
         }
 

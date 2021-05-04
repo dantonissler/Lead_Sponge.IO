@@ -1,8 +1,14 @@
 package com.leadsponge.IO.jdbc;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 
+import com.leadsponge.IO.models.cliente.Cliente;
+import com.leadsponge.IO.models.negociacao.EstatusNegociacao;
+import com.leadsponge.IO.models.negociacao.Negociacao;
+import com.leadsponge.IO.repository.negociacao.NegociacaoRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
