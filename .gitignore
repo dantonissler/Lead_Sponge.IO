@@ -13,6 +13,9 @@ BackEnd/local.properties
 BackEnd/.settings/
 BackEnd/.loadpath
 BackEnd/.recommenders
+BackEnd/docker/**
+BackEnd/target/**
+BackEnd/idea/**
 
 # External tool builders
 BackEnd/.externalToolBuilders/
@@ -192,3 +195,5 @@ BackEnd/LeadSponge.IO/.idea/
 .metadata/.plugins/org.eclipse.ui.workbench/
 
 .metadata/
+
+*.xml
