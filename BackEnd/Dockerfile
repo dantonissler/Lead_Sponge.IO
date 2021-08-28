@@ -6,11 +6,10 @@ ARG ADDITIONAL_OPTS
 ENV PROFILE=${PROFILE}
 ENV ADDITIONAL_OPTS=${ADDITIONAL_OPTS}
 
-WORKDIR /root
+WORKDIR /opt/backend
 COPY /target/leadsponge.jar leadsponge.jar
 
 SHELL ["/bin/sh", "-c"]
-#ENTRYPOINT ["java","-jar","leadsponge.jar"]
 
 EXPOSE 5005
 EXPOSE 8080
