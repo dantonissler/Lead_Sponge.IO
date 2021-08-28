@@ -1,0 +1,75 @@
+package br.com.blinkdev.leadsponge.models.motivoPerda;
+
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.TableGenerator;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import br.com.blinkdev.leadsponge.models.negociacao.Negociacao;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonView;
+import br.com.blinkdev.leadsponge.models.View;
+import br.com.blinkdev.leadsponge.models.audit.UserDateAudit;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "motivo_perda")
+@TableGenerator(name = "motivo_perda_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "motivo_perda", allocationSize = 1)
+public class MotivoPerda extends UserDateAudit {
+
+	@Id
+	@Column(name = "id")
+	@JsonView(View.MotivoPerda.class)
+	@GeneratedValue(strategy = GenerationType.TABLE, generator = "motivo_perda_id")
+	private Long id;
+
+	@Size(min = 4, max = 50, message = "{nome.size}")
+	@NotNull(message = "{nome.null}")
+	@Column(name = "nome")
+	private String nome;
+
+	@JsonIgnoreProperties("motivoPerda")
+	@OneToMany(mappedBy = "motivoPerda", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Negociacao> negociacoes;
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		MotivoPerda other = (MotivoPerda) obj;
+		if (id == null) {
+			return other.id == null;
+		} else return id.equals(other.id);
+	}
+
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		return super.clone();
+	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
+
+}
