@@ -1,35 +1,25 @@
 package br.com.blinkdev.leadsponge.models.tarefa;
 
-import java.time.LocalDateTime;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.TableGenerator;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonView;
 import br.com.blinkdev.leadsponge.models.View;
 import br.com.blinkdev.leadsponge.models.audit.UserDateAudit;
 import br.com.blinkdev.leadsponge.models.negociacao.Negociacao;
 import br.com.blinkdev.leadsponge.models.usuario.Usuario;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonView;
+import lombok.*;
+import org.hibernate.Hibernate;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "tarefas")
@@ -94,26 +84,21 @@ public class Tarefa extends UserDateAudit {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Tarefa other = (Tarefa) obj;
-		if (id == null) {
-			return other.id == null;
-		} else return id.equals(other.id);
-	}
-
-	@Override
 	protected Object clone() throws CloneNotSupportedException {
 		return super.clone();
 	}
 
 	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+		Tarefa tarefa = (Tarefa) o;
+
+		return Objects.equals(id, tarefa.id);
+	}
+
+	@Override
 	public int hashCode() {
-		return super.hashCode();
+		return 791331939;
 	}
 }

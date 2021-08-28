@@ -1,19 +1,21 @@
 package br.com.blinkdev.leadsponge.models.campanha;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import br.com.blinkdev.leadsponge.models.View;
 import br.com.blinkdev.leadsponge.models.audit.UserDateAudit;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonView;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "campanhas")
@@ -36,26 +38,21 @@ public class Campanha extends UserDateAudit implements Serializable {
     private String descricao;
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Campanha other = (Campanha) obj;
-        if (id == null) {
-            return other.id == null;
-        } else return id.equals(other.id);
-    }
-
-    @Override
     protected Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Campanha campanha = (Campanha) o;
+
+        return Objects.equals(id, campanha.id);
+    }
+
+    @Override
     public int hashCode() {
-        return super.hashCode();
+        return 561786513;
     }
 }

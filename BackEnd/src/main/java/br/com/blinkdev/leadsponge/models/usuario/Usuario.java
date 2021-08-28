@@ -1,16 +1,15 @@
 package br.com.blinkdev.leadsponge.models.usuario;
 
+import br.com.blinkdev.leadsponge.models.View;
+import br.com.blinkdev.leadsponge.models.audit.UserDateAudit;
 import br.com.blinkdev.leadsponge.models.cliente.Cliente;
+import br.com.blinkdev.leadsponge.models.role.Role;
 import br.com.blinkdev.leadsponge.models.tarefa.Tarefa;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
-import br.com.blinkdev.leadsponge.models.View;
-import br.com.blinkdev.leadsponge.models.audit.UserDateAudit;
-import br.com.blinkdev.leadsponge.models.role.Role;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -19,18 +18,18 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.io.Serializable;
+import java.util.*;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "usuarios", uniqueConstraints = {@UniqueConstraint(columnNames = {"username"})})
 @TableGenerator(name = "usuario_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "usuarios", allocationSize = 1)
-public class Usuario extends UserDateAudit implements UserDetails {
+public class Usuario extends UserDateAudit implements UserDetails, Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -91,10 +90,12 @@ public class Usuario extends UserDateAudit implements UserDetails {
 
     @JsonIgnoreProperties("usuario")
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @ToString.Exclude
     private List<Tarefa> tarefas = new ArrayList<>();
 
     @ManyToMany(mappedBy = "seguidores", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("seguidores")
+    @ToString.Exclude
     private List<Cliente> clientesSeguidos;
 
     @Override
@@ -125,26 +126,21 @@ public class Usuario extends UserDateAudit implements UserDetails {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Usuario other = (Usuario) obj;
-        if (id == null) {
-            return other.id == null;
-        } else return id.equals(other.id);
-    }
-
-    @Override
     protected Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Usuario usuario = (Usuario) o;
+
+        return Objects.equals(id, usuario.id);
+    }
+
+    @Override
     public int hashCode() {
-        return super.hashCode();
+        return 1225039686;
     }
 }

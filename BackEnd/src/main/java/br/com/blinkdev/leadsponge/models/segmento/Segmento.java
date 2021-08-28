@@ -1,30 +1,36 @@
 package br.com.blinkdev.leadsponge.models.segmento;
 
+import br.com.blinkdev.leadsponge.models.View;
+import br.com.blinkdev.leadsponge.models.audit.UserDateAudit;
 import br.com.blinkdev.leadsponge.models.cliente.Cliente;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
-import br.com.blinkdev.leadsponge.models.View;
-import br.com.blinkdev.leadsponge.models.audit.UserDateAudit;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "segmentos")
 @TableGenerator(name = "segmento_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "segmentos", allocationSize = 1)
-public class Segmento extends UserDateAudit {
+public class Segmento extends UserDateAudit implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     public Segmento(Long id) {
         this.id = id;
     }
+
     public Segmento(String nome) {
         this.nome = nome;
     }
@@ -42,23 +48,9 @@ public class Segmento extends UserDateAudit {
 
     @ManyToMany(mappedBy = "segmentos", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("segmentos")
+    @ToString.Exclude
     private List<Cliente> clientes;
 
-
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Segmento other = (Segmento) obj;
-        if (id == null) {
-            return other.id == null;
-        } else return id.equals(other.id);
-    }
 
     @Override
     protected Object clone() throws CloneNotSupportedException {
@@ -66,7 +58,16 @@ public class Segmento extends UserDateAudit {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Segmento segmento = (Segmento) o;
+
+        return Objects.equals(id, segmento.id);
+    }
+
+    @Override
     public int hashCode() {
-        return super.hashCode();
+        return 576652681;
     }
 }

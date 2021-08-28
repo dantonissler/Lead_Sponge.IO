@@ -1,21 +1,23 @@
 package br.com.blinkdev.leadsponge.models.negociacaoProduto;
 
+import br.com.blinkdev.leadsponge.models.View;
+import br.com.blinkdev.leadsponge.models.audit.UserDateAudit;
 import br.com.blinkdev.leadsponge.models.negociacao.Negociacao;
 import br.com.blinkdev.leadsponge.models.negociacao.TipoReincidencia;
 import br.com.blinkdev.leadsponge.models.produto.Produto;
 import com.fasterxml.jackson.annotation.JsonView;
-import br.com.blinkdev.leadsponge.models.View;
-import br.com.blinkdev.leadsponge.models.audit.UserDateAudit;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "negociacao_produto")
@@ -72,26 +74,21 @@ public class NegociacaoProduto extends UserDateAudit {
     private Negociacao negociacao;
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        NegociacaoProduto other = (NegociacaoProduto) obj;
-        if (id == null) {
-            return other.id == null;
-        } else return id.equals(other.id);
-    }
-
-    @Override
     protected Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        NegociacaoProduto that = (NegociacaoProduto) o;
+
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
     public int hashCode() {
-        return super.hashCode();
+        return 91508497;
     }
 }

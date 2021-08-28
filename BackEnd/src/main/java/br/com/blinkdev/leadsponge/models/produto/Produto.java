@@ -1,23 +1,25 @@
 package br.com.blinkdev.leadsponge.models.produto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonView;
 import br.com.blinkdev.leadsponge.models.View;
 import br.com.blinkdev.leadsponge.models.audit.UserDateAudit;
 import br.com.blinkdev.leadsponge.models.negociacaoProduto.NegociacaoProduto;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonView;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "produtos")
@@ -51,21 +53,8 @@ public class Produto extends UserDateAudit {
     @JsonIgnore
     @JsonIgnoreProperties(value = {"negociacao", "produto"})
     @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ToString.Exclude
     private List<NegociacaoProduto> negociacaoProdutos;
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Produto other = (Produto) obj;
-        if (id == null) {
-            return other.id == null;
-        } else return id.equals(other.id);
-    }
 
     @Override
     protected Object clone() throws CloneNotSupportedException {
@@ -73,8 +62,16 @@ public class Produto extends UserDateAudit {
     }
 
     @Override
-    public int hashCode() {
-        return super.hashCode();
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Produto produto = (Produto) o;
+
+        return Objects.equals(id, produto.id);
     }
 
+    @Override
+    public int hashCode() {
+        return 1852208554;
+    }
 }

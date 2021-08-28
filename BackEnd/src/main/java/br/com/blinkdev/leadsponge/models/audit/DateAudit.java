@@ -1,31 +1,39 @@
 package br.com.blinkdev.leadsponge.models.audit;
 
-import java.time.LocalDateTime;
-import java.util.Date;
-
-import javax.persistence.Column;
-import javax.persistence.EntityListeners;
-import javax.persistence.MappedSuperclass;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import javax.persistence.Column;
+import javax.persistence.EntityListeners;
+import javax.persistence.MappedSuperclass;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
-import lombok.Data;
-
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(value = { "createdAt", "updatedAt" }, allowGetters = true)
-public abstract class DateAudit {
+@JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
+public abstract class DateAudit implements Serializable {
 
-	@CreatedDate
-	@Column(nullable = false, updatable = false)
-	private LocalDateTime createdAt;
+    private static final long serialVersionUID = 1L;
 
-	@LastModifiedDate
-	@Column(nullable = false)
-	private LocalDateTime updatedAt;
+    @CreatedDate
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    @Column(nullable = false)
+    private LocalDateTime updatedAt;
 }

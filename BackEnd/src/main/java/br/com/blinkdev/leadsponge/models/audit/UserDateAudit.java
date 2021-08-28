@@ -1,7 +1,10 @@
 package br.com.blinkdev.leadsponge.models.audit;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -10,12 +13,18 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = {"createdBy", "updatedBy"}, allowGetters = true)
-public abstract class UserDateAudit extends DateAudit {
+public abstract class UserDateAudit extends DateAudit implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @CreatedBy
     @Column(nullable = false, updatable = false)

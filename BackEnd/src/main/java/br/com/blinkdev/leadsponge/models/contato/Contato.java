@@ -1,77 +1,79 @@
 package br.com.blinkdev.leadsponge.models.contato;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import br.com.blinkdev.leadsponge.models.audit.UserDateAudit;
 import br.com.blinkdev.leadsponge.models.cliente.Cliente;
 import br.com.blinkdev.leadsponge.models.email.Email;
 import br.com.blinkdev.leadsponge.models.telefone.Telefone;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "contatos")
 @TableGenerator(name = "contato_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "contatos", allocationSize = 1)
-public class Contato extends UserDateAudit {
+public class Contato extends UserDateAudit implements Serializable {
 
-	public Contato(Long id) {
-		this.id = id;
-	}
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.TABLE, generator = "contato_id")
-	private Long id;
+    public Contato(Long id) {
+        this.id = id;
+    }
 
-	@Column(name = "nome")
-	@NotNull(message = "{nome.null}")
-	@Size(min = 4, max = 50, message = "{nome.size}")
-	private String nome;
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "contato_id")
+    private Long id;
 
-	@Size(max = 50, message = "{cargo.size}")
-	private String cargo;
+    @Column(name = "nome")
+    @NotNull(message = "{nome.null}")
+    @Size(min = 4, max = 50, message = "{nome.size}")
+    private String nome;
 
-	@ManyToOne
-	@JoinColumn(name = "cliente_id")
-	private Cliente cliente;
+    @Size(max = 50, message = "{cargo.size}")
+    private String cargo;
 
-	@JsonIgnoreProperties("contato")
-	@OneToMany(mappedBy = "contato", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Telefone> telefone;
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
 
-	@JsonIgnoreProperties("contato")
-	@OneToMany(mappedBy = "contato", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Email> email;
+    @JsonIgnoreProperties("contato")
+    @OneToMany(mappedBy = "contato", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private List<Telefone> telefone;
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Contato other = (Contato) obj;
-		if (id == null) {
-			return other.id == null;
-		} else return id.equals(other.id);
-	}
+    @JsonIgnoreProperties("contato")
+    @OneToMany(mappedBy = "contato", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private List<Email> email;
 
-	@Override
-	protected Object clone() throws CloneNotSupportedException {
-		return super.clone();
-	}
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 
-	@Override
-	public int hashCode() {
-		return super.hashCode();
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Contato contato = (Contato) o;
+
+        return Objects.equals(id, contato.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return 391263437;
+    }
 }

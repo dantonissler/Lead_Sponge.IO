@@ -18,13 +18,15 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.PropertySource;
 
 import java.util.Arrays;
 import java.util.HashSet;
 
 @Profile("dev")
+@PropertySource("classpath:application-dev.properties")
 @Configuration
-class DummyData {
+class DummyDevData {
     @Bean
     CommandLineRunner initTableRole(RoleRepository roleRepository) {
         return args -> {
