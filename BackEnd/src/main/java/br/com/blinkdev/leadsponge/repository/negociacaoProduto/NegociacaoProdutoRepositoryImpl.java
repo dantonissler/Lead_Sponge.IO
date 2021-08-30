@@ -1,8 +1,8 @@
 package br.com.blinkdev.leadsponge.repository.negociacaoProduto;
 
 import br.com.blinkdev.leadsponge.models.negociacaoProduto.NegociacaoProduto;
+import br.com.blinkdev.leadsponge.models.negociacaoProduto.NegociacaoProdutoFilter;
 import br.com.blinkdev.leadsponge.models.negociacaoProduto.NegociacaoProduto_;
-import br.com.blinkdev.leadsponge.repository.Filter.NegociacaoProdutoFilter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;

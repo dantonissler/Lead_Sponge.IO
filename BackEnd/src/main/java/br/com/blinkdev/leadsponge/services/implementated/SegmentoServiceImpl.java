@@ -1,16 +1,15 @@
 package br.com.blinkdev.leadsponge.services.implementated;
 
+import br.com.blinkdev.leadsponge.errorValidate.ErroMessage;
 import br.com.blinkdev.leadsponge.models.segmento.Segmento;
+import br.com.blinkdev.leadsponge.models.segmento.SegmentoFilter;
+import br.com.blinkdev.leadsponge.repository.segmento.SegmentoRepository;
 import br.com.blinkdev.leadsponge.services.SegmentoService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import br.com.blinkdev.leadsponge.errorValidate.ErroMessage;
-import br.com.blinkdev.leadsponge.repository.Filter.SegmentoFilter;
-import br.com.blinkdev.leadsponge.repository.segmento.SegmentoRepository;
 
 @Service
 public class SegmentoServiceImpl extends ErroMessage implements SegmentoService {

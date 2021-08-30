@@ -1,4 +1,4 @@
-package br.com.blinkdev.leadsponge.repository.Filter;
+package br.com.blinkdev.leadsponge.models.cliente;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EstagioNegociacaoFilter {
+public class ClienteFilter {
 	private String nome;
-	private String apelido;
-	private Integer posicao;
+	private String url;
+	private String resumo;
 }

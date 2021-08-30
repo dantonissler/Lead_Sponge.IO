@@ -1,9 +1,9 @@
 package br.com.blinkdev.leadsponge.endPoints;
 
-import br.com.blinkdev.leadsponge.models.cliente.Cliente;
-import br.com.blinkdev.leadsponge.services.ClienteService;
 import br.com.blinkdev.leadsponge.event.RecursoCriadoEvent;
-import br.com.blinkdev.leadsponge.repository.Filter.ClienteFilter;
+import br.com.blinkdev.leadsponge.models.cliente.Cliente;
+import br.com.blinkdev.leadsponge.models.cliente.ClienteFilter;
+import br.com.blinkdev.leadsponge.services.ClienteService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -23,7 +23,7 @@ import javax.validation.Valid;
 class ClienteEndPoint {
 
     @Autowired
-    private final ClienteService service;
+    private final ClienteService clienteService;
 
     @Autowired
     private final ApplicationEventPublisher publisher;
@@ -31,14 +31,14 @@ class ClienteEndPoint {
     @GetMapping(value = {""})
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('PESQUISAR_CLIENTE') and #oauth2.hasScope('read')")
-    Page<Cliente> pesquisar(ClienteFilter clienteFilter, Pageable pageable) {
-        return service.filtrar(clienteFilter, pageable);
+    Page<Cliente> entryPoint(ClienteFilter clienteFilter, Pageable pageable) {
+        return clienteService.filtrar(clienteFilter, pageable);
     }
 
     @PostMapping(value = {""})
     @PreAuthorize("hasAuthority('CADASTRAR_CLIENTE') and #oauth2.hasScope('write')")
     ResponseEntity<Cliente> cadastrar(@Valid @RequestBody Cliente cliente, HttpServletResponse response) {
-        Cliente criarCliente = service.salvar(cliente);
+        Cliente criarCliente = clienteService.salvar(cliente);
         publisher.publishEvent(new RecursoCriadoEvent(this, response, criarCliente.getId()));
         return ResponseEntity.status(HttpStatus.CREATED).body(criarCliente);
     }
@@ -46,7 +46,7 @@ class ClienteEndPoint {
     @PutMapping(value = {"/{id}"})
     @PreAuthorize("hasAuthority('CADASTRAR_CLIENTE') and #oauth2.hasScope('write')")
     ResponseEntity<Cliente> atualizar(@Valid @RequestBody Cliente cliente, @PathVariable Long id, HttpServletResponse response) {
-        Cliente novoCliente = service.atualizar(id, cliente);
+        Cliente novoCliente = clienteService.atualizar(id, cliente);
         publisher.publishEvent(new RecursoCriadoEvent(this, response, novoCliente.getId()));
         return ResponseEntity.status(HttpStatus.CREATED).body(novoCliente);
     }
@@ -54,13 +54,13 @@ class ClienteEndPoint {
     @DeleteMapping(value = {"/{id}"})
     @PreAuthorize("hasAuthority('REMOVER_CLIENTE') and #oauth2.hasScope('write')")
     ResponseEntity<Cliente> deletar(@PathVariable Long id) {
-        return ResponseEntity.ok(service.deletar(id));
+        return ResponseEntity.ok(clienteService.deletar(id));
     }
 
     @GetMapping(value = {"/{id}"})
     @PreAuthorize("hasAuthority('PESQUISAR_CLIENTE') and #oauth2.hasScope('read')")
     ResponseEntity<Cliente> detalhar(@Valid @PathVariable("id") Long id, HttpServletResponse response) {
         publisher.publishEvent(new RecursoCriadoEvent(this, response, id));
-        return ResponseEntity.ok(service.detalhar(id));
+        return ResponseEntity.ok(clienteService.detalhar(id));
     }
 }

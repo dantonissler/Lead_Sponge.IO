@@ -1,10 +1,10 @@
 package br.com.blinkdev.leadsponge.services.implementated;
 
-import br.com.blinkdev.leadsponge.models.campanha.Campanha;
-import br.com.blinkdev.leadsponge.services.CampanhaService;
 import br.com.blinkdev.leadsponge.errorValidate.ErroMessage;
-import br.com.blinkdev.leadsponge.repository.Filter.CampanhaFilter;
+import br.com.blinkdev.leadsponge.models.campanha.Campanha;
+import br.com.blinkdev.leadsponge.models.campanha.CampanhaFilter;
 import br.com.blinkdev.leadsponge.repository.campanha.CampanhaRepository;
+import br.com.blinkdev.leadsponge.services.CampanhaService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

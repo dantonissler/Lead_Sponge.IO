@@ -1,7 +1,12 @@
 package br.com.blinkdev.leadsponge.repository.estagioNegociacao;
 
-import java.util.ArrayList;
-import java.util.List;
+import br.com.blinkdev.leadsponge.models.estagioNegociacao.EstagioNegociacao;
+import br.com.blinkdev.leadsponge.models.estagioNegociacao.EstagioNegociacaoFilter;
+import br.com.blinkdev.leadsponge.models.estagioNegociacao.EstagioNegociacao_;
+import org.apache.maven.surefire.shade.org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -10,14 +15,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-
-import br.com.blinkdev.leadsponge.models.estagioNegociacao.EstagioNegociacao;
-import br.com.blinkdev.leadsponge.models.estagioNegociacao.EstagioNegociacao_;
-import br.com.blinkdev.leadsponge.repository.Filter.EstagioNegociacaoFilter;
-import org.apache.maven.surefire.shade.org.apache.commons.lang3.StringUtils;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EstagioNegociacaoRepositoryImpl implements EstagioNegociacaoRepositoryQuery {
 

@@ -1,11 +1,10 @@
 package br.com.blinkdev.leadsponge.services;
 
 import br.com.blinkdev.leadsponge.models.estagioNegociacao.EstagioNegociacao;
+import br.com.blinkdev.leadsponge.models.estagioNegociacao.EstagioNegociacaoFilter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import br.com.blinkdev.leadsponge.repository.Filter.EstagioNegociacaoFilter;
 
 @Service
 public interface EstagioNegociacaoService {

@@ -1,16 +1,15 @@
 package br.com.blinkdev.leadsponge.services.implementated;
 
+import br.com.blinkdev.leadsponge.errorValidate.ErroMessage;
 import br.com.blinkdev.leadsponge.models.estagioNegociacao.EstagioNegociacao;
+import br.com.blinkdev.leadsponge.models.estagioNegociacao.EstagioNegociacaoFilter;
+import br.com.blinkdev.leadsponge.repository.estagioNegociacao.EstagioNegociacaoRepository;
 import br.com.blinkdev.leadsponge.services.EstagioNegociacaoService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import br.com.blinkdev.leadsponge.errorValidate.ErroMessage;
-import br.com.blinkdev.leadsponge.repository.Filter.EstagioNegociacaoFilter;
-import br.com.blinkdev.leadsponge.repository.estagioNegociacao.EstagioNegociacaoRepository;
 
 @Service
 public class EstagioNegociacaoServiceImpl extends ErroMessage implements EstagioNegociacaoService {

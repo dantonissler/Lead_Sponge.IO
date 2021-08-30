@@ -4,7 +4,7 @@ import br.com.blinkdev.leadsponge.leadsponge.IO.Util;
 import br.com.blinkdev.leadsponge.models.negociacao.Negociacao;
 import br.com.blinkdev.leadsponge.models.tarefa.Tarefa;
 import br.com.blinkdev.leadsponge.models.usuario.Usuario;
-import br.com.blinkdev.leadsponge.repository.Filter.TarefaFilter;
+import br.com.blinkdev.leadsponge.models.tarefa.TarefaFilter;
 import br.com.blinkdev.leadsponge.services.TarefaService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import br.com.blinkdev.leadsponge.LeadSpongeApiApplication;

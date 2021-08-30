@@ -1,9 +1,9 @@
 package br.com.blinkdev.leadsponge.endPoints;
 
-import br.com.blinkdev.leadsponge.models.campanha.Campanha;
-import br.com.blinkdev.leadsponge.services.CampanhaService;
 import br.com.blinkdev.leadsponge.event.RecursoCriadoEvent;
-import br.com.blinkdev.leadsponge.repository.Filter.CampanhaFilter;
+import br.com.blinkdev.leadsponge.models.campanha.Campanha;
+import br.com.blinkdev.leadsponge.models.campanha.CampanhaFilter;
+import br.com.blinkdev.leadsponge.services.CampanhaService;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +30,9 @@ public class CampanhaEndPoint {
     private final ApplicationEventPublisher publisher;
 
     @GetMapping(value = {""})
-    @ApiOperation(value = "Pesquisar campanhas")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('PESQUISAR_CAMPANHA') and #oauth2.hasScope('read')")
-    public Page<Campanha> pesquisar(CampanhaFilter campanhaFilter, Pageable pageable) {
-        System.out.println("passou aqui");
+    public Page<Campanha> entryPoint(CampanhaFilter campanhaFilter, Pageable pageable) {
         return campanhaService.filtrar(campanhaFilter, pageable);
     }
 

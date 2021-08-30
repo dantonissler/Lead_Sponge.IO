@@ -1,9 +1,9 @@
 package br.com.blinkdev.leadsponge.endPoints;
 
-import br.com.blinkdev.leadsponge.models.estagioNegociacao.EstagioNegociacao;
-import br.com.blinkdev.leadsponge.services.EstagioNegociacaoService;
 import br.com.blinkdev.leadsponge.event.RecursoCriadoEvent;
-import br.com.blinkdev.leadsponge.repository.Filter.EstagioNegociacaoFilter;
+import br.com.blinkdev.leadsponge.models.estagioNegociacao.EstagioNegociacao;
+import br.com.blinkdev.leadsponge.models.estagioNegociacao.EstagioNegociacaoFilter;
+import br.com.blinkdev.leadsponge.services.EstagioNegociacaoService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -23,7 +23,7 @@ import javax.validation.Valid;
 class EstagioNegociacaoEndPoint {
 
     @Autowired
-    private final EstagioNegociacaoService service;
+    private final EstagioNegociacaoService estagioNegociacaoService;
 
     @Autowired
     private final ApplicationEventPublisher publisher;
@@ -31,14 +31,14 @@ class EstagioNegociacaoEndPoint {
     @GetMapping(value = {""})
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('PESQUISAR_ESTAGIO') and #oauth2.hasScope('read')")
-    Page<EstagioNegociacao> pesquisar(EstagioNegociacaoFilter estagioNegociacaoFilter, Pageable pageable) {
-        return service.filtrar(estagioNegociacaoFilter, pageable);
+    Page<EstagioNegociacao> entryPoint(EstagioNegociacaoFilter estagioNegociacaoFilter, Pageable pageable) {
+        return estagioNegociacaoService.filtrar(estagioNegociacaoFilter, pageable);
     }
 
     @PostMapping(value = {""})
     @PreAuthorize("hasAuthority('CADASTRAR_ESTAGIO') and #oauth2.hasScope('write')")
     ResponseEntity<EstagioNegociacao> cadastrar(@Valid @RequestBody EstagioNegociacao estagioNegociacao, HttpServletResponse response) {
-        EstagioNegociacao criarEstagioNegociacao = service.salvar(estagioNegociacao);
+        EstagioNegociacao criarEstagioNegociacao = estagioNegociacaoService.salvar(estagioNegociacao);
         publisher.publishEvent(new RecursoCriadoEvent(this, response, criarEstagioNegociacao.getId()));
         return ResponseEntity.status(HttpStatus.CREATED).body(criarEstagioNegociacao);
     }
@@ -46,7 +46,7 @@ class EstagioNegociacaoEndPoint {
     @PutMapping(value = {"/{id}"})
     @PreAuthorize("hasAuthority('CADASTRAR_ESTAGIO') and #oauth2.hasScope('write')")
     ResponseEntity<EstagioNegociacao> atualizar(@Valid @RequestBody EstagioNegociacao estagioNegociacao, @PathVariable Long id, HttpServletResponse response) {
-        EstagioNegociacao novaEstagioNegociacao = service.atualizar(id, estagioNegociacao);
+        EstagioNegociacao novaEstagioNegociacao = estagioNegociacaoService.atualizar(id, estagioNegociacao);
         publisher.publishEvent(new RecursoCriadoEvent(this, response, novaEstagioNegociacao.getId()));
         return ResponseEntity.status(HttpStatus.CREATED).body(novaEstagioNegociacao);
     }
@@ -54,12 +54,12 @@ class EstagioNegociacaoEndPoint {
     @DeleteMapping(value = {"/{id}"})
     @PreAuthorize("hasAuthority('REMOVER_ESTAGIO') and #oauth2.hasScope('write')")
     ResponseEntity<EstagioNegociacao> deletar(@PathVariable Long id) {
-        return ResponseEntity.ok(service.deletar(id));
+        return ResponseEntity.ok(estagioNegociacaoService.deletar(id));
     }
 
     @GetMapping(value = {"/{id}"})
     @PreAuthorize("hasAuthority('PESQUISAR_ESTAGIO') and #oauth2.hasScope('read')")
     public ResponseEntity<EstagioNegociacao> detalhar(@Valid @PathVariable("id") Long id) {
-        return ResponseEntity.ok(service.detalhar(id));
+        return ResponseEntity.ok(estagioNegociacaoService.detalhar(id));
     }
 }

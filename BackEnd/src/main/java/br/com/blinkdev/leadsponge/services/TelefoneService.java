@@ -1,11 +1,10 @@
 package br.com.blinkdev.leadsponge.services;
 
 import br.com.blinkdev.leadsponge.models.telefone.Telefone;
+import br.com.blinkdev.leadsponge.models.telefone.TelefoneFilter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import br.com.blinkdev.leadsponge.repository.Filter.TelefoneFilter;
 
 @Service
 public interface TelefoneService {

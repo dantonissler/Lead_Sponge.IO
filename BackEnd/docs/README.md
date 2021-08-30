@@ -1,21 +1,18 @@
-# LeadSponge.IO
+# LeadSponge API
 
-Run with Docker
-
-Prepare Dockerfile for Java/Spring Boot application and docker-compose.yml for MySQL Server
-
-Type the below command at the project root directory, make sure your local Docker engine is running
-
-docker-compose up
+### Aplicação rodando banco de dados MySQL, Framework Spring Boot
 
 
-Run with Maven
-You can run the app with your local MySQL Server by updating "hk-mysql" on application.properties to "localhost" and type the below command at the project root directory
+## Ambientes
+### homologação "holomog" - em Docker
 
-mvn clean spring-boot:run
+####Comando para rodar o docker
+docker-compose up --build --force-recreate
 
-Testing time
+###Desenvolvimento "dev" - utilizar a propriedade --spring.profiles.active=dev
 
-Access to localhost:8080 and start playing around with the app
+
+
+
 
 

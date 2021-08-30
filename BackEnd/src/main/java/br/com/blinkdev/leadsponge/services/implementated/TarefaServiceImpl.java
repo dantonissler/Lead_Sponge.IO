@@ -1,11 +1,14 @@
 package br.com.blinkdev.leadsponge.services.implementated;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-
+import br.com.blinkdev.leadsponge.errorValidate.ErroMessage;
+import br.com.blinkdev.leadsponge.errorValidate.exception.UsuarioInativaException;
+import br.com.blinkdev.leadsponge.mail.Mailer;
 import br.com.blinkdev.leadsponge.models.tarefa.Tarefa;
+import br.com.blinkdev.leadsponge.models.tarefa.TarefaFilter;
+import br.com.blinkdev.leadsponge.models.tarefa.TarefaResumo;
 import br.com.blinkdev.leadsponge.models.usuario.Usuario;
+import br.com.blinkdev.leadsponge.repository.tarefa.TarefaRepository;
+import br.com.blinkdev.leadsponge.repository.usuario.UsuarioRepository;
 import br.com.blinkdev.leadsponge.services.TarefaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,13 +19,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import br.com.blinkdev.leadsponge.errorValidate.ErroMessage;
-import br.com.blinkdev.leadsponge.errorValidate.exception.UsuarioInativaException;
-import br.com.blinkdev.leadsponge.mail.Mailer;
-import br.com.blinkdev.leadsponge.repository.Filter.TarefaFilter;
-import br.com.blinkdev.leadsponge.repository.projection.TarefaResumo;
-import br.com.blinkdev.leadsponge.repository.tarefa.TarefaRepository;
-import br.com.blinkdev.leadsponge.repository.usuario.UsuarioRepository;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TarefaServiceImpl extends ErroMessage implements TarefaService {

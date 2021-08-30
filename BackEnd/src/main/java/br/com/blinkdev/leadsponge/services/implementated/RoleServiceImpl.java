@@ -2,8 +2,8 @@ package br.com.blinkdev.leadsponge.services.implementated;
 
 import br.com.blinkdev.leadsponge.errorValidate.ErroMessage;
 import br.com.blinkdev.leadsponge.models.role.Role;
-import br.com.blinkdev.leadsponge.repository.Filter.RoleFilter;
-import br.com.blinkdev.leadsponge.repository.projection.RoleResumo;
+import br.com.blinkdev.leadsponge.models.role.RoleFilter;
+import br.com.blinkdev.leadsponge.models.role.RoleResumo;
 import br.com.blinkdev.leadsponge.repository.role.RoleRepository;
 import br.com.blinkdev.leadsponge.services.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;

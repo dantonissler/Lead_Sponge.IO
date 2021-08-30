@@ -1,16 +1,16 @@
 package br.com.blinkdev.leadsponge.services;
 
-import java.util.Date;
-
 import br.com.blinkdev.leadsponge.models.estagioNegociacao.EstagioNegociacao;
 import br.com.blinkdev.leadsponge.models.motivoPerda.MotivoPerda;
 import br.com.blinkdev.leadsponge.models.negociacao.EstatusNegociacao;
 import br.com.blinkdev.leadsponge.models.negociacao.Negociacao;
+import br.com.blinkdev.leadsponge.models.negociacao.NegociacaoFilter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import br.com.blinkdev.leadsponge.repository.Filter.NegociacaoFilter;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Service
 public interface NegociacaoService {
@@ -20,7 +20,7 @@ public interface NegociacaoService {
 
 	void atualizarPropriedadeEstatus(Long id, EstatusNegociacao estatus);
 
-	void atualizarPropriedadeDataFim(Long id, Date data);
+	void atualizarPropriedadeDataFim(Long id, LocalDateTime data);
 
 	void atualizarPropriedadeEstagio(Long id, EstagioNegociacao estagio);
 

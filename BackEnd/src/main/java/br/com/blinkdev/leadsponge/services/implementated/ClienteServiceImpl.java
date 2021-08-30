@@ -1,10 +1,10 @@
 package br.com.blinkdev.leadsponge.services.implementated;
 
-import br.com.blinkdev.leadsponge.models.cliente.Cliente;
-import br.com.blinkdev.leadsponge.services.ClienteService;
 import br.com.blinkdev.leadsponge.errorValidate.ErroMessage;
-import br.com.blinkdev.leadsponge.repository.Filter.ClienteFilter;
+import br.com.blinkdev.leadsponge.models.cliente.Cliente;
+import br.com.blinkdev.leadsponge.models.cliente.ClienteFilter;
 import br.com.blinkdev.leadsponge.repository.cliente.ClienteRepository;
+import br.com.blinkdev.leadsponge.services.ClienteService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

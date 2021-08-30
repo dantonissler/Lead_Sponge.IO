@@ -4,6 +4,7 @@ import br.com.blinkdev.leadsponge.models.View;
 import br.com.blinkdev.leadsponge.models.audit.UserDateAudit;
 import br.com.blinkdev.leadsponge.models.negociacao.Negociacao;
 import br.com.blinkdev.leadsponge.models.usuario.Usuario;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -42,12 +43,14 @@ public class Tarefa extends UserDateAudit {
 	private String descricao;
 
 	@Column(name = "hora_vencimento")
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
 	private LocalDateTime horaMarcada;
 
 	@Column(name = "realizada")
 	private Boolean realizda;
 
 	@Column(name = "hora_realizada")
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
 	private LocalDateTime horaRealizada;
 
 	@NotNull

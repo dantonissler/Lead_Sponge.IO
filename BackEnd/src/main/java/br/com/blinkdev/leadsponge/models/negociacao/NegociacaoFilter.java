@@ -1,10 +1,10 @@
-package br.com.blinkdev.leadsponge.repository.Filter;
-
-import java.math.BigDecimal;
+package br.com.blinkdev.leadsponge.models.negociacao;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
 
 @Data
 @AllArgsConstructor

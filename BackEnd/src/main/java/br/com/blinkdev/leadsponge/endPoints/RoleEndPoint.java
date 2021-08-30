@@ -1,9 +1,9 @@
 package br.com.blinkdev.leadsponge.endPoints;
 
-import br.com.blinkdev.leadsponge.services.RoleService;
 import br.com.blinkdev.leadsponge.models.role.Role;
-import br.com.blinkdev.leadsponge.repository.Filter.RoleFilter;
-import br.com.blinkdev.leadsponge.repository.projection.RoleResumo;
+import br.com.blinkdev.leadsponge.models.role.RoleFilter;
+import br.com.blinkdev.leadsponge.models.role.RoleResumo;
+import br.com.blinkdev.leadsponge.services.RoleService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,17 +19,17 @@ import org.springframework.web.bind.annotation.RestController;
 class RoleEndPoint {
 
     @Autowired
-    private final RoleService service;
+    private final RoleService roleService;
 
     @GetMapping(params = "resumo")
     @PreAuthorize("hasAuthority('PESQUISAR_USUARIO') and #oauth2.hasScope('read')")
-    public Page<RoleResumo> resumir(RoleFilter roleFilter, Pageable pageable) {
-        return service.resumir(roleFilter, pageable);
+    public Page<RoleResumo> entryPoint(RoleFilter roleFilter, Pageable pageable) {
+        return roleService.resumir(roleFilter, pageable);
     }
 
     @GetMapping(value = {""})
     @PreAuthorize("hasAuthority('PESQUISAR_USUARIO') and #oauth2.hasScope('read')")
     public Page<Role> pesquisar(RoleFilter usuarioFilter, Pageable pageable) {
-        return service.filtrar(usuarioFilter, pageable);
+        return roleService.filtrar(usuarioFilter, pageable);
     }
 }

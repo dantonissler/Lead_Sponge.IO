@@ -1,12 +1,11 @@
 package br.com.blinkdev.leadsponge.services;
 
 import br.com.blinkdev.leadsponge.models.tarefa.Tarefa;
+import br.com.blinkdev.leadsponge.models.tarefa.TarefaFilter;
+import br.com.blinkdev.leadsponge.models.tarefa.TarefaResumo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import br.com.blinkdev.leadsponge.repository.Filter.TarefaFilter;
-import br.com.blinkdev.leadsponge.repository.projection.TarefaResumo;
 
 @Service
 public interface TarefaService {

@@ -1,16 +1,15 @@
 package br.com.blinkdev.leadsponge.services.implementated;
 
+import br.com.blinkdev.leadsponge.errorValidate.ErroMessage;
+import br.com.blinkdev.leadsponge.models.email.Email;
+import br.com.blinkdev.leadsponge.models.email.EmailFilter;
+import br.com.blinkdev.leadsponge.repository.email.EmailRepository;
 import br.com.blinkdev.leadsponge.services.EmailService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import br.com.blinkdev.leadsponge.errorValidate.ErroMessage;
-import br.com.blinkdev.leadsponge.models.email.Email;
-import br.com.blinkdev.leadsponge.repository.Filter.EmailFilter;
-import br.com.blinkdev.leadsponge.repository.email.EmailRepository;
 
 @Service
 public class EmailServiceImpl extends ErroMessage implements EmailService {

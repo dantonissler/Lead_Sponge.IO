@@ -1,10 +1,10 @@
 package br.com.blinkdev.leadsponge.repository.tarefa;
 
 import br.com.blinkdev.leadsponge.models.tarefa.Tarefa;
+import br.com.blinkdev.leadsponge.models.tarefa.TarefaFilter;
+import br.com.blinkdev.leadsponge.models.tarefa.TarefaResumo;
 import br.com.blinkdev.leadsponge.models.tarefa.Tarefa_;
 import br.com.blinkdev.leadsponge.models.usuario.Usuario_;
-import br.com.blinkdev.leadsponge.repository.Filter.TarefaFilter;
-import br.com.blinkdev.leadsponge.repository.projection.TarefaResumo;
 import org.apache.maven.surefire.shade.org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;

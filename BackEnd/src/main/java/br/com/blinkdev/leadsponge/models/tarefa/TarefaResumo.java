@@ -1,13 +1,11 @@
-package br.com.blinkdev.leadsponge.repository.projection;
-
-import java.time.LocalDateTime;
-
-import br.com.blinkdev.leadsponge.models.tarefa.TipoTarefa;
+package br.com.blinkdev.leadsponge.models.tarefa;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter

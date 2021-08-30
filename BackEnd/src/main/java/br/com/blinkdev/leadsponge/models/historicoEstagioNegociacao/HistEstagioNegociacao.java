@@ -3,12 +3,14 @@ package br.com.blinkdev.leadsponge.models.historicoEstagioNegociacao;
 import br.com.blinkdev.leadsponge.models.View;
 import br.com.blinkdev.leadsponge.models.audit.UserDateAudit;
 import br.com.blinkdev.leadsponge.models.negociacao.Negociacao;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -39,7 +41,8 @@ public class HistEstagioNegociacao extends UserDateAudit implements Serializable
 
     @NotNull
     @Column(name = "data_mudanca")
-    private Date dataMudanca;
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    private LocalDate dataMudanca;
 
     @ManyToOne
     @JoinColumn(name = "negociacao_id")

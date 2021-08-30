@@ -1,5 +1,6 @@
 package br.com.blinkdev.leadsponge.models;
 
+//TODO: me aprofundar na utilização de Views
 public class View {
 	public interface Campanha {
 	}

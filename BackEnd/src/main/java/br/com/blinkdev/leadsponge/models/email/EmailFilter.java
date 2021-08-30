@@ -1,4 +1,4 @@
-package br.com.blinkdev.leadsponge.repository.Filter;
+package br.com.blinkdev.leadsponge.models.email;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CampanhaFilter {
-	private String nome;
-	private String descricao;
+public class EmailFilter {
+	private String email;
+
 }

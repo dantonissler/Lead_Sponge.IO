@@ -1,9 +1,9 @@
 package br.com.blinkdev.leadsponge.endPoints;
 
-import br.com.blinkdev.leadsponge.models.negociacaoProduto.NegociacaoProduto;
-import br.com.blinkdev.leadsponge.services.NegociacaoProdutoService;
 import br.com.blinkdev.leadsponge.event.RecursoCriadoEvent;
-import br.com.blinkdev.leadsponge.repository.Filter.NegociacaoProdutoFilter;
+import br.com.blinkdev.leadsponge.models.negociacaoProduto.NegociacaoProduto;
+import br.com.blinkdev.leadsponge.models.negociacaoProduto.NegociacaoProdutoFilter;
+import br.com.blinkdev.leadsponge.services.NegociacaoProdutoService;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ import javax.validation.Valid;
 class NegociacaoProdutoEndPoint {
 
     @Autowired
-    private final NegociacaoProdutoService service;
+    private final NegociacaoProdutoService negociacaoProdutoService;
 
     @Autowired
     private final ApplicationEventPublisher publisher;
@@ -33,15 +33,15 @@ class NegociacaoProdutoEndPoint {
     @ApiOperation(value = "Pesquisar campanhas")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('PESQUISAR_CAMPANHA') and #oauth2.hasScope('read')")
-    public Page<NegociacaoProduto> pesquisar(NegociacaoProdutoFilter negociacaoProdutoFilter, Pageable pageable) {
-        return service.filtrar(negociacaoProdutoFilter, pageable);
+    public Page<NegociacaoProduto> entryPoint(NegociacaoProdutoFilter negociacaoProdutoFilter, Pageable pageable) {
+        return negociacaoProdutoService.filtrar(negociacaoProdutoFilter, pageable);
     }
 
     @PostMapping(value = {""})
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
     ResponseEntity<NegociacaoProduto> cadastrar(@Valid @RequestBody NegociacaoProduto nProduto, HttpServletResponse response) {
-        NegociacaoProduto criarNP = service.salvar(nProduto);
+        NegociacaoProduto criarNP = negociacaoProdutoService.salvar(nProduto);
         publisher.publishEvent(new RecursoCriadoEvent(this, response, criarNP.getId()));
         return ResponseEntity.status(HttpStatus.CREATED).body(criarNP);
     }
@@ -49,7 +49,7 @@ class NegociacaoProdutoEndPoint {
     @PutMapping(value = {"/{id}"})
     @PreAuthorize("hasAuthority('CADASTRAR_CLIENTE') and #oauth2.hasScope('write')")
     ResponseEntity<NegociacaoProduto> atualizar(@Valid @RequestBody NegociacaoProduto nProduto, @PathVariable Long id, HttpServletResponse response) {
-        NegociacaoProduto novoNegociacaoProduto = service.atualizar(id, nProduto);
+        NegociacaoProduto novoNegociacaoProduto = negociacaoProdutoService.atualizar(id, nProduto);
         publisher.publishEvent(new RecursoCriadoEvent(this, response, novoNegociacaoProduto.getId()));
         return ResponseEntity.status(HttpStatus.CREATED).body(novoNegociacaoProduto);
     }
@@ -57,12 +57,12 @@ class NegociacaoProdutoEndPoint {
     @GetMapping(value = {"/{id}"})
     @PreAuthorize("hasAuthority('PESQUISAR_CAMPANHA') and #oauth2.hasScope('read')")
     ResponseEntity<NegociacaoProduto> detalhar(@Valid @PathVariable("id") Long id) {
-        return ResponseEntity.ok(service.detalhar(id));
+        return ResponseEntity.ok(negociacaoProdutoService.detalhar(id));
     }
 
     @DeleteMapping(value = {"/{id}"})
     @PreAuthorize("hasAuthority('REMOVER_CLIENTE') and #oauth2.hasScope('write')")
     ResponseEntity<NegociacaoProduto> remover(@PathVariable Long id) {
-        return ResponseEntity.ok(service.deletar(id));
+        return ResponseEntity.ok(negociacaoProdutoService.deletar(id));
     }
 }

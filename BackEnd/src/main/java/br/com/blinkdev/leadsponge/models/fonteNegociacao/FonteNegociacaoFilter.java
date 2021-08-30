@@ -1,4 +1,4 @@
-package br.com.blinkdev.leadsponge.repository.Filter;
+package br.com.blinkdev.leadsponge.models.fonteNegociacao;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

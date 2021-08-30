@@ -1,9 +1,9 @@
 package br.com.blinkdev.leadsponge.endPoints;
 
-import br.com.blinkdev.leadsponge.models.contato.Contato;
-import br.com.blinkdev.leadsponge.services.ContatoService;
 import br.com.blinkdev.leadsponge.event.RecursoCriadoEvent;
-import br.com.blinkdev.leadsponge.repository.Filter.ContatoFilter;
+import br.com.blinkdev.leadsponge.models.contato.Contato;
+import br.com.blinkdev.leadsponge.models.contato.ContatoFilter;
+import br.com.blinkdev.leadsponge.services.ContatoService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -23,7 +23,7 @@ import javax.validation.Valid;
 class ContatoEndPoint {
 
     @Autowired
-    private final ContatoService service;
+    private final ContatoService contatoService;
 
     @Autowired
     private final ApplicationEventPublisher publisher;
@@ -31,14 +31,14 @@ class ContatoEndPoint {
     @GetMapping(value = {""})
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('PESQUISAR_CONTATO') and #oauth2.hasScope('read')")
-    Page<Contato> pesquisar(ContatoFilter contatoFilter, Pageable pageable) {
-        return service.filtrar(contatoFilter, pageable);
+    Page<Contato> entryPoint(ContatoFilter contatoFilter, Pageable pageable) {
+        return contatoService.filtrar(contatoFilter, pageable);
     }
 
     @PostMapping(value = {""})
     @PreAuthorize("hasAuthority('CADASTRAR_CONTATO') and #oauth2.hasScope('write')")
     ResponseEntity<Contato> cadastrar(@Valid @RequestBody Contato contato, HttpServletResponse response) {
-        Contato criarCliente = service.salvar(contato);
+        Contato criarCliente = contatoService.salvar(contato);
         publisher.publishEvent(new RecursoCriadoEvent(this, response, criarCliente.getId()));
         return ResponseEntity.status(HttpStatus.CREATED).body(criarCliente);
     }
@@ -46,7 +46,7 @@ class ContatoEndPoint {
     @PutMapping(value = {"/{id}"})
     @PreAuthorize("hasAuthority('CADASTRAR_CONTATO') and #oauth2.hasScope('write')")
     ResponseEntity<Contato> atualizar(@Valid @RequestBody Contato contato, @PathVariable Long id, HttpServletResponse response) {
-        Contato novaContato = service.atualizar(id, contato);
+        Contato novaContato = contatoService.atualizar(id, contato);
         publisher.publishEvent(new RecursoCriadoEvent(this, response, novaContato.getId()));
         return ResponseEntity.status(HttpStatus.CREATED).body(novaContato);
     }
@@ -54,12 +54,12 @@ class ContatoEndPoint {
     @DeleteMapping(value = {"/{id}"})
     @PreAuthorize("hasAuthority('REMOVER_CONTATO') and #oauth2.hasScope('write')")
     ResponseEntity<Contato> deletar(@PathVariable Long id) {
-        return ResponseEntity.ok(service.deletar(id));
+        return ResponseEntity.ok(contatoService.deletar(id));
     }
 
     @GetMapping(value = {"/{id}"})
     @PreAuthorize("hasAuthority('PESQUISAR_CAMPANHA') and #oauth2.hasScope('read')")
     ResponseEntity<Contato> detalhar(@Valid @PathVariable("id") Long id) {
-        return ResponseEntity.ok(service.detalhar(id));
+        return ResponseEntity.ok(contatoService.detalhar(id));
     }
 }

@@ -1,7 +1,14 @@
 package br.com.blinkdev.leadsponge.repository.role;
 
-import java.util.ArrayList;
-import java.util.List;
+import br.com.blinkdev.leadsponge.models.role.Role;
+import br.com.blinkdev.leadsponge.models.role.RoleFilter;
+import br.com.blinkdev.leadsponge.models.role.RoleResumo;
+import br.com.blinkdev.leadsponge.models.role.Role_;
+import org.apache.maven.surefire.shade.org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -10,17 +17,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-
-import br.com.blinkdev.leadsponge.repository.projection.RoleResumo;
-import org.apache.maven.surefire.shade.org.apache.commons.lang3.StringUtils;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-
-import br.com.blinkdev.leadsponge.models.role.Role;
-import br.com.blinkdev.leadsponge.models.role.Role_;
-import br.com.blinkdev.leadsponge.repository.Filter.RoleFilter;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class RoleRepositoryImpl implements RoleRepositoryQuery {

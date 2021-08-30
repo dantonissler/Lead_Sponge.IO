@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.blinkdev.leadsponge.config.property.LeadSpongeApiProperty;
 
-@Profile("oauth-security")
 @RestController
 @RequestMapping("/tokens")
 class TokenEndPoint {

@@ -1,4 +1,4 @@
-package br.com.blinkdev.leadsponge.repository.projection;
+package br.com.blinkdev.leadsponge.models.role;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

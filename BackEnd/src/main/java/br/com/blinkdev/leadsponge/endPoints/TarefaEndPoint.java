@@ -1,11 +1,11 @@
 package br.com.blinkdev.leadsponge.endPoints;
 
-import br.com.blinkdev.leadsponge.models.tarefa.Tarefa;
-import br.com.blinkdev.leadsponge.services.TarefaService;
 import br.com.blinkdev.leadsponge.errorValidate.ErroMessage;
 import br.com.blinkdev.leadsponge.event.RecursoCriadoEvent;
-import br.com.blinkdev.leadsponge.repository.Filter.TarefaFilter;
-import br.com.blinkdev.leadsponge.repository.projection.TarefaResumo;
+import br.com.blinkdev.leadsponge.models.tarefa.Tarefa;
+import br.com.blinkdev.leadsponge.models.tarefa.TarefaFilter;
+import br.com.blinkdev.leadsponge.models.tarefa.TarefaResumo;
+import br.com.blinkdev.leadsponge.services.TarefaService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -25,7 +25,7 @@ import javax.validation.Valid;
 class TarefaEndPoint extends ErroMessage {
 
     @Autowired
-    private final TarefaService service;
+    private final TarefaService tarefaService;
 
     @Autowired
     private final ApplicationEventPublisher publisher;
@@ -33,20 +33,20 @@ class TarefaEndPoint extends ErroMessage {
     @GetMapping(value = {""})
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('PESQUISAR_TAREFA') and #oauth2.hasScope('read')")
-    Page<Tarefa> pesquisar(TarefaFilter tarefaFilter, Pageable pageable) {
-        return service.filtrar(tarefaFilter, pageable);
+    Page<Tarefa> entryPoint(TarefaFilter tarefaFilter, Pageable pageable) {
+        return tarefaService.filtrar(tarefaFilter, pageable);
     }
 
     @GetMapping(params = "resumo")
     @PreAuthorize("hasAuthority('PESQUISAR_TAREFA') and #oauth2.hasScope('read')")
     Page<TarefaResumo> resumir(TarefaFilter tarefaFilter, Pageable pageable) {
-        return service.resumir(tarefaFilter, pageable);
+        return tarefaService.resumir(tarefaFilter, pageable);
     }
 
     @PostMapping(value = {""})
     @PreAuthorize("hasAuthority('CADASTRAR_TAREFA') and #oauth2.hasScope('write')")
     ResponseEntity<Tarefa> cadastrar(@Valid @RequestBody Tarefa tarefa, HttpServletResponse response) {
-        Tarefa criarTarefa = service.salvar(tarefa);
+        Tarefa criarTarefa = tarefaService.salvar(tarefa);
         publisher.publishEvent(new RecursoCriadoEvent(this, response, criarTarefa.getId()));
         return ResponseEntity.status(HttpStatus.CREATED).body(criarTarefa);
     }
@@ -54,7 +54,7 @@ class TarefaEndPoint extends ErroMessage {
     @PutMapping(value = {"/{id}"})
     @PreAuthorize("hasAuthority('CADASTRAR_TAREFA') and #oauth2.hasScope('write')")
     ResponseEntity<Tarefa> atualizar(@Valid @RequestBody Tarefa tarefa, @PathVariable Long id, HttpServletResponse response) {
-        Tarefa novaTarefa = service.atualizar(id, tarefa);
+        Tarefa novaTarefa = tarefaService.atualizar(id, tarefa);
         publisher.publishEvent(new RecursoCriadoEvent(this, response, novaTarefa.getId()));
         return ResponseEntity.status(HttpStatus.CREATED).body(novaTarefa);
     }
@@ -62,12 +62,12 @@ class TarefaEndPoint extends ErroMessage {
     @DeleteMapping(value = {"/{id}"})
     @PreAuthorize("hasAuthority('REMOVER_TAREFA') and #oauth2.hasScope('write')")
     ResponseEntity<Tarefa> remover(@PathVariable Long id) {
-        return ResponseEntity.ok(service.deletar(id));
+        return ResponseEntity.ok(tarefaService.deletar(id));
     }
 
     @GetMapping(value = {"/{id}"})
     @PreAuthorize("hasAuthority('PESQUISAR_TAREFA') and #oauth2.hasScope('read')")
     ResponseEntity<Tarefa> detalhar(@Valid @PathVariable("id") Long id) {
-        return ResponseEntity.ok(service.detalhar(id));
+        return ResponseEntity.ok(tarefaService.detalhar(id));
     }
 }

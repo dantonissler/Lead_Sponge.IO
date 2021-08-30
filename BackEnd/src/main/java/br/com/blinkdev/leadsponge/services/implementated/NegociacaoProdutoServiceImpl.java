@@ -1,9 +1,12 @@
 package br.com.blinkdev.leadsponge.services.implementated;
 
-import java.math.BigDecimal;
-
+import br.com.blinkdev.leadsponge.errorValidate.ErroMessage;
 import br.com.blinkdev.leadsponge.models.negociacaoProduto.NegociacaoProduto;
+import br.com.blinkdev.leadsponge.models.negociacaoProduto.NegociacaoProdutoFilter;
 import br.com.blinkdev.leadsponge.models.negociacaoProduto.TipoDesconto;
+import br.com.blinkdev.leadsponge.repository.negociacao.NegociacaoRepository;
+import br.com.blinkdev.leadsponge.repository.negociacaoProduto.NegociacaoProdutoRepository;
+import br.com.blinkdev.leadsponge.repository.produto.ProdutoRepository;
 import br.com.blinkdev.leadsponge.services.NegociacaoProdutoService;
 import br.com.blinkdev.leadsponge.services.NegociacaoService;
 import org.springframework.beans.BeanUtils;
@@ -12,11 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import br.com.blinkdev.leadsponge.errorValidate.ErroMessage;
-import br.com.blinkdev.leadsponge.repository.Filter.NegociacaoProdutoFilter;
-import br.com.blinkdev.leadsponge.repository.negociacao.NegociacaoRepository;
-import br.com.blinkdev.leadsponge.repository.negociacaoProduto.NegociacaoProdutoRepository;
-import br.com.blinkdev.leadsponge.repository.produto.ProdutoRepository;
+import java.math.BigDecimal;
 
 @Service
 public class NegociacaoProdutoServiceImpl extends ErroMessage implements NegociacaoProdutoService {

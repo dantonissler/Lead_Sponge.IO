@@ -1,9 +1,9 @@
 package br.com.blinkdev.leadsponge.repository.usuario;
 
 import br.com.blinkdev.leadsponge.models.usuario.Usuario;
+import br.com.blinkdev.leadsponge.models.usuario.UsuarioFilter;
+import br.com.blinkdev.leadsponge.models.usuario.UsuarioModel;
 import br.com.blinkdev.leadsponge.models.usuario.Usuario_;
-import br.com.blinkdev.leadsponge.repository.Filter.UsuarioFilter;
-import br.com.blinkdev.leadsponge.repository.projection.UsuarioResumo;
 import org.apache.maven.surefire.shade.org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -40,14 +40,14 @@ public class UsuarioRepositoryImpl implements UsuarioRepositoryQuery {
 	}
 
 	@Override
-	public Page<UsuarioResumo> resumir(UsuarioFilter usuarioFilter, Pageable pageable) {
+	public Page<UsuarioModel> resumir(UsuarioFilter usuarioFilter, Pageable pageable) {
 		CriteriaBuilder builder = manager.getCriteriaBuilder();
-		CriteriaQuery<UsuarioResumo> criteria = builder.createQuery(UsuarioResumo.class);
+		CriteriaQuery<UsuarioModel> criteria = builder.createQuery(UsuarioModel.class);
 		Root<Usuario> root = criteria.from(Usuario.class);
-		criteria.select(builder.construct(UsuarioResumo.class, root.get(Usuario_.id), root.get(Usuario_.username), root.get(Usuario_.nomeCompleto), root.get(Usuario_.email), root.get(Usuario_.enabled)));
+		criteria.select(builder.construct(UsuarioModel.class, root.get(Usuario_.id), root.get(Usuario_.username), root.get(Usuario_.nomeCompleto), root.get(Usuario_.email), root.get(Usuario_.enabled)));
 		Predicate[] predicates = criarRestricoes(usuarioFilter, builder, root);
 		criteria.where(predicates);
-		TypedQuery<UsuarioResumo> query = manager.createQuery(criteria);
+		TypedQuery<UsuarioModel> query = manager.createQuery(criteria);
 		adicionarRestricoesDePaginacao(query, pageable);
 		return new PageImpl<>(query.getResultList(), pageable, total(usuarioFilter));
 	}

@@ -1,4 +1,4 @@
-package br.com.blinkdev.leadsponge.repository.Filter;
+package br.com.blinkdev.leadsponge.models.usuario;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

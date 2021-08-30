@@ -1,16 +1,15 @@
 package br.com.blinkdev.leadsponge.services.implementated;
 
+import br.com.blinkdev.leadsponge.errorValidate.ErroMessage;
 import br.com.blinkdev.leadsponge.models.produto.Produto;
+import br.com.blinkdev.leadsponge.models.produto.ProdutoFilter;
+import br.com.blinkdev.leadsponge.repository.produto.ProdutoRepository;
 import br.com.blinkdev.leadsponge.services.ProdutoService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import br.com.blinkdev.leadsponge.errorValidate.ErroMessage;
-import br.com.blinkdev.leadsponge.repository.Filter.ProdutoFilter;
-import br.com.blinkdev.leadsponge.repository.produto.ProdutoRepository;
 
 @Service
 public class ProdutoServiceImpl extends ErroMessage implements ProdutoService {

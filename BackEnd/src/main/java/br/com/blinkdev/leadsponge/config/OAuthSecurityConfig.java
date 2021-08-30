@@ -1,8 +1,8 @@
 package br.com.blinkdev.leadsponge.config;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -22,7 +22,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 public class OAuthSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Bean
-	public PasswordEncoder passwordEncoder() {
+	public BCryptPasswordEncoder BCryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 
@@ -45,7 +45,6 @@ public class OAuthSecurityConfig extends WebSecurityConfigurerAdapter {
                 "/swagger-resources/**",
                 "/configuration/security",
                 "/swagger-ui.html",
-                "/swagger-ui",
                 "/webjars/**");
     }
 }

@@ -1,9 +1,9 @@
 package br.com.blinkdev.leadsponge.endPoints;
 
-import br.com.blinkdev.leadsponge.models.segmento.Segmento;
-import br.com.blinkdev.leadsponge.services.SegmentoService;
 import br.com.blinkdev.leadsponge.event.RecursoCriadoEvent;
-import br.com.blinkdev.leadsponge.repository.Filter.SegmentoFilter;
+import br.com.blinkdev.leadsponge.models.segmento.Segmento;
+import br.com.blinkdev.leadsponge.models.segmento.SegmentoFilter;
+import br.com.blinkdev.leadsponge.services.SegmentoService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -23,7 +23,7 @@ import javax.validation.Valid;
 class SegmentoEndPoint {
 
     @Autowired
-    private final SegmentoService service;
+    private final SegmentoService segmentoService;
 
     @Autowired
     private final ApplicationEventPublisher publisher;
@@ -31,14 +31,14 @@ class SegmentoEndPoint {
     @GetMapping(value = {""})
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('PESQUISAR_SEGMENTO') and #oauth2.hasScope('read')")
-    public Page<Segmento> pesquisar(SegmentoFilter segmentoFilter, Pageable pageable) {
-        return service.filtrar(segmentoFilter, pageable);
+    public Page<Segmento> entryPoint(SegmentoFilter segmentoFilter, Pageable pageable) {
+        return segmentoService.filtrar(segmentoFilter, pageable);
     }
 
     @PostMapping(value = {""})
     @PreAuthorize("hasAuthority('CADASTRAR_SEGMENTO') and #oauth2.hasScope('write')")
     public ResponseEntity<Segmento> cadastrar(@Valid @RequestBody Segmento segmento, HttpServletResponse response) {
-        Segmento criarSegmento = service.salvar(segmento);
+        Segmento criarSegmento = segmentoService.salvar(segmento);
         publisher.publishEvent(new RecursoCriadoEvent(this, response, criarSegmento.getId()));
         return ResponseEntity.status(HttpStatus.CREATED).body(criarSegmento);
     }
@@ -46,7 +46,7 @@ class SegmentoEndPoint {
     @PutMapping(value = {"/{id}"})
     @PreAuthorize("hasAuthority('CADASTRAR_SEGMENTO') and #oauth2.hasScope('write')")
     ResponseEntity<Segmento> atualizar(@Valid @RequestBody Segmento segmento, @PathVariable Long id, HttpServletResponse response) {
-        Segmento novaSegmento = service.atualizar(id, segmento);
+        Segmento novaSegmento = segmentoService.atualizar(id, segmento);
         publisher.publishEvent(new RecursoCriadoEvent(this, response, novaSegmento.getId()));
         return ResponseEntity.status(HttpStatus.CREATED).body(novaSegmento);
     }
@@ -54,13 +54,13 @@ class SegmentoEndPoint {
     @DeleteMapping(value = {"/{id}"})
     @PreAuthorize("hasAuthority('REMOVER_SEGMENTO') and #oauth2.hasScope('write')")
     public ResponseEntity<Segmento> deletar(@PathVariable Long id) {
-        return ResponseEntity.ok(service.deletar(id));
+        return ResponseEntity.ok(segmentoService.deletar(id));
     }
 
     @GetMapping(value = {"/{id}"})
     @PreAuthorize("hasAuthority('PESQUISAR_SEGMENTO') and #oauth2.hasScope('read')")
     public ResponseEntity<Segmento> detalhar(@Valid @PathVariable("id") Long id) {
-        return ResponseEntity.ok(service.detalhar(id));
+        return ResponseEntity.ok(segmentoService.detalhar(id));
     }
 
 }

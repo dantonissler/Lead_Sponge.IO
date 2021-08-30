@@ -1,13 +1,14 @@
 package br.com.blinkdev.leadsponge.services.implementated;
 
-import java.math.BigDecimal;
-import java.util.Date;
-
+import br.com.blinkdev.leadsponge.errorValidate.ErroMessage;
 import br.com.blinkdev.leadsponge.models.estagioNegociacao.EstagioNegociacao;
 import br.com.blinkdev.leadsponge.models.motivoPerda.MotivoPerda;
 import br.com.blinkdev.leadsponge.models.negociacao.EstatusNegociacao;
 import br.com.blinkdev.leadsponge.models.negociacao.Negociacao;
+import br.com.blinkdev.leadsponge.models.negociacao.NegociacaoFilter;
 import br.com.blinkdev.leadsponge.models.negociacao.TipoReincidencia;
+import br.com.blinkdev.leadsponge.repository.cliente.ClienteRepository;
+import br.com.blinkdev.leadsponge.repository.negociacao.NegociacaoRepository;
 import br.com.blinkdev.leadsponge.services.NegociacaoService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +16,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import br.com.blinkdev.leadsponge.errorValidate.ErroMessage;
-import br.com.blinkdev.leadsponge.repository.Filter.NegociacaoFilter;
-import br.com.blinkdev.leadsponge.repository.cliente.ClienteRepository;
-import br.com.blinkdev.leadsponge.repository.negociacao.NegociacaoRepository;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Service
 public class NegociacaoServiceImpl extends ErroMessage implements NegociacaoService {
@@ -64,7 +65,7 @@ public class NegociacaoServiceImpl extends ErroMessage implements NegociacaoServ
 	}
 
 	@Override
-	public void atualizarPropriedadeDataFim(Long id, Date data) {
+	public void atualizarPropriedadeDataFim(Long id, LocalDateTime data) {
 		Negociacao negociacaoSalva = repository.findById(id).orElseThrow(() -> notFouldId(id, "a negociação "));
 		negociacaoSalva.setDataPrevistaEncerramento(data);
 		repository.save(negociacaoSalva);

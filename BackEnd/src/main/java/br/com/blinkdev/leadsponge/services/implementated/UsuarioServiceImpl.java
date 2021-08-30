@@ -1,25 +1,32 @@
 package br.com.blinkdev.leadsponge.services.implementated;
 
-import java.util.HashSet;
-
+import br.com.blinkdev.leadsponge.endPoints.UsuarioEndPoint;
+import br.com.blinkdev.leadsponge.errorValidate.ErroMessage;
 import br.com.blinkdev.leadsponge.models.usuario.Usuario;
+import br.com.blinkdev.leadsponge.models.usuario.UsuarioFilter;
+import br.com.blinkdev.leadsponge.models.usuario.UsuarioModel;
 import br.com.blinkdev.leadsponge.models.usuario.UsuarioTO;
+import br.com.blinkdev.leadsponge.repository.usuario.UsuarioRepository;
 import br.com.blinkdev.leadsponge.services.UsuarioService;
 import br.com.blinkdev.leadsponge.storage.Disco;
 import org.apache.maven.surefire.shade.org.apache.commons.lang3.StringUtils;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import br.com.blinkdev.leadsponge.errorValidate.ErroMessage;
-import br.com.blinkdev.leadsponge.repository.Filter.UsuarioFilter;
-import br.com.blinkdev.leadsponge.repository.projection.UsuarioResumo;
-import br.com.blinkdev.leadsponge.repository.usuario.UsuarioRepository;
+
+
+import java.util.HashSet;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 public class UsuarioServiceImpl extends ErroMessage implements UsuarioService {
@@ -32,6 +39,9 @@ public class UsuarioServiceImpl extends ErroMessage implements UsuarioService {
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+	@Autowired
+	private ModelMapper modelMapper;
 
 	@Override
 	public Usuario atualizarUsuarioDTO(Long id, UsuarioTO usuario) {
@@ -115,17 +125,24 @@ public class UsuarioServiceImpl extends ErroMessage implements UsuarioService {
 	}
 
 	@Override
-	public Usuario detalhar(Long id) {
-		return repository.findById(id).orElseThrow(() -> notFouldId(id, "a produto"));
+	public UsuarioModel detalhar(Long id) {
+		return toModel(repository.findById(id).orElseThrow(() -> notFouldId(id, "a produto")));
 	}
 
 	@Override
-	public Page<UsuarioResumo> resumir(UsuarioFilter usuarioFilter, Pageable pageable) {
+	public Page<UsuarioModel> list(UsuarioFilter usuarioFilter, Pageable pageable) {
 		return repository.resumir(usuarioFilter, pageable);
 	}
 
 	@Override
 	public Usuario findByNome(String username) {
 		return repository.findByUsername(username).orElseThrow(() -> notFould("o usuario"));
+	}
+
+	// TODO ver a viabilidade
+	private UsuarioModel toModel(Usuario usuario){
+		UsuarioModel usuarioModel = modelMapper.map(usuario, UsuarioModel.class);
+		usuarioModel.add(linkTo(methodOn(UsuarioEndPoint.class).list(new UsuarioFilter(), null)).withRel(IanaLinkRelations.COLLECTION));
+		return usuarioModel;
 	}
 }

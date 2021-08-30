@@ -1,7 +1,7 @@
 package br.com.blinkdev.leadsponge.repository.telefone;
 
 import br.com.blinkdev.leadsponge.models.telefone.Telefone;
-import br.com.blinkdev.leadsponge.repository.Filter.TelefoneFilter;
+import br.com.blinkdev.leadsponge.models.telefone.TelefoneFilter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;

@@ -1,16 +1,15 @@
 package br.com.blinkdev.leadsponge.services.implementated;
 
+import br.com.blinkdev.leadsponge.errorValidate.ErroMessage;
 import br.com.blinkdev.leadsponge.models.telefone.Telefone;
+import br.com.blinkdev.leadsponge.models.telefone.TelefoneFilter;
+import br.com.blinkdev.leadsponge.repository.telefone.TelefoneRepository;
 import br.com.blinkdev.leadsponge.services.TelefoneService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import br.com.blinkdev.leadsponge.errorValidate.ErroMessage;
-import br.com.blinkdev.leadsponge.repository.Filter.TelefoneFilter;
-import br.com.blinkdev.leadsponge.repository.telefone.TelefoneRepository;
 
 @Service
 public class TelefoneServiceImpl extends ErroMessage implements TelefoneService {

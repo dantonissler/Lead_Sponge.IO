@@ -10,6 +10,7 @@ import br.com.blinkdev.leadsponge.models.historicoEstagioNegociacao.HistEstagioN
 import br.com.blinkdev.leadsponge.models.motivoPerda.MotivoPerda;
 import br.com.blinkdev.leadsponge.models.negociacaoProduto.NegociacaoProduto;
 import br.com.blinkdev.leadsponge.models.tarefa.Tarefa;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -20,6 +21,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -55,7 +57,8 @@ public class Negociacao extends UserDateAudit implements Serializable {
     private Integer avaliacao;
 
     @Column(name = "data_prevista_encerramento")
-    private Date dataPrevistaEncerramento;
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    private LocalDateTime dataPrevistaEncerramento;
 
     @NotNull
     @Enumerated(EnumType.STRING)

@@ -1,7 +1,7 @@
 package br.com.blinkdev.leadsponge.repository.contato;
 
 import br.com.blinkdev.leadsponge.models.contato.Contato;
-import br.com.blinkdev.leadsponge.repository.Filter.ContatoFilter;
+import br.com.blinkdev.leadsponge.models.contato.ContatoFilter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;

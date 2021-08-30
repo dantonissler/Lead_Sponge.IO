@@ -24,7 +24,7 @@ import java.util.List;
 public class SwaggerConfig {
 
     @Autowired
-    private LeadSpongeApiProperty property;
+    private LeadSpongeApiProperty leadSpongeApiProperty;
 
     @Bean
     public Docket api() {
@@ -41,7 +41,7 @@ public class SwaggerConfig {
     private OAuth securitySchema() {
         List<AuthorizationScope> authorizationScopeList = new ArrayList<>();
         List<GrantType> grantTypes = new ArrayList<>();
-        GrantType creGrant = new ResourceOwnerPasswordCredentialsGrant(property.getOauth2().getAccessTokenUri());
+        GrantType creGrant = new ResourceOwnerPasswordCredentialsGrant(leadSpongeApiProperty.getOauth2().getAccessTokenUri());
         grantTypes.add(creGrant);
         return new OAuth("oauth2schema", authorizationScopeList, grantTypes);
     }
@@ -57,7 +57,7 @@ public class SwaggerConfig {
 
     @Bean
     public SecurityConfiguration security() {
-        return SecurityConfigurationBuilder.builder().clientId(property.getOauth2().getClientId()).clientSecret(property.getOauth2().getClientSecretDecript()).realm("").appName("Lead Spong").scopeSeparator(",")
+        return SecurityConfigurationBuilder.builder().clientId(leadSpongeApiProperty.getOauth2().getClientId()).clientSecret(leadSpongeApiProperty.getOauth2().getClientSecretDecript()).realm("").appName("Lead Spong").scopeSeparator(",")
                 .useBasicAuthenticationWithAccessCodeGrant(false).build();
     }
 

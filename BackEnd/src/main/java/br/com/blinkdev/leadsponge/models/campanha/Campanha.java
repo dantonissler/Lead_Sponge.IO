@@ -25,12 +25,10 @@ public class Campanha extends UserDateAudit implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Column(name = "id")
     @JsonView(View.Campanha.class)
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "campanha_id")
     private Long id;
 
-    @Column(name = "nome")
     @NotNull(message = "{nome.null}")
     @Size(min = 4, max = 50, message = "{nome.size}")
     private String nome;

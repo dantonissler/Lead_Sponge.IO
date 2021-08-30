@@ -1,18 +1,17 @@
 package br.com.blinkdev.leadsponge.services.implementated;
 
+import br.com.blinkdev.leadsponge.errorValidate.ErroMessage;
 import br.com.blinkdev.leadsponge.models.cliente.Cliente;
 import br.com.blinkdev.leadsponge.models.contato.Contato;
+import br.com.blinkdev.leadsponge.models.contato.ContatoFilter;
+import br.com.blinkdev.leadsponge.repository.cliente.ClienteRepository;
+import br.com.blinkdev.leadsponge.repository.contato.ContatoRepository;
 import br.com.blinkdev.leadsponge.services.ContatoService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import br.com.blinkdev.leadsponge.errorValidate.ErroMessage;
-import br.com.blinkdev.leadsponge.repository.Filter.ContatoFilter;
-import br.com.blinkdev.leadsponge.repository.cliente.ClienteRepository;
-import br.com.blinkdev.leadsponge.repository.contato.ContatoRepository;
 
 @Service
 public class ContatoServiceImpl extends ErroMessage implements ContatoService {
