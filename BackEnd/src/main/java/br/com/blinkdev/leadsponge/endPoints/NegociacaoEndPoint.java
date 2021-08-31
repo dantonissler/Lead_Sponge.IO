@@ -6,7 +6,7 @@ import br.com.blinkdev.leadsponge.models.motivoPerda.MotivoPerda;
 import br.com.blinkdev.leadsponge.models.negociacao.EstatusNegociacao;
 import br.com.blinkdev.leadsponge.models.negociacao.Negociacao;
 import br.com.blinkdev.leadsponge.models.negociacao.NegociacaoFilter;
-import br.com.blinkdev.leadsponge.services.NegociacaoService;
+import br.com.blinkdev.leadsponge.services.negociacao.NegociacaoService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;

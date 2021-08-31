@@ -3,7 +3,7 @@ package br.com.blinkdev.leadsponge.endPoints;
 import br.com.blinkdev.leadsponge.event.RecursoCriadoEvent;
 import br.com.blinkdev.leadsponge.models.segmento.Segmento;
 import br.com.blinkdev.leadsponge.models.segmento.SegmentoFilter;
-import br.com.blinkdev.leadsponge.services.SegmentoService;
+import br.com.blinkdev.leadsponge.services.segmento.SegmentoService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;

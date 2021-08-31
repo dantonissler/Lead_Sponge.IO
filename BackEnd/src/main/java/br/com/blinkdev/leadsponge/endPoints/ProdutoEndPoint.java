@@ -4,7 +4,7 @@ import br.com.blinkdev.leadsponge.errorValidate.ErroMessage;
 import br.com.blinkdev.leadsponge.event.RecursoCriadoEvent;
 import br.com.blinkdev.leadsponge.models.produto.Produto;
 import br.com.blinkdev.leadsponge.models.produto.ProdutoFilter;
-import br.com.blinkdev.leadsponge.services.ProdutoService;
+import br.com.blinkdev.leadsponge.services.produto.ProdutoService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;

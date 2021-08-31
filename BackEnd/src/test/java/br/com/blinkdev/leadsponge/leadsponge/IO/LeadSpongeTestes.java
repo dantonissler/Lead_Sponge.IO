@@ -23,6 +23,7 @@ import br.com.blinkdev.leadsponge.models.produto.Produto;
 import br.com.blinkdev.leadsponge.models.produto.ProdutoFilter;
 import br.com.blinkdev.leadsponge.models.role.Role;
 import br.com.blinkdev.leadsponge.models.role.RoleFilter;
+import br.com.blinkdev.leadsponge.models.role.RoleResumo;
 import br.com.blinkdev.leadsponge.models.segmento.Segmento;
 import br.com.blinkdev.leadsponge.models.segmento.SegmentoFilter;
 import br.com.blinkdev.leadsponge.models.tarefa.Tarefa;
@@ -34,8 +35,19 @@ import br.com.blinkdev.leadsponge.models.telefone.TipoTelefone;
 import br.com.blinkdev.leadsponge.models.usuario.Usuario;
 import br.com.blinkdev.leadsponge.repository.campanha.CampanhaRepository;
 import br.com.blinkdev.leadsponge.repository.cliente.ClienteRepository;
-import br.com.blinkdev.leadsponge.models.role.RoleResumo;
-import br.com.blinkdev.leadsponge.services.*;
+import br.com.blinkdev.leadsponge.services.campanha.CampanhaService;
+import br.com.blinkdev.leadsponge.services.cliente.ClienteService;
+import br.com.blinkdev.leadsponge.services.contato.ContatoService;
+import br.com.blinkdev.leadsponge.services.email.EmailService;
+import br.com.blinkdev.leadsponge.services.estagioNegocianao.EstagioNegociacaoService;
+import br.com.blinkdev.leadsponge.services.fonteNegociacao.FonteNegociacaoService;
+import br.com.blinkdev.leadsponge.services.motivoPerda.MotivoPerdaService;
+import br.com.blinkdev.leadsponge.services.negociacaoProduto.NegociacaoProdutoService;
+import br.com.blinkdev.leadsponge.services.produto.ProdutoService;
+import br.com.blinkdev.leadsponge.services.role.RoleService;
+import br.com.blinkdev.leadsponge.services.segmento.SegmentoService;
+import br.com.blinkdev.leadsponge.services.tarefa.TarefaService;
+import br.com.blinkdev.leadsponge.services.telefone.TelefoneService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -82,7 +94,7 @@ class LeadSpongeTestes {
             private MockMvc mockMvc;
 
             @MockBean
-            private CampanhaService service;
+            private CampanhaService campanhaServiceMock;
 
             @Mock
             private Page<Campanha> page;
@@ -103,45 +115,45 @@ class LeadSpongeTestes {
             @Test
             @DisplayName("Listar Campanha, retornar a Campanha e status 200")
             public void listarCampanhas() throws Exception {
-                when(service.filtrar(filter, pageable)).thenReturn(page);
+                when(campanhaServiceMock.filtrar(filter, pageable)).thenReturn(page);
                 mockMvc.perform(get("/campanhas")
                                 .header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc))
                                 .accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isOk())
                         .andDo(print());
-                verify(service, times(1))
+                verify(campanhaServiceMock, times(1))
                         .filtrar(filter, pageable);
             }
 
             @Test
             @DisplayName("Listar Campanha usando filtro pelo nome, retornar a Campanha e status 200")
             public void listarCampanhasNome() throws Exception {
-                when(service.filtrar(filterNome, pageable)).thenReturn(page);
+                when(campanhaServiceMock.filtrar(filterNome, pageable)).thenReturn(page);
                 mockMvc.perform(get("/campanhas?nome=nome")
                                 .header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc))
                                 .accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isOk())
                         .andDo(print());
-                verify(service, times(1)).filtrar(filterNome, pageable);
+                verify(campanhaServiceMock, times(1)).filtrar(filterNome, pageable);
             }
 
             @Test
             @DisplayName("Listar Campanha usando filtro pela descrição, retornar a Campanha e status 200")
             public void listarCampanhasDescricao() throws Exception {
-                when(service.filtrar(filterDescricao, pageable)).thenReturn(page);
+                when(campanhaServiceMock.filtrar(filterDescricao, pageable)).thenReturn(page);
                 mockMvc.perform(get("/campanhas?descricao=descrição")
                                 .header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc))
                                 .accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isOk())
                         .andDo(print());
-                verify(service, times(1))
+                verify(campanhaServiceMock, times(1))
                         .filtrar(filterDescricao, pageable);
             }
 
             @Test
             @DisplayName("Buscar Campanha usando o id, retornar a Campanha e status 200 sucesso")
             public void buscarCampanha() throws Exception {
-                when(service.detalhar(3L)).thenReturn(campanha);
+                when(campanhaServiceMock.detalhar(3L)).thenReturn(campanha);
                 mockMvc.perform(get("/campanhas/{id}", 3L)
                                 .header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc))
                                 .accept(MediaType.APPLICATION_JSON))
@@ -150,7 +162,7 @@ class LeadSpongeTestes {
                         .andDo(print())
                         .andExpect(jsonPath("$.nome").value("nome"))
                         .andExpect(jsonPath("$.descricao").value("descrição"));
-                verify(service, times(1))
+                verify(campanhaServiceMock, times(1))
                         .detalhar(3L);
             }
 
@@ -162,14 +174,14 @@ class LeadSpongeTestes {
                                 .accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isOk())
                         .andDo(print());
-                verify(service, times(1))
+                verify(campanhaServiceMock, times(1))
                         .deletar(3L);
             }
 
             @Test
             @DisplayName("Criar Campanha, retornar a Campanha e status 201")
             public void criarCampanha() throws Exception {
-                when(service.salvar(campanha)).thenReturn(campanha);
+                when(campanhaServiceMock.salvar(campanha)).thenReturn(campanha);
                 String jsonString = mapper.writeValueAsString(campanha);
                 mockMvc.perform(post("/campanhas")
                                 .header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc))
@@ -181,14 +193,14 @@ class LeadSpongeTestes {
                         .andDo(print())
                         .andExpect(jsonPath("$.nome").value("nome"))
                         .andExpect(jsonPath("$.descricao").value("descrição"));
-                verify(service, times(1))
+                verify(campanhaServiceMock, times(1))
                         .salvar(Mockito.any(Campanha.class));
             }
 
             @Test
             @DisplayName("Atualizar Campanha, retornar a Campanha e status 201")
             public void atualizarCampanha() throws Exception {
-                when(service.atualizar(1L, campanha)).thenReturn(campanha);
+                when(campanhaServiceMock.atualizar(1L, campanha)).thenReturn(campanha);
                 String jsonString = mapper.writeValueAsString(campanha);
                 mockMvc.perform(put("/campanhas/{id}", 1L)
                                 .header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc))
@@ -200,7 +212,7 @@ class LeadSpongeTestes {
                         .andDo(print())
                         .andExpect(jsonPath("$.nome").value("nome"))
                         .andExpect(jsonPath("$.descricao").value("descrição"));
-                verify(service, times(1))
+                verify(campanhaServiceMock, times(1))
                         .atualizar(1L, campanha);
             }
         }

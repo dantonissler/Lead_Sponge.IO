@@ -6,7 +6,7 @@ import br.com.blinkdev.leadsponge.models.usuario.Usuario;
 import br.com.blinkdev.leadsponge.models.usuario.UsuarioFilter;
 import br.com.blinkdev.leadsponge.models.usuario.UsuarioModel;
 import br.com.blinkdev.leadsponge.models.usuario.UsuarioTO;
-import br.com.blinkdev.leadsponge.services.UsuarioService;
+import br.com.blinkdev.leadsponge.services.usuario.UsuarioService;
 import br.com.blinkdev.leadsponge.storage.Disco;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

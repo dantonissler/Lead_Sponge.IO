@@ -5,7 +5,7 @@ import br.com.blinkdev.leadsponge.event.RecursoCriadoEvent;
 import br.com.blinkdev.leadsponge.models.tarefa.Tarefa;
 import br.com.blinkdev.leadsponge.models.tarefa.TarefaFilter;
 import br.com.blinkdev.leadsponge.models.tarefa.TarefaResumo;
-import br.com.blinkdev.leadsponge.services.TarefaService;
+import br.com.blinkdev.leadsponge.services.tarefa.TarefaService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;

@@ -3,7 +3,7 @@ package br.com.blinkdev.leadsponge.endPoints;
 import br.com.blinkdev.leadsponge.event.RecursoCriadoEvent;
 import br.com.blinkdev.leadsponge.models.motivoPerda.MotivoPerda;
 import br.com.blinkdev.leadsponge.models.motivoPerda.MotivoPerdaFilter;
-import br.com.blinkdev.leadsponge.services.MotivoPerdaService;
+import br.com.blinkdev.leadsponge.services.motivoPerda.MotivoPerdaService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;

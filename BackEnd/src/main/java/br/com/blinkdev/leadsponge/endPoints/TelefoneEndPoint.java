@@ -3,7 +3,7 @@ package br.com.blinkdev.leadsponge.endPoints;
 import br.com.blinkdev.leadsponge.event.RecursoCriadoEvent;
 import br.com.blinkdev.leadsponge.models.telefone.Telefone;
 import br.com.blinkdev.leadsponge.models.telefone.TelefoneFilter;
-import br.com.blinkdev.leadsponge.services.TelefoneService;
+import br.com.blinkdev.leadsponge.services.telefone.TelefoneService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;

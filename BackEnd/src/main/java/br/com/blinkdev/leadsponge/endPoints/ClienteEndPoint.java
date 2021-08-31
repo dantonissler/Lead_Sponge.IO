@@ -3,7 +3,7 @@ package br.com.blinkdev.leadsponge.endPoints;
 import br.com.blinkdev.leadsponge.event.RecursoCriadoEvent;
 import br.com.blinkdev.leadsponge.models.cliente.Cliente;
 import br.com.blinkdev.leadsponge.models.cliente.ClienteFilter;
-import br.com.blinkdev.leadsponge.services.ClienteService;
+import br.com.blinkdev.leadsponge.services.cliente.ClienteService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;

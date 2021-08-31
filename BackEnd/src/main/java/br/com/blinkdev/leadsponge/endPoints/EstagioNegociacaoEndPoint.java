@@ -3,7 +3,7 @@ package br.com.blinkdev.leadsponge.endPoints;
 import br.com.blinkdev.leadsponge.event.RecursoCriadoEvent;
 import br.com.blinkdev.leadsponge.models.estagioNegociacao.EstagioNegociacao;
 import br.com.blinkdev.leadsponge.models.estagioNegociacao.EstagioNegociacaoFilter;
-import br.com.blinkdev.leadsponge.services.EstagioNegociacaoService;
+import br.com.blinkdev.leadsponge.services.estagioNegocianao.EstagioNegociacaoService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;

@@ -3,7 +3,7 @@ package br.com.blinkdev.leadsponge.endPoints;
 import br.com.blinkdev.leadsponge.event.RecursoCriadoEvent;
 import br.com.blinkdev.leadsponge.models.email.Email;
 import br.com.blinkdev.leadsponge.models.email.EmailFilter;
-import br.com.blinkdev.leadsponge.services.EmailService;
+import br.com.blinkdev.leadsponge.services.email.EmailService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;

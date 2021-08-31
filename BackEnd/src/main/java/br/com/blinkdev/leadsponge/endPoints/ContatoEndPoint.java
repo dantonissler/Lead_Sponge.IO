@@ -3,7 +3,7 @@ package br.com.blinkdev.leadsponge.endPoints;
 import br.com.blinkdev.leadsponge.event.RecursoCriadoEvent;
 import br.com.blinkdev.leadsponge.models.contato.Contato;
 import br.com.blinkdev.leadsponge.models.contato.ContatoFilter;
-import br.com.blinkdev.leadsponge.services.ContatoService;
+import br.com.blinkdev.leadsponge.services.contato.ContatoService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;

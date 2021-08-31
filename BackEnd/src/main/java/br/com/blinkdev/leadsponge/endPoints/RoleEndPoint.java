@@ -3,7 +3,7 @@ package br.com.blinkdev.leadsponge.endPoints;
 import br.com.blinkdev.leadsponge.models.role.Role;
 import br.com.blinkdev.leadsponge.models.role.RoleFilter;
 import br.com.blinkdev.leadsponge.models.role.RoleResumo;
-import br.com.blinkdev.leadsponge.services.RoleService;
+import br.com.blinkdev.leadsponge.services.role.RoleService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

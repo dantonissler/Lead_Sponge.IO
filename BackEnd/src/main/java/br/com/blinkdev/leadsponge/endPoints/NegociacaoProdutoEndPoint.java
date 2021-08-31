@@ -3,7 +3,7 @@ package br.com.blinkdev.leadsponge.endPoints;
 import br.com.blinkdev.leadsponge.event.RecursoCriadoEvent;
 import br.com.blinkdev.leadsponge.models.negociacaoProduto.NegociacaoProduto;
 import br.com.blinkdev.leadsponge.models.negociacaoProduto.NegociacaoProdutoFilter;
-import br.com.blinkdev.leadsponge.services.NegociacaoProdutoService;
+import br.com.blinkdev.leadsponge.services.negociacaoProduto.NegociacaoProdutoService;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

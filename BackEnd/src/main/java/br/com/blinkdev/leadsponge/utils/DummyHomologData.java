@@ -12,8 +12,8 @@ import br.com.blinkdev.leadsponge.repository.estagioNegociacao.EstagioNegociacao
 import br.com.blinkdev.leadsponge.repository.fonteNegociacao.FonteNegociacaoRepository;
 import br.com.blinkdev.leadsponge.repository.motivoPerda.MotivoPerdaRepository;
 import br.com.blinkdev.leadsponge.repository.role.RoleRepository;
-import br.com.blinkdev.leadsponge.services.SegmentoService;
-import br.com.blinkdev.leadsponge.services.UsuarioService;
+import br.com.blinkdev.leadsponge.services.segmento.SegmentoService;
+import br.com.blinkdev.leadsponge.services.usuario.UsuarioService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
