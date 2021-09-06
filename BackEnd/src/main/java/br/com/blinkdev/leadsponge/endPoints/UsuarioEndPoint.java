@@ -39,19 +39,13 @@ public class UsuarioEndPoint {
     @Autowired
     private final Disco disco;
 
-    @GetMapping
-    @PreAuthorize("hasAuthority('PESQUISAR_USUARIO') and #oauth2.hasScope('read')")
-    public Page<Usuario> entryPoint(UsuarioFilter usuarioFilter, Pageable pageable) {
-        return usuarioService.filtrar(usuarioFilter, pageable);
-    }
-
     /**
      * TODO: utilizar as referencias para implementar HATEOAS
      *
      * https://howtodoinjava.com/spring5/hateoas/spring-hateoas-tutorial/
      * https://howtodoinjava.com/spring5/hateoas/pagination-links/
      */
-    @GetMapping(value = "/list")
+    @GetMapping
     @PreAuthorize("hasAuthority('PESQUISAR_USUARIO') and #oauth2.hasScope('read')")
     public Page<UsuarioModel> list(UsuarioFilter usuarioFilter, Pageable pageable) {
         Page<UsuarioModel> retornos = usuarioService.list(usuarioFilter, pageable);

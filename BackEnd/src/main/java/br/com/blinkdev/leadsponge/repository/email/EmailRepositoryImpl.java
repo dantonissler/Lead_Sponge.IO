@@ -3,7 +3,6 @@ package br.com.blinkdev.leadsponge.repository.email;
 import br.com.blinkdev.leadsponge.models.email.Email;
 import br.com.blinkdev.leadsponge.models.email.EmailFilter;
 import br.com.blinkdev.leadsponge.models.email.Email_;
-import org.apache.maven.surefire.shade.org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -40,7 +39,7 @@ public class EmailRepositoryImpl implements EmailRepositoryQuery {
 
 	private Predicate[] criarRestricoes(EmailFilter emailFilter, CriteriaBuilder builder, Root<Email> root) {
 		List<Predicate> predicates = new ArrayList<>();
-		if (StringUtils.isNotBlank(emailFilter.getEmail())) {
+		if (emailFilter.getEmail().isBlank()) {
 			predicates.add(builder.like(builder.lower(root.get(Email_.email)), "%" + emailFilter.getEmail().toLowerCase() + "%"));
 		}
 		return predicates.toArray(new Predicate[predicates.size()]);

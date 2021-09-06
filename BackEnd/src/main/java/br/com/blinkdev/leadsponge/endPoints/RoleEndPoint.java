@@ -23,7 +23,7 @@ class RoleEndPoint {
 
     @GetMapping(params = "resumo")
     @PreAuthorize("hasAuthority('PESQUISAR_USUARIO') and #oauth2.hasScope('read')")
-    public Page<RoleResumo> entryPoint(RoleFilter roleFilter, Pageable pageable) {
+    public Page<RoleResumo> list(RoleFilter roleFilter, Pageable pageable) {
         return roleService.resumir(roleFilter, pageable);
     }
 

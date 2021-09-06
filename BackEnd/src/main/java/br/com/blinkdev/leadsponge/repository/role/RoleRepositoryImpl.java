@@ -4,7 +4,6 @@ import br.com.blinkdev.leadsponge.models.role.Role;
 import br.com.blinkdev.leadsponge.models.role.RoleFilter;
 import br.com.blinkdev.leadsponge.models.role.RoleResumo;
 import br.com.blinkdev.leadsponge.models.role.Role_;
-import org.apache.maven.surefire.shade.org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -56,7 +55,7 @@ public class RoleRepositoryImpl implements RoleRepositoryQuery {
 
 	private Predicate[] criarRestricoes(RoleFilter roleFilter, CriteriaBuilder builder, Root<Role> root) {
 		List<Predicate> predicates = new ArrayList<>();
-		if (StringUtils.isNotBlank(roleFilter.getNome())) {
+		if (roleFilter.getNome().isBlank()) {
 			predicates.add(builder.like(builder.lower(root.get(Role_.nome)), "%" + roleFilter.getNome().toLowerCase() + "%"));
 		}
 		return predicates.toArray(new Predicate[predicates.size()]);

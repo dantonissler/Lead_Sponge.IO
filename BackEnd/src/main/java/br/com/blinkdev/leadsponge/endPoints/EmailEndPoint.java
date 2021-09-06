@@ -31,7 +31,7 @@ class EmailEndPoint {
     @GetMapping(value = {""})
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('PESQUISAR_CLIENTE') and #oauth2.hasScope('read')")
-    Page<Email> entryPoint(EmailFilter emailFilter, Pageable pageable) {
+    Page<Email> list(EmailFilter emailFilter, Pageable pageable) {
         return emailService.filtrar(emailFilter, pageable);
     }
 

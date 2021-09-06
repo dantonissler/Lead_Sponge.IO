@@ -3,7 +3,6 @@ package br.com.blinkdev.leadsponge.repository.motivoPerda;
 import br.com.blinkdev.leadsponge.models.motivoPerda.MotivoPerda;
 import br.com.blinkdev.leadsponge.models.motivoPerda.MotivoPerdaFilter;
 import br.com.blinkdev.leadsponge.models.motivoPerda.MotivoPerda_;
-import org.apache.maven.surefire.shade.org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -40,7 +39,7 @@ public class MotivoPerdaRepositoryImpl implements MotivoPerdaRepositoryQuery {
 
     private Predicate[] criarRestricoes(MotivoPerdaFilter motivoPerdaFilter, CriteriaBuilder builder, Root<MotivoPerda> root) {
         List<Predicate> predicates = new ArrayList<>();
-        if (StringUtils.isNotBlank(motivoPerdaFilter.getNome())) {
+        if (motivoPerdaFilter.getNome().isBlank()) {
             predicates.add(builder.like(builder.lower(root.get(MotivoPerda_.nome)), "%" + motivoPerdaFilter.getNome().toLowerCase() + "%"));
         }
         return predicates.toArray(new Predicate[predicates.size()]);

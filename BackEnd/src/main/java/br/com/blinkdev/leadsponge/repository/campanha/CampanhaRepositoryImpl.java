@@ -1,9 +1,8 @@
 package br.com.blinkdev.leadsponge.repository.campanha;
 
-import br.com.blinkdev.leadsponge.models.campanha.Campanha;
+import br.com.blinkdev.leadsponge.models.campanha.CampanhaEntity;
 import br.com.blinkdev.leadsponge.models.campanha.CampanhaFilter;
 import br.com.blinkdev.leadsponge.models.campanha.Campanha_;
-import org.apache.maven.surefire.shade.org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -23,31 +22,31 @@ public class CampanhaRepositoryImpl implements CampanhaRepositoryQuery {
 	@PersistenceContext
 	private EntityManager manager;
 
-	@Override
-	public Page<Campanha> filtrar(CampanhaFilter campanhaFilter, Pageable pageable) {
-		CriteriaBuilder builder = manager.getCriteriaBuilder();
-		CriteriaQuery<Campanha> criteria = builder.createQuery(Campanha.class);
-		Root<Campanha> root = criteria.from(Campanha.class);
+    @Override
+    public Page<CampanhaEntity> filtrar(CampanhaFilter campanhaFilter, Pageable pageable) {
+        CriteriaBuilder builder = manager.getCriteriaBuilder();
+        CriteriaQuery<CampanhaEntity> criteria = builder.createQuery(CampanhaEntity.class);
+        Root<CampanhaEntity> root = criteria.from(CampanhaEntity.class);
 
-		Predicate[] predicates = criarRestricoes(campanhaFilter, builder, root);
-		criteria.where(predicates);
+        Predicate[] predicates = criarRestricoes(campanhaFilter, builder, root);
+        criteria.where(predicates);
 
-		TypedQuery<Campanha> query = manager.createQuery(criteria);
-		adicionarRestricoesDePaginacao(query, pageable);
+        TypedQuery<CampanhaEntity> query = manager.createQuery(criteria);
+        adicionarRestricoesDePaginacao(query, pageable);
 
-		return new PageImpl<>(query.getResultList(), pageable, total(campanhaFilter));
-	}
+        return new PageImpl<>(query.getResultList(), pageable, total(campanhaFilter));
+    }
 
-	private Predicate[] criarRestricoes(CampanhaFilter campanhaFilter, CriteriaBuilder builder, Root<Campanha> root) {
-		List<Predicate> predicates = new ArrayList<>();
-		if (StringUtils.isNotBlank(campanhaFilter.getNome())) {
-			predicates.add(builder.like(builder.lower(root.get(Campanha_.nome)), "%" + campanhaFilter.getNome().toLowerCase() + "%"));
-		}
-		if (StringUtils.isNotBlank(campanhaFilter.getDescricao())) {
-			predicates.add(builder.like(builder.lower(root.get(Campanha_.descricao)), "%" + campanhaFilter.getDescricao().toLowerCase() + "%"));
-		}
-		return predicates.toArray(new Predicate[predicates.size()]);
-	}
+    private Predicate[] criarRestricoes(CampanhaFilter campanhaFilter, CriteriaBuilder builder, Root<CampanhaEntity> root) {
+        List<Predicate> predicates = new ArrayList<>();
+        if (campanhaFilter.getNome().isBlank()) {
+            predicates.add(builder.like(builder.lower(root.get(Campanha_.nome)), "%" + campanhaFilter.getNome().toLowerCase() + "%"));
+        }
+        if (campanhaFilter.getDescricao().isBlank()) {
+            predicates.add(builder.like(builder.lower(root.get(Campanha_.descricao)), "%" + campanhaFilter.getDescricao().toLowerCase() + "%"));
+        }
+        return predicates.toArray(new Predicate[predicates.size()]);
+    }
 
 	private void adicionarRestricoesDePaginacao(TypedQuery<?> query, Pageable pageable) {
 		int paginaAtual = pageable.getPageNumber();
@@ -59,9 +58,9 @@ public class CampanhaRepositoryImpl implements CampanhaRepositoryQuery {
 
 	private Long total(CampanhaFilter campanhaFilter) {
 		CriteriaBuilder builder = manager.getCriteriaBuilder();
-		CriteriaQuery<Long> criteria = builder.createQuery(Long.class);
-		Root<Campanha> root = criteria.from(Campanha.class);
-		Predicate[] predicates = criarRestricoes(campanhaFilter, builder, root);
+        CriteriaQuery<Long> criteria = builder.createQuery(Long.class);
+        Root<CampanhaEntity> root = criteria.from(CampanhaEntity.class);
+        Predicate[] predicates = criarRestricoes(campanhaFilter, builder, root);
 		criteria.where(predicates);
 		criteria.select(builder.count(root));
 		return manager.createQuery(criteria).getSingleResult();

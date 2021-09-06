@@ -30,21 +30,21 @@ public class RootEntryPointEndpoint {
     @GetMapping
     RootEntryPointModel root() {
         var model = new RootEntryPointModel();
-        model.add(linkTo(methodOn(CampanhaEndPoint.class).entryPoint(new CampanhaFilter(), null)).withRel("campanha"));
-        model.add(linkTo(methodOn(ClienteEndPoint.class).entryPoint(new ClienteFilter(), null)).withRel("cliente"));
-        model.add(linkTo(methodOn(ContatoEndPoint.class).entryPoint(new ContatoFilter(), null)).withRel("contato"));
-        model.add(linkTo(methodOn(EmailEndPoint.class).entryPoint(new EmailFilter(), null)).withRel("email"));
-        model.add(linkTo(methodOn(EstagioNegociacaoEndPoint.class).entryPoint(new EstagioNegociacaoFilter(), null)).withRel("estagio_negociacao"));
-        model.add(linkTo(methodOn(FonteNegociacaoEndPoint.class).entryPoint(new FonteNegociacaoFilter(), null)).withRel("fonte_negociacao"));
-        model.add(linkTo(methodOn(MotivoPerdaEndPoint.class).entryPoint(new MotivoPerdaFilter(), null)).withRel("motivo_perda"));
-        model.add(linkTo(methodOn(NegociacaoEndPoint.class).entryPoint(new NegociacaoFilter(), null)).withRel("negociacao"));
-        model.add(linkTo(methodOn(NegociacaoProdutoEndPoint.class).entryPoint(new NegociacaoProdutoFilter(), null)).withRel("negociacao_produto"));
-        model.add(linkTo(methodOn(ProdutoEndPoint.class).entryPoint(new ProdutoFilter(), null)).withRel("produto"));
-        model.add(linkTo(methodOn(RoleEndPoint.class).entryPoint(new RoleFilter(), null)).withRel("role"));
-        model.add(linkTo(methodOn(SegmentoEndPoint.class).entryPoint(new SegmentoFilter(), null)).withRel("segmento"));
-        model.add(linkTo(methodOn(TarefaEndPoint.class).entryPoint(new TarefaFilter(), null)).withRel("tareafa"));
-        model.add(linkTo(methodOn(TelefoneEndPoint.class).entryPoint(new TelefoneFilter(), null)).withRel("telefone"));
-        model.add(linkTo(methodOn(UsuarioEndPoint.class).entryPoint(new UsuarioFilter(), null)).withRel("usuario"));
+        model.add(linkTo(methodOn(CampanhaEndPoint.class).getCampanhaByFilter(new CampanhaFilter(), null)).withRel("campanha"));
+        model.add(linkTo(methodOn(ClienteEndPoint.class).list(new ClienteFilter(), null)).withRel("cliente"));
+        model.add(linkTo(methodOn(ContatoEndPoint.class).list(new ContatoFilter(), null)).withRel("contato"));
+        model.add(linkTo(methodOn(EmailEndPoint.class).list(new EmailFilter(), null)).withRel("email"));
+        model.add(linkTo(methodOn(EstagioNegociacaoEndPoint.class).list(new EstagioNegociacaoFilter(), null)).withRel("estagio_negociacao"));
+        model.add(linkTo(methodOn(FonteNegociacaoEndPoint.class).list(new FonteNegociacaoFilter(), null)).withRel("fonte_negociacao"));
+        model.add(linkTo(methodOn(MotivoPerdaEndPoint.class).list(new MotivoPerdaFilter(), null)).withRel("motivo_perda"));
+        model.add(linkTo(methodOn(NegociacaoEndPoint.class).list(new NegociacaoFilter(), null)).withRel("negociacao"));
+        model.add(linkTo(methodOn(NegociacaoProdutoEndPoint.class).list(new NegociacaoProdutoFilter(), null)).withRel("negociacao_produto"));
+        model.add(linkTo(methodOn(ProdutoEndPoint.class).list(new ProdutoFilter(), null)).withRel("produto"));
+        model.add(linkTo(methodOn(RoleEndPoint.class).list(new RoleFilter(), null)).withRel("role"));
+        model.add(linkTo(methodOn(SegmentoEndPoint.class).list(new SegmentoFilter(), null)).withRel("segmento"));
+        model.add(linkTo(methodOn(TarefaEndPoint.class).list(new TarefaFilter(), null)).withRel("tareafa"));
+        model.add(linkTo(methodOn(TelefoneEndPoint.class).list(new TelefoneFilter(), null)).withRel("telefone"));
+        model.add(linkTo(methodOn(UsuarioEndPoint.class).list(new UsuarioFilter(), null)).withRel("usuario"));
         return model;
     }
 }

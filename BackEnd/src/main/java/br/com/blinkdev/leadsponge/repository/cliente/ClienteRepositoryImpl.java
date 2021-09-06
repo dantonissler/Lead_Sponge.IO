@@ -3,7 +3,6 @@ package br.com.blinkdev.leadsponge.repository.cliente;
 import br.com.blinkdev.leadsponge.models.cliente.Cliente;
 import br.com.blinkdev.leadsponge.models.cliente.ClienteFilter;
 import br.com.blinkdev.leadsponge.models.cliente.Cliente_;
-import org.apache.maven.surefire.shade.org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -40,13 +39,13 @@ public class ClienteRepositoryImpl implements ClienteRepositoryQuery {
 
 	private Predicate[] criarRestricoes(ClienteFilter clienteFilter, CriteriaBuilder builder, Root<Cliente> root) {
 		List<Predicate> predicates = new ArrayList<>();
-		if (StringUtils.isNotBlank(clienteFilter.getNome())) {
+		if (clienteFilter.getNome().isBlank()) {
 			predicates.add(builder.like(builder.lower(root.get(Cliente_.nome)), "%" + clienteFilter.getNome().toLowerCase() + "%"));
 		}
-		if (StringUtils.isNotBlank(clienteFilter.getUrl())) {
+		if (clienteFilter.getUrl().isBlank()) {
 			predicates.add(builder.like(builder.lower(root.get(Cliente_.url)), "%" + clienteFilter.getUrl().toLowerCase() + "%"));
 		}
-		if (StringUtils.isNotBlank(clienteFilter.getResumo())) {
+		if (clienteFilter.getResumo().isBlank()) {
 			predicates.add(builder.like(builder.lower(root.get(Cliente_.resumo)), "%" + clienteFilter.getResumo().toLowerCase() + "%"));
 		}
 		return predicates.toArray(new Predicate[predicates.size()]);

@@ -2,7 +2,7 @@ package br.com.blinkdev.leadsponge.models.negociacao;
 
 import br.com.blinkdev.leadsponge.models.View;
 import br.com.blinkdev.leadsponge.models.audit.UserDateAudit;
-import br.com.blinkdev.leadsponge.models.campanha.Campanha;
+import br.com.blinkdev.leadsponge.models.campanha.CampanhaEntity;
 import br.com.blinkdev.leadsponge.models.cliente.Cliente;
 import br.com.blinkdev.leadsponge.models.estagioNegociacao.EstagioNegociacao;
 import br.com.blinkdev.leadsponge.models.fonteNegociacao.FonteNegociacao;
@@ -22,7 +22,6 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -77,7 +76,7 @@ public class Negociacao extends UserDateAudit implements Serializable {
     @ManyToOne
     @JsonIgnoreProperties("negociacoes")
     @JoinColumn(name = "campanha_id")
-    private Campanha campanha;
+    private CampanhaEntity campanha;
 
     @NotNull
     @ManyToOne

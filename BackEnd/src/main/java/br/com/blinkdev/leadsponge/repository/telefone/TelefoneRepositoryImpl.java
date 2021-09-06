@@ -3,7 +3,6 @@ package br.com.blinkdev.leadsponge.repository.telefone;
 import br.com.blinkdev.leadsponge.models.telefone.Telefone;
 import br.com.blinkdev.leadsponge.models.telefone.TelefoneFilter;
 import br.com.blinkdev.leadsponge.models.telefone.Telefone_;
-import org.apache.maven.surefire.shade.org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -40,12 +39,12 @@ public class TelefoneRepositoryImpl implements TelefoneRepositoryQuery {
 
 	private Predicate[] criarRestricoes(TelefoneFilter telefoneFilter, CriteriaBuilder builder, Root<Telefone> root) {
 		List<Predicate> predicates = new ArrayList<>();
-		if (StringUtils.isNotBlank(telefoneFilter.getNumero())) {
-			predicates.add(builder.equal(root.get(Telefone_.numero), telefoneFilter.getNumero()));
-		}
-		if (StringUtils.isNotBlank(telefoneFilter.getTipo().getDescricao())) {
-			predicates.add(builder.equal(root.get(Telefone_.tipo), telefoneFilter.getTipo().getDescricao()));
-		}
+		if (telefoneFilter.getNumero().isBlank()) {
+            predicates.add(builder.equal(root.get(Telefone_.numero), telefoneFilter.getNumero()));
+        }
+        if (telefoneFilter.getTipo().getDescricao().isBlank()) {
+            predicates.add(builder.equal(root.get(Telefone_.tipo), telefoneFilter.getTipo().getDescricao()));
+        }
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}
 

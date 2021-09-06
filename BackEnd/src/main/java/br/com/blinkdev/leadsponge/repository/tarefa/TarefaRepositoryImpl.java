@@ -5,7 +5,6 @@ import br.com.blinkdev.leadsponge.models.tarefa.TarefaFilter;
 import br.com.blinkdev.leadsponge.models.tarefa.TarefaResumo;
 import br.com.blinkdev.leadsponge.models.tarefa.Tarefa_;
 import br.com.blinkdev.leadsponge.models.usuario.Usuario_;
-import org.apache.maven.surefire.shade.org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -55,10 +54,10 @@ public class TarefaRepositoryImpl implements TarefaRepositoryQuery {
 
     private Predicate[] criarRestricoes(TarefaFilter tarefaFilter, CriteriaBuilder builder, Root<Tarefa> root) {
         List<Predicate> predicates = new ArrayList<>();
-        if (StringUtils.isNotBlank(tarefaFilter.getAssunto())) {
+        if (tarefaFilter.getAssunto().isBlank()) {
             predicates.add(builder.like(builder.lower(root.get(Tarefa_.assunto)), "%" + tarefaFilter.getAssunto().toLowerCase() + "%"));
         }
-        if (StringUtils.isNotBlank(tarefaFilter.getDescricao())) {
+        if (tarefaFilter.getDescricao().isBlank()) {
             predicates.add(builder.like(builder.lower(root.get(Tarefa_.descricao)), "%" + tarefaFilter.getDescricao().toLowerCase() + "%"));
         }
         if (tarefaFilter.getHoraMarcada() != null) {

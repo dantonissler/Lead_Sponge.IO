@@ -1,9 +1,16 @@
 package br.com.blinkdev.leadsponge.config;
 
 import br.com.blinkdev.leadsponge.config.property.LeadSpongeApiProperty;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.hateoas.client.LinkDiscoverer;
+import org.springframework.http.MediaType;
+import org.springframework.plugin.core.OrderAwarePluginRegistry;
+import org.springframework.plugin.core.PluginRegistry;
+import org.springframework.web.filter.ForwardedHeaderFilter;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -21,10 +28,29 @@ import java.util.List;
 
 @Configuration
 @EnableSwagger2
-public class SwaggerConfig {
+public class DocumentationConfig {
 
     @Autowired
     private LeadSpongeApiProperty leadSpongeApiProperty;
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
+
+    @Bean
+    public PluginRegistry<LinkDiscoverer, MediaType> discoverers(
+            OrderAwarePluginRegistry<LinkDiscoverer, MediaType> relProviderPluginRegistry) {
+        return relProviderPluginRegistry;
+    }
+
+    @Bean
+    public FilterRegistrationBean<ForwardedHeaderFilter> forwardedHeaderFilter() {
+        FilterRegistrationBean<ForwardedHeaderFilter> result = new FilterRegistrationBean<>();
+        result.setFilter(new ForwardedHeaderFilter());
+        result.setOrder(0);
+        return result;
+    }
 
     @Bean
     public Docket api() {

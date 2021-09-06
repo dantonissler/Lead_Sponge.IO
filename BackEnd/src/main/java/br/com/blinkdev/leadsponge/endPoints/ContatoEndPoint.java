@@ -31,7 +31,7 @@ class ContatoEndPoint {
     @GetMapping(value = {""})
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('PESQUISAR_CONTATO') and #oauth2.hasScope('read')")
-    Page<Contato> entryPoint(ContatoFilter contatoFilter, Pageable pageable) {
+    Page<Contato> list(ContatoFilter contatoFilter, Pageable pageable) {
         return contatoService.filtrar(contatoFilter, pageable);
     }
 

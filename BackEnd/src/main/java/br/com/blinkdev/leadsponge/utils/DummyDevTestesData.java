@@ -1,29 +1,17 @@
 package br.com.blinkdev.leadsponge.utils;
 
-import br.com.blinkdev.leadsponge.models.campanha.Campanha;
-import br.com.blinkdev.leadsponge.models.estagioNegociacao.EstagioNegociacao;
-import br.com.blinkdev.leadsponge.models.fonteNegociacao.FonteNegociacao;
-import br.com.blinkdev.leadsponge.models.motivoPerda.MotivoPerda;
 import br.com.blinkdev.leadsponge.models.role.Role;
-import br.com.blinkdev.leadsponge.models.segmento.Segmento;
 import br.com.blinkdev.leadsponge.models.usuario.Usuario;
-import br.com.blinkdev.leadsponge.repository.campanha.CampanhaRepository;
-import br.com.blinkdev.leadsponge.repository.estagioNegociacao.EstagioNegociacaoRepository;
-import br.com.blinkdev.leadsponge.repository.fonteNegociacao.FonteNegociacaoRepository;
-import br.com.blinkdev.leadsponge.repository.motivoPerda.MotivoPerdaRepository;
 import br.com.blinkdev.leadsponge.repository.role.RoleRepository;
-import br.com.blinkdev.leadsponge.services.segmento.SegmentoService;
 import br.com.blinkdev.leadsponge.services.usuario.UsuarioService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.context.annotation.PropertySource;
 
-import java.util.Arrays;
 import java.util.HashSet;
 
-@PropertySource("classpath:application-dev-testes.properties")
+@Profile("dev-testes")
 @Configuration
 class DummyDevTestesData {
     @Bean

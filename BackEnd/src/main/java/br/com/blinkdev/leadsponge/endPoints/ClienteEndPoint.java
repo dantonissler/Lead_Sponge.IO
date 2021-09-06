@@ -31,7 +31,7 @@ class ClienteEndPoint {
     @GetMapping(value = {""})
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('PESQUISAR_CLIENTE') and #oauth2.hasScope('read')")
-    Page<Cliente> entryPoint(ClienteFilter clienteFilter, Pageable pageable) {
+    Page<Cliente> list(ClienteFilter clienteFilter, Pageable pageable) {
         return clienteService.filtrar(clienteFilter, pageable);
     }
 

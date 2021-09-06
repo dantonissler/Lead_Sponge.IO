@@ -1,6 +1,6 @@
 package br.com.blinkdev.leadsponge.utils;
 
-import br.com.blinkdev.leadsponge.models.campanha.Campanha;
+import br.com.blinkdev.leadsponge.models.campanha.CampanhaEntity;
 import br.com.blinkdev.leadsponge.models.estagioNegociacao.EstagioNegociacao;
 import br.com.blinkdev.leadsponge.models.fonteNegociacao.FonteNegociacao;
 import br.com.blinkdev.leadsponge.models.motivoPerda.MotivoPerda;
@@ -90,7 +90,7 @@ class DummyDevData {
 
     @Bean
     CommandLineRunner initTableCampanha(CampanhaRepository campanhaRepository) {
-        return args -> campanhaRepository.save(new Campanha(null, "Sem Campanha", ""));
+        return args -> campanhaRepository.save(new CampanhaEntity(null, "Sem Campanha", ""));
     }
 
     @Bean

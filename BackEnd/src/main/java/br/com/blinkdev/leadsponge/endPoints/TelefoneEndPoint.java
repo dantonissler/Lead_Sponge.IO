@@ -31,7 +31,7 @@ class TelefoneEndPoint {
     @GetMapping(value = {""})
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('PESQUISAR_CLIENTE') and #oauth2.hasScope('read')")
-    Page<Telefone> entryPoint(TelefoneFilter telefoneFilter, Pageable pageable) {
+    Page<Telefone> list(TelefoneFilter telefoneFilter, Pageable pageable) {
         return telefoneService.filtrar(telefoneFilter, pageable);
     }
 

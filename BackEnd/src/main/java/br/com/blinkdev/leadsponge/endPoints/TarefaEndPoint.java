@@ -33,7 +33,7 @@ class TarefaEndPoint extends ErroMessage {
     @GetMapping(value = {""})
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('PESQUISAR_TAREFA') and #oauth2.hasScope('read')")
-    Page<Tarefa> entryPoint(TarefaFilter tarefaFilter, Pageable pageable) {
+    Page<Tarefa> list(TarefaFilter tarefaFilter, Pageable pageable) {
         return tarefaService.filtrar(tarefaFilter, pageable);
     }
 

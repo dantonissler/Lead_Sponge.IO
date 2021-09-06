@@ -31,7 +31,7 @@ class MotivoPerdaEndPoint {
     @GetMapping(value = {""})
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('PESQUISAR_CAMPANHA') and #oauth2.hasScope('read')")
-    Page<MotivoPerda> entryPoint(MotivoPerdaFilter motivoPerdaFilter, Pageable pageable) {
+    Page<MotivoPerda> list(MotivoPerdaFilter motivoPerdaFilter, Pageable pageable) {
         return motivoPerdaService.filtrar(motivoPerdaFilter, pageable);
     }
 

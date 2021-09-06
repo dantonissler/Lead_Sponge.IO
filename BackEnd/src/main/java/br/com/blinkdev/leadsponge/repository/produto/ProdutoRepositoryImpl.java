@@ -3,7 +3,7 @@ package br.com.blinkdev.leadsponge.repository.produto;
 import br.com.blinkdev.leadsponge.models.produto.Produto;
 import br.com.blinkdev.leadsponge.models.produto.ProdutoFilter;
 import br.com.blinkdev.leadsponge.models.produto.Produto_;
-import org.apache.maven.surefire.shade.org.apache.commons.lang3.StringUtils;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -40,10 +40,10 @@ public class ProdutoRepositoryImpl implements ProdutoRepositoryQuery {
 
 	private Predicate[] criarRestricoes(ProdutoFilter produtoFilter, CriteriaBuilder builder, Root<Produto> root) {
 		List<Predicate> predicates = new ArrayList<>();
-		if (StringUtils.isNotBlank(produtoFilter.getNome())) {
+		if (produtoFilter.getNome().isBlank()) {
 			predicates.add(builder.like(builder.lower(root.get(Produto_.nome)), "%" + produtoFilter.getNome().toLowerCase() + "%"));
 		}
-		if (StringUtils.isNotBlank(produtoFilter.getDescricao())) {
+		if (produtoFilter.getDescricao().isBlank()) {
 			predicates.add(builder.like(builder.lower(root.get(Produto_.descricao)), "%" + produtoFilter.getDescricao().toLowerCase() + "%"));
 		}
 		return predicates.toArray(new Predicate[predicates.size()]);

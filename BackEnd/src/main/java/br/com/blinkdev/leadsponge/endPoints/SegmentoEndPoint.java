@@ -31,7 +31,7 @@ class SegmentoEndPoint {
     @GetMapping(value = {""})
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('PESQUISAR_SEGMENTO') and #oauth2.hasScope('read')")
-    public Page<Segmento> entryPoint(SegmentoFilter segmentoFilter, Pageable pageable) {
+    public Page<Segmento> list(SegmentoFilter segmentoFilter, Pageable pageable) {
         return segmentoService.filtrar(segmentoFilter, pageable);
     }
 

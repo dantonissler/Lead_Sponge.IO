@@ -1,49 +1,89 @@
 package br.com.blinkdev.leadsponge.services.campanha;
 
 import br.com.blinkdev.leadsponge.errorValidate.ErroMessage;
-import br.com.blinkdev.leadsponge.models.campanha.Campanha;
+import br.com.blinkdev.leadsponge.models.campanha.CampanhaEntity;
 import br.com.blinkdev.leadsponge.models.campanha.CampanhaFilter;
+import br.com.blinkdev.leadsponge.models.campanha.CampanhaModel;
+import br.com.blinkdev.leadsponge.models.campanha.CampanhaModelAssembler;
 import br.com.blinkdev.leadsponge.repository.campanha.CampanhaRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
 
-@Slf4j // TODO: criar um log para os metodos
+import java.lang.reflect.Field;
+import java.util.Map;
+
+@Slf4j
 @Service
 public class CampanhaServiceImpl extends ErroMessage implements CampanhaService {
 
-	@Autowired
-	private CampanhaRepository repository;
+    @Autowired
+    private CampanhaRepository campanhaRepository;
 
-	@Override
-	public Page<Campanha> filtrar(CampanhaFilter campanhaFilter, Pageable pageable) {
-		return repository.filtrar(campanhaFilter, pageable);
-	}
+    @Autowired
+    private CampanhaModelAssembler campanhaModelAssembler;
 
-	@Override
-	public Campanha salvar(Campanha campanha) {
-		return repository.save(campanha);
-	}
+    @Autowired
+    private PagedResourcesAssembler<CampanhaEntity> pagedResourcesAssembler;
 
-	@Override
-	public Campanha atualizar(Long id, Campanha campanha) {
-		Campanha campanhaSalvo = repository.findById(id).orElseThrow(() -> notFouldId(id, "a campanha"));
-		BeanUtils.copyProperties(campanha, campanhaSalvo, "id");
-		return repository.save(campanhaSalvo);
-	}
+    @Override
+    public PagedModel<CampanhaModel> getCampanhaByFilter(CampanhaFilter campanhaFilter, Pageable pageable) {
+        log.info("CampanhaServiceImpl - getCampanhaByFilter");
+        return pagedResourcesAssembler.toModel(campanhaRepository.findAll(pageable), campanhaModelAssembler);
+    }
 
-	@Override
-	public Campanha deletar(Long id) {
-		Campanha campanhaSalvo = repository.findById(id).orElseThrow(() -> notFouldId(id, "a campanha"));
-		repository.deleteById(id);
-		return campanhaSalvo;
-	}
+    @Override
+    public CollectionModel<CampanhaModel> getAllCampanhas() {
+        log.info("CampanhaServiceImpl - getAllCampanhas");
+        return campanhaModelAssembler.toCollectionModel(campanhaRepository.findAll());
+    }
 
-	@Override
-	public Campanha detalhar(Long id) {
-		return repository.findById(id).orElseThrow(() -> notFouldId(id, "a campanha"));
-	}
+    @Override
+    public CampanhaModel getCampanhaById(Long id) {
+        log.info("CampanhaServiceImpl - getCampanhaById");
+        return campanhaRepository.findById(id)
+                .map(campanhaModelAssembler::toModel)
+                .orElseThrow(() -> notFouldId(id, "a campanha"));
+    }
+
+    @Override
+    public CampanhaEntity salvar(CampanhaEntity campanha) {
+        log.info("CampanhaServiceImpl - save");
+        return campanhaRepository.save(campanha);
+    }
+
+    @Override
+    public CampanhaEntity atualizar(CampanhaEntity campanha) {
+        log.info("CampanhaServiceImpl - update put");
+        CampanhaEntity campanhaSalvo = campanhaRepository.findById(campanha.getId()).orElseThrow(() -> notFouldId(campanha.getId(), "a campanha"));
+        BeanUtils.copyProperties(campanha, campanhaSalvo, "id");
+        return campanhaRepository.save(campanhaSalvo);
+    }
+
+    @Override
+    public CampanhaEntity updatePatch(Long id, Map<Object, Object> fields) {
+        log.info("CampanhaServiceImpl - update patch");
+        CampanhaEntity campanha = campanhaRepository.findById(id).orElseThrow(() -> notFouldId(id, "campanha"));
+        fields.forEach((key, value) -> {
+            Field field = ReflectionUtils.findField(CampanhaEntity.class, (String) key);
+            assert field != null;
+            field.setAccessible(true);
+            ReflectionUtils.setField(field, campanha, value);
+        });
+        return salvar(campanha);
+    }
+
+    @Override
+    public CampanhaEntity deletar(Long id) {
+        log.info("CampanhaServiceImpl - delete");
+        CampanhaEntity campanhaSalvo = campanhaRepository.findById(id).orElseThrow(() -> notFouldId(id, "a campanha"));
+        campanhaRepository.deleteById(id);
+        return campanhaSalvo;
+    }
 }

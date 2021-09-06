@@ -31,7 +31,7 @@ class EstagioNegociacaoEndPoint {
     @GetMapping(value = {""})
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('PESQUISAR_ESTAGIO') and #oauth2.hasScope('read')")
-    Page<EstagioNegociacao> entryPoint(EstagioNegociacaoFilter estagioNegociacaoFilter, Pageable pageable) {
+    Page<EstagioNegociacao> list(EstagioNegociacaoFilter estagioNegociacaoFilter, Pageable pageable) {
         return estagioNegociacaoService.filtrar(estagioNegociacaoFilter, pageable);
     }
 

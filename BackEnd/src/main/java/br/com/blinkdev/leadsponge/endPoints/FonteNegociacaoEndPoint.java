@@ -31,7 +31,7 @@ class FonteNegociacaoEndPoint {
     @GetMapping(value = {""})
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('PESQUISAR_FONTE') and #oauth2.hasScope('read')")
-    public Page<FonteNegociacao> entryPoint(FonteNegociacaoFilter fonteNegociacaoFilter, Pageable pageable) {
+    public Page<FonteNegociacao> list(FonteNegociacaoFilter fonteNegociacaoFilter, Pageable pageable) {
         return fonteNegociacaoService.filtrar(fonteNegociacaoFilter, pageable);
     }
 

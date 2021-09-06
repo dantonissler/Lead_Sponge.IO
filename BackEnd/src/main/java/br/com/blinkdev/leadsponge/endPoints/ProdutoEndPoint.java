@@ -32,7 +32,7 @@ class ProdutoEndPoint extends ErroMessage {
     @GetMapping(value = {""})
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('PESQUISAR_PRODUTO') and #oauth2.hasScope('read')")
-    public Page<Produto> entryPoint(ProdutoFilter produtoFilter, Pageable pageable) {
+    public Page<Produto> list(ProdutoFilter produtoFilter, Pageable pageable) {
         return produtoService.filtrar(produtoFilter, pageable);
     }
 

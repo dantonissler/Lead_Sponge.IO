@@ -1,20 +1,28 @@
 package br.com.blinkdev.leadsponge.services.campanha;
 
-import br.com.blinkdev.leadsponge.models.campanha.Campanha;
+import br.com.blinkdev.leadsponge.models.campanha.CampanhaEntity;
 import br.com.blinkdev.leadsponge.models.campanha.CampanhaFilter;
-import org.springframework.data.domain.Page;
+import br.com.blinkdev.leadsponge.models.campanha.CampanhaModel;
 import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 @Service
 public interface CampanhaService {
-	Campanha salvar(Campanha campanha);
+    PagedModel<CampanhaModel> getCampanhaByFilter(CampanhaFilter campanhaFilter, Pageable pageable);
 
-	Campanha atualizar(Long id, Campanha campanha);
+    CollectionModel<CampanhaModel> getAllCampanhas();
 
-	Campanha deletar(Long id);
+    CampanhaModel getCampanhaById(Long id);
 
-	Campanha detalhar(Long id);
+    CampanhaEntity salvar(CampanhaEntity campanha);
 
-	Page<Campanha> filtrar(CampanhaFilter campanhaFilter, Pageable pageable);
+    CampanhaEntity atualizar(CampanhaEntity campanha);
+
+    CampanhaEntity updatePatch(Long id, Map<Object, Object> fields);
+
+    CampanhaEntity deletar(Long id);
 }

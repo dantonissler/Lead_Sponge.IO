@@ -3,7 +3,6 @@ package br.com.blinkdev.leadsponge.repository.fonteNegociacao;
 import br.com.blinkdev.leadsponge.models.fonteNegociacao.FonteNegociacao;
 import br.com.blinkdev.leadsponge.models.fonteNegociacao.FonteNegociacaoFilter;
 import br.com.blinkdev.leadsponge.models.fonteNegociacao.FonteNegociacao_;
-import org.apache.maven.surefire.shade.org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -40,9 +39,9 @@ public class FonteNegociacaoRepositoryImpl implements FonteNegociacaoRepositoryQ
 
 	private Predicate[] criarRestricoes(FonteNegociacaoFilter fonteNegociacaoFilter, CriteriaBuilder builder, Root<FonteNegociacao> root) {
 		List<Predicate> predicates = new ArrayList<>();
-		if (StringUtils.isNotBlank(fonteNegociacaoFilter.getNome())) {
-			predicates.add(builder.like(builder.lower(root.get(FonteNegociacao_.nome)), "%" + fonteNegociacaoFilter.getNome().toLowerCase() + "%"));
-		}
+		if (fonteNegociacaoFilter.getNome().isBlank()) {
+            predicates.add(builder.like(builder.lower(root.get(FonteNegociacao_.nome)), "%" + fonteNegociacaoFilter.getNome().toLowerCase() + "%"));
+        }
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}
 

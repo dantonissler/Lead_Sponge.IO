@@ -35,7 +35,7 @@ class NegociacaoEndPoint {
     @GetMapping(value = {""})
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('PESQUISAR_NEGOCIACAO') and #oauth2.hasScope('read')")
-    Page<Negociacao> entryPoint(NegociacaoFilter negociacaoFilter, Pageable pageable) {
+    Page<Negociacao> list(NegociacaoFilter negociacaoFilter, Pageable pageable) {
         return negociacaoService.filtrar(negociacaoFilter, pageable);
     }
 

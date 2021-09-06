@@ -1,6 +1,5 @@
 package br.com.blinkdev.leadsponge.services.usuario;
 
-import br.com.blinkdev.leadsponge.endPoints.UsuarioEndPoint;
 import br.com.blinkdev.leadsponge.errorValidate.ErroMessage;
 import br.com.blinkdev.leadsponge.models.usuario.Usuario;
 import br.com.blinkdev.leadsponge.models.usuario.UsuarioFilter;
@@ -8,22 +7,16 @@ import br.com.blinkdev.leadsponge.models.usuario.UsuarioModel;
 import br.com.blinkdev.leadsponge.models.usuario.UsuarioTO;
 import br.com.blinkdev.leadsponge.repository.usuario.UsuarioRepository;
 import br.com.blinkdev.leadsponge.storage.Disco;
-import org.apache.maven.surefire.shade.org.apache.commons.lang3.StringUtils;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
-
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 public class UsuarioServiceImpl extends ErroMessage implements UsuarioService {
@@ -37,8 +30,8 @@ public class UsuarioServiceImpl extends ErroMessage implements UsuarioService {
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-	@Autowired
-	private ModelMapper modelMapper;
+//	@Autowired
+//	private ModelMapper modelMapper;
 
 	@Override
 	public Usuario atualizarUsuarioDTO(Long id, UsuarioTO usuario) {
@@ -84,9 +77,9 @@ public class UsuarioServiceImpl extends ErroMessage implements UsuarioService {
 		usuarioSalva.getRoles().clear();
 		usuarioSalva.getRoles().addAll(usuario.getRoles());
 		usuarioSalva.setRoles(new HashSet<>(usuarioSalva.getRoles()));
-		if (StringUtils.isBlank(usuario.getFoto()) && StringUtils.isBlank(usuarioSalva.getFoto())) {
+		if (usuario.getFoto().isBlank() && usuarioSalva.getFoto().isBlank()) {
 			disco.remover(usuarioSalva.getUrlFoto());
-		} else if (StringUtils.isBlank(usuario.getFoto()) && !usuario.getFoto().equals(usuarioSalva.getFoto())) {
+		} else if (usuario.getFoto().isBlank() && !usuario.getFoto().equals(usuarioSalva.getFoto())) {
 			disco.remover(usuario.getUrlFoto());
 		}
 		BeanUtils.copyProperties(usuario, usuarioSalva, "id", "roles");
@@ -123,7 +116,7 @@ public class UsuarioServiceImpl extends ErroMessage implements UsuarioService {
 
 	@Override
 	public UsuarioModel detalhar(Long id) {
-		return toModel(repository.findById(id).orElseThrow(() -> notFouldId(id, "a produto")));
+		return new UsuarioModel();//repository.findById(id).orElseThrow(() -> notFouldId(id, "a produto"));
 	}
 
 	@Override
@@ -137,9 +130,9 @@ public class UsuarioServiceImpl extends ErroMessage implements UsuarioService {
 	}
 
 	// TODO ver a viabilidade
-	private UsuarioModel toModel(Usuario usuario){
-		UsuarioModel usuarioModel = modelMapper.map(usuario, UsuarioModel.class);
-		usuarioModel.add(linkTo(methodOn(UsuarioEndPoint.class).list(new UsuarioFilter(), null)).withRel(IanaLinkRelations.COLLECTION));
-		return usuarioModel;
-	}
+//	private UsuarioModel toModel(Usuario usuario){
+//		UsuarioModel usuarioModel = modelMapper.map(usuario, UsuarioModel.class);
+//		usuarioModel.add(linkTo(methodOn(UsuarioEndPoint.class).list(new UsuarioFilter(), null)).withRel(IanaLinkRelations.COLLECTION));
+//		return usuarioModel;
+//	}
 }

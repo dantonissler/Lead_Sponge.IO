@@ -4,7 +4,6 @@ import br.com.blinkdev.leadsponge.event.RecursoCriadoEvent;
 import br.com.blinkdev.leadsponge.models.negociacaoProduto.NegociacaoProduto;
 import br.com.blinkdev.leadsponge.models.negociacaoProduto.NegociacaoProdutoFilter;
 import br.com.blinkdev.leadsponge.services.negociacaoProduto.NegociacaoProdutoService;
-import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -30,10 +29,9 @@ class NegociacaoProdutoEndPoint {
     private final ApplicationEventPublisher publisher;
 
     @GetMapping(value = {""})
-    @ApiOperation(value = "Pesquisar campanhas")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('PESQUISAR_CAMPANHA') and #oauth2.hasScope('read')")
-    public Page<NegociacaoProduto> entryPoint(NegociacaoProdutoFilter negociacaoProdutoFilter, Pageable pageable) {
+    public Page<NegociacaoProduto> list(NegociacaoProdutoFilter negociacaoProdutoFilter, Pageable pageable) {
         return negociacaoProdutoService.filtrar(negociacaoProdutoFilter, pageable);
     }
 

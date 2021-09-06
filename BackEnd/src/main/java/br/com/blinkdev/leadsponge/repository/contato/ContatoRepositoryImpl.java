@@ -3,7 +3,6 @@ package br.com.blinkdev.leadsponge.repository.contato;
 import br.com.blinkdev.leadsponge.models.contato.Contato;
 import br.com.blinkdev.leadsponge.models.contato.ContatoFilter;
 import br.com.blinkdev.leadsponge.models.contato.Contato_;
-import org.apache.maven.surefire.shade.org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -40,10 +39,10 @@ public class ContatoRepositoryImpl implements ContatoRepositoryQuery {
 
 	private Predicate[] criarRestricoes(ContatoFilter contatoFilter, CriteriaBuilder builder, Root<Contato> root) {
 		List<Predicate> predicates = new ArrayList<>();
-		if (StringUtils.isNotBlank(contatoFilter.getNome())) {
+		if (contatoFilter.getNome().isBlank()) {
 			predicates.add(builder.like(builder.lower(root.get(Contato_.nome)), "%" + contatoFilter.getNome().toLowerCase() + "%"));
 		}
-		if (StringUtils.isNotBlank(contatoFilter.getCargo())) {
+		if (contatoFilter.getCargo().isBlank()) {
 			predicates.add(builder.like(builder.lower(root.get(Contato_.cargo)), "%" + contatoFilter.getCargo().toLowerCase() + "%"));
 		}
 		return predicates.toArray(new Predicate[predicates.size()]);

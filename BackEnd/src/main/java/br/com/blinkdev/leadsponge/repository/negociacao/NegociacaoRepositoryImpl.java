@@ -3,7 +3,6 @@ package br.com.blinkdev.leadsponge.repository.negociacao;
 import br.com.blinkdev.leadsponge.models.negociacao.Negociacao;
 import br.com.blinkdev.leadsponge.models.negociacao.NegociacaoFilter;
 import br.com.blinkdev.leadsponge.models.negociacao.Negociacao_;
-import org.apache.maven.surefire.shade.org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -40,21 +39,21 @@ public class NegociacaoRepositoryImpl implements NegociacaoRepositoryQuery {
 
 	private Predicate[] criarRestricoes(NegociacaoFilter negociacaoFilter, CriteriaBuilder builder, Root<Negociacao> root) {
 		List<Predicate> predicates = new ArrayList<>();
-		if (StringUtils.isNotBlank(negociacaoFilter.getNome())) {
-			predicates.add(builder.like(builder.lower(root.get(Negociacao_.nome)), "%" + negociacaoFilter.getNome().toLowerCase() + "%"));
-		}
-		if (StringUtils.isNotBlank(negociacaoFilter.getAvaliacao().toString())) {
-			predicates.add(builder.equal(root.get(Negociacao_.avaliacao), negociacaoFilter.getAvaliacao()));
-		}
-		if (StringUtils.isNotBlank(negociacaoFilter.getValorTotal().toString())) {
-			predicates.add(builder.equal(root.get(Negociacao_.valorTotal), negociacaoFilter.getValorTotal()));
-		}
-		if (StringUtils.isNotBlank(negociacaoFilter.getValorMensal().toString())) {
-			predicates.add(builder.equal(root.get(Negociacao_.valorMensal), negociacaoFilter.getValorMensal()));
-		}
-		if (StringUtils.isNotBlank(negociacaoFilter.getValorUnico().toString())) {
-			predicates.add(builder.equal(root.get(Negociacao_.valorUnico), negociacaoFilter.getValorUnico()));
-		}
+		if (negociacaoFilter.getNome().isBlank()) {
+            predicates.add(builder.like(builder.lower(root.get(Negociacao_.nome)), "%" + negociacaoFilter.getNome().toLowerCase() + "%"));
+        }
+        if (negociacaoFilter.getAvaliacao().toString().isBlank()) {
+            predicates.add(builder.equal(root.get(Negociacao_.avaliacao), negociacaoFilter.getAvaliacao()));
+        }
+        if (negociacaoFilter.getValorTotal().toString().isBlank()) {
+            predicates.add(builder.equal(root.get(Negociacao_.valorTotal), negociacaoFilter.getValorTotal()));
+        }
+        if (negociacaoFilter.getValorMensal().toString().isBlank()) {
+            predicates.add(builder.equal(root.get(Negociacao_.valorMensal), negociacaoFilter.getValorMensal()));
+        }
+        if (negociacaoFilter.getValorUnico().toString().isBlank()) {
+            predicates.add(builder.equal(root.get(Negociacao_.valorUnico), negociacaoFilter.getValorUnico()));
+        }
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}
 

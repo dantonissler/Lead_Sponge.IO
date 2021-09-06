@@ -4,7 +4,6 @@ import br.com.blinkdev.leadsponge.models.usuario.Usuario;
 import br.com.blinkdev.leadsponge.models.usuario.UsuarioFilter;
 import br.com.blinkdev.leadsponge.models.usuario.UsuarioModel;
 import br.com.blinkdev.leadsponge.models.usuario.Usuario_;
-import org.apache.maven.surefire.shade.org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -54,15 +53,15 @@ public class UsuarioRepositoryImpl implements UsuarioRepositoryQuery {
 
 	private Predicate[] criarRestricoes(UsuarioFilter usuarioFilter, CriteriaBuilder builder, Root<Usuario> root) {
 		List<Predicate> predicates = new ArrayList<>();
-		if (StringUtils.isNotBlank(usuarioFilter.getNomeCompleto())) {
-			predicates.add(builder.like(builder.lower(root.get(Usuario_.nomeCompleto)), "%" + usuarioFilter.getNomeCompleto().toLowerCase() + "%"));
-		}
-		if (StringUtils.isNotBlank(usuarioFilter.getUsername())) {
-			predicates.add(builder.like(builder.lower(root.get(Usuario_.username)), "%" + usuarioFilter.getUsername().toLowerCase() + "%"));
-		}
-		if (StringUtils.isNotBlank(usuarioFilter.getEmail())) {
-			predicates.add(builder.like(builder.lower(root.get(Usuario_.email)), "%" + usuarioFilter.getEmail().toLowerCase() + "%"));
-		}
+		if (usuarioFilter.getNomeCompleto().isBlank()) {
+            predicates.add(builder.like(builder.lower(root.get(Usuario_.nomeCompleto)), "%" + usuarioFilter.getNomeCompleto().toLowerCase() + "%"));
+        }
+        if (usuarioFilter.getUsername().isBlank()) {
+            predicates.add(builder.like(builder.lower(root.get(Usuario_.username)), "%" + usuarioFilter.getUsername().toLowerCase() + "%"));
+        }
+        if (usuarioFilter.getEmail().isBlank()) {
+            predicates.add(builder.like(builder.lower(root.get(Usuario_.email)), "%" + usuarioFilter.getEmail().toLowerCase() + "%"));
+        }
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}
 
