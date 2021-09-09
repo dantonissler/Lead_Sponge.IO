@@ -1,18 +1,17 @@
 package br.com.blinkdev.leadsponge.storage;
 
+import br.com.blinkdev.leadsponge.config.property.LeadSpongeApiProperty;
+import br.com.blinkdev.leadsponge.errorValidate.ResourceBadRequestException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
-
-import br.com.blinkdev.leadsponge.config.property.LeadSpongeApiProperty;
-import br.com.blinkdev.leadsponge.errorValidate.ResourceBadRequestException;
 
 @Component
 public class Disco {
@@ -43,7 +42,7 @@ public class Disco {
 	}
 
 	private String gerarNomeUnico(String originalFilename) {
-		return UUID.randomUUID().toString() + "_" + originalFilename;
+		return UUID.randomUUID() + "_" + originalFilename;
 	}
 
 	public void remover(String objeto) {

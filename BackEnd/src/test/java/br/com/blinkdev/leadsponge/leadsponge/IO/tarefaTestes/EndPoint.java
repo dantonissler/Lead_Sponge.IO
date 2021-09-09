@@ -1,13 +1,13 @@
 package br.com.blinkdev.leadsponge.leadsponge.IO.tarefaTestes;
 
 import br.com.blinkdev.leadsponge.LeadSpongeApiApplication;
+import br.com.blinkdev.leadsponge.endPoints.negociacao.entity.NegociacaoEntity;
+import br.com.blinkdev.leadsponge.endPoints.tarefa.entity.TarefaEntity;
+import br.com.blinkdev.leadsponge.endPoints.tarefa.enumeration.TipoTarefa;
+import br.com.blinkdev.leadsponge.endPoints.tarefa.filter.TarefaFilter;
+import br.com.blinkdev.leadsponge.endPoints.user.entity.UserEntity;
 import br.com.blinkdev.leadsponge.leadsponge.IO.Util;
-import br.com.blinkdev.leadsponge.models.negociacao.Negociacao;
-import br.com.blinkdev.leadsponge.models.tarefa.Tarefa;
-import br.com.blinkdev.leadsponge.models.tarefa.TarefaFilter;
-import br.com.blinkdev.leadsponge.models.tarefa.TipoTarefa;
-import br.com.blinkdev.leadsponge.models.usuario.Usuario;
-import br.com.blinkdev.leadsponge.services.tarefa.TarefaService;
+import br.com.blinkdev.leadsponge.endPoints.tarefa.service.TarefaService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -45,7 +45,7 @@ public class EndPoint {
     private TarefaService service;
 
     @Mock
-    private Page<Tarefa> page;
+    private Page<TarefaEntity> page;
 
     private final MediaType contentType = new MediaType("application", "json");
     private final Pageable pageable = PageRequest.of(0, 10);
@@ -55,7 +55,7 @@ public class EndPoint {
     private final TarefaFilter tarefaFilterRealizada = new TarefaFilter(null, null, null, true, null, null);
     private final TarefaFilter tarefaFilterTipo = new TarefaFilter(null, null, null, null, null, TipoTarefa.TAREFA);
 
-    private final Tarefa tarefa = new Tarefa(3L, "assunto", "descricao", "2016-03-04 11:30", true, "2016-03-04 11:30", TipoTarefa.TAREFA, new Usuario(1L), new Negociacao(1L));
+    private final TarefaEntity tarefa = new TarefaEntity(3L, "assunto", "descricao", "2016-03-04 11:30", true, "2016-03-04 11:30", TipoTarefa.TAREFA, new UserEntity(1L), new NegociacaoEntity(1L));
 
 
     @Test
@@ -182,16 +182,16 @@ public class EndPoint {
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(tarefa);
         mockMvc.perform(post("/tarefas")
-                .header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc))
-                .accept(MediaType.APPLICATION_JSON)
-                .content(jsonString)
-                .contentType(MediaType.APPLICATION_JSON))
+                        .header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc))
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(jsonString)
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(contentType))
                 .andExpect(status().isCreated())
                 .andDo(print())
                 .andExpect(jsonPath("$.assunto").value("assunto"))
                 .andExpect(jsonPath("$.descricao").value("descricao"));
-        verify(service, times(1)).salvar(Mockito.any(Tarefa.class));
+        verify(service, times(1)).salvar(Mockito.any(TarefaEntity.class));
     }
 
     @Test
@@ -347,15 +347,15 @@ public class EndPoint {
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(tarefa);
         mockMvc.perform(post("/tarefas")
-                .header("Authorization", "Bearer " + Util.getAccessToken("user", "123321", mockMvc))
-                .accept(MediaType.APPLICATION_JSON)
-                .content(jsonString)
-                .contentType(MediaType.APPLICATION_JSON))
+                        .header("Authorization", "Bearer " + Util.getAccessToken("user", "123321", mockMvc))
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(jsonString)
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(contentType))
                 .andExpect(status().isForbidden())
                 .andDo(print())
                 .andExpect(jsonPath("$.error").value("access_denied"));
-        verify(service, times(0)).salvar(Mockito.any(Tarefa.class));
+        verify(service, times(0)).salvar(Mockito.any(TarefaEntity.class));
     }
 
     @Test
@@ -537,7 +537,7 @@ public class EndPoint {
     @DisplayName("Atualizar Tarefa informando um assunto null, retornar mensagem de erro e status 400.")
     public void atualizarassuntoNull() throws Exception {
         LocalDateTime data = LocalDateTime.now();
-        Tarefa tarefa = new Tarefa(3L, null, "descricao", data, true, data, TipoTarefa.TAREFA, new Usuario(1L), new Negociacao(1L));
+        TarefaEntity tarefa = new TarefaEntity(3L, null, "descricao", data, true, data, TipoTarefa.TAREFA, new UserEntity(1L), new NegociacaoEntity(1L));
         when(service.atualizar(1L, tarefa)).thenReturn(tarefa);
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(tarefa);
@@ -557,7 +557,7 @@ public class EndPoint {
     @DisplayName("Atualizar Tarefa informando um assunto vazio, retornar mensagem de erro e status 400.")
     public void atualizarassuntoVazio() throws Exception {
         LocalDateTime data = LocalDateTime.now();
-        Tarefa tarefa = new Tarefa(3L, "", "descricao", data, true, data, TipoTarefa.TAREFA, new Usuario(1L), new Negociacao(1L));
+        TarefaEntity tarefa = new TarefaEntity(3L, "", "descricao", data, true, data, TipoTarefa.TAREFA, new UserEntity(1L), new NegociacaoEntity(1L));
         when(service.atualizar(1L, tarefa)).thenReturn(tarefa);
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(tarefa);
@@ -577,15 +577,15 @@ public class EndPoint {
     @DisplayName("Criar Tarefa informando um assunto acima de 50 caracteres, retornar mensagem de erro e status 400.")
     public void criarassuntoAcima50Caracteres() throws Exception {
         LocalDateTime data = LocalDateTime.now();
-        Tarefa tarefa = new Tarefa(3L, "assunto assunto assunto assunto assunto assunto assunto assunto assunto assunto assunto assunto", "descricao", data, true, data, TipoTarefa.TAREFA, new Usuario(1L), new Negociacao(1L));
-        when(service.salvar(Mockito.any(Tarefa.class))).thenReturn(tarefa);
+        TarefaEntity tarefa = new TarefaEntity(3L, "assunto assunto assunto assunto assunto assunto assunto assunto assunto assunto assunto assunto", "descricao", data, true, data, TipoTarefa.TAREFA, new UserEntity(1L), new NegociacaoEntity(1L));
+        when(service.salvar(Mockito.any(TarefaEntity.class))).thenReturn(tarefa);
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(tarefa);
         mockMvc.perform(post("/tarefas")
-                .header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc))
-                .accept(MediaType.APPLICATION_JSON)
-                .content(jsonString)
-                .contentType(MediaType.APPLICATION_JSON))
+                        .header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc))
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(jsonString)
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
                 .andDo(print());
@@ -596,15 +596,15 @@ public class EndPoint {
     @DisplayName("Criar Tarefa informando um assunto abaixo de 4 caracteres, retornar mensagem de erro e status 400.")
     public void criarassuntoAbaixo4Caracteres() throws Exception {
         LocalDateTime data = LocalDateTime.now();
-        Tarefa tarefa = new Tarefa(3L, "nom", "descricao", data, true, data, TipoTarefa.TAREFA, new Usuario(1L), new Negociacao(1L));
-        when(service.salvar(Mockito.any(Tarefa.class))).thenReturn(tarefa);
+        TarefaEntity tarefa = new TarefaEntity(3L, "nom", "descricao", data, true, data, TipoTarefa.TAREFA, new UserEntity(1L), new NegociacaoEntity(1L));
+        when(service.salvar(Mockito.any(TarefaEntity.class))).thenReturn(tarefa);
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(tarefa);
         mockMvc.perform(post("/tarefas")
-                .header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc))
-                .accept(MediaType.APPLICATION_JSON)
-                .content(jsonString)
-                .contentType(MediaType.APPLICATION_JSON))
+                        .header("Authorization", "Bearer " + Util.getAccessToken("admin", "123321", mockMvc))
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(jsonString)
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
                 .andDo(print());

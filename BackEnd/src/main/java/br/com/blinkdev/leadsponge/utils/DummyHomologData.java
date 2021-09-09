@@ -1,19 +1,19 @@
 package br.com.blinkdev.leadsponge.utils;
 
-import br.com.blinkdev.leadsponge.models.campanha.CampanhaEntity;
-import br.com.blinkdev.leadsponge.models.estagioNegociacao.EstagioNegociacao;
-import br.com.blinkdev.leadsponge.models.fonteNegociacao.FonteNegociacao;
-import br.com.blinkdev.leadsponge.models.motivoPerda.MotivoPerda;
-import br.com.blinkdev.leadsponge.models.role.Role;
-import br.com.blinkdev.leadsponge.models.segmento.Segmento;
-import br.com.blinkdev.leadsponge.models.usuario.Usuario;
-import br.com.blinkdev.leadsponge.repository.campanha.CampanhaRepository;
-import br.com.blinkdev.leadsponge.repository.estagioNegociacao.EstagioNegociacaoRepository;
-import br.com.blinkdev.leadsponge.repository.fonteNegociacao.FonteNegociacaoRepository;
-import br.com.blinkdev.leadsponge.repository.motivoPerda.MotivoPerdaRepository;
-import br.com.blinkdev.leadsponge.repository.role.RoleRepository;
-import br.com.blinkdev.leadsponge.services.segmento.SegmentoService;
-import br.com.blinkdev.leadsponge.services.usuario.UsuarioService;
+import br.com.blinkdev.leadsponge.endPoints.FonteNegociacao.entity.FonteNegociacaoEntity;
+import br.com.blinkdev.leadsponge.endPoints.campanha.entity.CampanhaEntity;
+import br.com.blinkdev.leadsponge.endPoints.campanha.repository.CampanhaRepository;
+import br.com.blinkdev.leadsponge.endPoints.estagioNegociacao.entity.EstagioNegociacaoEntity;
+import br.com.blinkdev.leadsponge.endPoints.motivoPerda.entity.MotivoPerdaEntity;
+import br.com.blinkdev.leadsponge.endPoints.role.entity.RoleEntity;
+import br.com.blinkdev.leadsponge.endPoints.segmento.entity.SegmentoEntity;
+import br.com.blinkdev.leadsponge.endPoints.user.entity.UserEntity;
+import br.com.blinkdev.leadsponge.endPoints.user.service.UsuarioService;
+import br.com.blinkdev.leadsponge.endPoints.estagioNegociacao.repository.EstagioNegociacaoRepository;
+import br.com.blinkdev.leadsponge.endPoints.FonteNegociacao.repository.FonteNegociacaoRepository;
+import br.com.blinkdev.leadsponge.endPoints.motivoPerda.repository.MotivoPerdaRepository;
+import br.com.blinkdev.leadsponge.endPoints.role.repository.RoleRepository;
+import br.com.blinkdev.leadsponge.endPoints.segmento.service.SegmentoService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,60 +30,60 @@ class DummyHomologData {
     @Bean
     CommandLineRunner initTableRole(RoleRepository roleRepository) {
         return args -> {
-            roleRepository.save(new Role("CADASTRAR_USUARIO"));
-            roleRepository.save(new Role("REMOVER_USUARIO"));
-            roleRepository.save(new Role("PESQUISAR_USUARIO"));
+            roleRepository.save(new RoleEntity("CADASTRAR_USUARIO"));
+            roleRepository.save(new RoleEntity("REMOVER_USUARIO"));
+            roleRepository.save(new RoleEntity("PESQUISAR_USUARIO"));
 
-            roleRepository.save(new Role("CADASTRAR_CLIENTE"));
-            roleRepository.save(new Role("REMOVER_CLIENTE"));
-            roleRepository.save(new Role("PESQUISAR_CLIENTE"));
+            roleRepository.save(new RoleEntity("CADASTRAR_CLIENTE"));
+            roleRepository.save(new RoleEntity("REMOVER_CLIENTE"));
+            roleRepository.save(new RoleEntity("PESQUISAR_CLIENTE"));
 
-            roleRepository.save(new Role("CADASTRAR_NEGOCIACAO"));
-            roleRepository.save(new Role("REMOVER_NEGOCIACAO"));
-            roleRepository.save(new Role("PESQUISAR_NEGOCIACAO"));
+            roleRepository.save(new RoleEntity("CADASTRAR_NEGOCIACAO"));
+            roleRepository.save(new RoleEntity("REMOVER_NEGOCIACAO"));
+            roleRepository.save(new RoleEntity("PESQUISAR_NEGOCIACAO"));
 
-            roleRepository.save(new Role("CADASTRAR_CAMPANHA"));
-            roleRepository.save(new Role("REMOVER_CAMPANHA"));
-            roleRepository.save(new Role("PESQUISAR_CAMPANHA"));
+            roleRepository.save(new RoleEntity("CADASTRAR_CAMPANHA"));
+            roleRepository.save(new RoleEntity("REMOVER_CAMPANHA"));
+            roleRepository.save(new RoleEntity("PESQUISAR_CAMPANHA"));
 
-            roleRepository.save(new Role("CADASTRAR_CONTATO"));
-            roleRepository.save(new Role("REMOVER_CONTATO"));
-            roleRepository.save(new Role("PESQUISAR_CONTATO"));
+            roleRepository.save(new RoleEntity("CADASTRAR_CONTATO"));
+            roleRepository.save(new RoleEntity("REMOVER_CONTATO"));
+            roleRepository.save(new RoleEntity("PESQUISAR_CONTATO"));
 
-            roleRepository.save(new Role("CADASTRAR_FONTE"));
-            roleRepository.save(new Role("REMOVER_FONTE"));
-            roleRepository.save(new Role("PESQUISAR_FONTE"));
+            roleRepository.save(new RoleEntity("CADASTRAR_FONTE"));
+            roleRepository.save(new RoleEntity("REMOVER_FONTE"));
+            roleRepository.save(new RoleEntity("PESQUISAR_FONTE"));
 
-            roleRepository.save(new Role("CADASTRAR_PRODUTO"));
-            roleRepository.save(new Role("REMOVER_PRODUTO"));
-            roleRepository.save(new Role("PESQUISAR_PRODUTO"));
+            roleRepository.save(new RoleEntity("CADASTRAR_PRODUTO"));
+            roleRepository.save(new RoleEntity("REMOVER_PRODUTO"));
+            roleRepository.save(new RoleEntity("PESQUISAR_PRODUTO"));
 
-            roleRepository.save(new Role("CADASTRAR_TAREFA"));
-            roleRepository.save(new Role("REMOVER_TAREFA"));
-            roleRepository.save(new Role("PESQUISAR_TAREFA"));
+            roleRepository.save(new RoleEntity("CADASTRAR_TAREFA"));
+            roleRepository.save(new RoleEntity("REMOVER_TAREFA"));
+            roleRepository.save(new RoleEntity("PESQUISAR_TAREFA"));
 
-            roleRepository.save(new Role("CADASTRAR_ESTAGIO"));
-            roleRepository.save(new Role("REMOVER_ESTAGIO"));
-            roleRepository.save(new Role("PESQUISAR_ESTAGIO"));
+            roleRepository.save(new RoleEntity("CADASTRAR_ESTAGIO"));
+            roleRepository.save(new RoleEntity("REMOVER_ESTAGIO"));
+            roleRepository.save(new RoleEntity("PESQUISAR_ESTAGIO"));
 
-            roleRepository.save(new Role("CADASTRAR_SEGMENTO"));
-            roleRepository.save(new Role("REMOVER_SEGMENTO"));
-            roleRepository.save(new Role("PESQUISAR_SEGMENTO"));
+            roleRepository.save(new RoleEntity("CADASTRAR_SEGMENTO"));
+            roleRepository.save(new RoleEntity("REMOVER_SEGMENTO"));
+            roleRepository.save(new RoleEntity("PESQUISAR_SEGMENTO"));
 
-            roleRepository.save(new Role("CADASTRAR_MOTIVO"));
-            roleRepository.save(new Role("REMOVER_MOTIVO"));
-            roleRepository.save(new Role("PESQUISAR_MOTIVO"));
+            roleRepository.save(new RoleEntity("CADASTRAR_MOTIVO"));
+            roleRepository.save(new RoleEntity("REMOVER_MOTIVO"));
+            roleRepository.save(new RoleEntity("PESQUISAR_MOTIVO"));
 
-            roleRepository.save(new Role("USER"));
+            roleRepository.save(new RoleEntity("USER"));
         };
     }
 
     @Bean
     CommandLineRunner initTableUsuario(UsuarioService usuarioService, RoleRepository roleRepository) {
         return args -> {
-            usuarioService.salvar(new Usuario("admin", "Danton Issler Rodrigues", "danton.issler18@gmail.com", "123321", "123321", true, "98ad18d9-d419-4099-864d-6a9317e6ec29_1.jpg", "/assets/img/perfil/98ad18d9-d419-4099-864d-6a9317e6ec29_1.jpg",
+            usuarioService.salvar(new UserEntity("admin", "Danton Issler Rodrigues", "danton.issler18@gmail.com", "123321", "123321", true, "98ad18d9-d419-4099-864d-6a9317e6ec29_1.jpg", "/assets/img/perfil/98ad18d9-d419-4099-864d-6a9317e6ec29_1.jpg",
                     new HashSet<>(roleRepository.findAll())));
-            usuarioService.salvar(new Usuario("user", "user", "user@gmail.com", "123321", "123321", true, null, null, new HashSet<>()));
+            usuarioService.salvar(new UserEntity("user", "user", "user@gmail.com", "123321", "123321", true, null, null, new HashSet<>()));
 
         };
     }
@@ -96,70 +96,70 @@ class DummyHomologData {
     @Bean
     CommandLineRunner initTableFonteNegociacao(FonteNegociacaoRepository fonteNegociacaoRepository) {
         return args -> {
-            fonteNegociacaoRepository.save(new FonteNegociacao("Cliente Ativo"));
-            fonteNegociacaoRepository.save(new FonteNegociacao("Contato pelo Site"));
-            fonteNegociacaoRepository.save(new FonteNegociacao("Contato por E-mail"));
-            fonteNegociacaoRepository.save(new FonteNegociacao("Contato por Telefone"));
-            fonteNegociacaoRepository.save(new FonteNegociacao("E-mail Marketing"));
-            fonteNegociacaoRepository.save(new FonteNegociacao("Feiras e Eventos"));
-            fonteNegociacaoRepository.save(new FonteNegociacao("Google e Outros Buscadores"));
-            fonteNegociacaoRepository.save(new FonteNegociacao("Indicação por Clientes"));
-            fonteNegociacaoRepository.save(new FonteNegociacao("Indicação por Parceiros"));
-            fonteNegociacaoRepository.save(new FonteNegociacao("Prospecção Ativa"));
-            fonteNegociacaoRepository.save(new FonteNegociacao("Redes Sociais"));
+            fonteNegociacaoRepository.save(new FonteNegociacaoEntity("Cliente Ativo"));
+            fonteNegociacaoRepository.save(new FonteNegociacaoEntity("Contato pelo Site"));
+            fonteNegociacaoRepository.save(new FonteNegociacaoEntity("Contato por E-mail"));
+            fonteNegociacaoRepository.save(new FonteNegociacaoEntity("Contato por Telefone"));
+            fonteNegociacaoRepository.save(new FonteNegociacaoEntity("E-mail Marketing"));
+            fonteNegociacaoRepository.save(new FonteNegociacaoEntity("Feiras e Eventos"));
+            fonteNegociacaoRepository.save(new FonteNegociacaoEntity("Google e Outros Buscadores"));
+            fonteNegociacaoRepository.save(new FonteNegociacaoEntity("Indicação por Clientes"));
+            fonteNegociacaoRepository.save(new FonteNegociacaoEntity("Indicação por Parceiros"));
+            fonteNegociacaoRepository.save(new FonteNegociacaoEntity("Prospecção Ativa"));
+            fonteNegociacaoRepository.save(new FonteNegociacaoEntity("Redes Sociais"));
         };
     }
 
     @Bean
     CommandLineRunner initTableEstagio(EstagioNegociacaoRepository estagioNegociacaoRepository) {
-        return args -> estagioNegociacaoRepository.saveAll(Arrays.asList(new EstagioNegociacao("Sem contato", "SC", 1), new EstagioNegociacao("Contrato Feito", "CF", 2), new EstagioNegociacao("Identificação de Interece", "IDI", 3),
-                new EstagioNegociacao("Apresentação", "A", 4), new EstagioNegociacao("Proposta Enviada", "PE", 5)));
+        return args -> estagioNegociacaoRepository.saveAll(Arrays.asList(new EstagioNegociacaoEntity("Sem contato", "SC", 1), new EstagioNegociacaoEntity("Contrato Feito", "CF", 2), new EstagioNegociacaoEntity("Identificação de Interece", "IDI", 3),
+                new EstagioNegociacaoEntity("Apresentação", "A", 4), new EstagioNegociacaoEntity("Proposta Enviada", "PE", 5)));
     }
 
     @Bean
     CommandLineRunner initTablePerda(MotivoPerdaRepository motivoPerdaRepository) {
         return args -> {
-            motivoPerdaRepository.save(new MotivoPerda(null, "Cliente optou por não realizar o projeto", null));
-            motivoPerdaRepository.save(new MotivoPerda(null, "Demora no follow", null));
-            motivoPerdaRepository.save(new MotivoPerda(null, "Fechou com outra empresa", null));
-            motivoPerdaRepository.save(new MotivoPerda(null, "Não gostou do produto/serviço", null));
-            motivoPerdaRepository.save(new MotivoPerda(null, "Outros", null));
-            motivoPerdaRepository.save(new MotivoPerda(null, "Preço", null));
+            motivoPerdaRepository.save(new MotivoPerdaEntity(null, "Cliente optou por não realizar o projeto", null));
+            motivoPerdaRepository.save(new MotivoPerdaEntity(null, "Demora no follow", null));
+            motivoPerdaRepository.save(new MotivoPerdaEntity(null, "Fechou com outra empresa", null));
+            motivoPerdaRepository.save(new MotivoPerdaEntity(null, "Não gostou do produto/serviço", null));
+            motivoPerdaRepository.save(new MotivoPerdaEntity(null, "Outros", null));
+            motivoPerdaRepository.save(new MotivoPerdaEntity(null, "Preço", null));
         };
     }
 
     @Bean
     CommandLineRunner initTableSegmento(SegmentoService segmentoService) {
         return args -> {
-            segmentoService.salvar(new Segmento("Advocacia"));
-            segmentoService.salvar(new Segmento("Agropecuária"));
-            segmentoService.salvar(new Segmento("Arquitetura"));
-            segmentoService.salvar(new Segmento("Bancos"));
-            segmentoService.salvar(new Segmento("Blogs e Sites Pessoais"));
-            segmentoService.salvar(new Segmento("Clinicas / Saúde"));
-            segmentoService.salvar(new Segmento("Concessionárias de Veículos"));
-            segmentoService.salvar(new Segmento("Contabilidade"));
-            segmentoService.salvar(new Segmento("Demolição e terraplanagem"));
-            segmentoService.salvar(new Segmento("Distribuidoras / Atacadistas"));
-            segmentoService.salvar(new Segmento("Engenharia"));
-            segmentoService.salvar(new Segmento("Esoterismo"));
-            segmentoService.salvar(new Segmento("Eventos e Entretenimento"));
-            segmentoService.salvar(new Segmento("Fotografia"));
-            segmentoService.salvar(new Segmento("Gráfica"));
-            segmentoService.salvar(new Segmento("Indústria"));
-            segmentoService.salvar(new Segmento("Instituições Religiosas"));
-            segmentoService.salvar(new Segmento("Músicos e Bandas"));
-            segmentoService.salvar(new Segmento("Pessoa física"));
-            segmentoService.salvar(new Segmento("Pet Shop"));
-            segmentoService.salvar(new Segmento("Poder público"));
-            segmentoService.salvar(new Segmento("Publicidade"));
-            segmentoService.salvar(new Segmento("Serviços"));
-            segmentoService.salvar(new Segmento("Shoppings e Feiras Comerciais"));
-            segmentoService.salvar(new Segmento("Sindicato Patronal"));
-            segmentoService.salvar(new Segmento("Tecnologia"));
-            segmentoService.salvar(new Segmento("Telefonia"));
-            segmentoService.salvar(new Segmento("Terceiro Setor"));
-            segmentoService.salvar(new Segmento("Turismo"));
+            segmentoService.salvar(new SegmentoEntity("Advocacia"));
+            segmentoService.salvar(new SegmentoEntity("Agropecuária"));
+            segmentoService.salvar(new SegmentoEntity("Arquitetura"));
+            segmentoService.salvar(new SegmentoEntity("Bancos"));
+            segmentoService.salvar(new SegmentoEntity("Blogs e Sites Pessoais"));
+            segmentoService.salvar(new SegmentoEntity("Clinicas / Saúde"));
+            segmentoService.salvar(new SegmentoEntity("Concessionárias de Veículos"));
+            segmentoService.salvar(new SegmentoEntity("Contabilidade"));
+            segmentoService.salvar(new SegmentoEntity("Demolição e terraplanagem"));
+            segmentoService.salvar(new SegmentoEntity("Distribuidoras / Atacadistas"));
+            segmentoService.salvar(new SegmentoEntity("Engenharia"));
+            segmentoService.salvar(new SegmentoEntity("Esoterismo"));
+            segmentoService.salvar(new SegmentoEntity("Eventos e Entretenimento"));
+            segmentoService.salvar(new SegmentoEntity("Fotografia"));
+            segmentoService.salvar(new SegmentoEntity("Gráfica"));
+            segmentoService.salvar(new SegmentoEntity("Indústria"));
+            segmentoService.salvar(new SegmentoEntity("Instituições Religiosas"));
+            segmentoService.salvar(new SegmentoEntity("Músicos e Bandas"));
+            segmentoService.salvar(new SegmentoEntity("Pessoa física"));
+            segmentoService.salvar(new SegmentoEntity("Pet Shop"));
+            segmentoService.salvar(new SegmentoEntity("Poder público"));
+            segmentoService.salvar(new SegmentoEntity("Publicidade"));
+            segmentoService.salvar(new SegmentoEntity("Serviços"));
+            segmentoService.salvar(new SegmentoEntity("Shoppings e Feiras Comerciais"));
+            segmentoService.salvar(new SegmentoEntity("Sindicato Patronal"));
+            segmentoService.salvar(new SegmentoEntity("Tecnologia"));
+            segmentoService.salvar(new SegmentoEntity("Telefonia"));
+            segmentoService.salvar(new SegmentoEntity("Terceiro Setor"));
+            segmentoService.salvar(new SegmentoEntity("Turismo"));
         };
     }
 }
