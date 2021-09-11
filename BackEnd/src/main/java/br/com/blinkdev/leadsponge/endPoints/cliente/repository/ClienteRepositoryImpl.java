@@ -1,8 +1,8 @@
 package br.com.blinkdev.leadsponge.endPoints.cliente.repository;
 
 import br.com.blinkdev.leadsponge.endPoints.cliente.entity.ClienteEntity;
-import br.com.blinkdev.leadsponge.endPoints.cliente.filter.ClienteFilter;
 import br.com.blinkdev.leadsponge.endPoints.cliente.entity.ClienteEntity_;
+import br.com.blinkdev.leadsponge.endPoints.cliente.filter.ClienteFilter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -39,15 +39,15 @@ public class ClienteRepositoryImpl implements ClienteRepositoryQuery {
 
 	private Predicate[] criarRestricoes(ClienteFilter clienteFilter, CriteriaBuilder builder, Root<ClienteEntity> root) {
 		List<Predicate> predicates = new ArrayList<>();
-		if (clienteFilter.getNome().isBlank()) {
-			predicates.add(builder.like(builder.lower(root.get(ClienteEntity_.nome)), "%" + clienteFilter.getNome().toLowerCase() + "%"));
-		}
-		if (clienteFilter.getUrl().isBlank()) {
-			predicates.add(builder.like(builder.lower(root.get(ClienteEntity_.url)), "%" + clienteFilter.getUrl().toLowerCase() + "%"));
-		}
-		if (clienteFilter.getResumo().isBlank()) {
-			predicates.add(builder.like(builder.lower(root.get(ClienteEntity_.resumo)), "%" + clienteFilter.getResumo().toLowerCase() + "%"));
-		}
+        if (clienteFilter.getNome() != null && !clienteFilter.getNome().isBlank()) {
+            predicates.add(builder.like(builder.lower(root.get(ClienteEntity_.nome)), "%" + clienteFilter.getNome().toLowerCase() + "%"));
+        }
+        if (clienteFilter.getUrl() != null && !clienteFilter.getUrl().isBlank()) {
+            predicates.add(builder.like(builder.lower(root.get(ClienteEntity_.url)), "%" + clienteFilter.getUrl().toLowerCase() + "%"));
+        }
+        if (clienteFilter.getResumo() != null && !clienteFilter.getResumo().isBlank()) {
+            predicates.add(builder.like(builder.lower(root.get(ClienteEntity_.resumo)), "%" + clienteFilter.getResumo().toLowerCase() + "%"));
+        }
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}
 

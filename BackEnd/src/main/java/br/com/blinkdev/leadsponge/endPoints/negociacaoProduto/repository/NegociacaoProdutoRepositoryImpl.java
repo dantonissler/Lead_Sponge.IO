@@ -27,13 +27,10 @@ public class NegociacaoProdutoRepositoryImpl implements NegociacaoProdutoReposit
         CriteriaBuilder builder = manager.getCriteriaBuilder();
         CriteriaQuery<NegociacaoProdutoEntity> criteria = builder.createQuery(NegociacaoProdutoEntity.class);
         Root<NegociacaoProdutoEntity> root = criteria.from(NegociacaoProdutoEntity.class);
-
         Predicate[] predicates = criarRestricoes(negociacaoFilter, builder, root);
         criteria.where(predicates);
-
         TypedQuery<NegociacaoProdutoEntity> query = manager.createQuery(criteria);
         adicionarRestricoesDePaginacao(query, pageable);
-
         return new PageImpl<>(query.getResultList(), pageable, total(negociacaoFilter));
     }
 

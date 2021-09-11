@@ -1,8 +1,8 @@
 package br.com.blinkdev.leadsponge.endPoints.motivoPerda.repository;
 
 import br.com.blinkdev.leadsponge.endPoints.motivoPerda.entity.MotivoPerdaEntity;
-import br.com.blinkdev.leadsponge.endPoints.motivoPerda.filter.MotivoPerdaFilter;
 import br.com.blinkdev.leadsponge.endPoints.motivoPerda.entity.MotivoPerdaEntity_;
+import br.com.blinkdev.leadsponge.endPoints.motivoPerda.filter.MotivoPerdaFilter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -27,19 +27,16 @@ public class MotivoPerdaRepositoryImpl implements MotivoPerdaRepositoryQuery {
         CriteriaBuilder builder = manager.getCriteriaBuilder();
         CriteriaQuery<MotivoPerdaEntity> criteria = builder.createQuery(MotivoPerdaEntity.class);
         Root<MotivoPerdaEntity> root = criteria.from(MotivoPerdaEntity.class);
-
         Predicate[] predicates = criarRestricoes(motivoPerdaFilter, builder, root);
         criteria.where(predicates);
-
         TypedQuery<MotivoPerdaEntity> query = manager.createQuery(criteria);
         adicionarRestricoesDePaginacao(query, pageable);
-
         return new PageImpl<>(query.getResultList(), pageable, total(motivoPerdaFilter));
     }
 
     private Predicate[] criarRestricoes(MotivoPerdaFilter motivoPerdaFilter, CriteriaBuilder builder, Root<MotivoPerdaEntity> root) {
         List<Predicate> predicates = new ArrayList<>();
-        if (motivoPerdaFilter.getNome().isBlank()) {
+        if (motivoPerdaFilter.getNome() != null && !motivoPerdaFilter.getNome().isBlank()) {
             predicates.add(builder.like(builder.lower(root.get(MotivoPerdaEntity_.nome)), "%" + motivoPerdaFilter.getNome().toLowerCase() + "%"));
         }
         return predicates.toArray(new Predicate[predicates.size()]);

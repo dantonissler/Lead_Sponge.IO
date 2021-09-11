@@ -1,8 +1,8 @@
 package br.com.blinkdev.leadsponge.endPoints.contato.repository;
 
 import br.com.blinkdev.leadsponge.endPoints.contato.entity.ContatoEntity;
-import br.com.blinkdev.leadsponge.endPoints.contato.filter.ContatoFilter;
 import br.com.blinkdev.leadsponge.endPoints.contato.entity.ContatoEntity_;
+import br.com.blinkdev.leadsponge.endPoints.contato.filter.ContatoFilter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -39,12 +39,12 @@ public class ContatoRepositoryImpl implements ContatoRepositoryQuery {
 
 	private Predicate[] criarRestricoes(ContatoFilter contatoFilter, CriteriaBuilder builder, Root<ContatoEntity> root) {
 		List<Predicate> predicates = new ArrayList<>();
-		if (contatoFilter.getNome().isBlank()) {
-			predicates.add(builder.like(builder.lower(root.get(ContatoEntity_.nome)), "%" + contatoFilter.getNome().toLowerCase() + "%"));
-		}
-		if (contatoFilter.getCargo().isBlank()) {
-			predicates.add(builder.like(builder.lower(root.get(ContatoEntity_.cargo)), "%" + contatoFilter.getCargo().toLowerCase() + "%"));
-		}
+        if (contatoFilter.getNome() != null && !contatoFilter.getNome().isBlank()) {
+            predicates.add(builder.like(builder.lower(root.get(ContatoEntity_.nome)), "%" + contatoFilter.getNome().toLowerCase() + "%"));
+        }
+        if (contatoFilter.getCargo() != null && !contatoFilter.getCargo().isBlank()) {
+            predicates.add(builder.like(builder.lower(root.get(ContatoEntity_.cargo)), "%" + contatoFilter.getCargo().toLowerCase() + "%"));
+        }
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}
 

@@ -27,23 +27,20 @@ public class SegmentoRepositoryImpl implements SegmentoRepositoryQuery {
 		CriteriaBuilder builder = manager.getCriteriaBuilder();
 		CriteriaQuery<SegmentoEntity> criteria = builder.createQuery(SegmentoEntity.class);
 		Root<SegmentoEntity> root = criteria.from(SegmentoEntity.class);
-
 		Predicate[] predicates = criarRestricoes(segmentoFilter, builder, root);
 		criteria.where(predicates);
-
 		TypedQuery<SegmentoEntity> query = manager.createQuery(criteria);
 		adicionarRestricoesDePaginacao(query, pageable);
-
 		return new PageImpl<>(query.getResultList(), pageable, total(segmentoFilter));
 	}
 
 	private Predicate[] criarRestricoes(SegmentoFilter segmentoFilter, CriteriaBuilder builder, Root<SegmentoEntity> root) {
-		List<Predicate> predicates = new ArrayList<>();
-		if (segmentoFilter.getNome().isBlank()) {
+        List<Predicate> predicates = new ArrayList<>();
+        if (segmentoFilter.getNome() != null && !segmentoFilter.getNome().isBlank()) {
             predicates.add(builder.like(builder.lower(root.get(SegmentoEntity_.nome)), "%" + segmentoFilter.getNome().toLowerCase() + "%"));
         }
-		return predicates.toArray(new Predicate[predicates.size()]);
-	}
+        return predicates.toArray(new Predicate[predicates.size()]);
+    }
 
 	private void adicionarRestricoesDePaginacao(TypedQuery<?> query, Pageable pageable) {
 		int paginaAtual = pageable.getPageNumber();

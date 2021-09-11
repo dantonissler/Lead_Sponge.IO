@@ -1,8 +1,8 @@
 package br.com.blinkdev.leadsponge.endPoints.user.service;
 
-import br.com.blinkdev.leadsponge.endPoints.user.entity.UserEntity;
 import br.com.blinkdev.leadsponge.endPoints.user.TO.UsuarioSistemaTO;
-import br.com.blinkdev.leadsponge.endPoints.user.repository.UsuarioRepository;
+import br.com.blinkdev.leadsponge.endPoints.user.entity.UserEntity;
+import br.com.blinkdev.leadsponge.endPoints.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,17 +18,17 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
-public class UsuarioDetailsServiceImpl implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
 
-	@Autowired
-	private UsuarioRepository usuarioRepository;
+    @Autowired
+    private UserRepository usuarioRepository;
 
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Optional<UserEntity> usuarioOptional = usuarioRepository.findByUsername(username);
-		UserEntity usuario = usuarioOptional.orElseThrow(() -> new UsernameNotFoundException("Usuário ou senha incorretos"));
-		if (!usuario.isEnabled()) {
-			throw new UserDeniedAuthorizationException("Usuário inativo");
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<UserEntity> usuarioOptional = usuarioRepository.findByUsername(username);
+        UserEntity usuario = usuarioOptional.orElseThrow(() -> new UsernameNotFoundException("Usuário ou senha incorretos"));
+        if (!usuario.isEnabled()) {
+            throw new UserDeniedAuthorizationException("Usuário inativo");
 		}
 		return new UsuarioSistemaTO(usuario, getRoles(usuario));
 		

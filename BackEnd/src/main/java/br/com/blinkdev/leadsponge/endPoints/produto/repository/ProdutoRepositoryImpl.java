@@ -27,24 +27,21 @@ public class ProdutoRepositoryImpl implements ProdutoRepositoryQuery {
 		CriteriaBuilder builder = manager.getCriteriaBuilder();
 		CriteriaQuery<ProdutoEntity> criteria = builder.createQuery(ProdutoEntity.class);
 		Root<ProdutoEntity> root = criteria.from(ProdutoEntity.class);
-
 		Predicate[] predicates = criarRestricoes(produtoFilter, builder, root);
 		criteria.where(predicates);
-
 		TypedQuery<ProdutoEntity> query = manager.createQuery(criteria);
 		adicionarRestricoesDePaginacao(query, pageable);
-
 		return new PageImpl<>(query.getResultList(), pageable, total(produtoFilter));
 	}
 
 	private Predicate[] criarRestricoes(ProdutoFilter produtoFilter, CriteriaBuilder builder, Root<ProdutoEntity> root) {
 		List<Predicate> predicates = new ArrayList<>();
-		if (produtoFilter.getNome().isBlank()) {
-			predicates.add(builder.like(builder.lower(root.get(ProdutoEntity_.nome)), "%" + produtoFilter.getNome().toLowerCase() + "%"));
-		}
-		if (produtoFilter.getDescricao().isBlank()) {
-			predicates.add(builder.like(builder.lower(root.get(ProdutoEntity_.descricao)), "%" + produtoFilter.getDescricao().toLowerCase() + "%"));
-		}
+		if (produtoFilter.getNome() != null && !produtoFilter.getNome().isBlank()) {
+            predicates.add(builder.like(builder.lower(root.get(ProdutoEntity_.nome)), "%" + produtoFilter.getNome().toLowerCase() + "%"));
+        }
+        if (produtoFilter.getDescricao() != null && !produtoFilter.getDescricao().isBlank()) {
+            predicates.add(builder.like(builder.lower(root.get(ProdutoEntity_.descricao)), "%" + produtoFilter.getDescricao().toLowerCase() + "%"));
+        }
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}
 

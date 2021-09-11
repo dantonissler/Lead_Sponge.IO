@@ -1,7 +1,7 @@
 package br.com.blinkdev.leadsponge.endPoints.negociacao.entity;
 
 import br.com.blinkdev.leadsponge.endPoints.FonteNegociacao.entity.FonteNegociacaoEntity;
-import br.com.blinkdev.leadsponge.endPoints.campanha.entity.CampanhaEntity;
+import br.com.blinkdev.leadsponge.endPoints.campanha.entity.CampaignEntity;
 import br.com.blinkdev.leadsponge.endPoints.cliente.entity.ClienteEntity;
 import br.com.blinkdev.leadsponge.endPoints.estagioNegociacao.entity.EstagioNegociacaoEntity;
 import br.com.blinkdev.leadsponge.endPoints.historicoEstagioNegociacao.entity.HistEstagioNegociacao;
@@ -24,7 +24,7 @@ public abstract class NegociacaoEntity_ {
     public static volatile SingularAttribute<NegociacaoEntity, String> nome;
     public static volatile SingularAttribute<NegociacaoEntity, EstatusNegociacao> estatus;
     public static volatile SingularAttribute<NegociacaoEntity, MotivoPerdaEntity> motivoPerda;
-    public static volatile SingularAttribute<NegociacaoEntity, CampanhaEntity> campanha;
+    public static volatile SingularAttribute<NegociacaoEntity, CampaignEntity> campanha;
     public static volatile ListAttribute<NegociacaoEntity, NegociacaoProdutoEntity> negociacaoProdutos;
     public static volatile SingularAttribute<NegociacaoEntity, Integer> avaliacao;
     public static volatile SingularAttribute<NegociacaoEntity, Date> dataPrevistaEncerramento;

@@ -1,19 +1,19 @@
 package br.com.blinkdev.leadsponge.utils;
 
-import br.com.blinkdev.leadsponge.endPoints.campanha.entity.CampanhaEntity;
-import br.com.blinkdev.leadsponge.endPoints.estagioNegociacao.entity.EstagioNegociacaoEntity;
 import br.com.blinkdev.leadsponge.endPoints.FonteNegociacao.entity.FonteNegociacaoEntity;
-import br.com.blinkdev.leadsponge.endPoints.motivoPerda.entity.MotivoPerdaEntity;
-import br.com.blinkdev.leadsponge.endPoints.role.entity.RoleEntity;
-import br.com.blinkdev.leadsponge.endPoints.segmento.entity.SegmentoEntity;
-import br.com.blinkdev.leadsponge.endPoints.user.entity.UserEntity;
-import br.com.blinkdev.leadsponge.endPoints.campanha.repository.CampanhaRepository;
-import br.com.blinkdev.leadsponge.endPoints.estagioNegociacao.repository.EstagioNegociacaoRepository;
 import br.com.blinkdev.leadsponge.endPoints.FonteNegociacao.repository.FonteNegociacaoRepository;
+import br.com.blinkdev.leadsponge.endPoints.campanha.entity.CampaignEntity;
+import br.com.blinkdev.leadsponge.endPoints.campanha.repository.CampaignRepository;
+import br.com.blinkdev.leadsponge.endPoints.estagioNegociacao.entity.EstagioNegociacaoEntity;
+import br.com.blinkdev.leadsponge.endPoints.estagioNegociacao.repository.EstagioNegociacaoRepository;
+import br.com.blinkdev.leadsponge.endPoints.motivoPerda.entity.MotivoPerdaEntity;
 import br.com.blinkdev.leadsponge.endPoints.motivoPerda.repository.MotivoPerdaRepository;
+import br.com.blinkdev.leadsponge.endPoints.role.entity.RoleEntity;
 import br.com.blinkdev.leadsponge.endPoints.role.repository.RoleRepository;
+import br.com.blinkdev.leadsponge.endPoints.segmento.entity.SegmentoEntity;
 import br.com.blinkdev.leadsponge.endPoints.segmento.service.SegmentoService;
-import br.com.blinkdev.leadsponge.endPoints.user.service.UsuarioService;
+import br.com.blinkdev.leadsponge.endPoints.user.entity.UserEntity;
+import br.com.blinkdev.leadsponge.endPoints.user.service.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -79,18 +79,18 @@ class DummyDevData {
     }
 
     @Bean
-    CommandLineRunner initTableUsuario(UsuarioService usuarioService, RoleRepository roleRepository) {
+    CommandLineRunner initTableUsuario(UserService usuarioService, RoleRepository roleRepository) {
         return args -> {
-            usuarioService.salvar(new UserEntity("admin", "Danton Issler Rodrigues", "danton.issler18@gmail.com", "123321", "123321", true, "98ad18d9-d419-4099-864d-6a9317e6ec29_1.jpg", "/assets/img/perfil/98ad18d9-d419-4099-864d-6a9317e6ec29_1.jpg",
+            usuarioService.save(new UserEntity("admin", "Danton Issler Rodrigues", "danton.issler18@gmail.com", "123321", "123321", true, "98ad18d9-d419-4099-864d-6a9317e6ec29_1.jpg", "/assets/img/perfil/98ad18d9-d419-4099-864d-6a9317e6ec29_1.jpg",
                     new HashSet<>(roleRepository.findAll())));
-            usuarioService.salvar(new UserEntity("user", "user", "user@gmail.com", "123321", "123321", true, null, null, new HashSet<>()));
+            usuarioService.save(new UserEntity("user", "user", "user@gmail.com", "123321", "123321", true, null, null, new HashSet<>()));
 
         };
     }
 
     @Bean
-    CommandLineRunner initTableCampanha(CampanhaRepository campanhaRepository) {
-        return args -> campanhaRepository.save(new CampanhaEntity(null, "Sem Campanha", ""));
+    CommandLineRunner initTableCampanha(CampaignRepository campanhaRepository) {
+        return args -> campanhaRepository.save(new CampaignEntity(null, "Sem Campanha", ""));
     }
 
     @Bean

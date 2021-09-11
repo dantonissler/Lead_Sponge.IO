@@ -42,22 +42,19 @@ public class TarefaRepositoryImpl implements TarefaRepositoryQuery {
         CriteriaBuilder builder = manager.getCriteriaBuilder();
         CriteriaQuery<TarefaEntity> criteria = builder.createQuery(TarefaEntity.class);
         Root<TarefaEntity> root = criteria.from(TarefaEntity.class);
-
         Predicate[] predicates = criarRestricoes(tarefaFilter, builder, root);
         criteria.where(predicates);
-
         TypedQuery<TarefaEntity> query = manager.createQuery(criteria);
         adicionarRestricoesDePaginacao(query, pageable);
-
         return new PageImpl<>(query.getResultList(), pageable, total(tarefaFilter));
     }
 
     private Predicate[] criarRestricoes(TarefaFilter tarefaFilter, CriteriaBuilder builder, Root<TarefaEntity> root) {
         List<Predicate> predicates = new ArrayList<>();
-        if (tarefaFilter.getAssunto().isBlank()) {
+        if (tarefaFilter.getAssunto() != null && !tarefaFilter.getAssunto().isBlank()) {
             predicates.add(builder.like(builder.lower(root.get(TarefaEntity_.assunto)), "%" + tarefaFilter.getAssunto().toLowerCase() + "%"));
         }
-        if (tarefaFilter.getDescricao().isBlank()) {
+        if (tarefaFilter.getAssunto() != null && !tarefaFilter.getDescricao().isBlank()) {
             predicates.add(builder.like(builder.lower(root.get(TarefaEntity_.descricao)), "%" + tarefaFilter.getDescricao().toLowerCase() + "%"));
         }
         if (tarefaFilter.getHoraMarcada() != null) {

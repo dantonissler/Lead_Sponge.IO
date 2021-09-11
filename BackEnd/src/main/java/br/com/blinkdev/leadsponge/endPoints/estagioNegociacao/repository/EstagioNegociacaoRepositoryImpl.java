@@ -1,8 +1,8 @@
 package br.com.blinkdev.leadsponge.endPoints.estagioNegociacao.repository;
 
 import br.com.blinkdev.leadsponge.endPoints.estagioNegociacao.entity.EstagioNegociacaoEntity;
-import br.com.blinkdev.leadsponge.endPoints.estagioNegociacao.filter.EstagioNegociacaoFilter;
 import br.com.blinkdev.leadsponge.endPoints.estagioNegociacao.entity.EstagioNegociacaoEntity_;
+import br.com.blinkdev.leadsponge.endPoints.estagioNegociacao.filter.EstagioNegociacaoFilter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -39,9 +39,9 @@ public class EstagioNegociacaoRepositoryImpl implements EstagioNegociacaoReposit
 
 	private Predicate[] criarRestricoes(EstagioNegociacaoFilter estagioNegociacaoFilter, CriteriaBuilder builder, Root<EstagioNegociacaoEntity> root) {
 		List<Predicate> predicates = new ArrayList<>();
-		if (estagioNegociacaoFilter.getNome().isBlank()) {
-			predicates.add(builder.like(builder.lower(root.get(EstagioNegociacaoEntity_.nome)), "%" + estagioNegociacaoFilter.getNome().toLowerCase() + "%"));
-		}
+		if (estagioNegociacaoFilter.getNome() != null && !estagioNegociacaoFilter.getNome().isBlank()) {
+            predicates.add(builder.like(builder.lower(root.get(EstagioNegociacaoEntity_.nome)), "%" + estagioNegociacaoFilter.getNome().toLowerCase() + "%"));
+        }
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}
 

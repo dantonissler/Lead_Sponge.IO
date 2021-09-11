@@ -2,7 +2,7 @@ package br.com.blinkdev.leadsponge.endPoints.negociacao.entity;
 
 import br.com.blinkdev.leadsponge.endPoints.FonteNegociacao.entity.FonteNegociacaoEntity;
 import br.com.blinkdev.leadsponge.endPoints.View;
-import br.com.blinkdev.leadsponge.endPoints.campanha.entity.CampanhaEntity;
+import br.com.blinkdev.leadsponge.endPoints.campanha.entity.CampaignEntity;
 import br.com.blinkdev.leadsponge.endPoints.cliente.entity.ClienteEntity;
 import br.com.blinkdev.leadsponge.endPoints.estagioNegociacao.entity.EstagioNegociacaoEntity;
 import br.com.blinkdev.leadsponge.endPoints.historicoEstagioNegociacao.entity.HistEstagioNegociacao;
@@ -77,7 +77,7 @@ public class NegociacaoEntity extends UserDateAudit implements Serializable {
     @ManyToOne
     @JsonIgnoreProperties("negociacoes")
     @JoinColumn(name = "campanha_id")
-    private CampanhaEntity campanha;
+    private CampaignEntity campanha;
 
     @NotNull
     @ManyToOne

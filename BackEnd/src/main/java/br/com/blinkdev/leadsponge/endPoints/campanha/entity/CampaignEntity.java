@@ -20,7 +20,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Table(name = "campanhas")
 @TableGenerator(name = "campanha_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "campanhas", allocationSize = 1)
-public class CampanhaEntity extends UserDateAudit implements Serializable {
+public class CampaignEntity extends UserDateAudit implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

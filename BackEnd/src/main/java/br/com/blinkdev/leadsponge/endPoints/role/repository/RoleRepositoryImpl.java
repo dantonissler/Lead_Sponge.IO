@@ -31,13 +31,10 @@ public class RoleRepositoryImpl implements RoleRepositoryQuery {
 		CriteriaBuilder builder = manager.getCriteriaBuilder();
 		CriteriaQuery<RoleEntity> criteria = builder.createQuery(RoleEntity.class);
 		Root<RoleEntity> root = criteria.from(RoleEntity.class);
-
 		Predicate[] predicates = criarRestricoes(roleFilter, builder, root);
 		criteria.where(predicates);
-
 		TypedQuery<RoleEntity> query = manager.createQuery(criteria);
 		adicionarRestricoesDePaginacao(query, pageable);
-
 		return new PageImpl<>(query.getResultList(), pageable, total(roleFilter));
 	}
 
@@ -56,9 +53,9 @@ public class RoleRepositoryImpl implements RoleRepositoryQuery {
 
 	private Predicate[] criarRestricoes(RoleFilter roleFilter, CriteriaBuilder builder, Root<RoleEntity> root) {
 		List<Predicate> predicates = new ArrayList<>();
-		if (roleFilter.getNome().isBlank()) {
-			predicates.add(builder.like(builder.lower(root.get(RoleEntity_.nome)), "%" + roleFilter.getNome().toLowerCase() + "%"));
-		}
+		if (roleFilter.getNome() != null && !roleFilter.getNome().isBlank()) {
+            predicates.add(builder.like(builder.lower(root.get(RoleEntity_.nome)), "%" + roleFilter.getNome().toLowerCase() + "%"));
+        }
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}
 

@@ -1,9 +1,9 @@
 package br.com.blinkdev.leadsponge.utils;
 
 import br.com.blinkdev.leadsponge.endPoints.role.entity.RoleEntity;
-import br.com.blinkdev.leadsponge.endPoints.user.entity.UserEntity;
 import br.com.blinkdev.leadsponge.endPoints.role.repository.RoleRepository;
-import br.com.blinkdev.leadsponge.endPoints.user.service.UsuarioService;
+import br.com.blinkdev.leadsponge.endPoints.user.entity.UserEntity;
+import br.com.blinkdev.leadsponge.endPoints.user.service.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -66,11 +66,11 @@ class DummyDevTestesData {
     }
 
     @Bean
-    CommandLineRunner initTableUsuario(UsuarioService usuarioService, RoleRepository roleRepository) {
+    CommandLineRunner initTableUsuario(UserService usuarioService, RoleRepository roleRepository) {
         return args -> {
-            usuarioService.salvar(new UserEntity("admin", "Danton Issler Rodrigues", "danton.issler18@gmail.com", "123321", "123321", true, "98ad18d9-d419-4099-864d-6a9317e6ec29_1.jpg", "/assets/img/perfil/98ad18d9-d419-4099-864d-6a9317e6ec29_1.jpg",
+            usuarioService.save(new UserEntity("admin", "Danton Issler Rodrigues", "danton.issler18@gmail.com", "123321", "123321", true, "98ad18d9-d419-4099-864d-6a9317e6ec29_1.jpg", "/assets/img/perfil/98ad18d9-d419-4099-864d-6a9317e6ec29_1.jpg",
                     new HashSet<>(roleRepository.findAll())));
-            usuarioService.salvar(new UserEntity("user", "user", "user@gmail.com", "123321", "123321", true, null, null, new HashSet<>()));
+            usuarioService.save(new UserEntity("user", "user", "user@gmail.com", "123321", "123321", true, null, null, new HashSet<>()));
 
         };
     }

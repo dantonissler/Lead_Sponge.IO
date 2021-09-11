@@ -1,8 +1,8 @@
 package br.com.blinkdev.leadsponge.endPoints.email.repository;
 
 import br.com.blinkdev.leadsponge.endPoints.email.entity.EmailEntity;
-import br.com.blinkdev.leadsponge.endPoints.email.filter.EmailFilter;
 import br.com.blinkdev.leadsponge.endPoints.email.entity.EmailEntity_;
+import br.com.blinkdev.leadsponge.endPoints.email.filter.EmailFilter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -39,9 +39,9 @@ public class EmailRepositoryImpl implements EmailRepositoryQuery {
 
 	private Predicate[] criarRestricoes(EmailFilter emailFilter, CriteriaBuilder builder, Root<EmailEntity> root) {
 		List<Predicate> predicates = new ArrayList<>();
-		if (emailFilter.getEmail().isBlank()) {
-			predicates.add(builder.like(builder.lower(root.get(EmailEntity_.email)), "%" + emailFilter.getEmail().toLowerCase() + "%"));
-		}
+		if (emailFilter.getEmail() != null && !emailFilter.getEmail().isBlank()) {
+            predicates.add(builder.like(builder.lower(root.get(EmailEntity_.email)), "%" + emailFilter.getEmail().toLowerCase() + "%"));
+        }
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}
 

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CampanhaFilter {
+public class CampaignFilters {
 	private String nome;
 	private String descricao;
 }

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface UsuarioRepository extends JpaRepository<UserEntity, Long>, UsuarioRepositoryQuery {
+public interface UserRepository extends JpaRepository<UserEntity, Long>, UserRepositoryQuery {
 
     Optional<UserEntity> findByUsername(String username);
 

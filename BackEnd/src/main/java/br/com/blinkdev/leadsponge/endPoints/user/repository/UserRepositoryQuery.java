@@ -8,9 +8,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UsuarioRepositoryQuery {
+public interface UserRepositoryQuery {
 
-	Page<UserEntity> filtrar(UserFilter usuarioFilter, Pageable pageable);
+    Page<UserEntity> searchWithFilter(UserFilter usuarioFilter, Pageable pageable);
 
-	Page<UserModel> resumir(UserFilter usuarioFilter, Pageable pageable);
+    Page<UserModel> resumir(UserFilter usuarioFilter, Pageable pageable);
 }

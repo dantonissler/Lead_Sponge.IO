@@ -26,13 +26,9 @@ import java.util.List;
 @SpringBootApplication
 @EnableConfigurationProperties(LeadSpongeApiProperty.class)
 public class LeadSpongeApiApplication extends SpringBootServletInitializer {
-    private static ApplicationContext APPLICATION_CONTEXT;
 
     public static void main(String[] args) {
-        APPLICATION_CONTEXT = SpringApplication.run(LeadSpongeApiApplication.class, args);
+        SpringApplication.run(LeadSpongeApiApplication.class, args);
     }
 
-    public static <T> T getBean(Class<T> type) {
-        return APPLICATION_CONTEXT.getBean(type);
-    }
 }

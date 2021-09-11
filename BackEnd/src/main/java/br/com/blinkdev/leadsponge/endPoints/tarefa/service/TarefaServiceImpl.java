@@ -3,12 +3,12 @@ package br.com.blinkdev.leadsponge.endPoints.tarefa.service;
 import br.com.blinkdev.leadsponge.endPoints.tarefa.entity.TarefaEntity;
 import br.com.blinkdev.leadsponge.endPoints.tarefa.filter.TarefaFilter;
 import br.com.blinkdev.leadsponge.endPoints.tarefa.model.TarefaModel;
+import br.com.blinkdev.leadsponge.endPoints.tarefa.repository.TarefaRepository;
 import br.com.blinkdev.leadsponge.endPoints.user.entity.UserEntity;
-import br.com.blinkdev.leadsponge.endPoints.user.repository.UsuarioRepository;
+import br.com.blinkdev.leadsponge.endPoints.user.repository.UserRepository;
 import br.com.blinkdev.leadsponge.errorValidate.ErroMessage;
 import br.com.blinkdev.leadsponge.errorValidate.exception.UsuarioInativaException;
 import br.com.blinkdev.leadsponge.utils.mail.Mailer;
-import br.com.blinkdev.leadsponge.endPoints.tarefa.repository.TarefaRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -32,8 +32,8 @@ public class TarefaServiceImpl extends ErroMessage implements TarefaService {
 	@Autowired
 	private TarefaRepository repository;
 
-	@Autowired
-	private UsuarioRepository usuarioRepository;
+    @Autowired
+    private UserRepository usuarioRepository;
 
 	@Autowired
 	private Mailer mailer;

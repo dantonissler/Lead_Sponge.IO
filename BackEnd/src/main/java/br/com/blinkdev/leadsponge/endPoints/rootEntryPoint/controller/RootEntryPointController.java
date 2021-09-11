@@ -1,7 +1,7 @@
 package br.com.blinkdev.leadsponge.endPoints.rootEntryPoint.controller;
 
-import br.com.blinkdev.leadsponge.endPoints.campanha.Filter.CampanhaFilter;
-import br.com.blinkdev.leadsponge.endPoints.campanha.controller.CampanhaController;
+import br.com.blinkdev.leadsponge.endPoints.campanha.Filter.CampaignFilters;
+import br.com.blinkdev.leadsponge.endPoints.campanha.controller.CampaignController;
 import br.com.blinkdev.leadsponge.endPoints.rootEntryPoint.model.RootEntryPointModel;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +17,7 @@ public class RootEntryPointController {
     @GetMapping
     public RootEntryPointModel root() {
         var model = new RootEntryPointModel();
-        model.add(linkTo(methodOn(CampanhaController.class).searchCampanha(new CampanhaFilter(), null)).withRel("campanha"));
+        model.add(linkTo(methodOn(CampaignController.class).searchWithFilters(new CampaignFilters(), null)).withRel("campanha"));
 //        model.add(linkTo(methodOn(ClienteEndPoint.class).list(new ClienteFilter(), null)).withRel("cliente"));
 //        model.add(linkTo(methodOn(ContatoEndPoint.class).list(new ContatoFilter(), null)).withRel("contato"));
 //        model.add(linkTo(methodOn(EmailEndPoint.class).list(new EmailFilter(), null)).withRel("email"));

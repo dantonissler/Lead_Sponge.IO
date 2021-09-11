@@ -1,8 +1,8 @@
 package br.com.blinkdev.leadsponge.endPoints.telefone.repository;
 
 import br.com.blinkdev.leadsponge.endPoints.telefone.entity.Telefone;
-import br.com.blinkdev.leadsponge.endPoints.telefone.filter.TelefoneFilter;
 import br.com.blinkdev.leadsponge.endPoints.telefone.entity.Telefone_;
+import br.com.blinkdev.leadsponge.endPoints.telefone.filter.TelefoneFilter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -27,22 +27,19 @@ public class TelefoneRepositoryImpl implements TelefoneRepositoryQuery {
 		CriteriaBuilder builder = manager.getCriteriaBuilder();
 		CriteriaQuery<Telefone> criteria = builder.createQuery(Telefone.class);
 		Root<Telefone> root = criteria.from(Telefone.class);
-
 		Predicate[] predicates = criarRestricoes(telefoneFilter, builder, root);
 		criteria.where(predicates);
-
 		TypedQuery<Telefone> query = manager.createQuery(criteria);
 		adicionarRestricoesDePaginacao(query, pageable);
-
 		return new PageImpl<>(query.getResultList(), pageable, total(telefoneFilter));
 	}
 
 	private Predicate[] criarRestricoes(TelefoneFilter telefoneFilter, CriteriaBuilder builder, Root<Telefone> root) {
 		List<Predicate> predicates = new ArrayList<>();
-		if (telefoneFilter.getNumero().isBlank()) {
+		if (telefoneFilter.getNumero() != null && !telefoneFilter.getNumero().isBlank()) {
             predicates.add(builder.equal(root.get(Telefone_.numero), telefoneFilter.getNumero()));
         }
-        if (telefoneFilter.getTipo().getDescricao().isBlank()) {
+        if (telefoneFilter.getTipo() != null && !telefoneFilter.getTipo().getDescricao().isBlank()) {
             predicates.add(builder.equal(root.get(Telefone_.tipo), telefoneFilter.getTipo().getDescricao()));
         }
 		return predicates.toArray(new Predicate[predicates.size()]);

@@ -27,35 +27,32 @@ public class NegociacaoRepositoryImpl implements NegociacaoRepositoryQuery {
 		CriteriaBuilder builder = manager.getCriteriaBuilder();
 		CriteriaQuery<NegociacaoEntity> criteria = builder.createQuery(NegociacaoEntity.class);
 		Root<NegociacaoEntity> root = criteria.from(NegociacaoEntity.class);
-
 		Predicate[] predicates = criarRestricoes(negociacaoFilter, builder, root);
 		criteria.where(predicates);
-
 		TypedQuery<NegociacaoEntity> query = manager.createQuery(criteria);
 		adicionarRestricoesDePaginacao(query, pageable);
-
 		return new PageImpl<>(query.getResultList(), pageable, total(negociacaoFilter));
 	}
 
 	private Predicate[] criarRestricoes(NegociacaoFilter negociacaoFilter, CriteriaBuilder builder, Root<NegociacaoEntity> root) {
 		List<Predicate> predicates = new ArrayList<>();
-		if (negociacaoFilter.getNome().isBlank()) {
-			predicates.add(builder.like(builder.lower(root.get(NegociacaoEntity_.nome)), "%" + negociacaoFilter.getNome().toLowerCase() + "%"));
-		}
-		if (negociacaoFilter.getAvaliacao().toString().isBlank()) {
-			predicates.add(builder.equal(root.get(NegociacaoEntity_.avaliacao), negociacaoFilter.getAvaliacao()));
-		}
-		if (negociacaoFilter.getValorTotal().toString().isBlank()) {
-			predicates.add(builder.equal(root.get(NegociacaoEntity_.valorTotal), negociacaoFilter.getValorTotal()));
-		}
-        if (negociacaoFilter.getValorMensal().toString().isBlank()) {
-			predicates.add(builder.equal(root.get(NegociacaoEntity_.valorMensal), negociacaoFilter.getValorMensal()));
+		if (negociacaoFilter.getNome() != null && !negociacaoFilter.getNome().isBlank()) {
+            predicates.add(builder.like(builder.lower(root.get(NegociacaoEntity_.nome)), "%" + negociacaoFilter.getNome().toLowerCase() + "%"));
         }
-        if (negociacaoFilter.getValorUnico().toString().isBlank()) {
-			predicates.add(builder.equal(root.get(NegociacaoEntity_.valorUnico), negociacaoFilter.getValorUnico()));
+        if (negociacaoFilter.getAvaliacao() != null && !negociacaoFilter.getAvaliacao().toString().isBlank()) {
+            predicates.add(builder.equal(root.get(NegociacaoEntity_.avaliacao), negociacaoFilter.getAvaliacao()));
         }
-		return predicates.toArray(new Predicate[predicates.size()]);
-	}
+        if (negociacaoFilter.getValorTotal() != null && !negociacaoFilter.getValorTotal().toString().isBlank()) {
+            predicates.add(builder.equal(root.get(NegociacaoEntity_.valorTotal), negociacaoFilter.getValorTotal()));
+        }
+        if (negociacaoFilter.getValorMensal() != null && !negociacaoFilter.getValorMensal().toString().isBlank()) {
+            predicates.add(builder.equal(root.get(NegociacaoEntity_.valorMensal), negociacaoFilter.getValorMensal()));
+        }
+        if (negociacaoFilter.getValorUnico() != null && !negociacaoFilter.getValorUnico().toString().isBlank()) {
+            predicates.add(builder.equal(root.get(NegociacaoEntity_.valorUnico), negociacaoFilter.getValorUnico()));
+        }
+        return predicates.toArray(new Predicate[predicates.size()]);
+    }
 
 	private void adicionarRestricoesDePaginacao(TypedQuery<?> query, Pageable pageable) {
 		int paginaAtual = pageable.getPageNumber();

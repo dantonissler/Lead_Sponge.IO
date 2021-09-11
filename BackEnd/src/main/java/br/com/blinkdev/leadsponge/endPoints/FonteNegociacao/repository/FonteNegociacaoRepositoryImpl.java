@@ -1,8 +1,8 @@
 package br.com.blinkdev.leadsponge.endPoints.FonteNegociacao.repository;
 
 import br.com.blinkdev.leadsponge.endPoints.FonteNegociacao.entity.FonteNegociacaoEntity;
-import br.com.blinkdev.leadsponge.endPoints.FonteNegociacao.filter.FonteNegociacaoFilter;
 import br.com.blinkdev.leadsponge.endPoints.FonteNegociacao.entity.FonteNegociacaoEntity_;
+import br.com.blinkdev.leadsponge.endPoints.FonteNegociacao.filter.FonteNegociacaoFilter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -27,23 +27,20 @@ public class FonteNegociacaoRepositoryImpl implements FonteNegociacaoRepositoryQ
 		CriteriaBuilder builder = manager.getCriteriaBuilder();
 		CriteriaQuery<FonteNegociacaoEntity> criteria = builder.createQuery(FonteNegociacaoEntity.class);
 		Root<FonteNegociacaoEntity> root = criteria.from(FonteNegociacaoEntity.class);
-
 		Predicate[] predicates = criarRestricoes(fonteNegociacaoFilter, builder, root);
 		criteria.where(predicates);
-
 		TypedQuery<FonteNegociacaoEntity> query = manager.createQuery(criteria);
 		adicionarRestricoesDePaginacao(query, pageable);
-
 		return new PageImpl<>(query.getResultList(), pageable, total(fonteNegociacaoFilter));
 	}
 
 	private Predicate[] criarRestricoes(FonteNegociacaoFilter fonteNegociacaoFilter, CriteriaBuilder builder, Root<FonteNegociacaoEntity> root) {
-		List<Predicate> predicates = new ArrayList<>();
-		if (fonteNegociacaoFilter.getNome().isBlank()) {
+        List<Predicate> predicates = new ArrayList<>();
+        if (fonteNegociacaoFilter.getNome() != null && !fonteNegociacaoFilter.getNome().isBlank()) {
             predicates.add(builder.like(builder.lower(root.get(FonteNegociacaoEntity_.nome)), "%" + fonteNegociacaoFilter.getNome().toLowerCase() + "%"));
         }
-		return predicates.toArray(new Predicate[predicates.size()]);
-	}
+        return predicates.toArray(new Predicate[predicates.size()]);
+    }
 
 	private void adicionarRestricoesDePaginacao(TypedQuery<?> query, Pageable pageable) {
 		int paginaAtual = pageable.getPageNumber();

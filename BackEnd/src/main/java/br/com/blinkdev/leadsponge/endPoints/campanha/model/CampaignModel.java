@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = false)
 @Relation(collectionRelation = "campanhas", itemRelation = "campanha")
 @JsonInclude(Include.NON_NULL)
-public class CampanhaModel extends RepresentationModel<CampanhaModel> {
+public class CampaignModel extends RepresentationModel<CampaignModel> {
     private Long id;
     private String nome;
     private String descricao;
