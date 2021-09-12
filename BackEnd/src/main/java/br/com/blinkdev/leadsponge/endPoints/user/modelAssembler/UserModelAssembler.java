@@ -6,6 +6,7 @@ import br.com.blinkdev.leadsponge.endPoints.user.entity.UserEntity;
 import br.com.blinkdev.leadsponge.endPoints.user.model.UserModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
@@ -28,19 +29,17 @@ public class UserModelAssembler extends RepresentationModelAssemblerSupport<User
     public UserModel toModel(UserEntity entity) {
         UserModel userModel = modelMapper.map(entity, UserModel.class);
         userModel.add(linkTo(methodOn(UserController.class).getById(entity.getId())).withSelfRel().withType("GET"));
-        userModel.add(linkTo(methodOn(UserController.class).getAll()).withRel(IanaLinkRelations.COLLECTION).withType("GET"));
-        userModel.add(linkTo(methodOn(UserController.class).searchWithFilter(null, null)).withRel(IanaLinkRelations.SEARCH_VALUE).withType("GET"));
+        userModel.add(linkTo(methodOn(UserController.class).searchWithFilter(null, Pageable.unpaged())).withRel(IanaLinkRelations.COLLECTION).withType("GET"));
         userModel.add(linkTo(methodOn(UserController.class).save(null, null)).withRel("save").withType("POST"));
-        userModel.add(linkTo(methodOn(UserController.class).update(null, null, null)).withRel("update").withType("PUT"));
-        userModel.add(linkTo(methodOn(UserController.class).updatePatch(null, null, null)).withRel("updatePatch").withType("PATCH"));
-        userModel.add(linkTo(methodOn(UserController.class).delete(null)).withRel("delete").withType("DELETE"));
+        userModel.add(linkTo(methodOn(UserController.class).updatePatch(null, entity.getId(), null)).withRel("updatePatch").withType("PATCH"));
+        userModel.add(linkTo(methodOn(UserController.class).delete(entity.getId())).withRel("delete").withType("DELETE"));
         return userModel;
     }
 
     @Override
     public CollectionModel<UserModel> toCollectionModel(Iterable<? extends UserEntity> entities) {
         CollectionModel<UserModel> campanhaModels = super.toCollectionModel(entities);
-        campanhaModels.add(linkTo(methodOn(UserController.class).getAll()).withSelfRel().withType("GET"));
+        campanhaModels.add(linkTo(methodOn(UserController.class).searchWithFilter(null, Pageable.unpaged())).withSelfRel().withType("GET"));
         campanhaModels.add(linkTo(methodOn(RootEntryPointController.class).root()).withRel("entry_Point").withType("GET"));
         return campanhaModels;
     }

@@ -21,7 +21,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 @Table(name = "roles", uniqueConstraints = {@UniqueConstraint(columnNames = {"nome"})})
-@TableGenerator(name = "role_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "roles", allocationSize = 1)
+@TableGenerator(name = "role_id", table = "identifier_table", pkColumnName = "name", valueColumnName = "identifier", pkColumnValue = "roles", allocationSize = 1)
 public class RoleEntity implements GrantedAuthority, Serializable {
 
     private static final long serialVersionUID = 1L;

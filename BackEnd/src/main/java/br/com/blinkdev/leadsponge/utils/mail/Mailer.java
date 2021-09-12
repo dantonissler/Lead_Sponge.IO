@@ -1,6 +1,6 @@
 package br.com.blinkdev.leadsponge.utils.mail;
 
-import br.com.blinkdev.leadsponge.endPoints.tarefa.entity.TarefaEntity;
+import br.com.blinkdev.leadsponge.endPoints.task.entity.TaskEntity;
 import br.com.blinkdev.leadsponge.endPoints.user.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -20,35 +20,35 @@ import java.util.stream.Collectors;
 @Component
 public class Mailer {
 
-	@Autowired
-	private JavaMailSender mailSender;
+    @Autowired
+    private JavaMailSender mailSender;
 
-	@Autowired
-	private TemplateEngine thymeleaf;
+    @Autowired
+    private TemplateEngine thymeleaf;
 
-	public void avisarSobreTarefasVencidas(List<TarefaEntity> vencidos, List<UserEntity> destinatarios) {
-		Map<String, Object> variaveis = new HashMap<>();
-		variaveis.put("lancamentos", vencidos);
+    public void avisarSobreTarefasVencidas(List<TaskEntity> vencidos, List<UserEntity> destinatarios) {
+        Map<String, Object> variaveis = new HashMap<>();
+        variaveis.put("lancamentos", vencidos);
 
-		List<String> emails = destinatarios.stream().map(u -> u.getEmail()).collect(Collectors.toList());
+        List<String> emails = destinatarios.stream().map(u -> u.getEmail()).collect(Collectors.toList());
 
-		this.enviarEmail("danton.issler18@gmail.com", emails, "Tarefas vencidas",
-				"mail/aviso-lancamentos-vencidos", variaveis);
-	}
+        this.enviarEmail("danton.issler18@gmail.com", emails, "Tarefas vencidas",
+                "mail/aviso-lancamentos-vencidos", variaveis);
+    }
 
-	public void enviarEmail(String remetente, List<String> destinatarios, String assunto, String template,
-			Map<String, Object> variaveis) {
-		Context context = new Context(new Locale("pt", "BR"));
+    public void enviarEmail(String remetente, List<String> destinatarios, String assunto, String template,
+                            Map<String, Object> variaveis) {
+        Context context = new Context(new Locale("pt", "BR"));
 
-		variaveis.entrySet().forEach(e -> context.setVariable(e.getKey(), e.getValue()));
+        variaveis.entrySet().forEach(e -> context.setVariable(e.getKey(), e.getValue()));
 
-		String mensagem = thymeleaf.process(template, context);
+        String mensagem = thymeleaf.process(template, context);
 
-		this.enviarEmail(remetente, destinatarios, assunto, mensagem);
-	}
+        this.enviarEmail(remetente, destinatarios, assunto, mensagem);
+    }
 
-	public void enviarEmail(String remetente, List<String> destinatarios, String assunto, String mensagem) {
-		try {
+    public void enviarEmail(String remetente, List<String> destinatarios, String assunto, String mensagem) {
+        try {
 			MimeMessage mimeMessage = mailSender.createMimeMessage();
 
 			MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "UTF-8");

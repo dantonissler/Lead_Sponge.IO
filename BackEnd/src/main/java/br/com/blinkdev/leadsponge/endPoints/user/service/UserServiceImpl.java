@@ -13,7 +13,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
-import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -51,12 +50,6 @@ public class UserServiceImpl extends ErroMessage implements UserService {
 	}
 
 	@Override
-	public CollectionModel<UserModel> getAll() {
-		log.info("CampanhaServiceImpl - getAllCampanhas");
-		return userModelAssembler.toCollectionModel(userRepository.findAll());
-	}
-
-	@Override
 	public PagedModel<UserModel> searchWithFilter(UserFilter userFilter, Pageable pageable) {
 		log.info("CampanhaServiceImpl - getCampanhaByFilter");
 		return assembler.toModel(userRepository.searchWithFilter(userFilter, pageable), userModelAssembler);
@@ -71,23 +64,6 @@ public class UserServiceImpl extends ErroMessage implements UserService {
 		usuario.setPassword(bCryptPasswordEncoder.encode(usuario.getPassword()));
 		usuario.setRoles(new HashSet<>(usuario.getRoles()));
 		return userRepository.save(usuario);
-	}
-
-	@Override
-	public UserEntity update(Long id, UserEntity usuario) {
-		log.info("CampanhaServiceImpl - update put");
-		UserEntity userEntitySave = userRepository.findById(id).orElseThrow(() -> notFouldId(id, "o user"));
-		usuario.setPassword(bCryptPasswordEncoder.encode(usuario.getPassword()));
-		userEntitySave.getRoles().clear();
-		userEntitySave.getRoles().addAll(usuario.getRoles());
-		userEntitySave.setRoles(new HashSet<>(userEntitySave.getRoles()));
-		if (usuario.getFoto().isBlank() && userEntitySave.getFoto().isBlank()) {
-			disco.remover(userEntitySave.getUrlFoto());
-		} else if (usuario.getFoto().isBlank() && !usuario.getFoto().equals(userEntitySave.getFoto())) {
-			disco.remover(usuario.getUrlFoto());
-		}
-		BeanUtils.copyProperties(usuario, userEntitySave, "id", "roles");
-		return userRepository.save(userEntitySave);
 	}
 
 	@Override

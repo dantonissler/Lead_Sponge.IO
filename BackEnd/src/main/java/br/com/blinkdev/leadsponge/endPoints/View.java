@@ -2,28 +2,28 @@ package br.com.blinkdev.leadsponge.endPoints;
 
 //TODO: me aprofundar na utilização de Views
 public class View {
-	public interface Campanha {
-	}
+    public interface Campaign {
+    }
 
-	public interface Cliente {
-	}
+    public interface Cliente {
+    }
 
-	public interface Contato {
-	}
+    public interface Contato {
+    }
 
-	public interface Email {
-	}
+    public interface Email {
+    }
 
-	public interface FonteNegociacao {
-	}
+    public interface FonteNegociacao {
+    }
 
-	public interface Negociacao {
-	}
+    public interface Negociacao {
+    }
 
-	public interface Produto {
-	}
+    public interface Produto {
+    }
 
-	public interface Segmento {
+    public interface Segmento {
 	}
 
 	public interface Tarefa {

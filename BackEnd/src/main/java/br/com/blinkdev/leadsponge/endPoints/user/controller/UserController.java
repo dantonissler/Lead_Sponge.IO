@@ -6,14 +6,13 @@ import br.com.blinkdev.leadsponge.endPoints.user.entity.UserEntity;
 import br.com.blinkdev.leadsponge.endPoints.user.filter.UserFilter;
 import br.com.blinkdev.leadsponge.endPoints.user.model.UserModel;
 import br.com.blinkdev.leadsponge.endPoints.user.service.UserService;
-import br.com.blinkdev.leadsponge.event.RecursoCriadoEvent;
+import br.com.blinkdev.leadsponge.event.ResourcesCreatedEvent;
 import br.com.blinkdev.leadsponge.storage.Disco;
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Pageable;
-import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
@@ -29,8 +28,8 @@ import java.util.Map;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping(value = "/usuarios", produces = {MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE})
-@Api(tags = "User")
+@RequestMapping(value = "/users", produces = {MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE})
+@Api(tags = "Users")
 public class UserController {
 
     @Autowired
@@ -48,12 +47,6 @@ public class UserController {
         return ResponseEntity.ok(userService.getById(id));
     }
 
-    @GetMapping(value = {"/getAll"})
-    @PreAuthorize("hasAuthority('PESQUISAR_CAMPANHA') and #oauth2.hasScope('read')")
-    public ResponseEntity<CollectionModel<UserModel>> getAll() {
-        return new ResponseEntity<>(userService.getAll(), HttpStatus.OK);
-    }
-
     @GetMapping(value = {"/searchWithFilter"})
     @PreAuthorize("hasAuthority('PESQUISAR_CAMPANHA') and #oauth2.hasScope('read')")
     public ResponseEntity<PagedModel<UserModel>> searchWithFilter(UserFilter userFilter, Pageable pageable) {
@@ -66,17 +59,8 @@ public class UserController {
     public ResponseEntity<UserEntity> save(@Valid @RequestBody UserEntity usuario, HttpServletResponse response) {
 //		usuarioService.autoLogin(usuario.getUsername(), usuario.getPassword());
         UserEntity usuarioSalvar = userService.save(usuario);
-        publisher.publishEvent(new RecursoCriadoEvent(this, response, usuarioSalvar.getId()));
+        publisher.publishEvent(new ResourcesCreatedEvent(this, response, usuarioSalvar.getId()));
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioSalvar);
-    }
-
-    @PutMapping(value = {"/{id}"})
-    @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasAuthority('CADASTRAR_USUARIO') and #oauth2.hasScope('write')")
-    public ResponseEntity<UserEntity> update(@Valid @RequestBody UserEntity usuario, @PathVariable Long id, HttpServletResponse response) {
-        UserEntity novaUsuario = userService.update(id, usuario);
-        publisher.publishEvent(new RecursoCriadoEvent(this, response, novaUsuario.getId()));
-        return ResponseEntity.status(HttpStatus.CREATED).body(novaUsuario);
     }
 
     @PatchMapping(value = {"/patch/{id}"})
@@ -84,7 +68,7 @@ public class UserController {
     @PreAuthorize("hasAuthority('CADASTRAR_USUARIO') and #oauth2.hasScope('write')")
     public ResponseEntity<UserEntity> updatePatch(@RequestBody Map<Object, Object> campanha, @PathVariable Long id, HttpServletResponse response) {
         UserEntity novaCampanha = userService.updatePatch(id, campanha);
-        publisher.publishEvent(new RecursoCriadoEvent(this, response, novaCampanha.getId()));
+        publisher.publishEvent(new ResourcesCreatedEvent(this, response, novaCampanha.getId()));
         return ResponseEntity.status(HttpStatus.OK).body(novaCampanha);
     }
 
@@ -144,7 +128,7 @@ public class UserController {
     @PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
     ResponseEntity<UserEntity> atualizarUsuarioDTO(@PathVariable Long id, @RequestBody UsuarioTO usuario, HttpServletResponse response) {
         UserEntity novoUsuario = userService.atualizarUsuarioDTO(id, usuario);
-        publisher.publishEvent(new RecursoCriadoEvent(this, response, novoUsuario.getId()));
+        publisher.publishEvent(new ResourcesCreatedEvent(this, response, novoUsuario.getId()));
         return ResponseEntity.status(HttpStatus.CREATED).body(novoUsuario);
     }
 

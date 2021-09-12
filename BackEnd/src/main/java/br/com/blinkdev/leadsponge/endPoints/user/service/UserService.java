@@ -5,7 +5,6 @@ import br.com.blinkdev.leadsponge.endPoints.user.entity.UserEntity;
 import br.com.blinkdev.leadsponge.endPoints.user.filter.UserFilter;
 import br.com.blinkdev.leadsponge.endPoints.user.model.UserModel;
 import org.springframework.data.domain.Pageable;
-import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
 
@@ -16,13 +15,9 @@ public interface UserService {
 
     UserModel getById(Long id);
 
-    CollectionModel<UserModel> getAll();
-
     PagedModel<UserModel> searchWithFilter(UserFilter usuarioFilter, Pageable pageable);
 
     UserEntity save(UserEntity usuario);
-
-    UserEntity update(Long id, UserEntity usuario);
 
     UserEntity updatePatch(Long id, Map<Object, Object> fields);
 

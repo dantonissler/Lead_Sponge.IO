@@ -1,8 +1,8 @@
 package br.com.blinkdev.leadsponge.endPoints.email.entity;
 
 import br.com.blinkdev.leadsponge.endPoints.View;
+import br.com.blinkdev.leadsponge.endPoints.contact.entity.ContactEntity;
 import br.com.blinkdev.leadsponge.utils.audit.UserDateAudit;
-import br.com.blinkdev.leadsponge.endPoints.contato.entity.ContatoEntity;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -19,7 +19,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "emails")
-@TableGenerator(name = "email_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "emails", allocationSize = 1)
+@TableGenerator(name = "email_id", table = "identifier_table", pkColumnName = "name", valueColumnName = "identifier", pkColumnValue = "emails", allocationSize = 1)
 public class EmailEntity extends UserDateAudit implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -36,7 +36,7 @@ public class EmailEntity extends UserDateAudit implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "contato_id")
-    private ContatoEntity contato;
+    private ContactEntity contato;
 
     @Override
     protected Object clone() throws CloneNotSupportedException {

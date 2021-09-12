@@ -1,17 +1,17 @@
 package br.com.blinkdev.leadsponge.utils;
 
-import br.com.blinkdev.leadsponge.endPoints.FonteNegociacao.entity.FonteNegociacaoEntity;
-import br.com.blinkdev.leadsponge.endPoints.FonteNegociacao.repository.FonteNegociacaoRepository;
-import br.com.blinkdev.leadsponge.endPoints.campanha.entity.CampaignEntity;
-import br.com.blinkdev.leadsponge.endPoints.campanha.repository.CampaignRepository;
-import br.com.blinkdev.leadsponge.endPoints.estagioNegociacao.entity.EstagioNegociacaoEntity;
-import br.com.blinkdev.leadsponge.endPoints.estagioNegociacao.repository.EstagioNegociacaoRepository;
-import br.com.blinkdev.leadsponge.endPoints.motivoPerda.entity.MotivoPerdaEntity;
-import br.com.blinkdev.leadsponge.endPoints.motivoPerda.repository.MotivoPerdaRepository;
+import br.com.blinkdev.leadsponge.endPoints.campaign.entity.CampaignEntity;
+import br.com.blinkdev.leadsponge.endPoints.campaign.repository.CampaignRepository;
+import br.com.blinkdev.leadsponge.endPoints.negotiationSource.entity.NegotiationSourceEntity;
+import br.com.blinkdev.leadsponge.endPoints.negotiationSource.repository.NegotiationSourceRepository;
+import br.com.blinkdev.leadsponge.endPoints.negotiationStyle.entity.NegotiationStyleEntity;
+import br.com.blinkdev.leadsponge.endPoints.negotiationStyle.repository.NegotiationStyleRepository;
+import br.com.blinkdev.leadsponge.endPoints.reasonForLoss.entity.ReasonForLossEntity;
+import br.com.blinkdev.leadsponge.endPoints.reasonForLoss.repository.ReasonForLossRepository;
 import br.com.blinkdev.leadsponge.endPoints.role.entity.RoleEntity;
 import br.com.blinkdev.leadsponge.endPoints.role.repository.RoleRepository;
-import br.com.blinkdev.leadsponge.endPoints.segmento.entity.SegmentoEntity;
-import br.com.blinkdev.leadsponge.endPoints.segmento.service.SegmentoService;
+import br.com.blinkdev.leadsponge.endPoints.segment.entity.SegmentEntity;
+import br.com.blinkdev.leadsponge.endPoints.segment.service.SegmentService;
 import br.com.blinkdev.leadsponge.endPoints.user.entity.UserEntity;
 import br.com.blinkdev.leadsponge.endPoints.user.service.UserService;
 import org.springframework.boot.CommandLineRunner;
@@ -94,72 +94,72 @@ class DummyHomologData {
     }
 
     @Bean
-    CommandLineRunner initTableFonteNegociacao(FonteNegociacaoRepository fonteNegociacaoRepository) {
+    CommandLineRunner initTableFonteNegociacao(NegotiationSourceRepository fonteNegociacaoRepository) {
         return args -> {
-            fonteNegociacaoRepository.save(new FonteNegociacaoEntity("Cliente Ativo"));
-            fonteNegociacaoRepository.save(new FonteNegociacaoEntity("Contato pelo Site"));
-            fonteNegociacaoRepository.save(new FonteNegociacaoEntity("Contato por E-mail"));
-            fonteNegociacaoRepository.save(new FonteNegociacaoEntity("Contato por Telefone"));
-            fonteNegociacaoRepository.save(new FonteNegociacaoEntity("E-mail Marketing"));
-            fonteNegociacaoRepository.save(new FonteNegociacaoEntity("Feiras e Eventos"));
-            fonteNegociacaoRepository.save(new FonteNegociacaoEntity("Google e Outros Buscadores"));
-            fonteNegociacaoRepository.save(new FonteNegociacaoEntity("Indicação por Clientes"));
-            fonteNegociacaoRepository.save(new FonteNegociacaoEntity("Indicação por Parceiros"));
-            fonteNegociacaoRepository.save(new FonteNegociacaoEntity("Prospecção Ativa"));
-            fonteNegociacaoRepository.save(new FonteNegociacaoEntity("Redes Sociais"));
+            fonteNegociacaoRepository.save(new NegotiationSourceEntity("Cliente Ativo"));
+            fonteNegociacaoRepository.save(new NegotiationSourceEntity("Contato pelo Site"));
+            fonteNegociacaoRepository.save(new NegotiationSourceEntity("Contato por E-mail"));
+            fonteNegociacaoRepository.save(new NegotiationSourceEntity("Contato por Telefone"));
+            fonteNegociacaoRepository.save(new NegotiationSourceEntity("E-mail Marketing"));
+            fonteNegociacaoRepository.save(new NegotiationSourceEntity("Feiras e Eventos"));
+            fonteNegociacaoRepository.save(new NegotiationSourceEntity("Google e Outros Buscadores"));
+            fonteNegociacaoRepository.save(new NegotiationSourceEntity("Indicação por Clientes"));
+            fonteNegociacaoRepository.save(new NegotiationSourceEntity("Indicação por Parceiros"));
+            fonteNegociacaoRepository.save(new NegotiationSourceEntity("Prospecção Ativa"));
+            fonteNegociacaoRepository.save(new NegotiationSourceEntity("Redes Sociais"));
         };
     }
 
     @Bean
-    CommandLineRunner initTableEstagio(EstagioNegociacaoRepository estagioNegociacaoRepository) {
-        return args -> estagioNegociacaoRepository.saveAll(Arrays.asList(new EstagioNegociacaoEntity("Sem contato", "SC", 1), new EstagioNegociacaoEntity("Contrato Feito", "CF", 2), new EstagioNegociacaoEntity("Identificação de Interece", "IDI", 3),
-                new EstagioNegociacaoEntity("Apresentação", "A", 4), new EstagioNegociacaoEntity("Proposta Enviada", "PE", 5)));
+    CommandLineRunner initTableEstagio(NegotiationStyleRepository estagioNegociacaoRepository) {
+        return args -> estagioNegociacaoRepository.saveAll(Arrays.asList(new NegotiationStyleEntity("Sem contato", "SC", 1), new NegotiationStyleEntity("Contrato Feito", "CF", 2), new NegotiationStyleEntity("Identificação de Interece", "IDI", 3),
+                new NegotiationStyleEntity("Apresentação", "A", 4), new NegotiationStyleEntity("Proposta Enviada", "PE", 5)));
     }
 
     @Bean
-    CommandLineRunner initTablePerda(MotivoPerdaRepository motivoPerdaRepository) {
+    CommandLineRunner initTablePerda(ReasonForLossRepository motivoPerdaRepository) {
         return args -> {
-            motivoPerdaRepository.save(new MotivoPerdaEntity(null, "Cliente optou por não realizar o projeto", null));
-            motivoPerdaRepository.save(new MotivoPerdaEntity(null, "Demora no follow", null));
-            motivoPerdaRepository.save(new MotivoPerdaEntity(null, "Fechou com outra empresa", null));
-            motivoPerdaRepository.save(new MotivoPerdaEntity(null, "Não gostou do produto/serviço", null));
-            motivoPerdaRepository.save(new MotivoPerdaEntity(null, "Outros", null));
-            motivoPerdaRepository.save(new MotivoPerdaEntity(null, "Preço", null));
+            motivoPerdaRepository.save(new ReasonForLossEntity(null, "Cliente optou por não realizar o projeto", null));
+            motivoPerdaRepository.save(new ReasonForLossEntity(null, "Demora no follow", null));
+            motivoPerdaRepository.save(new ReasonForLossEntity(null, "Fechou com outra empresa", null));
+            motivoPerdaRepository.save(new ReasonForLossEntity(null, "Não gostou do produto/serviço", null));
+            motivoPerdaRepository.save(new ReasonForLossEntity(null, "Outros", null));
+            motivoPerdaRepository.save(new ReasonForLossEntity(null, "Preço", null));
         };
     }
 
     @Bean
-    CommandLineRunner initTableSegmento(SegmentoService segmentoService) {
+    CommandLineRunner initTableSegmento(SegmentService segmentoService) {
         return args -> {
-            segmentoService.salvar(new SegmentoEntity("Advocacia"));
-            segmentoService.salvar(new SegmentoEntity("Agropecuária"));
-            segmentoService.salvar(new SegmentoEntity("Arquitetura"));
-            segmentoService.salvar(new SegmentoEntity("Bancos"));
-            segmentoService.salvar(new SegmentoEntity("Blogs e Sites Pessoais"));
-            segmentoService.salvar(new SegmentoEntity("Clinicas / Saúde"));
-            segmentoService.salvar(new SegmentoEntity("Concessionárias de Veículos"));
-            segmentoService.salvar(new SegmentoEntity("Contabilidade"));
-            segmentoService.salvar(new SegmentoEntity("Demolição e terraplanagem"));
-            segmentoService.salvar(new SegmentoEntity("Distribuidoras / Atacadistas"));
-            segmentoService.salvar(new SegmentoEntity("Engenharia"));
-            segmentoService.salvar(new SegmentoEntity("Esoterismo"));
-            segmentoService.salvar(new SegmentoEntity("Eventos e Entretenimento"));
-            segmentoService.salvar(new SegmentoEntity("Fotografia"));
-            segmentoService.salvar(new SegmentoEntity("Gráfica"));
-            segmentoService.salvar(new SegmentoEntity("Indústria"));
-            segmentoService.salvar(new SegmentoEntity("Instituições Religiosas"));
-            segmentoService.salvar(new SegmentoEntity("Músicos e Bandas"));
-            segmentoService.salvar(new SegmentoEntity("Pessoa física"));
-            segmentoService.salvar(new SegmentoEntity("Pet Shop"));
-            segmentoService.salvar(new SegmentoEntity("Poder público"));
-            segmentoService.salvar(new SegmentoEntity("Publicidade"));
-            segmentoService.salvar(new SegmentoEntity("Serviços"));
-            segmentoService.salvar(new SegmentoEntity("Shoppings e Feiras Comerciais"));
-            segmentoService.salvar(new SegmentoEntity("Sindicato Patronal"));
-            segmentoService.salvar(new SegmentoEntity("Tecnologia"));
-            segmentoService.salvar(new SegmentoEntity("Telefonia"));
-            segmentoService.salvar(new SegmentoEntity("Terceiro Setor"));
-            segmentoService.salvar(new SegmentoEntity("Turismo"));
+            segmentoService.salvar(new SegmentEntity("Advocacia"));
+            segmentoService.salvar(new SegmentEntity("Agropecuária"));
+            segmentoService.salvar(new SegmentEntity("Arquitetura"));
+            segmentoService.salvar(new SegmentEntity("Bancos"));
+            segmentoService.salvar(new SegmentEntity("Blogs e Sites Pessoais"));
+            segmentoService.salvar(new SegmentEntity("Clinicas / Saúde"));
+            segmentoService.salvar(new SegmentEntity("Concessionárias de Veículos"));
+            segmentoService.salvar(new SegmentEntity("Contabilidade"));
+            segmentoService.salvar(new SegmentEntity("Demolição e terraplanagem"));
+            segmentoService.salvar(new SegmentEntity("Distribuidoras / Atacadistas"));
+            segmentoService.salvar(new SegmentEntity("Engenharia"));
+            segmentoService.salvar(new SegmentEntity("Esoterismo"));
+            segmentoService.salvar(new SegmentEntity("Eventos e Entretenimento"));
+            segmentoService.salvar(new SegmentEntity("Fotografia"));
+            segmentoService.salvar(new SegmentEntity("Gráfica"));
+            segmentoService.salvar(new SegmentEntity("Indústria"));
+            segmentoService.salvar(new SegmentEntity("Instituições Religiosas"));
+            segmentoService.salvar(new SegmentEntity("Músicos e Bandas"));
+            segmentoService.salvar(new SegmentEntity("Pessoa física"));
+            segmentoService.salvar(new SegmentEntity("Pet Shop"));
+            segmentoService.salvar(new SegmentEntity("Poder público"));
+            segmentoService.salvar(new SegmentEntity("Publicidade"));
+            segmentoService.salvar(new SegmentEntity("Serviços"));
+            segmentoService.salvar(new SegmentEntity("Shoppings e Feiras Comerciais"));
+            segmentoService.salvar(new SegmentEntity("Sindicato Patronal"));
+            segmentoService.salvar(new SegmentEntity("Tecnologia"));
+            segmentoService.salvar(new SegmentEntity("Telefonia"));
+            segmentoService.salvar(new SegmentEntity("Terceiro Setor"));
+            segmentoService.salvar(new SegmentEntity("Turismo"));
         };
     }
 }

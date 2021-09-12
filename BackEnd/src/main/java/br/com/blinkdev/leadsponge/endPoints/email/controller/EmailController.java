@@ -1,15 +1,18 @@
 package br.com.blinkdev.leadsponge.endPoints.email.controller;
 
-import br.com.blinkdev.leadsponge.event.RecursoCriadoEvent;
 import br.com.blinkdev.leadsponge.endPoints.email.entity.EmailEntity;
 import br.com.blinkdev.leadsponge.endPoints.email.filter.EmailFilter;
 import br.com.blinkdev.leadsponge.endPoints.email.service.EmailService;
+import br.com.blinkdev.leadsponge.event.ResourcesCreatedEvent;
+import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +22,8 @@ import javax.validation.Valid;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/emails")
+@RequestMapping(value = "emails", produces = {MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE})
+@Api(tags = "Emails")
 class EmailController {
 
     @Autowired
@@ -39,7 +43,7 @@ class EmailController {
     @PreAuthorize("hasAuthority('CADASTRAR_CLIENTE') and #oauth2.hasScope('write')")
     ResponseEntity<EmailEntity> cadastrar(@Valid @RequestBody EmailEntity email, HttpServletResponse response) {
         EmailEntity criarEmail = emailService.salvar(email);
-        publisher.publishEvent(new RecursoCriadoEvent(this, response, criarEmail.getId()));
+        publisher.publishEvent(new ResourcesCreatedEvent(this, response, criarEmail.getId()));
         return ResponseEntity.status(HttpStatus.CREATED).body(criarEmail);
     }
 
@@ -47,7 +51,7 @@ class EmailController {
     @PreAuthorize("hasAuthority('CADASTRAR_CLIENTE') and #oauth2.hasScope('write')")
     ResponseEntity<EmailEntity> atualizar(@Valid @RequestBody EmailEntity email, @PathVariable Long id, HttpServletResponse response) {
         EmailEntity novaEmail = emailService.atualizar(id, email);
-        publisher.publishEvent(new RecursoCriadoEvent(this, response, novaEmail.getId()));
+        publisher.publishEvent(new ResourcesCreatedEvent(this, response, novaEmail.getId()));
         return ResponseEntity.status(HttpStatus.CREATED).body(novaEmail);
     }
 

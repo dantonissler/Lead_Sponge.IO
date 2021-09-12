@@ -1,8 +1,11 @@
 package br.com.blinkdev.leadsponge.endPoints.rootEntryPoint.controller;
 
-import br.com.blinkdev.leadsponge.endPoints.campanha.Filter.CampaignFilters;
-import br.com.blinkdev.leadsponge.endPoints.campanha.controller.CampaignController;
+import br.com.blinkdev.leadsponge.endPoints.campaign.Filter.CampaignFilters;
+import br.com.blinkdev.leadsponge.endPoints.campaign.controller.CampaignController;
 import br.com.blinkdev.leadsponge.endPoints.rootEntryPoint.model.RootEntryPointModel;
+import io.swagger.annotations.Api;
+import org.springframework.hateoas.MediaTypes;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,7 +14,8 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
-@RequestMapping(produces = "application/hal+json")
+@RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE})
+@Api(tags = "Root entry point")
 public class RootEntryPointController {
 
     @GetMapping

@@ -1,9 +1,9 @@
 package br.com.blinkdev.leadsponge.endPoints.user.entity;
 
 import br.com.blinkdev.leadsponge.endPoints.View;
-import br.com.blinkdev.leadsponge.endPoints.cliente.entity.ClienteEntity;
+import br.com.blinkdev.leadsponge.endPoints.customer.entity.CustomerEntity;
 import br.com.blinkdev.leadsponge.endPoints.role.entity.RoleEntity;
-import br.com.blinkdev.leadsponge.endPoints.tarefa.entity.TarefaEntity;
+import br.com.blinkdev.leadsponge.endPoints.task.entity.TaskEntity;
 import br.com.blinkdev.leadsponge.utils.audit.UserDateAudit;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -19,23 +19,25 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
-// TODO: Criar uma
 @Entity
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "usuarios", uniqueConstraints = {@UniqueConstraint(columnNames = {"username"})})
-@TableGenerator(name = "usuario_id", table = "sequencia_tabelas", pkColumnName = "tabela", valueColumnName = "identificador", pkColumnValue = "usuarios", allocationSize = 1)
+@Table(name = "user", uniqueConstraints = {@UniqueConstraint(columnNames = {"username"})})
+@TableGenerator(name = "user_id", table = "identifier_table", pkColumnName = "name", valueColumnName = "identifier", pkColumnValue = "user", allocationSize = 1)
 public class UserEntity extends UserDateAudit implements UserDetails, Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @JsonView(View.Usuario.class)
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "usuario_id")
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "user_id")
     private Long id;
     @Column(unique = true)
     @NotNull(message = "{login.null}")
@@ -61,11 +63,11 @@ public class UserEntity extends UserDateAudit implements UserDetails, Serializab
     @JsonIgnoreProperties("usuario")
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     @ToString.Exclude
-    private List<TarefaEntity> tarefas = new ArrayList<>();
+    private List<TaskEntity> tarefas;
     @ManyToMany(mappedBy = "seguidores", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("seguidores")
     @ToString.Exclude
-    private List<ClienteEntity> clientesSeguidos;
+    private List<CustomerEntity> clientesSeguidos;
     @Override
     @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
