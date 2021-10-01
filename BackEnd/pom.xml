@@ -55,7 +55,12 @@
         <dependency>
             <groupId>org.springframework.security.oauth.boot</groupId>
             <artifactId>spring-security-oauth2-autoconfigure</artifactId>
-            <version>2.1.5.RELEASE</version> <!-- TODO: Atualizar para a versão 2.4.0 estudar como migrar a forma de login. -->
+            <version>2.1.5.RELEASE
+            </version> <!-- TODO: Atualizar para a versão 2.4.0 estudar como migrar a forma de login. -->
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.hateoas</groupId>
+            <artifactId>spring-hateoas</artifactId>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation -->
