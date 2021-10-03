@@ -38,13 +38,12 @@ class CustomerController {
     @GetMapping(value = {"/{id}"})
     @ApiOperation(value = "Get custumer by ID.")
     @PreAuthorize("hasAuthority('PESQUISAR_Customer') and #oauth2.hasScope('read')")
-    CustomerModel getById(@Valid @PathVariable("id") Long id, HttpServletResponse response) {
-        publisher.publishEvent(new ResourcesCreatedEvent(this, response, id));
+    CustomerModel getById(@PathVariable("id") Long id) {
         return customerService.getById(id);
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(value = {""})
+    @GetMapping
     @ApiOperation(value = "Search custumers with a filters.")
     @PreAuthorize("hasAuthority('PESQUISAR_CONTATO') and #oauth2.hasScope('read')")
     PagedModel<CustomerModel> searchWithFilters(CustomerFilter customerFilter, Pageable pageable) {
@@ -52,23 +51,23 @@ class CustomerController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping(value = {""})
+    @PostMapping
     @ApiOperation(value = "Save custumer.")
     @PreAuthorize("hasAuthority('CADASTRAR_Customer') and #oauth2.hasScope('write')")
     CustomerModel save(@Valid @RequestBody CustomerEntity customer, HttpServletResponse response) {
-        CustomerModel criarCustomer = customerService.save(customer);
-        publisher.publishEvent(new ResourcesCreatedEvent(this, response, criarCustomer.getId()));
-        return criarCustomer;
+        CustomerModel customerModel = customerService.save(customer);
+        publisher.publishEvent(new ResourcesCreatedEvent(this, response, customerModel.getId()));
+        return customerModel;
     }
 
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PatchMapping(value = {"/{id}"})
     @ApiOperation(value = "Patch custumer.")
     @PreAuthorize("hasAuthority('CADASTRAR_Customer') and #oauth2.hasScope('write')")
-    CustomerModel patch(@Valid @RequestBody Map<Object, Object> fields, @PathVariable Long id, HttpServletResponse response) {
-        CustomerModel novoCustomer = customerService.patch(id, fields);
-        publisher.publishEvent(new ResourcesCreatedEvent(this, response, novoCustomer.getId()));
-        return novoCustomer;
+    CustomerModel patch(@RequestBody Map<Object, Object> fields, @PathVariable Long id, HttpServletResponse response) {
+        CustomerModel customerModel = customerService.patch(id, fields);
+        publisher.publishEvent(new ResourcesCreatedEvent(this, response, customerModel.getId()));
+        return customerModel;
     }
 
     @ResponseStatus(HttpStatus.OK)

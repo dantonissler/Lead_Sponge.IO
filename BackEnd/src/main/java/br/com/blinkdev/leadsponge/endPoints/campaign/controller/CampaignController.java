@@ -15,7 +15,6 @@ import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,42 +33,47 @@ public class CampaignController {
     @Autowired
     private ApplicationEventPublisher publisher;
 
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = {"{id}"})
     @ApiOperation(value = "Get campaign by ID.")
     @PreAuthorize("hasAuthority('PESQUISAR_CAMPANHA') and #oauth2.hasScope('read')")
-    public ResponseEntity<CampaignModel> getById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok().body(campaignService.getById(id));
+    CampaignModel getById(@PathVariable("id") Long id) {
+        return campaignService.getById(id);
     }
 
-    @GetMapping()
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping
     @ApiOperation(value = "Search campaigns with a filters.")
     @PreAuthorize("hasAuthority('PESQUISAR_CAMPANHA') and #oauth2.hasScope('read')")
-    public ResponseEntity<PagedModel<CampaignModel>> searchWithFilters(CampaignFilters campanhaFilter, Pageable pageable) {
-        return ResponseEntity.ok().body(campaignService.searchWithFilters(campanhaFilter, pageable));
+    PagedModel<CampaignModel> searchWithFilters(CampaignFilters campanhaFilter, Pageable pageable) {
+        return campaignService.searchWithFilters(campanhaFilter, pageable);
     }
 
-    @PostMapping()
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping
     @ApiOperation(value = "Save campaign.")
     @PreAuthorize("hasAuthority('CADASTRAR_CAMPANHA') and #oauth2.hasScope('write')")
-    public ResponseEntity<CampaignModel> save(@Valid @RequestBody CampaignEntity campanha, HttpServletResponse response) {
-        CampaignModel created = campaignService.save(campanha);
-        publisher.publishEvent(new CampaignCreatedEvent(this, response, created.getId()));
-        return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    CampaignModel save(@Valid @RequestBody CampaignEntity campanha, HttpServletResponse response) {
+        CampaignModel campaignModel = campaignService.save(campanha);
+        publisher.publishEvent(new CampaignCreatedEvent(this, response, campaignModel.getId()));
+        return campaignModel;
     }
 
+    @ResponseStatus(HttpStatus.ACCEPTED)
     @PatchMapping(value = {"{id}"})
     @ApiOperation(value = "Patch campaign.")
     @PreAuthorize("hasAuthority('CADASTRAR_CAMPANHA') and #oauth2.hasScope('write')")
-    public ResponseEntity<CampaignModel> patch(@RequestBody Map<Object, Object> campanha, @PathVariable Long id, HttpServletResponse response) {
-        CampaignModel patchCampaign = campaignService.patch(id, campanha);
-        publisher.publishEvent(new CampaignPatchEvent(this, response, patchCampaign.getId()));
-        return ResponseEntity.ok(patchCampaign);
+    CampaignModel patch(@RequestBody Map<Object, Object> campanha, @PathVariable Long id, HttpServletResponse response) {
+        CampaignModel campaignModel = campaignService.patch(id, campanha);
+        publisher.publishEvent(new CampaignPatchEvent(this, response, campaignModel.getId()));
+        return campaignModel;
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @DeleteMapping(value = {"{id}"})
     @ApiOperation(value = "Delete campaign.")
     @PreAuthorize("hasAuthority('REMOVER_CAMPANHA') and #oauth2.hasScope('write')")
-    public ResponseEntity<CampaignModel> delete(@PathVariable Long id) {
-        return ResponseEntity.ok(campaignService.delete(id));
+    CampaignModel delete(@PathVariable Long id) {
+        return campaignService.delete(id);
     }
 }

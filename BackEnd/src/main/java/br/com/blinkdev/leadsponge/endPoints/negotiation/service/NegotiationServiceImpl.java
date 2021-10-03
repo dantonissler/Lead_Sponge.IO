@@ -1,6 +1,5 @@
 package br.com.blinkdev.leadsponge.endPoints.negotiation.service;
 
-import br.com.blinkdev.leadsponge.endPoints.customer.repository.CustomerRepository;
 import br.com.blinkdev.leadsponge.endPoints.negotiation.entity.NegotiationEntity;
 import br.com.blinkdev.leadsponge.endPoints.negotiation.enumeration.RecidivismType;
 import br.com.blinkdev.leadsponge.endPoints.negotiation.enumeration.StatusNegotiation;
@@ -12,15 +11,17 @@ import br.com.blinkdev.leadsponge.endPoints.negotiationStyle.entity.NegotiationS
 import br.com.blinkdev.leadsponge.endPoints.reasonForLoss.entity.ReasonForLossEntity;
 import br.com.blinkdev.leadsponge.errorValidate.ErroMessage;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
 
+import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -28,9 +29,6 @@ public class NegotiationServiceImpl extends ErroMessage implements NegotiationSe
 
     @Autowired
     private NegotiationRepository repository;
-
-    @Autowired
-    private CustomerRepository clienteR;
 
     @Autowired
     private NegotiationModelAssembler negotiationModelAssembler;
@@ -57,13 +55,17 @@ public class NegotiationServiceImpl extends ErroMessage implements NegotiationSe
     }
 
     @Override
-    public NegotiationModel patch(Long id, NegotiationEntity negociacao) {
+    public NegotiationModel patch(Long id, Map<Object, Object> fields) {
         log.info("NegotiationServiceImpl - patch");
         NegotiationEntity negotiationEntity = repository.findById(id).orElseThrow(() -> notFouldId(id, "a negociação "));
-        clienteR.findById(negociacao.getCliente().getId()).orElseThrow(() -> notFouldId(negociacao.getCliente().getId(), "o cliente"));
         // TODO fazer as devidas validações
-        BeanUtils.copyProperties(negociacao, negotiationEntity, "id");
-        return negotiationModelAssembler.toModel(repository.save(negotiationEntity));
+        fields.forEach((key, value) -> {
+            Field field = ReflectionUtils.findField(NegotiationEntity.class, (String) key);
+            assert field != null;
+            field.setAccessible(true);
+            ReflectionUtils.setField(field, negotiationEntity, value);
+        });
+        return save(negotiationEntity);
     }
 
     @Override

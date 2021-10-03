@@ -1,6 +1,5 @@
 package br.com.blinkdev.leadsponge.endPoints.customer.service;
 
-import br.com.blinkdev.leadsponge.endPoints.contact.entity.ContactEntity;
 import br.com.blinkdev.leadsponge.endPoints.customer.entity.CustomerEntity;
 import br.com.blinkdev.leadsponge.endPoints.customer.filter.CustomerFilter;
 import br.com.blinkdev.leadsponge.endPoints.customer.model.CustomerModel;
@@ -60,7 +59,7 @@ public class CustomerServiceImpl extends ErroMessage implements CustomerService 
         log.info("CustomerServiceImpl - patch");
         CustomerEntity customerEntity = customerRepository.findById(id).orElseThrow(() -> notFouldId(id, "a campanha"));
         fields.forEach((key, value) -> {
-            Field field = ReflectionUtils.findField(ContactEntity.class, (String) key);
+            Field field = ReflectionUtils.findField(CustomerEntity.class, (String) key);
             assert field != null;
             field.setAccessible(true);
             ReflectionUtils.setField(field, customerEntity, value);

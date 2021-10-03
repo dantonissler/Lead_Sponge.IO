@@ -35,38 +35,43 @@ class ContactController {
     @Autowired
     private final ApplicationEventPublisher publisher;
 
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = {"/{id}"})
     @ApiOperation(value = "Get contact by ID.")
     @PreAuthorize("hasAuthority('REMOVER_CONTATO') and #oauth2.hasScope('write')")
-    public ResponseEntity<ContactModel> getById(@PathVariable Long id) {
-        return ResponseEntity.ok(contactService.getById(id));
+    ContactModel getById(@PathVariable Long id) {
+        return contactService.getById(id);
     }
 
-    @GetMapping(value = {""})
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping
     @ApiOperation(value = "Search contacts with a filters.")
     @PreAuthorize("hasAuthority('PESQUISAR_CONTATO') and #oauth2.hasScope('read')")
-    public ResponseEntity<PagedModel<ContactModel>> searchWithFilters(ContactFilter contactFilter, Pageable pageable) {
-        return ResponseEntity.ok().body(contactService.searchWithFilters(contactFilter, pageable));
+    PagedModel<ContactModel> searchWithFilters(ContactFilter contactFilter, Pageable pageable) {
+        return contactService.searchWithFilters(contactFilter, pageable);
     }
 
-    @PostMapping(value = {""})
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping
     @ApiOperation(value = "Save contact.")
     @PreAuthorize("hasAuthority('CADASTRAR_CONTATO') and #oauth2.hasScope('write')")
-    public ResponseEntity<ContactModel> save(@RequestBody ContactEntity contato, HttpServletResponse response) {
-        ContactModel criarCliente = contactService.save(contato);
-        publisher.publishEvent(new ResourcesCreatedEvent(this, response, criarCliente.getId()));
-        return ResponseEntity.status(HttpStatus.CREATED).body(criarCliente);
+    ContactModel save(@RequestBody ContactEntity contato, HttpServletResponse response) {
+        ContactModel contactModel = contactService.save(contato);
+        publisher.publishEvent(new ResourcesCreatedEvent(this, response, contactModel.getId()));
+        return contactModel;
     }
 
+    @ResponseStatus(HttpStatus.ACCEPTED)
     @PatchMapping(value = {"{id}"})
     @ApiOperation(value = "Patch campaign.")
     @PreAuthorize("hasAuthority('CADASTRAR_CONTATO') and #oauth2.hasScope('write')")
-    public ResponseEntity<ContactModel> patch(@RequestBody Map<Object, Object> contact, @PathVariable Long id, HttpServletResponse response) {
-        ContactModel patchContact = contactService.patch(id, contact);
-        publisher.publishEvent(new ResourcesCreatedEvent(this, response, patchContact.getId()));
-        return ResponseEntity.ok(patchContact);
+    ContactModel patch(@RequestBody Map<Object, Object> contact, @PathVariable Long id, HttpServletResponse response) {
+        ContactModel contactModel = contactService.patch(id, contact);
+        publisher.publishEvent(new ResourcesCreatedEvent(this, response, contactModel.getId()));
+        return contactModel;
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @DeleteMapping(value = {"/{id}"})
     @ApiOperation(value = "Delete campaign.")
     @PreAuthorize("hasAuthority('REMOVER_CAMPANHA') and #oauth2.hasScope('read')")

@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.Map;
 
 @RestController
 @AllArgsConstructor
@@ -47,19 +48,19 @@ class NegotiationController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(value = {""})
+    @GetMapping
     @ApiOperation(value = "Search negotiations with a filters.")
     @PreAuthorize("hasAuthority('PESQUISAR_NEGOCIACAO') and #oauth2.hasScope('read')")
-    PagedModel<NegotiationModel> searchWithFilters(NegotiationFilter negociacaoFilter, Pageable pageable) {
-        return negotiationService.searchWithFilters(negociacaoFilter, pageable);
+    PagedModel<NegotiationModel> searchWithFilters(NegotiationFilter negotiationFilter, Pageable pageable) {
+        return negotiationService.searchWithFilters(negotiationFilter, pageable);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping(value = {""})
+    @PostMapping
     @ApiOperation(value = "Save negotiation.")
     @PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
-    NegotiationModel save(@Valid @RequestBody NegotiationEntity negociacao, HttpServletResponse response) {
-        NegotiationModel criarNegociacao = negotiationService.save(negociacao);
+    NegotiationModel save(@Valid @RequestBody NegotiationEntity negotiationEntity, HttpServletResponse response) {
+        NegotiationModel criarNegociacao = negotiationService.save(negotiationEntity);
         publisher.publishEvent(new ResourcesCreatedEvent(this, response, criarNegociacao.getId()));
         return criarNegociacao;
     }
@@ -68,8 +69,8 @@ class NegotiationController {
     @PatchMapping(value = {"/{id}"})
     @ApiOperation(value = "Patch negotiation.")
     @PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
-    NegotiationModel patch(@RequestBody NegotiationEntity negociacao, @PathVariable Long id, HttpServletResponse response) {
-        NegotiationModel novonegociacao = negotiationService.patch(id, negociacao);
+    NegotiationModel patch(@RequestBody Map<Object, Object> fields, @PathVariable Long id, HttpServletResponse response) {
+        NegotiationModel novonegociacao = negotiationService.patch(id, fields);
         publisher.publishEvent(new ResourcesCreatedEvent(this, response, novonegociacao.getId()));
         return novonegociacao;
     }

@@ -11,6 +11,7 @@ import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 @Service
 public interface NegotiationService {
@@ -21,7 +22,7 @@ public interface NegotiationService {
 
     NegotiationModel save(NegotiationEntity negociacao);
 
-    NegotiationModel patch(Long id, NegotiationEntity negociacao);
+    NegotiationModel patch(Long id, Map<Object, Object> fields);
 
     NegotiationModel deletar(Long id);
 
