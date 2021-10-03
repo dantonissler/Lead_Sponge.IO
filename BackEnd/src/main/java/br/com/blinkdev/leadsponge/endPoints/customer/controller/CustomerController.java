@@ -15,7 +15,6 @@ import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,44 +34,49 @@ class CustomerController {
     @Autowired
     private final ApplicationEventPublisher publisher;
 
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = {"/{id}"})
     @ApiOperation(value = "Get custumer by ID.")
     @PreAuthorize("hasAuthority('PESQUISAR_Customer') and #oauth2.hasScope('read')")
-    ResponseEntity<CustomerModel> getById(@Valid @PathVariable("id") Long id, HttpServletResponse response) {
+    CustomerModel getById(@Valid @PathVariable("id") Long id, HttpServletResponse response) {
         publisher.publishEvent(new ResourcesCreatedEvent(this, response, id));
-        return ResponseEntity.ok(customerService.getById(id));
+        return customerService.getById(id);
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = {""})
-    @ApiOperation(value = "Search contacts with a filters.")
+    @ApiOperation(value = "Search custumers with a filters.")
     @PreAuthorize("hasAuthority('PESQUISAR_CONTATO') and #oauth2.hasScope('read')")
-    public ResponseEntity<PagedModel<CustomerModel>> searchWithFilters(CustomerFilter customerFilter, Pageable pageable) {
-        return ResponseEntity.ok().body(customerService.searchWithFilters(customerFilter, pageable));
+    PagedModel<CustomerModel> searchWithFilters(CustomerFilter customerFilter, Pageable pageable) {
+        return customerService.searchWithFilters(customerFilter, pageable);
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = {""})
     @ApiOperation(value = "Save custumer.")
     @PreAuthorize("hasAuthority('CADASTRAR_Customer') and #oauth2.hasScope('write')")
-    ResponseEntity<CustomerModel> save(@Valid @RequestBody CustomerEntity customer, HttpServletResponse response) {
+    CustomerModel save(@Valid @RequestBody CustomerEntity customer, HttpServletResponse response) {
         CustomerModel criarCustomer = customerService.save(customer);
         publisher.publishEvent(new ResourcesCreatedEvent(this, response, criarCustomer.getId()));
-        return ResponseEntity.status(HttpStatus.CREATED).body(criarCustomer);
+        return criarCustomer;
     }
 
+    @ResponseStatus(HttpStatus.ACCEPTED)
     @PatchMapping(value = {"/{id}"})
     @ApiOperation(value = "Patch custumer.")
     @PreAuthorize("hasAuthority('CADASTRAR_Customer') and #oauth2.hasScope('write')")
-    ResponseEntity<CustomerModel> patch(@Valid @RequestBody Map<Object, Object> fields, @PathVariable Long id, HttpServletResponse response) {
+    CustomerModel patch(@Valid @RequestBody Map<Object, Object> fields, @PathVariable Long id, HttpServletResponse response) {
         CustomerModel novoCustomer = customerService.patch(id, fields);
         publisher.publishEvent(new ResourcesCreatedEvent(this, response, novoCustomer.getId()));
-        return ResponseEntity.status(HttpStatus.CREATED).body(novoCustomer);
+        return novoCustomer;
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @DeleteMapping(value = {"/{id}"})
     @ApiOperation(value = "Delete custumer.")
     @PreAuthorize("hasAuthority('REMOVER_Customer') and #oauth2.hasScope('write')")
-    ResponseEntity<CustomerModel> delete(@PathVariable Long id) {
-        return ResponseEntity.ok(customerService.delete(id));
+    CustomerModel delete(@PathVariable Long id) {
+        return customerService.delete(id);
     }
 
 

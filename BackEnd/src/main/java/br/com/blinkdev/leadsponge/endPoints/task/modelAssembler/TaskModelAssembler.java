@@ -6,7 +6,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
+import org.springframework.stereotype.Component;
 
+@Component
 public class TaskModelAssembler extends RepresentationModelAssemblerSupport<TaskEntity, TaskModel> {
     @Autowired
     private ModelMapper modelMapper;

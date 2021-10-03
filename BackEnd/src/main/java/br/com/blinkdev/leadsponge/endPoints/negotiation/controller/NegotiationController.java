@@ -3,17 +3,19 @@ package br.com.blinkdev.leadsponge.endPoints.negotiation.controller;
 import br.com.blinkdev.leadsponge.endPoints.negotiation.entity.NegotiationEntity;
 import br.com.blinkdev.leadsponge.endPoints.negotiation.enumeration.StatusNegotiation;
 import br.com.blinkdev.leadsponge.endPoints.negotiation.filter.NegotiationFilter;
+import br.com.blinkdev.leadsponge.endPoints.negotiation.model.NegotiationModel;
 import br.com.blinkdev.leadsponge.endPoints.negotiation.service.NegotiationService;
 import br.com.blinkdev.leadsponge.endPoints.negotiationStyle.entity.NegotiationStyleEntity;
 import br.com.blinkdev.leadsponge.endPoints.reasonForLoss.entity.ReasonForLossEntity;
 import br.com.blinkdev.leadsponge.event.ResourcesCreatedEvent;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.MediaTypes;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -36,39 +38,47 @@ class NegotiationController {
     @Autowired
     private final ApplicationEventPublisher publisher;
 
-    @GetMapping(value = {""})
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasAuthority('PESQUISAR_NEGOCIACAO') and #oauth2.hasScope('read')")
-    Page<NegotiationEntity> list(NegotiationFilter negociacaoFilter, Pageable pageable) {
-        return negotiationService.filtrar(negociacaoFilter, pageable);
-    }
-
-    @PostMapping(value = {""})
-    @PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
-    ResponseEntity<NegotiationEntity> cadastrar(@Valid @RequestBody NegotiationEntity negociacao, HttpServletResponse response) {
-        NegotiationEntity criarNegociacao = negotiationService.salvar(negociacao);
-        publisher.publishEvent(new ResourcesCreatedEvent(this, response, criarNegociacao.getId()));
-        return ResponseEntity.status(HttpStatus.CREATED).body(criarNegociacao);
-    }
-
     @GetMapping(value = {"/{id}"})
+    @ApiOperation(value = "Get negotiation by ID.")
     @PreAuthorize("hasAuthority('PESQUISAR_NEGOCIACAO') and #oauth2.hasScope('read')")
-    ResponseEntity<NegotiationEntity> detalhar(@Valid @PathVariable("id") Long id) {
-        return ResponseEntity.ok(negotiationService.detalhar(id));
+    NegotiationModel getById(@Valid @PathVariable("id") Long id) {
+        return negotiationService.getById(id);
     }
 
-    @PutMapping(value = {"/{id}"})
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value = {""})
+    @ApiOperation(value = "Search negotiations with a filters.")
+    @PreAuthorize("hasAuthority('PESQUISAR_NEGOCIACAO') and #oauth2.hasScope('read')")
+    PagedModel<NegotiationModel> searchWithFilters(NegotiationFilter negociacaoFilter, Pageable pageable) {
+        return negotiationService.searchWithFilters(negociacaoFilter, pageable);
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping(value = {""})
+    @ApiOperation(value = "Save negotiation.")
     @PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
-    ResponseEntity<NegotiationEntity> atualizar(@RequestBody NegotiationEntity negociacao, @PathVariable Long id, HttpServletResponse response) {
-        NegotiationEntity novonegociacao = negotiationService.atualizar(id, negociacao);
-        publisher.publishEvent(new ResourcesCreatedEvent(this, response, novonegociacao.getId()));
-        return ResponseEntity.status(HttpStatus.CREATED).body(novonegociacao);
+    NegotiationModel save(@Valid @RequestBody NegotiationEntity negociacao, HttpServletResponse response) {
+        NegotiationModel criarNegociacao = negotiationService.save(negociacao);
+        publisher.publishEvent(new ResourcesCreatedEvent(this, response, criarNegociacao.getId()));
+        return criarNegociacao;
     }
 
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @PatchMapping(value = {"/{id}"})
+    @ApiOperation(value = "Patch negotiation.")
+    @PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
+    NegotiationModel patch(@RequestBody NegotiationEntity negociacao, @PathVariable Long id, HttpServletResponse response) {
+        NegotiationModel novonegociacao = negotiationService.patch(id, negociacao);
+        publisher.publishEvent(new ResourcesCreatedEvent(this, response, novonegociacao.getId()));
+        return novonegociacao;
+    }
+
+    @ResponseStatus(HttpStatus.OK)
     @DeleteMapping(value = {"/{id}"})
     @PreAuthorize("hasAuthority('REMOVER_NEGOCIACAO') and #oauth2.hasScope('write')")
-    ResponseEntity<NegotiationEntity> deletar(@PathVariable Long id) {
-        return ResponseEntity.ok(negotiationService.deletar(id));
+    NegotiationModel delete(@PathVariable Long id) {
+        return negotiationService.deletar(id);
     }
 
     @PutMapping("/{id}/avaliacao")
