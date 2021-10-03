@@ -2,15 +2,17 @@ package br.com.blinkdev.leadsponge.endPoints.customer.controller;
 
 import br.com.blinkdev.leadsponge.endPoints.customer.entity.CustomerEntity;
 import br.com.blinkdev.leadsponge.endPoints.customer.filter.CustomerFilter;
+import br.com.blinkdev.leadsponge.endPoints.customer.model.CustomerModel;
 import br.com.blinkdev.leadsponge.endPoints.customer.service.CustomerService;
 import br.com.blinkdev.leadsponge.event.ResourcesCreatedEvent;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.MediaTypes;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.Map;
 
 @RestController
 @AllArgsConstructor
@@ -32,39 +35,45 @@ class CustomerController {
     @Autowired
     private final ApplicationEventPublisher publisher;
 
+    @GetMapping(value = {"/{id}"})
+    @ApiOperation(value = "Get custumer by ID.")
+    @PreAuthorize("hasAuthority('PESQUISAR_Customer') and #oauth2.hasScope('read')")
+    ResponseEntity<CustomerModel> getById(@Valid @PathVariable("id") Long id, HttpServletResponse response) {
+        publisher.publishEvent(new ResourcesCreatedEvent(this, response, id));
+        return ResponseEntity.ok(customerService.getById(id));
+    }
+
     @GetMapping(value = {""})
-    @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasAuthority('PESQUISAR_CLIENTE') and #oauth2.hasScope('read')")
-    Page<CustomerEntity> list(CustomerFilter clienteFilter, Pageable pageable) {
-        return customerService.filtrar(clienteFilter, pageable);
+    @ApiOperation(value = "Search contacts with a filters.")
+    @PreAuthorize("hasAuthority('PESQUISAR_CONTATO') and #oauth2.hasScope('read')")
+    public ResponseEntity<PagedModel<CustomerModel>> searchWithFilters(CustomerFilter customerFilter, Pageable pageable) {
+        return ResponseEntity.ok().body(customerService.searchWithFilters(customerFilter, pageable));
     }
 
     @PostMapping(value = {""})
-    @PreAuthorize("hasAuthority('CADASTRAR_CLIENTE') and #oauth2.hasScope('write')")
-    ResponseEntity<CustomerEntity> cadastrar(@Valid @RequestBody CustomerEntity cliente, HttpServletResponse response) {
-        CustomerEntity criarCliente = customerService.salvar(cliente);
-        publisher.publishEvent(new ResourcesCreatedEvent(this, response, criarCliente.getId()));
-        return ResponseEntity.status(HttpStatus.CREATED).body(criarCliente);
+    @ApiOperation(value = "Save custumer.")
+    @PreAuthorize("hasAuthority('CADASTRAR_Customer') and #oauth2.hasScope('write')")
+    ResponseEntity<CustomerModel> save(@Valid @RequestBody CustomerEntity customer, HttpServletResponse response) {
+        CustomerModel criarCustomer = customerService.save(customer);
+        publisher.publishEvent(new ResourcesCreatedEvent(this, response, criarCustomer.getId()));
+        return ResponseEntity.status(HttpStatus.CREATED).body(criarCustomer);
     }
 
-    @PutMapping(value = {"/{id}"})
-    @PreAuthorize("hasAuthority('CADASTRAR_CLIENTE') and #oauth2.hasScope('write')")
-    ResponseEntity<CustomerEntity> atualizar(@Valid @RequestBody CustomerEntity cliente, @PathVariable Long id, HttpServletResponse response) {
-        CustomerEntity novoCliente = customerService.atualizar(id, cliente);
-        publisher.publishEvent(new ResourcesCreatedEvent(this, response, novoCliente.getId()));
-        return ResponseEntity.status(HttpStatus.CREATED).body(novoCliente);
+    @PatchMapping(value = {"/{id}"})
+    @ApiOperation(value = "Patch custumer.")
+    @PreAuthorize("hasAuthority('CADASTRAR_Customer') and #oauth2.hasScope('write')")
+    ResponseEntity<CustomerModel> patch(@Valid @RequestBody Map<Object, Object> fields, @PathVariable Long id, HttpServletResponse response) {
+        CustomerModel novoCustomer = customerService.patch(id, fields);
+        publisher.publishEvent(new ResourcesCreatedEvent(this, response, novoCustomer.getId()));
+        return ResponseEntity.status(HttpStatus.CREATED).body(novoCustomer);
     }
 
     @DeleteMapping(value = {"/{id}"})
-    @PreAuthorize("hasAuthority('REMOVER_CLIENTE') and #oauth2.hasScope('write')")
-    ResponseEntity<CustomerEntity> deletar(@PathVariable Long id) {
-        return ResponseEntity.ok(customerService.deletar(id));
+    @ApiOperation(value = "Delete custumer.")
+    @PreAuthorize("hasAuthority('REMOVER_Customer') and #oauth2.hasScope('write')")
+    ResponseEntity<CustomerModel> delete(@PathVariable Long id) {
+        return ResponseEntity.ok(customerService.delete(id));
     }
 
-    @GetMapping(value = {"/{id}"})
-    @PreAuthorize("hasAuthority('PESQUISAR_CLIENTE') and #oauth2.hasScope('read')")
-    ResponseEntity<CustomerEntity> detalhar(@Valid @PathVariable("id") Long id, HttpServletResponse response) {
-        publisher.publishEvent(new ResourcesCreatedEvent(this, response, id));
-        return ResponseEntity.ok(customerService.detalhar(id));
-    }
+
 }

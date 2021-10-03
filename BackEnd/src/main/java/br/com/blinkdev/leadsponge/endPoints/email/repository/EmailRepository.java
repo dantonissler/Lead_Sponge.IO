@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface EmailRepository extends JpaRepository<EmailEntity, Long>, EmailRepositoryQuery {
+public interface EmailRepository extends JpaRepository<EmailEntity, Long> {
     Iterable<EmailEntity> findByContatoEmail(ContactEntity contato);
 }

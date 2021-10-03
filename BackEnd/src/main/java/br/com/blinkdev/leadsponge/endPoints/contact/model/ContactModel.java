@@ -1,5 +1,6 @@
 package br.com.blinkdev.leadsponge.endPoints.contact.model;
 
+import br.com.blinkdev.leadsponge.endPoints.address.model.AddressModel;
 import br.com.blinkdev.leadsponge.endPoints.customer.entity.CustomerEntity;
 import br.com.blinkdev.leadsponge.endPoints.email.model.EmailModel;
 import br.com.blinkdev.leadsponge.endPoints.phone.model.PhoneModel;
@@ -25,7 +26,7 @@ public class ContactModel extends RepresentationModel<ContactModel> {
     private String nome;
     private String cargo;
 
-    private List<PhoneModel> telefone;
-
+    private List<PhoneModel> phone;
     private List<EmailModel> email;
+    private List<AddressModel> address;
 }

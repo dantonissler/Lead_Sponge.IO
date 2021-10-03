@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.Map;
-
+// TODO: Trabalhar com o email, phone e endereço
 @RestController
 @AllArgsConstructor
 @RequestMapping(value = "contacts", produces = {MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE})
@@ -36,7 +36,7 @@ class ContactController {
     private final ApplicationEventPublisher publisher;
 
     @GetMapping(value = {"/{id}"})
-    @ApiOperation(value = "Get contacts by ID.")
+    @ApiOperation(value = "Get contact by ID.")
     @PreAuthorize("hasAuthority('REMOVER_CONTATO') and #oauth2.hasScope('write')")
     public ResponseEntity<ContactModel> getById(@PathVariable Long id) {
         return ResponseEntity.ok(contactService.getById(id));

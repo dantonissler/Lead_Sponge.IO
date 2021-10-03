@@ -1,5 +1,6 @@
 package br.com.blinkdev.leadsponge.endPoints.contact.entity;
 
+import br.com.blinkdev.leadsponge.endPoints.address.entity.AddressEntity;
 import br.com.blinkdev.leadsponge.endPoints.customer.entity.CustomerEntity;
 import br.com.blinkdev.leadsponge.endPoints.email.entity.EmailEntity;
 import br.com.blinkdev.leadsponge.endPoints.phone.entity.PhoneEntity;
@@ -15,7 +16,8 @@ public abstract class ContactEntity_ {
     public static volatile SingularAttribute<ContactEntity, Long> id;
     public static volatile SingularAttribute<ContactEntity, String> nome;
     public static volatile SingularAttribute<ContactEntity, String> cargo;
-    public static volatile ListAttribute<ContactEntity, PhoneEntity> telefone;
+    public static volatile ListAttribute<ContactEntity, PhoneEntity> phone;
     public static volatile ListAttribute<ContactEntity, EmailEntity> email;
-    public static volatile SingularAttribute<ContactEntity, CustomerEntity> cliente;
+    public static volatile ListAttribute<ContactEntity, AddressEntity> address;
+    public static volatile SingularAttribute<ContactEntity, CustomerEntity> customer;
 }

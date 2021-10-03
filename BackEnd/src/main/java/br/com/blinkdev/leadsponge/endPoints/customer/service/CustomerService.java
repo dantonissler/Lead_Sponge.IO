@@ -2,20 +2,26 @@ package br.com.blinkdev.leadsponge.endPoints.customer.service;
 
 import br.com.blinkdev.leadsponge.endPoints.customer.entity.CustomerEntity;
 import br.com.blinkdev.leadsponge.endPoints.customer.filter.CustomerFilter;
+import br.com.blinkdev.leadsponge.endPoints.customer.model.CustomerModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 @Service
 public interface CustomerService {
-    CustomerEntity salvar(CustomerEntity cliente);
 
-    CustomerEntity atualizar(Long id, CustomerEntity cliente);
+    CustomerModel getById(Long id);
 
-    CustomerEntity deletar(Long id);
+    PagedModel<CustomerModel> searchWithFilters(CustomerFilter clienteFilter, Pageable pageable);
 
-    CustomerEntity detalhar(Long id);
+    CustomerModel save(CustomerEntity customer);
 
-    Page<CustomerEntity> filtrar(CustomerFilter clienteFilter, Pageable pageable);
+    CustomerModel patch(Long id, Map<Object, Object> fields);
+
+    CustomerModel delete(Long id);
 
 }
+

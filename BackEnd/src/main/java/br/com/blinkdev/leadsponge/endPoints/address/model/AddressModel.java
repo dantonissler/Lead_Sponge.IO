@@ -1,7 +1,7 @@
-package br.com.blinkdev.leadsponge.endPoints.email.model;
+package br.com.blinkdev.leadsponge.endPoints.address.model;
 
 import br.com.blinkdev.leadsponge.endPoints.contact.model.ContactModel;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import br.com.blinkdev.leadsponge.endPoints.negotiationStyle.model.NegotiationStyleModel;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
@@ -15,9 +15,13 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-@Relation(collectionRelation = "emails", itemRelation = "email")
+@Relation(collectionRelation = "adresses", itemRelation = "address")
 @JsonInclude(Include.NON_NULL)
-public class EmailModel extends RepresentationModel<EmailModel> {
+public class AddressModel extends RepresentationModel<AddressModel> {
     private Long id;
-    private String email;
+    private String cep;
+    private String logradouro;
+    private String bairro;
+    private String localidade;
+    private String uf;
 }

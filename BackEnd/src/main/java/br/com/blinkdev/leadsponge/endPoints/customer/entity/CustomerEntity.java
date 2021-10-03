@@ -22,7 +22,6 @@ import java.util.Objects;
 @Entity
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "customer")
@@ -46,27 +45,23 @@ public class CustomerEntity extends UserDateAudit implements Serializable {
     @Size(max = 1024, message = "{descricao.max}")
     private String resumo;
 
-    @JsonIgnoreProperties("cliente")
-    @OneToMany(mappedBy = "cliente")
-    @ToString.Exclude
-    private List<ContactEntity> contato = new ArrayList<>();
+    @JsonIgnoreProperties("customer")
+    @OneToMany(mappedBy = "customer")
+    private List<ContactEntity> contact;
 
     @JsonIgnoreProperties(value = {"cliente", "clientes", "clientesSeguidos", "roles", "tarefas"})
     @OneToMany(mappedBy = "cliente")
-    @ToString.Exclude
     private List<NegotiationEntity> negociacoes;
 
     @ManyToMany
     @JsonIgnoreProperties("clientes")
     @JoinTable(name = "segmentos_clientes", joinColumns = @JoinColumn(name = "cliente_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "segmento_id", referencedColumnName = "id"))
-    @ToString.Exclude
-    private List<SegmentEntity> segmentos = new ArrayList<>();
+    private List<SegmentEntity> segmentos;
 
     @ManyToMany
     @JsonIgnoreProperties(value = {"clientes", "clientesSeguidos", "roles", "tarefas"})
     @JoinTable(name = "seguidores_clientes_seguidos", joinColumns = @JoinColumn(name = "clientes_seguidos_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "seguidor_id", referencedColumnName = "id"))
-    @ToString.Exclude
-    private List<UserEntity> seguidores = new ArrayList<>();
+    private List<UserEntity> seguidores;
 
     @ManyToOne
     @JsonIgnoreProperties(value = {"clientes", "clientesSeguidos", "roles", "tarefas"})

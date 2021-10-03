@@ -1,54 +1,89 @@
 package br.com.blinkdev.leadsponge.endPoints.customer.service;
 
+import br.com.blinkdev.leadsponge.endPoints.contact.entity.ContactEntity;
 import br.com.blinkdev.leadsponge.endPoints.customer.entity.CustomerEntity;
 import br.com.blinkdev.leadsponge.endPoints.customer.filter.CustomerFilter;
+import br.com.blinkdev.leadsponge.endPoints.customer.model.CustomerModel;
+import br.com.blinkdev.leadsponge.endPoints.customer.modelAssembler.CustomerModelAssembler;
 import br.com.blinkdev.leadsponge.endPoints.customer.repository.CustomerRepository;
 import br.com.blinkdev.leadsponge.errorValidate.ErroMessage;
-import org.springframework.beans.BeanUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Map;
 
+@Slf4j
 @Service
 public class CustomerServiceImpl extends ErroMessage implements CustomerService {
+
     @Autowired
-    private CustomerRepository repository;
+    private CustomerRepository customerRepository;
+
+    @Autowired
+    private CustomerModelAssembler customerModelAssembler;
+
+    @Autowired
+    private PagedResourcesAssembler<CustomerEntity> assembler;
 
     @Override
-    public CustomerEntity salvar(CustomerEntity cliente) {
-        cliente.setSegmentos(new ArrayList<>(cliente.getSegmentos()));
-        cliente.getContato().forEach(c -> c.setCliente(cliente));
-        cliente.getContato().forEach(contato -> contato.getTelefone().forEach(telefone -> telefone.setContato(contato)));
-        cliente.getContato().forEach(contato -> contato.getEmail().forEach(email -> email.setContato(contato)));
-        cliente.setSeguidores(new ArrayList<>(cliente.getSeguidores()));
-        return repository.save(cliente);
+    public CustomerModel getById(Long id) {
+        log.info("CustomerServiceImpl - getById");
+        return customerRepository.findById(id).map(customerModelAssembler::toModel).orElseThrow(() -> notFouldId(id, "the customer"));
     }
 
     @Override
-    public CustomerEntity atualizar(Long id, CustomerEntity cliente) {
-        CustomerEntity clienteSalvo = repository.findById(id).orElseThrow(() -> notFouldId(id, "a campanha"));
-        if (cliente.getSegmentos() != null) {
-            clienteSalvo.getSegmentos().clear();
-            clienteSalvo.setSegmentos(cliente.getSegmentos());
-        }
-        if (cliente.getContato() != null) {
-            clienteSalvo.getContato().clear();
-            clienteSalvo.setContato(cliente.getContato());
-        }
-        if (cliente.getSeguidores() != null) {
-            clienteSalvo.getSeguidores().clear();
-            clienteSalvo.setSeguidores(cliente.getSeguidores());
-        }
-        if (cliente.getResponsavel() != null) {
-            clienteSalvo.setResponsavel(cliente.getResponsavel());
-        }
-        if (cliente.getNegociacoes() != null) {
-            clienteSalvo.getNegociacoes().clear();
-            clienteSalvo.setNegociacoes(cliente.getNegociacoes());
-        }
+    public PagedModel<CustomerModel> searchWithFilters(CustomerFilter campanhaFilter, Pageable pageable) {
+        log.info("CustomerServiceImpl - searchWithFilters");
+        return assembler.toModel(customerRepository.searchWithFilters(campanhaFilter, pageable), customerModelAssembler);
+    }
+
+    @Override
+    public CustomerModel save(CustomerEntity cliente) {
+        log.info("CustomerServiceImpl - save");
+        cliente.setSegmentos(new ArrayList<>(cliente.getSegmentos()));
+        cliente.getContact().forEach(c -> c.setCustomer(cliente));
+        cliente.getContact().forEach(contact -> contact.getPhone().forEach(telefone -> telefone.setContato(contact)));
+        cliente.getContact().forEach(contact -> contact.getEmail().forEach(email -> email.setContato(contact)));
+        cliente.setSeguidores(new ArrayList<>(cliente.getSeguidores()));
+        return customerModelAssembler.toModel(customerRepository.save(cliente));
+    }
+
+    @Override
+    public CustomerModel patch(Long id, Map<Object, Object> fields) {
+        log.info("CustomerServiceImpl - patch");
+        CustomerEntity customerEntity = customerRepository.findById(id).orElseThrow(() -> notFouldId(id, "a campanha"));
+        fields.forEach((key, value) -> {
+            Field field = ReflectionUtils.findField(ContactEntity.class, (String) key);
+            assert field != null;
+            field.setAccessible(true);
+            ReflectionUtils.setField(field, customerEntity, value);
+        });
+//        if (cliente.getSegmentos() != null) {
+//            clienteSalvo.getSegmentos().clear();
+//            clienteSalvo.setSegmentos(cliente.getSegmentos());
+//        }
+//        if (cliente.getContato() != null) {
+//            clienteSalvo.getContato().clear();
+//            clienteSalvo.setContato(cliente.getContato());
+//        }
+//        if (cliente.getSeguidores() != null) {
+//            clienteSalvo.getSeguidores().clear();
+//            clienteSalvo.setSeguidores(cliente.getSeguidores());
+//        }
+//        if (cliente.getResponsavel() != null) {
+//            clienteSalvo.setResponsavel(cliente.getResponsavel());
+//        }
+//        if (cliente.getNegociacoes() != null) {
+//            clienteSalvo.getNegociacoes().clear();
+//            clienteSalvo.setNegociacoes(cliente.getNegociacoes());
+//        }
 //		clienteSalvo.getContato().forEach(contato -> contato.getEmail().clear());
 //		clienteSalvo.getContato().forEach(contato -> contato.getTelefone().clear());
 //		clienteSalvo.getContato().addAll(cliente.getContato());
@@ -57,24 +92,15 @@ public class CustomerServiceImpl extends ErroMessage implements CustomerService 
 //		clienteSalvo.getContato().forEach(contato -> contato.setCliente(clienteSalvo));
 //		clienteSalvo.getContato().forEach(contato -> contato.getTelefone().forEach(telefone -> telefone.setContato(contato)));
 //		clienteSalvo.getContato().forEach(contato -> contato.getEmail().forEach(email -> email.setContato(contato)));
-        BeanUtils.copyProperties(cliente, clienteSalvo, "id", "segmentos", "contatos");
-        return repository.save(clienteSalvo);
+        return save(customerEntity);
     }
 
     @Override
-    public Page<CustomerEntity> filtrar(CustomerFilter campanhaFilter, Pageable pageable) {
-        return repository.searchWithFilters(campanhaFilter, pageable);
-    }
-
-    @Override
-    public CustomerEntity deletar(Long id) {
-        CustomerEntity campanhaSalvo = repository.findById(id).orElseThrow(() -> notFouldId(id, "o cliente"));
-        repository.deleteById(id);
-        return campanhaSalvo;
-    }
-
-    @Override
-    public CustomerEntity detalhar(Long id) {
-        return repository.findById(id).orElseThrow(() -> notFouldId(id, "o cliente"));
+    public CustomerModel delete(Long id) {
+        log.info("CustomerServiceImpl - delete");
+        CustomerEntity customerEntity = customerRepository.findById(id).orElseThrow(() -> notFouldId(id, "o cliente"));
+        customerRepository.deleteById(id);
+        return customerModelAssembler.toModel(customerEntity);
     }
 }
+

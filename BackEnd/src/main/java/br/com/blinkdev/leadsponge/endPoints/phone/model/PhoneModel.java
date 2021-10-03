@@ -1,7 +1,5 @@
 package br.com.blinkdev.leadsponge.endPoints.phone.model;
 
-import br.com.blinkdev.leadsponge.endPoints.contact.entity.ContactEntity;
-import br.com.blinkdev.leadsponge.endPoints.negotiationStyle.model.NegotiationStyleModel;
 import br.com.blinkdev.leadsponge.endPoints.phone.enumeration.TypePhone;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
@@ -18,10 +16,11 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include;
 @EqualsAndHashCode(callSuper = false)
 @Relation(collectionRelation = "phones", itemRelation = "phone")
 @JsonInclude(Include.NON_NULL)
-public class PhoneModel extends RepresentationModel<NegotiationStyleModel> {
+public class PhoneModel extends RepresentationModel<PhoneModel> {
     private Long id;
     private String numero;
+    private String codigoArea;
+    private String codigoPais;
+    private Boolean temWhatsapp;
     private TypePhone tipo;
-
-    private ContactEntity contato;
 }

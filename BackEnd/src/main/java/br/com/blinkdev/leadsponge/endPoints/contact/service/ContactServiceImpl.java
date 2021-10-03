@@ -5,7 +5,6 @@ import br.com.blinkdev.leadsponge.endPoints.contact.filter.ContactFilter;
 import br.com.blinkdev.leadsponge.endPoints.contact.model.ContactModel;
 import br.com.blinkdev.leadsponge.endPoints.contact.modelAssembler.ContactModelAssembler;
 import br.com.blinkdev.leadsponge.endPoints.contact.repository.ContactRepository;
-import br.com.blinkdev.leadsponge.endPoints.customer.repository.CustomerRepository;
 import br.com.blinkdev.leadsponge.errorValidate.ErroMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +23,6 @@ public class ContactServiceImpl extends ErroMessage implements ContactService {
 
     @Autowired
     private ContactRepository contactRepository;
-
-    @Autowired
-    private CustomerRepository clienteRepository;
 
     @Autowired
     private ContactModelAssembler contactModelAssembler;
@@ -49,8 +45,6 @@ public class ContactServiceImpl extends ErroMessage implements ContactService {
     @Override
     public ContactModel save(ContactEntity contato) {
         log.info("ContactServiceImpl - save");
-        contato.getTelefone().forEach(c -> c.setContato(contato));
-        contato.getEmail().forEach(c -> c.setContato(contato));
         return contactModelAssembler.toModel(contactRepository.save(contato));
     }
 

@@ -1,9 +1,11 @@
 package br.com.blinkdev.leadsponge.endPoints.contact.entity;
 
+import br.com.blinkdev.leadsponge.endPoints.address.entity.AddressEntity;
 import br.com.blinkdev.leadsponge.endPoints.customer.entity.CustomerEntity;
 import br.com.blinkdev.leadsponge.endPoints.email.entity.EmailEntity;
 import br.com.blinkdev.leadsponge.endPoints.phone.entity.PhoneEntity;
 import br.com.blinkdev.leadsponge.utils.audit.UserDateAudit;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -18,7 +20,6 @@ import java.util.Objects;
 @Entity
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "contact")
@@ -39,18 +40,21 @@ public class ContactEntity extends UserDateAudit implements Serializable {
     private String cargo;
 
     @JsonIgnoreProperties("contato")
-    @OneToMany(mappedBy = "contato", cascade = CascadeType.ALL, orphanRemoval = true)
-    @ToString.Exclude
-    private List<PhoneEntity> telefone;
+    @OneToMany(mappedBy = "contato", cascade = CascadeType.ALL)
+    private List<PhoneEntity> phone;
 
     @JsonIgnoreProperties("contato")
-    @OneToMany(mappedBy = "contato", cascade = CascadeType.ALL, orphanRemoval = true)
-    @ToString.Exclude
+    @OneToMany(mappedBy = "contato", cascade = CascadeType.ALL)
     private List<EmailEntity> email;
 
-    @ManyToOne
-    @JoinColumn(name = "cliente_id")
-    private CustomerEntity cliente;
+    @JsonIgnoreProperties("contact")
+    @OneToMany(mappedBy = "contact", cascade = CascadeType.ALL)
+    private List<AddressEntity> address;
+
+    @JsonIgnoreProperties(value = {"contact", "negociacoes"})// TODO: entender o por que isso não funciona.
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "customer_id")
+    private CustomerEntity customer;
 
     public ContactEntity(Long id) {
         this.id = id;

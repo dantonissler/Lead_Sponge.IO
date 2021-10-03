@@ -35,39 +35,52 @@ import java.util.Set;
 public class UserEntity extends UserDateAudit implements UserDetails, Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @JsonView(View.Usuario.class)
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "user_id")
     private Long id;
+
     @Column(unique = true)
     @NotNull(message = "{login.null}")
     @Size(min = 4, max = 32, message = "{login.size}")
     private String username;
+
     @Column(name = "nome_completo")
     @Size(min = 4, max = 50, message = "{nome.size}")
     private String nomeCompleto;
+
     @Email(message = "{email.not.valid}")
     @NotBlank(message = "{email.not.blank}")
     private String email;
+
     @Size(min = 6, max = 150, message = "{senha.size}")
     private String password;
+
     private String foto;
+
     private String urlFoto;
+
     @Transient
     private String confirmarPassword;
+
     private boolean enabled;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JsonIgnoreProperties("usuarios")
     @JoinTable(name = "roles_usuarios", joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Set<RoleEntity> roles;
+
     @JsonIgnoreProperties("usuario")
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<TaskEntity> tarefas;
+
     @ManyToMany(mappedBy = "seguidores", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("seguidores")
     @ToString.Exclude
     private List<CustomerEntity> clientesSeguidos;
+
     @Override
     @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {

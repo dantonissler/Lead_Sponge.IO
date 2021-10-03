@@ -18,7 +18,7 @@ public abstract class CustomerEntity_ {
     public static volatile SingularAttribute<CustomerEntity, String> url;
     public static volatile SingularAttribute<CustomerEntity, String> resumo;
     public static volatile ListAttribute<CustomerEntity, NegotiationEntity> negociacoes;
-    public static volatile ListAttribute<CustomerEntity, ContactEntity> contato;
+    public static volatile ListAttribute<CustomerEntity, ContactEntity> contact;
     public static volatile ListAttribute<CustomerEntity, SegmentEntity> segmentos;
     public static volatile SingularAttribute<CustomerEntity, UserEntity> responsavel;
     public static volatile ListAttribute<CustomerEntity, UserEntity> seguidores;
