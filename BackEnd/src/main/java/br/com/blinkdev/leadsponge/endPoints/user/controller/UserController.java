@@ -9,6 +9,7 @@ import br.com.blinkdev.leadsponge.endPoints.user.service.UserService;
 import br.com.blinkdev.leadsponge.event.ResourcesCreatedEvent;
 import br.com.blinkdev.leadsponge.storage.Disco;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -41,42 +42,49 @@ public class UserController {
     @Autowired
     private final Disco disco;
 
-    @GetMapping(value = {"/{id}"})
-    @PreAuthorize("hasAuthority('PESQUISAR_USUARIO') and #oauth2.hasScope('read')")
-    public ResponseEntity<UserModel> getById(@Valid @PathVariable("id") Long id) {
-        return ResponseEntity.ok(userService.getById(id));
-    }
-
-    @GetMapping(value = {"/searchWithFilter"})
-    @PreAuthorize("hasAuthority('PESQUISAR_CAMPANHA') and #oauth2.hasScope('read')")
-    public ResponseEntity<PagedModel<UserModel>> searchWithFilter(UserFilter userFilter, Pageable pageable) {
-        return new ResponseEntity<>(userService.searchWithFilter(userFilter, pageable), HttpStatus.OK);
-    }
-
-    @PostMapping(value = {""})
-    @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasAuthority('CADASTRAR_USUARIO') and #oauth2.hasScope('write')")
-    public ResponseEntity<UserEntity> save(@Valid @RequestBody UserEntity usuario, HttpServletResponse response) {
-//		usuarioService.autoLogin(usuario.getUsername(), usuario.getPassword());
-        UserEntity usuarioSalvar = userService.save(usuario);
-        publisher.publishEvent(new ResourcesCreatedEvent(this, response, usuarioSalvar.getId()));
-        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioSalvar);
-    }
-
-    @PatchMapping(value = {"/patch/{id}"})
-    @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasAuthority('CADASTRAR_USUARIO') and #oauth2.hasScope('write')")
-    public ResponseEntity<UserEntity> updatePatch(@RequestBody Map<Object, Object> campanha, @PathVariable Long id, HttpServletResponse response) {
-        UserEntity novaCampanha = userService.updatePatch(id, campanha);
-        publisher.publishEvent(new ResourcesCreatedEvent(this, response, novaCampanha.getId()));
-        return ResponseEntity.status(HttpStatus.OK).body(novaCampanha);
-    }
-
-    @DeleteMapping(value = {"/{id}"})
     @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value = {"/{id}"})
+    @ApiOperation(value = "Get custumer by ID.")
+    @PreAuthorize("hasAuthority('PESQUISAR_USUARIO') and #oauth2.hasScope('read')")
+    public UserModel getById(@Valid @PathVariable("id") Long id) {
+        return userService.getById(id);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping
+    @ApiOperation(value = "Search custumers with a filters.")
+    @PreAuthorize("hasAuthority('PESQUISAR_CAMPANHA') and #oauth2.hasScope('read')")
+    public PagedModel<UserModel> searchWithFilter(UserFilter userFilter, Pageable pageable) {
+        return userService.searchWithFilter(userFilter, pageable);
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping
+    @ApiOperation(value = "Save custumer.")
+    @PreAuthorize("hasAuthority('CADASTRAR_USUARIO') and #oauth2.hasScope('write')")
+    public UserModel save(@Valid @RequestBody UserEntity usuario, HttpServletResponse response) {
+//		usuarioService.autoLogin(usuario.getUsername(), usuario.getPassword());
+        UserModel userEntity = userService.save(usuario);
+        publisher.publishEvent(new ResourcesCreatedEvent(this, response, userEntity.getId()));
+        return userEntity;
+    }
+
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @PatchMapping(value = {"/{id}"})
+    @ApiOperation(value = "Patch custumer.")
+    @PreAuthorize("hasAuthority('CADASTRAR_USUARIO') and #oauth2.hasScope('write')")
+    public UserModel patch(@RequestBody Map<Object, Object> fields, @PathVariable Long id, HttpServletResponse response) {
+        UserModel userEntity = userService.patch(id, fields);
+        publisher.publishEvent(new ResourcesCreatedEvent(this, response, userEntity.getId()));
+        return userEntity;
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping(value = {"/{id}"})
+    @ApiOperation(value = "Delete custumer.")
     @PreAuthorize("hasAuthority('REMOVER_USUARIO') and #oauth2.hasScope('write')")
-    public ResponseEntity<UserEntity> delete(@PathVariable Long id) {
-        return ResponseEntity.ok(userService.delete(id));
+    public UserModel delete(@PathVariable Long id) {
+        return userService.delete(id);
     }
 
     @PutMapping(value = {"/{id}/ativo"})
@@ -99,12 +107,6 @@ public class UserController {
     AnexoTO uploadFoto(@RequestParam MultipartFile foto) {
         String nome = disco.salvarFoto(foto);
         return new AnexoTO(nome, disco.configurarUrlFoto(nome));
-    }
-
-    @GetMapping(value = {"/username/{username}"})
-    @PreAuthorize("hasAuthority('PESQUISAR_USUARIO') and #oauth2.hasScope('read')")
-    ResponseEntity<UserEntity> encontrarPeloNome(@Valid @PathVariable String username) {
-        return ResponseEntity.ok(userService.findByNome(username));
     }
 
     @PutMapping(value = {"/{id}/foto"})

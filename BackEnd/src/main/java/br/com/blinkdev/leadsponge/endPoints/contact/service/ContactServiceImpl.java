@@ -32,26 +32,26 @@ public class ContactServiceImpl extends ErroMessage implements ContactService {
 
     @Override
     public ContactModel getById(Long id) {
-        log.info("ContactServiceImpl - getById");
-        return contactRepository.findById(id).map(contactModelAssembler::toModel).orElseThrow(() -> notFouldId(id, "the contact"));
+        log.info("ContactService - getById");
+        return contactRepository.findById(id).map(contactModelAssembler::toModel).orElseThrow(() -> notFouldId(id, "[contact]"));
     }
 
     @Override
     public PagedModel<ContactModel> searchWithFilters(ContactFilter contactFilter, Pageable pageable) {
-        log.info("ContactServiceImpl - searchWithFilters");
+        log.info("ContactService - searchWithFilters");
         return assembler.toModel(contactRepository.searchWithFilters(contactFilter, pageable), contactModelAssembler);
     }
 
     @Override
     public ContactModel save(ContactEntity contato) {
-        log.info("ContactServiceImpl - save");
+        log.info("ContactService - save");
         return contactModelAssembler.toModel(contactRepository.save(contato));
     }
 
     @Override
     public ContactModel patch(Long id, Map<Object, Object> fields) {
-        log.info("CampanhaServiceImpl - patch");
-        ContactEntity contactEntity = contactRepository.findById(id).orElseThrow(() -> notFouldId(id, "the campaign"));
+        log.info("CampanhaService - patch");
+        ContactEntity contactEntity = contactRepository.findById(id).orElseThrow(() -> notFouldId(id, "[contact]"));
         fields.forEach((key, value) -> {
             Field field = ReflectionUtils.findField(ContactEntity.class, (String) key);
             assert field != null;
@@ -63,8 +63,8 @@ public class ContactServiceImpl extends ErroMessage implements ContactService {
 
     @Override
     public ContactModel delete(Long id) {
-        log.info("CampanhaServiceImpl - delete");
-        ContactEntity contactEntity = contactRepository.findById(id).orElseThrow(() -> notFouldId(id, "the contact"));
+        log.info("CampanhaService - delete");
+        ContactEntity contactEntity = contactRepository.findById(id).orElseThrow(() -> notFouldId(id, "[contact]"));
         contactRepository.deleteById(id);
         return contactModelAssembler.toModel(contactEntity);
     }

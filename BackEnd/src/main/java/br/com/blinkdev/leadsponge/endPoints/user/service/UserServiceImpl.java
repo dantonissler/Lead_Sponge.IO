@@ -45,31 +45,32 @@ public class UserServiceImpl extends ErroMessage implements UserService {
 
 	@Override
 	public UserModel getById(Long id) {
-		log.info("CampanhaServiceImpl - getById");
-		return userRepository.findById(id).map(userModelAssembler::toModel).orElseThrow(() -> notFouldId(id, "a user"));
+		log.info("UserServiceImpl - getById");
+		return userRepository.findById(id).map(userModelAssembler::toModel).orElseThrow(() -> notFouldId(id, "[user]"));
 	}
 
 	@Override
 	public PagedModel<UserModel> searchWithFilter(UserFilter userFilter, Pageable pageable) {
-		log.info("CampanhaServiceImpl - getCampanhaByFilter");
+		log.info("UserServiceImpl - searchWithFilter");
 		return assembler.toModel(userRepository.searchWithFilter(userFilter, pageable), userModelAssembler);
 	}
 
 	@Override
-	public UserEntity save(UserEntity usuario) {
+	public UserModel save(UserEntity usuario) {
+		log.info("UserServiceImpl - save");
 		if (!usuario.getConfirmarPassword().equals(usuario.getPassword()))
 			throw otherMensagemBadRequest("O campo de senha não corresponde com o confirmar senha.");
 		else if (userRepository.findByUsername(usuario.getUsername()).isPresent())
 			throw otherMensagemBadRequest("O nome de usuario já existe.");
 		usuario.setPassword(bCryptPasswordEncoder.encode(usuario.getPassword()));
 		usuario.setRoles(new HashSet<>(usuario.getRoles()));
-		return userRepository.save(usuario);
+		return userModelAssembler.toModel(userRepository.save(usuario));
 	}
 
 	@Override
-	public UserEntity updatePatch(Long id, Map<Object, Object> fields) {
-		log.info("CampanhaServiceImpl - update patch");
-		UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> notFouldId(id, "campanha"));
+	public UserModel patch(Long id, Map<Object, Object> fields) {
+		log.info("UserServiceImpl - patch");
+		UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> notFouldId(id, "[user]"));
 		fields.forEach((key, value) -> {
 			Field field = ReflectionUtils.findField(UserEntity.class, (String) key);
 			assert field != null;
@@ -79,10 +80,18 @@ public class UserServiceImpl extends ErroMessage implements UserService {
 		return save(userEntity);
 	}
 
+	@Override
+	public UserModel delete(Long id) {
+		log.info("UserServiceImpl - delete");
+		UserEntity usuarioSalvo = userRepository.findById(id).orElseThrow(() -> notFouldId(id, "[user]"));
+		userRepository.deleteById(id);
+		return userModelAssembler.toModel(usuarioSalvo);
+	}
+
 
 	@Override
 	public void atualizarPropriedadeEnabled(Long id, Boolean enabled) {
-		UserEntity usuarioSalva = userRepository.findById(id).orElseThrow(() -> notFouldId(id, "a user"));
+		UserEntity usuarioSalva = userRepository.findById(id).orElseThrow(() -> notFouldId(id, "[user]"));
 		usuarioSalva.setEnabled(enabled);
 		userRepository.save(usuarioSalva);
 	}
@@ -97,20 +106,8 @@ public class UserServiceImpl extends ErroMessage implements UserService {
 	}
 
 	@Override
-	public UserEntity delete(Long id) {
-		UserEntity usuarioSalvo = userRepository.findById(id).orElseThrow(() -> notFouldId(id, "a user"));
-		userRepository.deleteById(id);
-		return usuarioSalvo;
-	}
-
-	@Override
-	public UserEntity findByNome(String username) {
-		return userRepository.findByUsername(username).orElseThrow(() -> notFould("o user"));
-	}
-
-	@Override
 	public UserEntity atualizarUsuarioDTO(Long id, UsuarioTO usuario) {
-		UserEntity usuarioSalva = userRepository.findById(id).orElseThrow(() -> notFouldId(id, "o user"));
+		UserEntity usuarioSalva = userRepository.findById(id).orElseThrow(() -> notFouldId(id, "[user]"));
 		usuarioSalva.getRoles().clear();
 		usuarioSalva.getRoles().addAll(usuario.getRoles());
 		BeanUtils.copyProperties(usuario, usuarioSalva, "id", "roles");
@@ -119,7 +116,7 @@ public class UserServiceImpl extends ErroMessage implements UserService {
 
 	@Override
 	public void removerImg(Long id) {
-		UserEntity usuarioSalva = userRepository.findById(id).orElseThrow(() -> notFouldId(id, "o user"));
+		UserEntity usuarioSalva = userRepository.findById(id).orElseThrow(() -> notFouldId(id, "[user]"));
 		disco.remover(usuarioSalva.getUrlFoto());
 		usuarioSalva.setFoto(null);
 		usuarioSalva.setUrlFoto(null);
@@ -128,16 +125,9 @@ public class UserServiceImpl extends ErroMessage implements UserService {
 
 	@Override
 	public void atualizarImg(Long id, String foto) {
-		UserEntity usuarioSalva = userRepository.findById(id).orElseThrow(() -> notFouldId(id, "o user"));
+		UserEntity usuarioSalva = userRepository.findById(id).orElseThrow(() -> notFouldId(id, "[user]"));
 		usuarioSalva.setFoto(foto);
 		usuarioSalva.setUrlFoto(disco.configurarUrlFoto(foto));
 		userRepository.save(usuarioSalva);
 	}
-
-	// TODO ver a viabilidade
-//	private UsuarioModel toModel(Usuario usuario){
-//		UsuarioModel usuarioModel = modelMapper.map(usuario, UsuarioModel.class);
-//		usuarioModel.add(linkTo(methodOn(UsuarioEndPoint.class).list(new UsuarioFilter(), null)).withRel(IanaLinkRelations.COLLECTION));
-//		return usuarioModel;
-//	}
 }

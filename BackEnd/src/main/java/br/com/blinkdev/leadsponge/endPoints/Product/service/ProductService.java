@@ -2,21 +2,25 @@ package br.com.blinkdev.leadsponge.endPoints.Product.service;
 
 import br.com.blinkdev.leadsponge.endPoints.Product.entity.ProductEntity;
 import br.com.blinkdev.leadsponge.endPoints.Product.filter.ProductFilter;
-import org.springframework.data.domain.Page;
+import br.com.blinkdev.leadsponge.endPoints.Product.model.ProductModel;
 import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 @Service
 public interface ProductService {
-    ProductEntity salvar(ProductEntity produto);
+
+    ProductModel getById(Long id);
+
+    PagedModel<ProductModel> searchWithFilters(ProductFilter productFilter, Pageable pageable);
+
+    ProductModel save(ProductEntity productEntity);
+
+    ProductModel patch(Long id, Map<Object, Object> fields);
+
+    ProductModel delete(Long id);
 
     void atualizarPropriedadeVisibilidade(Long id, Boolean visibilidade);
-
-    ProductEntity atualizar(Long id, ProductEntity produto);
-
-    ProductEntity deletar(Long id);
-
-    ProductEntity detalhar(Long id);
-
-    Page<ProductEntity> filtrar(ProductFilter negociacaoFilter, Pageable pageable);
 }

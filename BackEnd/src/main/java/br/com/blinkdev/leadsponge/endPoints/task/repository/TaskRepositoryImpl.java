@@ -3,8 +3,6 @@ package br.com.blinkdev.leadsponge.endPoints.task.repository;
 import br.com.blinkdev.leadsponge.endPoints.task.entity.TaskEntity;
 import br.com.blinkdev.leadsponge.endPoints.task.entity.TaskEntity_;
 import br.com.blinkdev.leadsponge.endPoints.task.filter.TaskFilter;
-import br.com.blinkdev.leadsponge.endPoints.task.model.TaskModel;
-import br.com.blinkdev.leadsponge.endPoints.user.entity.UserEntity_;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -23,19 +21,6 @@ public class TaskRepositoryImpl implements TaskRepositoryQuery {
 
     @PersistenceContext
     private EntityManager manager;
-
-    @Override
-    public Page<TaskModel> resumir(TaskFilter tarefaFilter, Pageable pageable) {
-        CriteriaBuilder builder = manager.getCriteriaBuilder();
-        CriteriaQuery<TaskModel> criteria = builder.createQuery(TaskModel.class);
-        Root<TaskEntity> root = criteria.from(TaskEntity.class);
-        criteria.select(builder.construct(TaskModel.class, root.get(TaskEntity_.id), root.get(TaskEntity_.assunto), root.get(TaskEntity_.horaMarcada), root.get(TaskEntity_.tipo), root.get(TaskEntity_.usuario).get(UserEntity_.nomeCompleto)));
-        Predicate[] predicates = criarRestricoes(tarefaFilter, builder, root);
-        criteria.where(predicates);
-        TypedQuery<TaskModel> query = manager.createQuery(criteria);
-        adicionarRestricoesDePaginacao(query, pageable);
-        return new PageImpl<>(query.getResultList(), pageable, total(tarefaFilter));
-    }
 
     @Override
     public Page<TaskEntity> filtrar(TaskFilter tarefaFilter, Pageable pageable) {

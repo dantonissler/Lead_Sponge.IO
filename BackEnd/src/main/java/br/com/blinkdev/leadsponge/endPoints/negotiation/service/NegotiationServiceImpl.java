@@ -38,26 +38,26 @@ public class NegotiationServiceImpl extends ErroMessage implements NegotiationSe
 
     @Override
     public NegotiationModel getById(Long id) {
-        log.info("NegotiationServiceImpl - getById");
-        return repository.findById(id).map(negotiationModelAssembler::toModel).orElseThrow(() -> notFouldId(id, "a fonte da negociação "));
+        log.info("NegotiationService - getById");
+        return repository.findById(id).map(negotiationModelAssembler::toModel).orElseThrow(() -> notFouldId(id, "[negotiation]"));
     }
 
     @Override
     public PagedModel<NegotiationModel> searchWithFilters(NegotiationFilter negociacaoFilter, Pageable pageable) {
-        log.info("NegotiationServiceImpl - searchWithFilters");
+        log.info("NegotiationService - searchWithFilters");
         return assembler.toModel(repository.filtrar(negociacaoFilter, pageable), negotiationModelAssembler);
     }
 
     @Override
     public NegotiationModel save(NegotiationEntity negociacao) {
-        log.info("NegotiationServiceImpl - save");
+        log.info("NegotiationService - save");
         return negotiationModelAssembler.toModel(repository.save(negociacao));
     }
 
     @Override
     public NegotiationModel patch(Long id, Map<Object, Object> fields) {
-        log.info("NegotiationServiceImpl - patch");
-        NegotiationEntity negotiationEntity = repository.findById(id).orElseThrow(() -> notFouldId(id, "a negociação "));
+        log.info("NegotiationService - patch");
+        NegotiationEntity negotiationEntity = repository.findById(id).orElseThrow(() -> notFouldId(id, "[negotiation]"));
         // TODO fazer as devidas validações
         fields.forEach((key, value) -> {
             Field field = ReflectionUtils.findField(NegotiationEntity.class, (String) key);
@@ -70,8 +70,8 @@ public class NegotiationServiceImpl extends ErroMessage implements NegotiationSe
 
     @Override
     public NegotiationModel deletar(Long id) {
-        log.info("NegotiationServiceImpl - deletar");
-        NegotiationEntity negotiationEntity = repository.findById(id).orElseThrow(() -> notFouldId(id, "a fonte da negociação "));
+        log.info("NegotiationService - deletar");
+        NegotiationEntity negotiationEntity = repository.findById(id).orElseThrow(() -> notFouldId(id, "[negotiation]"));
         repository.deleteById(id);
         return negotiationModelAssembler.toModel(negotiationEntity);
     }
@@ -81,7 +81,7 @@ public class NegotiationServiceImpl extends ErroMessage implements NegotiationSe
      */
     @Override
     public void calculo(Long id) {
-        NegotiationEntity negociacao = repository.findById(id).orElseThrow(() -> notFouldId(id, "a negociação "));
+        NegotiationEntity negociacao = repository.findById(id).orElseThrow(() -> notFouldId(id, "[negotiation]"));
         BigDecimal somaTotal = negociacao.getNegociacaoProdutos().stream().map(total -> total.getTotal()).reduce(BigDecimal.ZERO, BigDecimal::add);
         BigDecimal somaMensal = negociacao.getNegociacaoProdutos().stream().filter(mensal -> mensal.getReincidencia().equals(RecidivismType.RECORRENTE)).map(total -> total.getTotal()).reduce(BigDecimal.ZERO, BigDecimal::add);
         BigDecimal somaUnico = negociacao.getNegociacaoProdutos().stream().filter(mensal -> mensal.getReincidencia().equals(RecidivismType.UNICO)).map(unico -> unico.getTotal()).reduce(BigDecimal.ZERO, BigDecimal::add);
@@ -93,7 +93,7 @@ public class NegotiationServiceImpl extends ErroMessage implements NegotiationSe
 
     @Override
     public void atribuirPropMP(Long id, ReasonForLossEntity motivoPerda) {
-        NegotiationEntity negociacaoSalva = repository.findById(id).orElseThrow(() -> notFouldId(id, "a negociação "));
+        NegotiationEntity negociacaoSalva = repository.findById(id).orElseThrow(() -> notFouldId(id, "[negotiation]"));
         negociacaoSalva.setMotivoPerda(motivoPerda);
         negociacaoSalva.setEstatus(StatusNegotiation.PERDIDA);
         repository.save(negociacaoSalva);
@@ -101,7 +101,7 @@ public class NegotiationServiceImpl extends ErroMessage implements NegotiationSe
 
     @Override
     public void atualizarPropriedadeEstatus(Long id, StatusNegotiation estatus) {
-        NegotiationEntity negociacaoSalva = repository.findById(id).orElseThrow(() -> notFouldId(id, "a negociação "));
+        NegotiationEntity negociacaoSalva = repository.findById(id).orElseThrow(() -> notFouldId(id, "[negotiation]"));
         if (negociacaoSalva.getEstatus() == StatusNegotiation.PERDIDA)
             negociacaoSalva.setMotivoPerda(null);
         negociacaoSalva.setEstatus(estatus);
@@ -110,21 +110,21 @@ public class NegotiationServiceImpl extends ErroMessage implements NegotiationSe
 
     @Override
     public void atualizarPropriedadeDataFim(Long id, LocalDateTime data) {
-        NegotiationEntity negociacaoSalva = repository.findById(id).orElseThrow(() -> notFouldId(id, "a negociação "));
+        NegotiationEntity negociacaoSalva = repository.findById(id).orElseThrow(() -> notFouldId(id, "[negotiation]"));
         negociacaoSalva.setDataPrevistaEncerramento(data);
         repository.save(negociacaoSalva);
     }
 
     @Override
     public void atualizarPropriedadeEstagio(Long id, NegotiationStyleEntity estagio) {
-        NegotiationEntity negociacaoSalva = repository.findById(id).orElseThrow(() -> notFouldId(id, "a negociação "));
+        NegotiationEntity negociacaoSalva = repository.findById(id).orElseThrow(() -> notFouldId(id, "[negotiation]"));
         negociacaoSalva.setEstagio(estagio);
         repository.save(negociacaoSalva);
     }
 
     @Override
     public void atualizarPropriedadeAvaliacao(Long id, Integer avaliacao) {
-        NegotiationEntity negociacaoSalva = repository.findById(id).orElseThrow(() -> notFouldId(id, "a negociação "));
+        NegotiationEntity negociacaoSalva = repository.findById(id).orElseThrow(() -> notFouldId(id, "[negotiation]"));
         negociacaoSalva.setAvaliacao(avaliacao);
         repository.save(negociacaoSalva);
     }

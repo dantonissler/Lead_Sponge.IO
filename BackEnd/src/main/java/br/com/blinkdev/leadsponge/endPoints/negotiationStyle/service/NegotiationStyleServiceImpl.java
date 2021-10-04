@@ -2,46 +2,70 @@ package br.com.blinkdev.leadsponge.endPoints.negotiationStyle.service;
 
 import br.com.blinkdev.leadsponge.endPoints.negotiationStyle.entity.NegotiationStyleEntity;
 import br.com.blinkdev.leadsponge.endPoints.negotiationStyle.filter.NegotiationStyleFilter;
+import br.com.blinkdev.leadsponge.endPoints.negotiationStyle.model.NegotiationStyleModel;
+import br.com.blinkdev.leadsponge.endPoints.negotiationStyle.modelAssembler.NegotiationStyleModelAssembler;
 import br.com.blinkdev.leadsponge.endPoints.negotiationStyle.repository.NegotiationStyleRepository;
 import br.com.blinkdev.leadsponge.errorValidate.ErroMessage;
-import org.springframework.beans.BeanUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
 
+import java.lang.reflect.Field;
+import java.util.Map;
+
+@Slf4j
 @Service
 public class NegotiationStyleServiceImpl extends ErroMessage implements NegotiationStyleService {
 
     @Autowired
     private NegotiationStyleRepository repository;
 
+    @Autowired
+    private NegotiationStyleModelAssembler negotiationStyleModelAssembler;
+
+    @Autowired
+    private PagedResourcesAssembler<NegotiationStyleEntity> assembler;
+
     @Override
-    public NegotiationStyleEntity salvar(NegotiationStyleEntity estagioNegociacao) {
-        return repository.save(estagioNegociacao);
+    public NegotiationStyleModel getById(Long id) {
+        log.info("NegotiationStyleServiceImpl - getById");
+        return repository.findById(id).map(negotiationStyleModelAssembler::toModel).orElseThrow(() -> notFouldId(id, "[negotiation style]"));
     }
 
     @Override
-    public NegotiationStyleEntity atualizar(Long id, NegotiationStyleEntity estagioNegociacao) {
-        NegotiationStyleEntity estagioNegociacaoSalvo = repository.findById(id).orElseThrow(() -> notFouldId(id, " o estagio da negociação "));
-        BeanUtils.copyProperties(estagioNegociacao, estagioNegociacaoSalvo, "id");
-        return repository.save(estagioNegociacao);
+    public PagedModel<NegotiationStyleModel> searchWithFilters(NegotiationStyleFilter negotiationStyleFilter, Pageable pageable) {
+        log.info("NegotiationStyleServiceImpl - searchWithFilters");
+        return assembler.toModel(repository.filtrar(negotiationStyleFilter, pageable), negotiationStyleModelAssembler);
     }
 
     @Override
-    public Page<NegotiationStyleEntity> filtrar(NegotiationStyleFilter estagioNegociacaoFilter, Pageable pageable) {
-        return repository.filtrar(estagioNegociacaoFilter, pageable);
+    public NegotiationStyleModel save(NegotiationStyleEntity estagioNegociacao) {
+        log.info("NegotiationStyleServiceImpl - save");
+        return negotiationStyleModelAssembler.toModel(repository.save(estagioNegociacao));
     }
 
     @Override
-    public NegotiationStyleEntity deletar(Long id) {
-        NegotiationStyleEntity estagioNegociacaoSalvo = repository.findById(id).orElseThrow(() -> notFouldId(id, " o estagio da negociação "));
+    public NegotiationStyleModel patch(Long id, Map<Object, Object> fields) {
+        log.info("NegotiationStyleServiceImpl - patch");
+        NegotiationStyleEntity negotiationStyleEntity = repository.findById(id).orElseThrow(() -> notFouldId(id, "[negotiation style]"));
+        fields.forEach((key, value) -> {
+            Field field = ReflectionUtils.findField(NegotiationStyleEntity.class, (String) key);
+            assert field != null;
+            field.setAccessible(true);
+            ReflectionUtils.setField(field, negotiationStyleEntity, value);
+        });
+        return save(negotiationStyleEntity);
+    }
+
+    @Override
+    public NegotiationStyleModel delete(Long id) {
+        log.info("NegotiationStyleServiceImpl - delete");
+        NegotiationStyleEntity negotiationStyleEntity = repository.findById(id).orElseThrow(() -> notFouldId(id, "[negotiation style]"));
         repository.deleteById(id);
-        return estagioNegociacaoSalvo;
-    }
-
-    @Override
-    public NegotiationStyleEntity detalhar(Long id) {
-        return repository.findById(id).orElseThrow(() -> notFouldId(id, " o estagio da negociação "));
+        return negotiationStyleModelAssembler.toModel(negotiationStyleEntity);
     }
 }

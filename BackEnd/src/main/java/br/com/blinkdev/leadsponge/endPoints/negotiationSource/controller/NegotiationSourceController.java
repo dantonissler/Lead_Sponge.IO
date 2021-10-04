@@ -2,23 +2,25 @@ package br.com.blinkdev.leadsponge.endPoints.negotiationSource.controller;
 
 import br.com.blinkdev.leadsponge.endPoints.negotiationSource.entity.NegotiationSourceEntity;
 import br.com.blinkdev.leadsponge.endPoints.negotiationSource.filter.NegotiationSourceFilter;
+import br.com.blinkdev.leadsponge.endPoints.negotiationSource.model.NegotiationSourceModel;
 import br.com.blinkdev.leadsponge.endPoints.negotiationSource.service.NegotiationSourceService;
 import br.com.blinkdev.leadsponge.event.ResourcesCreatedEvent;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.MediaTypes;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.Map;
 
 @RestController
 @AllArgsConstructor
@@ -32,38 +34,47 @@ class NegotiationSourceController {
     @Autowired
     private final ApplicationEventPublisher publisher;
 
-    @GetMapping(value = {""})
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasAuthority('PESQUISAR_FONTE') and #oauth2.hasScope('read')")
-    public Page<NegotiationSourceEntity> list(NegotiationSourceFilter fonteNegociacaoFilter, Pageable pageable) {
-        return negotiationSourceService.filtrar(fonteNegociacaoFilter, pageable);
-    }
-
-    @PostMapping(value = {""})
-    @PreAuthorize("hasAuthority('CADASTRAR_FONTE') and #oauth2.hasScope('write')")
-    public ResponseEntity<NegotiationSourceEntity> cadastrar(@Valid @RequestBody NegotiationSourceEntity fonteNegociacao, HttpServletResponse response) {
-        NegotiationSourceEntity fonteNegociacaoNegociacao = negotiationSourceService.salvar(fonteNegociacao);
-        publisher.publishEvent(new ResourcesCreatedEvent(this, response, fonteNegociacaoNegociacao.getId()));
-        return ResponseEntity.status(HttpStatus.CREATED).body(fonteNegociacaoNegociacao);
-    }
-
-    @PutMapping(value = {"/{id}"})
-    @PreAuthorize("hasAuthority('CADASTRAR_FONTE') and #oauth2.hasScope('write')")
-    ResponseEntity<NegotiationSourceEntity> atualizar(@Valid @RequestBody NegotiationSourceEntity fonteNegociacao, @PathVariable Long id, HttpServletResponse response) {
-        NegotiationSourceEntity fonteNegociacaoNegociacao = negotiationSourceService.atualizar(id, fonteNegociacao);
-        publisher.publishEvent(new ResourcesCreatedEvent(this, response, fonteNegociacaoNegociacao.getId()));
-        return ResponseEntity.status(HttpStatus.CREATED).body(fonteNegociacaoNegociacao);
-    }
-
-    @DeleteMapping(value = {"/{id}"})
-    @PreAuthorize("hasAuthority('REMOVER_FONTE') and #oauth2.hasScope('write')")
-    public ResponseEntity<NegotiationSourceEntity> deletar(@PathVariable Long id) {
-        return ResponseEntity.ok(negotiationSourceService.deletar(id));
-    }
-
     @GetMapping(value = {"/{id}"})
+    @ApiOperation(value = "Get negotiation source by ID.")
     @PreAuthorize("hasAuthority('PESQUISAR_FONTE') and #oauth2.hasScope('read')")
-    public ResponseEntity<NegotiationSourceEntity> detalhar(@Valid @PathVariable("id") Long id) {
-        return ResponseEntity.ok(negotiationSourceService.detalhar(id));
+    public NegotiationSourceModel getById(@PathVariable("id") Long id) {
+        return negotiationSourceService.getById(id);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping
+    @ApiOperation(value = "Search negotiations sources with a filters.")
+    @PreAuthorize("hasAuthority('PESQUISAR_FONTE') and #oauth2.hasScope('read')")
+    public PagedModel<NegotiationSourceModel> searchWithFilters(NegotiationSourceFilter negotiationSourceFilter, Pageable pageable) {
+        return negotiationSourceService.searchWithFilters(negotiationSourceFilter, pageable);
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping
+    @ApiOperation(value = "Save negotiation source.")
+    @PreAuthorize("hasAuthority('CADASTRAR_FONTE') and #oauth2.hasScope('write')")
+    public NegotiationSourceModel save(@Valid @RequestBody NegotiationSourceEntity negotiationSource, HttpServletResponse response) {
+        NegotiationSourceModel negotiationSourceModel = negotiationSourceService.save(negotiationSource);
+        publisher.publishEvent(new ResourcesCreatedEvent(this, response, negotiationSourceModel.getId()));
+        return negotiationSourceModel;
+    }
+
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @PutMapping(value = {"/{id}"})
+    @ApiOperation(value = "Patch negotiation source.")
+    @PreAuthorize("hasAuthority('CADASTRAR_FONTE') and #oauth2.hasScope('write')")
+    public NegotiationSourceModel patch(@RequestBody Map<Object, Object> fields, @PathVariable Long id, HttpServletResponse response) {
+        NegotiationSourceModel negotiationSourceModel = negotiationSourceService.patch(id, fields);
+        publisher.publishEvent(new ResourcesCreatedEvent(this, response, negotiationSourceModel.getId()));
+        return negotiationSourceModel;
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping(value = {"/{id}"})
+    @ApiOperation(value = "Delete negotiation source.")
+    @PreAuthorize("hasAuthority('REMOVER_FONTE') and #oauth2.hasScope('write')")
+    public NegotiationSourceModel delete(@PathVariable Long id) {
+        return negotiationSourceService.delete(id);
     }
 }

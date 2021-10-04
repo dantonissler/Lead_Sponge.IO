@@ -3,53 +3,78 @@ package br.com.blinkdev.leadsponge.endPoints.Product.service;
 
 import br.com.blinkdev.leadsponge.endPoints.Product.entity.ProductEntity;
 import br.com.blinkdev.leadsponge.endPoints.Product.filter.ProductFilter;
+import br.com.blinkdev.leadsponge.endPoints.Product.model.ProductModel;
+import br.com.blinkdev.leadsponge.endPoints.Product.modelAssembler.ProductModelAssembler;
 import br.com.blinkdev.leadsponge.endPoints.Product.repository.ProductRepository;
 import br.com.blinkdev.leadsponge.errorValidate.ErroMessage;
-import org.springframework.beans.BeanUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
 
+import java.lang.reflect.Field;
+import java.util.Map;
+
+@Slf4j
 @Service
 public class ProductServiceImpl extends ErroMessage implements ProductService {
 
     @Autowired
-    private ProductRepository repository;
+    private ProductRepository productRepository;
+
+    @Autowired
+    private ProductModelAssembler productModelAssembler;
+
+    @Autowired
+    private PagedResourcesAssembler<ProductEntity> assembler;
 
     @Override
-    public ProductEntity salvar(ProductEntity produto) {
-        return repository.save(produto);
+    public ProductModel getById(Long id) {
+        log.info("ProductService - getById");
+        return productRepository.findById(id).map(productModelAssembler::toModel).orElseThrow(() -> notFouldId(id, "a produto"));
+    }
+
+    @Override
+    public PagedModel<ProductModel> searchWithFilters(ProductFilter produtoFilter, Pageable pageable) {
+        log.info("ProductService - searchWithFilters");
+        return assembler.toModel(productRepository.filtrar(produtoFilter, pageable), productModelAssembler);
+    }
+
+    @Override
+    public ProductModel save(ProductEntity produto) {
+        log.info("ProductService - save");
+        return productModelAssembler.toModel(productRepository.save(produto));
+    }
+
+    @Override
+    public ProductModel patch(Long id, Map<Object, Object> fields) {
+        log.info("ProductService - patch");
+        ProductEntity productEntity = productRepository.findById(id).orElseThrow(() -> notFouldId(id, "[product]"));
+        fields.forEach((key, value) -> {
+            Field field = ReflectionUtils.findField(ProductEntity.class, (String) key);
+            assert field != null;
+            field.setAccessible(true);
+            ReflectionUtils.setField(field, productEntity, value);
+        });
+        return save(productEntity);
+    }
+
+    @Override
+    public ProductModel delete(Long id) {
+        log.info("ProductService - delete");
+        ProductEntity productEntity = productRepository.findById(id).orElseThrow(() -> notFouldId(id, "[product]"));
+        productRepository.deleteById(id);
+        return productModelAssembler.toModel(productEntity);
     }
 
     @Override
     public void atualizarPropriedadeVisibilidade(Long id, Boolean visibilidade) {
-        ProductEntity produtoSalva = repository.findById(id).orElseThrow(() -> notFouldId(id, "a produto"));
+        log.info("ProductService - atualizarPropriedadeVisibilidade");
+        ProductEntity produtoSalva = productRepository.findById(id).orElseThrow(() -> notFouldId(id, "[product]"));
         produtoSalva.setVisibilidade(visibilidade);
-        repository.save(produtoSalva);
-    }
-
-    @Override
-    public ProductEntity atualizar(Long id, ProductEntity produto) {
-        ProductEntity produtoSalva = repository.findById(id).orElseThrow(() -> notFouldId(id, "a produto"));
-        BeanUtils.copyProperties(produto, produtoSalva, "id");
-        return repository.save(produtoSalva);
-    }
-
-    @Override
-    public Page<ProductEntity> filtrar(ProductFilter produtoFilter, Pageable pageable) {
-        return repository.filtrar(produtoFilter, pageable);
-    }
-
-    @Override
-    public ProductEntity deletar(Long id) {
-        ProductEntity produtoSalvo = repository.findById(id).orElseThrow(() -> notFouldId(id, "a produto"));
-        repository.deleteById(id);
-        return produtoSalvo;
-    }
-
-    @Override
-    public ProductEntity detalhar(Long id) {
-        return repository.findById(id).orElseThrow(() -> notFouldId(id, "a produto"));
+        productRepository.save(produtoSalva);
     }
 }

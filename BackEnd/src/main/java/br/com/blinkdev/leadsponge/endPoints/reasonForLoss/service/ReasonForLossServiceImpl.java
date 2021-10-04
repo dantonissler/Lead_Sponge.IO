@@ -2,47 +2,71 @@ package br.com.blinkdev.leadsponge.endPoints.reasonForLoss.service;
 
 import br.com.blinkdev.leadsponge.endPoints.reasonForLoss.entity.ReasonForLossEntity;
 import br.com.blinkdev.leadsponge.endPoints.reasonForLoss.filter.ReasonForLossFilter;
+import br.com.blinkdev.leadsponge.endPoints.reasonForLoss.model.ReasonForLossModel;
+import br.com.blinkdev.leadsponge.endPoints.reasonForLoss.modelAssembler.ReasonForLossModelAssembler;
 import br.com.blinkdev.leadsponge.endPoints.reasonForLoss.repository.ReasonForLossRepository;
 import br.com.blinkdev.leadsponge.errorValidate.ErroMessage;
-import org.springframework.beans.BeanUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
 
+import java.lang.reflect.Field;
+import java.util.Map;
+
+@Slf4j
 @Service
 public class ReasonForLossServiceImpl extends ErroMessage implements ReasonForLossService {
 
     @Autowired
     private ReasonForLossRepository repository;
 
+    @Autowired
+    private ReasonForLossModelAssembler reasonForLossModelAssembler;
+
+    @Autowired
+    private PagedResourcesAssembler<ReasonForLossEntity> assembler;
+
     @Override
-    public ReasonForLossEntity salvar(ReasonForLossEntity motivoPerda) {
-        return repository.save(motivoPerda);
+    public ReasonForLossModel getById(Long id) {
+        log.info("CustomerServiceImpl - getById");
+        return repository.findById(id).map(reasonForLossModelAssembler::toModel).orElseThrow(() -> notFouldId(id, "[reason for loss]"));
     }
 
     @Override
-    public ReasonForLossEntity atualizar(Long id, ReasonForLossEntity motivoPerda) {
-        ReasonForLossEntity novomotivoPerda = repository.findById(id).orElseThrow(() -> notFouldId(id, "a motivo da negociação "));
-        BeanUtils.copyProperties(motivoPerda, novomotivoPerda, "id");
-        return repository.save(novomotivoPerda);
+    public PagedModel<ReasonForLossModel> searchWithFilters(ReasonForLossFilter motivoPerdaFilter, Pageable pageable) {
+        log.info("CustomerServiceImpl - searchWithFilters");
+        return assembler.toModel(repository.filtrar(motivoPerdaFilter, pageable), reasonForLossModelAssembler);
     }
 
     @Override
-    public ReasonForLossEntity deletar(Long id) {
-        ReasonForLossEntity motivoPerda = repository.findById(id).orElseThrow(() -> notFouldId(id, "a motivo da negociação "));
+    public ReasonForLossModel save(ReasonForLossEntity motivoPerda) {
+        log.info("CustomerServiceImpl - save");
+        return reasonForLossModelAssembler.toModel(repository.save(motivoPerda));
+    }
+
+
+    @Override
+    public ReasonForLossModel patch(Long id, Map<Object, Object> fields) {
+        log.info("CustomerServiceImpl - patch");
+        ReasonForLossEntity novomotivoPerda = repository.findById(id).orElseThrow(() -> notFouldId(id, "[reason for loss]"));
+        fields.forEach((key, value) -> {
+            Field field = ReflectionUtils.findField(ReasonForLossEntity.class, (String) key);
+            assert field != null;
+            field.setAccessible(true);
+            ReflectionUtils.setField(field, novomotivoPerda, value);
+        });
+        return save(novomotivoPerda);
+    }
+
+    @Override
+    public ReasonForLossModel delete(Long id) {
+        log.info("CustomerServiceImpl - delete");
+        ReasonForLossEntity motivoPerda = repository.findById(id).orElseThrow(() -> notFouldId(id, "[reason for loss]"));
         repository.deleteById(id);
-        return motivoPerda;
-    }
-
-    @Override
-    public ReasonForLossEntity detalhar(Long id) {
-        // TODO fazer as devidas validações
-        return repository.findById(id).orElseThrow(() -> notFouldId(id, "a motivo da negociação "));
-    }
-
-    @Override
-    public Page<ReasonForLossEntity> filtrar(ReasonForLossFilter motivoPerdaFilter, Pageable pageable) {
-        return repository.filtrar(motivoPerdaFilter, pageable);
+        return reasonForLossModelAssembler.toModel(motivoPerda);
     }
 }

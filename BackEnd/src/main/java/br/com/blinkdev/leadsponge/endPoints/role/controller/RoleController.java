@@ -1,19 +1,21 @@
 package br.com.blinkdev.leadsponge.endPoints.role.controller;
 
-import br.com.blinkdev.leadsponge.endPoints.role.entity.RoleEntity;
 import br.com.blinkdev.leadsponge.endPoints.role.filter.RoleFilter;
 import br.com.blinkdev.leadsponge.endPoints.role.model.RoleModel;
 import br.com.blinkdev.leadsponge.endPoints.role.service.RoleService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.MediaTypes;
+import org.springframework.hateoas.PagedModel;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -25,15 +27,11 @@ class RoleController {
     @Autowired
     private final RoleService roleService;
 
-    @GetMapping(params = "resumo")
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping
+    @ApiOperation(value = "Search for roles with a filters.")
     @PreAuthorize("hasAuthority('PESQUISAR_USUARIO') and #oauth2.hasScope('read')")
-    public Page<RoleModel> list(RoleFilter roleFilter, Pageable pageable) {
-        return roleService.resumir(roleFilter, pageable);
-    }
-
-    @GetMapping(value = {""})
-    @PreAuthorize("hasAuthority('PESQUISAR_USUARIO') and #oauth2.hasScope('read')")
-    public Page<RoleEntity> pesquisar(RoleFilter usuarioFilter, Pageable pageable) {
-        return roleService.filtrar(usuarioFilter, pageable);
+    public PagedModel<RoleModel> searchWithFilters(RoleFilter usuarioFilter, Pageable pageable) {
+        return roleService.searchWithFilters(usuarioFilter, pageable);
     }
 }

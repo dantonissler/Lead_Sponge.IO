@@ -34,30 +34,30 @@ public class CustomerServiceImpl extends ErroMessage implements CustomerService 
     @Override
     public CustomerModel getById(Long id) {
         log.info("CustomerServiceImpl - getById");
-        return customerRepository.findById(id).map(customerModelAssembler::toModel).orElseThrow(() -> notFouldId(id, "the customer"));
+        return customerRepository.findById(id).map(customerModelAssembler::toModel).orElseThrow(() -> notFouldId(id, "[customer]"));
     }
 
     @Override
     public PagedModel<CustomerModel> searchWithFilters(CustomerFilter campanhaFilter, Pageable pageable) {
-        log.info("CustomerServiceImpl - searchWithFilters");
+        log.info("CustomerService - searchWithFilters");
         return assembler.toModel(customerRepository.searchWithFilters(campanhaFilter, pageable), customerModelAssembler);
     }
 
     @Override
-    public CustomerModel save(CustomerEntity cliente) {
-        log.info("CustomerServiceImpl - save");
-        cliente.setSegmentos(new ArrayList<>(cliente.getSegmentos()));
-        cliente.getContact().forEach(c -> c.setCustomer(cliente));
-        cliente.getContact().forEach(contact -> contact.getPhone().forEach(telefone -> telefone.setContato(contact)));
-        cliente.getContact().forEach(contact -> contact.getEmail().forEach(email -> email.setContato(contact)));
-        cliente.setSeguidores(new ArrayList<>(cliente.getSeguidores()));
-        return customerModelAssembler.toModel(customerRepository.save(cliente));
+    public CustomerModel save(CustomerEntity customerEntity) {
+        log.info("CustomerService - save");
+        customerEntity.setSegmentos(new ArrayList<>(customerEntity.getSegmentos()));
+        customerEntity.getContact().forEach(c -> c.setCustomer(customerEntity));
+        customerEntity.getContact().forEach(contact -> contact.getPhone().forEach(telefone -> telefone.setContato(contact)));
+        customerEntity.getContact().forEach(contact -> contact.getEmail().forEach(email -> email.setContato(contact)));
+        customerEntity.setSeguidores(new ArrayList<>(customerEntity.getSeguidores()));
+        return customerModelAssembler.toModel(customerRepository.save(customerEntity));
     }
 
     @Override
     public CustomerModel patch(Long id, Map<Object, Object> fields) {
-        log.info("CustomerServiceImpl - patch");
-        CustomerEntity customerEntity = customerRepository.findById(id).orElseThrow(() -> notFouldId(id, "a campanha"));
+        log.info("CustomerService - patch");
+        CustomerEntity customerEntity = customerRepository.findById(id).orElseThrow(() -> notFouldId(id, "[customer]"));
         fields.forEach((key, value) -> {
             Field field = ReflectionUtils.findField(CustomerEntity.class, (String) key);
             assert field != null;
@@ -96,8 +96,8 @@ public class CustomerServiceImpl extends ErroMessage implements CustomerService 
 
     @Override
     public CustomerModel delete(Long id) {
-        log.info("CustomerServiceImpl - delete");
-        CustomerEntity customerEntity = customerRepository.findById(id).orElseThrow(() -> notFouldId(id, "o cliente"));
+        log.info("CustomerService - delete");
+        CustomerEntity customerEntity = customerRepository.findById(id).orElseThrow(() -> notFouldId(id, "[customer]"));
         customerRepository.deleteById(id);
         return customerModelAssembler.toModel(customerEntity);
     }

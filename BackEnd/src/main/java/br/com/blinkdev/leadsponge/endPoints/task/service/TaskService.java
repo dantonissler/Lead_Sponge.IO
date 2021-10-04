@@ -3,24 +3,23 @@ package br.com.blinkdev.leadsponge.endPoints.task.service;
 import br.com.blinkdev.leadsponge.endPoints.task.entity.TaskEntity;
 import br.com.blinkdev.leadsponge.endPoints.task.filter.TaskFilter;
 import br.com.blinkdev.leadsponge.endPoints.task.model.TaskModel;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 @Service
 public interface TaskService {
-    void avisarSobreTarefasVencidos();
 
-    TaskEntity salvar(TaskEntity tarefa);
+    TaskModel getById(Long id);
 
-    TaskEntity atualizar(Long id, TaskEntity tarefa);
+    PagedModel<TaskModel> searchWithFilters(TaskFilter tarefaFilter, Pageable pageable);
 
-    TaskEntity deletar(Long id);
+    TaskModel save(TaskEntity tarefa);
 
-    TaskEntity detalhar(Long id);
+    TaskModel patch(Long id, Map<Object, Object> fields);
 
-    Page<TaskEntity> filtrar(TaskFilter tarefaFilter, Pageable pageable);
-
-    Page<TaskModel> resumir(TaskFilter tarefaFilter, Pageable pageable);
+    TaskModel delete(Long id);
 
 }

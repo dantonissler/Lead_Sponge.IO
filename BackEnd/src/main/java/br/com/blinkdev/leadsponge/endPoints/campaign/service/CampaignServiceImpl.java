@@ -34,26 +34,26 @@ public class CampaignServiceImpl extends ErroMessage implements CampaignService 
 
     @Override
     public CampaignModel getById(Long id) {
-        log.info("CampanhaServiceImpl - getById");
-        return campanhaRepository.findById(id).map(campanhaModelAssembler::toModel).orElseThrow(() -> notFouldId(id, "the campaign"));
+        log.info("CampanhaService - getById");
+        return campanhaRepository.findById(id).map(campanhaModelAssembler::toModel).orElseThrow(() -> notFouldId(id, "[campaign]"));
     }
 
     @Override
     public PagedModel<CampaignModel> searchWithFilters(CampaignFilters campanhaFilter, Pageable pageable) {
-        log.info("CampanhaServiceImpl - searchWithFilters");
+        log.info("CampanhaService - searchWithFilters");
         return assembler.toModel(campanhaRepository.searchWithFilters(campanhaFilter, pageable), campanhaModelAssembler);
     }
 
     @Override
     public CampaignModel save(CampaignEntity campanha) {
-        log.info("CampanhaServiceImpl - save");
+        log.info("CampanhaService - save");
         return campanhaModelAssembler.toModel(campanhaRepository.save(campanha));
     }
 
     @Override
     public CampaignModel patch(Long id, Map<Object, Object> fields) {
-        log.info("CampanhaServiceImpl - patch");
-        CampaignEntity campaignEntity = campanhaRepository.findById(id).orElseThrow(() -> notFouldId(id, "the campaign"));
+        log.info("CampanhaService - patch");
+        CampaignEntity campaignEntity = campanhaRepository.findById(id).orElseThrow(() -> notFouldId(id, "[campaign]"));
         fields.forEach((key, value) -> {
             Field field = ReflectionUtils.findField(CampaignEntity.class, (String) key);
             assert field != null;
@@ -65,8 +65,8 @@ public class CampaignServiceImpl extends ErroMessage implements CampaignService 
 
     @Override
     public CampaignModel delete(Long id) {
-        log.info("CampanhaServiceImpl - delete");
-        CampaignEntity campaignEntity = campanhaRepository.findById(id).orElseThrow(() -> notFouldId(id, "the campaign"));
+        log.info("CampanhaService - delete");
+        CampaignEntity campaignEntity = campanhaRepository.findById(id).orElseThrow(() -> notFouldId(id, "[campaign]"));
         campanhaRepository.deleteById(id);
         return campanhaModelAssembler.toModel(campaignEntity);
     }

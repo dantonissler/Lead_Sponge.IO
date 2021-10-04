@@ -4,7 +4,6 @@ package br.com.blinkdev.leadsponge.endPoints.role.repository;
 import br.com.blinkdev.leadsponge.endPoints.role.entity.RoleEntity;
 import br.com.blinkdev.leadsponge.endPoints.role.entity.RoleEntity_;
 import br.com.blinkdev.leadsponge.endPoints.role.filter.RoleFilter;
-import br.com.blinkdev.leadsponge.endPoints.role.model.RoleModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -36,19 +35,6 @@ public class RoleRepositoryImpl implements RoleRepositoryQuery {
 		TypedQuery<RoleEntity> query = manager.createQuery(criteria);
 		adicionarRestricoesDePaginacao(query, pageable);
 		return new PageImpl<>(query.getResultList(), pageable, total(roleFilter));
-	}
-
-	@Override
-	public Page<RoleModel> resumir(RoleFilter usuarioFilter, Pageable pageable) {
-		CriteriaBuilder builder = manager.getCriteriaBuilder();
-		CriteriaQuery<RoleModel> criteria = builder.createQuery(RoleModel.class);
-		Root<RoleEntity> root = criteria.from(RoleEntity.class);
-		criteria.select(builder.construct(RoleModel.class, root.get(RoleEntity_.id), root.get(RoleEntity_.nome)));
-		Predicate[] predicates = criarRestricoes(usuarioFilter, builder, root);
-		criteria.where(predicates);
-		TypedQuery<RoleModel> query = manager.createQuery(criteria);
-		adicionarRestricoesDePaginacao(query, pageable);
-		return new PageImpl<>(query.getResultList(), pageable, total(usuarioFilter));
 	}
 
 	private Predicate[] criarRestricoes(RoleFilter roleFilter, CriteriaBuilder builder, Root<RoleEntity> root) {

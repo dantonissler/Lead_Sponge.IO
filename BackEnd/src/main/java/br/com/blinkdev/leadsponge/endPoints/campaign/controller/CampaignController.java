@@ -37,7 +37,7 @@ public class CampaignController {
     @GetMapping(value = {"{id}"})
     @ApiOperation(value = "Get campaign by ID.")
     @PreAuthorize("hasAuthority('PESQUISAR_CAMPANHA') and #oauth2.hasScope('read')")
-    CampaignModel getById(@PathVariable("id") Long id) {
+    public CampaignModel getById(@PathVariable("id") Long id) {
         return campaignService.getById(id);
     }
 
@@ -45,7 +45,7 @@ public class CampaignController {
     @GetMapping
     @ApiOperation(value = "Search campaigns with a filters.")
     @PreAuthorize("hasAuthority('PESQUISAR_CAMPANHA') and #oauth2.hasScope('read')")
-    PagedModel<CampaignModel> searchWithFilters(CampaignFilters campanhaFilter, Pageable pageable) {
+    public PagedModel<CampaignModel> searchWithFilters(CampaignFilters campanhaFilter, Pageable pageable) {
         return campaignService.searchWithFilters(campanhaFilter, pageable);
     }
 
@@ -53,7 +53,7 @@ public class CampaignController {
     @PostMapping
     @ApiOperation(value = "Save campaign.")
     @PreAuthorize("hasAuthority('CADASTRAR_CAMPANHA') and #oauth2.hasScope('write')")
-    CampaignModel save(@Valid @RequestBody CampaignEntity campanha, HttpServletResponse response) {
+    public CampaignModel save(@Valid @RequestBody CampaignEntity campanha, HttpServletResponse response) {
         CampaignModel campaignModel = campaignService.save(campanha);
         publisher.publishEvent(new CampaignCreatedEvent(this, response, campaignModel.getId()));
         return campaignModel;
@@ -63,7 +63,7 @@ public class CampaignController {
     @PatchMapping(value = {"{id}"})
     @ApiOperation(value = "Patch campaign.")
     @PreAuthorize("hasAuthority('CADASTRAR_CAMPANHA') and #oauth2.hasScope('write')")
-    CampaignModel patch(@RequestBody Map<Object, Object> campanha, @PathVariable Long id, HttpServletResponse response) {
+    public CampaignModel patch(@RequestBody Map<Object, Object> campanha, @PathVariable Long id, HttpServletResponse response) {
         CampaignModel campaignModel = campaignService.patch(id, campanha);
         publisher.publishEvent(new CampaignPatchEvent(this, response, campaignModel.getId()));
         return campaignModel;
@@ -73,7 +73,7 @@ public class CampaignController {
     @DeleteMapping(value = {"{id}"})
     @ApiOperation(value = "Delete campaign.")
     @PreAuthorize("hasAuthority('REMOVER_CAMPANHA') and #oauth2.hasScope('write')")
-    CampaignModel delete(@PathVariable Long id) {
+    public CampaignModel delete(@PathVariable Long id) {
         return campaignService.delete(id);
     }
 }

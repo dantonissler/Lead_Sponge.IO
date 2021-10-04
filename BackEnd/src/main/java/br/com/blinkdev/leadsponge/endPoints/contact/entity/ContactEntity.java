@@ -1,11 +1,10 @@
 package br.com.blinkdev.leadsponge.endPoints.contact.entity;
 
-import br.com.blinkdev.leadsponge.endPoints.address.entity.AddressEntity;
+import br.com.blinkdev.leadsponge.resources.address.entity.AddressEntity;
 import br.com.blinkdev.leadsponge.endPoints.customer.entity.CustomerEntity;
-import br.com.blinkdev.leadsponge.endPoints.email.entity.EmailEntity;
-import br.com.blinkdev.leadsponge.endPoints.phone.entity.PhoneEntity;
+import br.com.blinkdev.leadsponge.resources.email.entity.EmailEntity;
+import br.com.blinkdev.leadsponge.resources.phone.entity.PhoneEntity;
 import br.com.blinkdev.leadsponge.utils.audit.UserDateAudit;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.Hibernate;

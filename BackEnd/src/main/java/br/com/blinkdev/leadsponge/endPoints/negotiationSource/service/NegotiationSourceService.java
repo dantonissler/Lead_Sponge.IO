@@ -2,19 +2,23 @@ package br.com.blinkdev.leadsponge.endPoints.negotiationSource.service;
 
 import br.com.blinkdev.leadsponge.endPoints.negotiationSource.entity.NegotiationSourceEntity;
 import br.com.blinkdev.leadsponge.endPoints.negotiationSource.filter.NegotiationSourceFilter;
-import org.springframework.data.domain.Page;
+import br.com.blinkdev.leadsponge.endPoints.negotiationSource.model.NegotiationSourceModel;
 import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 @Service
 public interface NegotiationSourceService {
-    NegotiationSourceEntity salvar(NegotiationSourceEntity fonteNegociacao);
 
-    NegotiationSourceEntity atualizar(Long id, NegotiationSourceEntity fonteNegociacao);
+    NegotiationSourceModel getById(Long id);
 
-    NegotiationSourceEntity deletar(Long id);
+    PagedModel<NegotiationSourceModel> searchWithFilters(NegotiationSourceFilter negotiationSourceFilter, Pageable pageable);
 
-    NegotiationSourceEntity detalhar(Long id);
+    NegotiationSourceModel save(NegotiationSourceEntity negotiationSourceEntity);
 
-    Page<NegotiationSourceEntity> filtrar(NegotiationSourceFilter fonteNegociacaoFilter, Pageable pageable);
+    NegotiationSourceModel patch(Long id, Map<Object, Object> fields);
+
+    NegotiationSourceModel delete(Long id);
 }

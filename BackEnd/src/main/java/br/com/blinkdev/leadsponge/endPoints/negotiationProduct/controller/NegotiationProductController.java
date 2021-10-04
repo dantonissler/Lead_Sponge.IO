@@ -38,7 +38,7 @@ class NegotiationProductController {
     @GetMapping(value = {"/{id}"})
     @ApiOperation(value = "Get negotiation product by ID.")
     @PreAuthorize("hasAuthority('PESQUISAR_CAMPANHA') and #oauth2.hasScope('read')")
-    NegotiationProductModel getById(@PathVariable("id") Long id) {
+    public NegotiationProductModel getById(@PathVariable("id") Long id) {
         return negotiationProductService.getById(id);
     }
 
@@ -54,7 +54,7 @@ class NegotiationProductController {
     @PostMapping
     @ApiOperation(value = "Save negotiation product.")
     @PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
-    NegotiationProductModel save(@Valid @RequestBody NegotiationProductEntity negotiationProduct, HttpServletResponse response) {
+    public NegotiationProductModel save(@Valid @RequestBody NegotiationProductEntity negotiationProduct, HttpServletResponse response) {
         NegotiationProductModel negotiationProductEntity = negotiationProductService.save(negotiationProduct);
         publisher.publishEvent(new ResourcesCreatedEvent(this, response, negotiationProductEntity.getId()));
         return negotiationProductEntity;
@@ -64,7 +64,7 @@ class NegotiationProductController {
     @PutMapping(value = {"/{id}"})
     @ApiOperation(value = "Patch negotiation product.")
     @PreAuthorize("hasAuthority('CADASTRAR_CLIENTE') and #oauth2.hasScope('write')")
-    NegotiationProductModel patch(@RequestBody Map<Object, Object> fields, @PathVariable Long id, HttpServletResponse response) {
+    public NegotiationProductModel patch(@RequestBody Map<Object, Object> fields, @PathVariable Long id, HttpServletResponse response) {
         NegotiationProductModel negotiationProductEntity = negotiationProductService.patch(id, fields);
         publisher.publishEvent(new ResourcesCreatedEvent(this, response, negotiationProductEntity.getId()));
         return negotiationProductEntity;
@@ -74,7 +74,7 @@ class NegotiationProductController {
     @DeleteMapping(value = {"/{id}"})
     @ApiOperation(value = "Delete negotiation product.")
     @PreAuthorize("hasAuthority('REMOVER_CLIENTE') and #oauth2.hasScope('write')")
-    NegotiationProductModel delete(@PathVariable Long id) {
+    public NegotiationProductModel delete(@PathVariable Long id) {
         return negotiationProductService.delete(id);
     }
 }

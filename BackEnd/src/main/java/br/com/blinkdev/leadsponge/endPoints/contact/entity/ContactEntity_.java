@@ -1,9 +1,9 @@
 package br.com.blinkdev.leadsponge.endPoints.contact.entity;
 
-import br.com.blinkdev.leadsponge.endPoints.address.entity.AddressEntity;
+import br.com.blinkdev.leadsponge.resources.address.entity.AddressEntity;
 import br.com.blinkdev.leadsponge.endPoints.customer.entity.CustomerEntity;
-import br.com.blinkdev.leadsponge.endPoints.email.entity.EmailEntity;
-import br.com.blinkdev.leadsponge.endPoints.phone.entity.PhoneEntity;
+import br.com.blinkdev.leadsponge.resources.email.entity.EmailEntity;
+import br.com.blinkdev.leadsponge.resources.phone.entity.PhoneEntity;
 
 import javax.annotation.Generated;
 import javax.persistence.metamodel.ListAttribute;

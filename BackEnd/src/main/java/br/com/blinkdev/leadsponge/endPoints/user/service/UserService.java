@@ -17,17 +17,15 @@ public interface UserService {
 
     PagedModel<UserModel> searchWithFilter(UserFilter usuarioFilter, Pageable pageable);
 
-    UserEntity save(UserEntity usuario);
+    UserModel save(UserEntity usuario);
 
-    UserEntity updatePatch(Long id, Map<Object, Object> fields);
+    UserModel patch(Long id, Map<Object, Object> fields);
+
+    UserModel delete(Long id);
 
     void atualizarPropriedadeEnabled(Long id, Boolean enabled);
 
     String findLoggedInLogin();
-
-    UserEntity delete(Long id);
-
-    UserEntity findByNome(String username);
 
     UserEntity atualizarUsuarioDTO(Long id, UsuarioTO usuario);
 

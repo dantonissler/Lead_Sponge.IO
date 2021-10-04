@@ -2,19 +2,23 @@ package br.com.blinkdev.leadsponge.endPoints.negotiationStyle.service;
 
 import br.com.blinkdev.leadsponge.endPoints.negotiationStyle.entity.NegotiationStyleEntity;
 import br.com.blinkdev.leadsponge.endPoints.negotiationStyle.filter.NegotiationStyleFilter;
-import org.springframework.data.domain.Page;
+import br.com.blinkdev.leadsponge.endPoints.negotiationStyle.model.NegotiationStyleModel;
 import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 @Service
 public interface NegotiationStyleService {
-    NegotiationStyleEntity salvar(NegotiationStyleEntity estagioNegociacao);
 
-    NegotiationStyleEntity atualizar(Long id, NegotiationStyleEntity estagioNegociacao);
+    NegotiationStyleModel getById(Long id);
 
-    NegotiationStyleEntity deletar(Long id);
+    PagedModel<NegotiationStyleModel> searchWithFilters(NegotiationStyleFilter estagioNegociacaoFilter, Pageable pageable);
 
-    NegotiationStyleEntity detalhar(Long id);
+    NegotiationStyleModel save(NegotiationStyleEntity estagioNegociacao);
 
-    Page<NegotiationStyleEntity> filtrar(NegotiationStyleFilter estagioNegociacaoFilter, Pageable pageable);
+    NegotiationStyleModel patch(Long id, Map<Object, Object> fields);
+
+    NegotiationStyleModel delete(Long id);
 }

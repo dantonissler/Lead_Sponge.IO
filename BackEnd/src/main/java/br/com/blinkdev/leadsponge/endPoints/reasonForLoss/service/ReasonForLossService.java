@@ -2,19 +2,23 @@ package br.com.blinkdev.leadsponge.endPoints.reasonForLoss.service;
 
 import br.com.blinkdev.leadsponge.endPoints.reasonForLoss.entity.ReasonForLossEntity;
 import br.com.blinkdev.leadsponge.endPoints.reasonForLoss.filter.ReasonForLossFilter;
-import org.springframework.data.domain.Page;
+import br.com.blinkdev.leadsponge.endPoints.reasonForLoss.model.ReasonForLossModel;
 import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 @Service
 public interface ReasonForLossService {
-    ReasonForLossEntity salvar(ReasonForLossEntity motivoPerda);
 
-    ReasonForLossEntity atualizar(Long id, ReasonForLossEntity motivoPerda);
+    ReasonForLossModel getById(Long id);
 
-    ReasonForLossEntity deletar(Long id);
+    PagedModel<ReasonForLossModel> searchWithFilters(ReasonForLossFilter reasonForLossFilter, Pageable pageable);
 
-    ReasonForLossEntity detalhar(Long id);
+    ReasonForLossModel save(ReasonForLossEntity reasonForLossEntity);
 
-    Page<ReasonForLossEntity> filtrar(ReasonForLossFilter motivoPerdaFilter, Pageable pageable);
+    ReasonForLossModel patch(Long id, Map<Object, Object> fields);
+
+    ReasonForLossModel delete(Long id);
 }

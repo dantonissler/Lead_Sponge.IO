@@ -2,19 +2,22 @@ package br.com.blinkdev.leadsponge.endPoints.segment.service;
 
 import br.com.blinkdev.leadsponge.endPoints.segment.entity.SegmentEntity;
 import br.com.blinkdev.leadsponge.endPoints.segment.filter.SegmentFilter;
-import org.springframework.data.domain.Page;
+import br.com.blinkdev.leadsponge.endPoints.segment.model.SegmentModel;
 import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 @Service
 public interface SegmentService {
-    SegmentEntity salvar(SegmentEntity segmento);
+    SegmentModel getById(Long id);
 
-    SegmentEntity atualizar(Long id, SegmentEntity segmento);
+    PagedModel<SegmentModel> searchWithFilters(SegmentFilter segmentFilter, Pageable pageable);
 
-    SegmentEntity deletar(Long id);
+    SegmentModel save(SegmentEntity segmentEntity);
 
-    SegmentEntity detalhar(Long id);
+    SegmentModel patch(Long id, Map<Object, Object> fields);
 
-    Page<SegmentEntity> filtrar(SegmentFilter negociacaoFilter, Pageable pageable);
+    SegmentModel delete(Long id);
 }

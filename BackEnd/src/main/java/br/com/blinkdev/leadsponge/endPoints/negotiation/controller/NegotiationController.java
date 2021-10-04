@@ -43,7 +43,7 @@ class NegotiationController {
     @GetMapping(value = {"/{id}"})
     @ApiOperation(value = "Get negotiation by ID.")
     @PreAuthorize("hasAuthority('PESQUISAR_NEGOCIACAO') and #oauth2.hasScope('read')")
-    NegotiationModel getById(@Valid @PathVariable("id") Long id) {
+    public NegotiationModel getById(@Valid @PathVariable("id") Long id) {
         return negotiationService.getById(id);
     }
 
@@ -51,7 +51,7 @@ class NegotiationController {
     @GetMapping
     @ApiOperation(value = "Search negotiations with a filters.")
     @PreAuthorize("hasAuthority('PESQUISAR_NEGOCIACAO') and #oauth2.hasScope('read')")
-    PagedModel<NegotiationModel> searchWithFilters(NegotiationFilter negotiationFilter, Pageable pageable) {
+    public PagedModel<NegotiationModel> searchWithFilters(NegotiationFilter negotiationFilter, Pageable pageable) {
         return negotiationService.searchWithFilters(negotiationFilter, pageable);
     }
 
@@ -59,7 +59,7 @@ class NegotiationController {
     @PostMapping
     @ApiOperation(value = "Save negotiation.")
     @PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
-    NegotiationModel save(@Valid @RequestBody NegotiationEntity negotiationEntity, HttpServletResponse response) {
+    public NegotiationModel save(@Valid @RequestBody NegotiationEntity negotiationEntity, HttpServletResponse response) {
         NegotiationModel criarNegociacao = negotiationService.save(negotiationEntity);
         publisher.publishEvent(new ResourcesCreatedEvent(this, response, criarNegociacao.getId()));
         return criarNegociacao;
@@ -69,7 +69,7 @@ class NegotiationController {
     @PatchMapping(value = {"/{id}"})
     @ApiOperation(value = "Patch negotiation.")
     @PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
-    NegotiationModel patch(@RequestBody Map<Object, Object> fields, @PathVariable Long id, HttpServletResponse response) {
+    public NegotiationModel patch(@RequestBody Map<Object, Object> fields, @PathVariable Long id, HttpServletResponse response) {
         NegotiationModel novonegociacao = negotiationService.patch(id, fields);
         publisher.publishEvent(new ResourcesCreatedEvent(this, response, novonegociacao.getId()));
         return novonegociacao;
@@ -78,14 +78,14 @@ class NegotiationController {
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping(value = {"/{id}"})
     @PreAuthorize("hasAuthority('REMOVER_NEGOCIACAO') and #oauth2.hasScope('write')")
-    NegotiationModel delete(@PathVariable Long id) {
+    public NegotiationModel delete(@PathVariable Long id) {
         return negotiationService.deletar(id);
     }
 
     @PutMapping("/{id}/avaliacao")
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
-    ResponseEntity<NegotiationEntity> atualizarPropriedadeEnabled(@PathVariable Long id, @RequestBody Integer avaliacao) {
+    public ResponseEntity<NegotiationEntity> atualizarPropriedadeEnabled(@PathVariable Long id, @RequestBody Integer avaliacao) {
         negotiationService.atualizarPropriedadeAvaliacao(id, avaliacao);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -93,7 +93,7 @@ class NegotiationController {
     @PutMapping("/{id}/estagio")
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
-    ResponseEntity<NegotiationEntity> atualizarPropriedadeEstagio(@PathVariable Long id, @RequestBody NegotiationStyleEntity estagio) {
+    public ResponseEntity<NegotiationEntity> atualizarPropriedadeEstagio(@PathVariable Long id, @RequestBody NegotiationStyleEntity estagio) {
         negotiationService.atualizarPropriedadeEstagio(id, estagio);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -101,7 +101,7 @@ class NegotiationController {
     @PutMapping("/{id}/estatus")
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
-    ResponseEntity<NegotiationEntity> atualizarPropriedadeEstatus(@PathVariable Long id, @RequestBody StatusNegotiation estatus) {
+    public ResponseEntity<NegotiationEntity> atualizarPropriedadeEstatus(@PathVariable Long id, @RequestBody StatusNegotiation estatus) {
         negotiationService.atualizarPropriedadeEstatus(id, estatus);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -109,7 +109,7 @@ class NegotiationController {
     @PutMapping("/{id}/dataFim")
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
-    ResponseEntity<NegotiationEntity> atualizarPropriedadeDataFim(@PathVariable Long id, @RequestBody LocalDateTime data) {
+    public ResponseEntity<NegotiationEntity> atualizarPropriedadeDataFim(@PathVariable Long id, @RequestBody LocalDateTime data) {
         negotiationService.atualizarPropriedadeDataFim(id, data);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -117,7 +117,7 @@ class NegotiationController {
     @PutMapping("/{id}/perda")
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
-    ResponseEntity<NegotiationEntity> atribuirMotivoPerda(@PathVariable Long id, @RequestBody ReasonForLossEntity morivoPerda) {
+    public ResponseEntity<NegotiationEntity> atribuirMotivoPerda(@PathVariable Long id, @RequestBody ReasonForLossEntity morivoPerda) {
         negotiationService.atribuirPropMP(id, morivoPerda);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

@@ -31,7 +31,7 @@ public class UserModelAssembler extends RepresentationModelAssemblerSupport<User
         userModel.add(linkTo(methodOn(UserController.class).getById(entity.getId())).withSelfRel().withType("GET"));
         userModel.add(linkTo(methodOn(UserController.class).searchWithFilter(null, Pageable.unpaged())).withRel(IanaLinkRelations.COLLECTION).withType("GET"));
         userModel.add(linkTo(methodOn(UserController.class).save(null, null)).withRel("save").withType("POST"));
-        userModel.add(linkTo(methodOn(UserController.class).updatePatch(null, entity.getId(), null)).withRel("updatePatch").withType("PATCH"));
+        userModel.add(linkTo(methodOn(UserController.class).patch(null, entity.getId(), null)).withRel("updatePatch").withType("PATCH"));
         userModel.add(linkTo(methodOn(UserController.class).delete(entity.getId())).withRel("delete").withType("DELETE"));
         return userModel;
     }

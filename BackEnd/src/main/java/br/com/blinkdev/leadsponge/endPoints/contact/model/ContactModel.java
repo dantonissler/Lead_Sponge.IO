@@ -1,9 +1,9 @@
 package br.com.blinkdev.leadsponge.endPoints.contact.model;
 
-import br.com.blinkdev.leadsponge.endPoints.address.model.AddressModel;
+import br.com.blinkdev.leadsponge.resources.address.model.AddressModel;
 import br.com.blinkdev.leadsponge.endPoints.customer.entity.CustomerEntity;
-import br.com.blinkdev.leadsponge.endPoints.email.model.EmailModel;
-import br.com.blinkdev.leadsponge.endPoints.phone.model.PhoneModel;
+import br.com.blinkdev.leadsponge.resources.email.model.EmailModel;
+import br.com.blinkdev.leadsponge.resources.phone.model.PhoneModel;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import org.springframework.hateoas.RepresentationModel;

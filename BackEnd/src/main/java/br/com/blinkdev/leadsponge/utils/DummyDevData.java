@@ -131,35 +131,35 @@ class DummyDevData {
     @Bean
     CommandLineRunner initTableSegmento(SegmentService segmentoService) {
         return args -> {
-            segmentoService.salvar(new SegmentEntity("Advocacia"));
-            segmentoService.salvar(new SegmentEntity("Agropecuária"));
-            segmentoService.salvar(new SegmentEntity("Arquitetura"));
-            segmentoService.salvar(new SegmentEntity("Bancos"));
-            segmentoService.salvar(new SegmentEntity("Blogs e Sites Pessoais"));
-            segmentoService.salvar(new SegmentEntity("Clinicas / Saúde"));
-            segmentoService.salvar(new SegmentEntity("Concessionárias de Veículos"));
-            segmentoService.salvar(new SegmentEntity("Contabilidade"));
-            segmentoService.salvar(new SegmentEntity("Demolição e terraplanagem"));
-            segmentoService.salvar(new SegmentEntity("Distribuidoras / Atacadistas"));
-            segmentoService.salvar(new SegmentEntity("Engenharia"));
-            segmentoService.salvar(new SegmentEntity("Esoterismo"));
-            segmentoService.salvar(new SegmentEntity("Eventos e Entretenimento"));
-            segmentoService.salvar(new SegmentEntity("Fotografia"));
-            segmentoService.salvar(new SegmentEntity("Gráfica"));
-            segmentoService.salvar(new SegmentEntity("Indústria"));
-            segmentoService.salvar(new SegmentEntity("Instituições Religiosas"));
-            segmentoService.salvar(new SegmentEntity("Músicos e Bandas"));
-            segmentoService.salvar(new SegmentEntity("Pessoa física"));
-            segmentoService.salvar(new SegmentEntity("Pet Shop"));
-            segmentoService.salvar(new SegmentEntity("Poder público"));
-            segmentoService.salvar(new SegmentEntity("Publicidade"));
-            segmentoService.salvar(new SegmentEntity("Serviços"));
-            segmentoService.salvar(new SegmentEntity("Shoppings e Feiras Comerciais"));
-            segmentoService.salvar(new SegmentEntity("Sindicato Patronal"));
-            segmentoService.salvar(new SegmentEntity("Tecnologia"));
-            segmentoService.salvar(new SegmentEntity("Telefonia"));
-            segmentoService.salvar(new SegmentEntity("Terceiro Setor"));
-            segmentoService.salvar(new SegmentEntity("Turismo"));
+            segmentoService.save(new SegmentEntity("Advocacia"));
+            segmentoService.save(new SegmentEntity("Agropecuária"));
+            segmentoService.save(new SegmentEntity("Arquitetura"));
+            segmentoService.save(new SegmentEntity("Bancos"));
+            segmentoService.save(new SegmentEntity("Blogs e Sites Pessoais"));
+            segmentoService.save(new SegmentEntity("Clinicas / Saúde"));
+            segmentoService.save(new SegmentEntity("Concessionárias de Veículos"));
+            segmentoService.save(new SegmentEntity("Contabilidade"));
+            segmentoService.save(new SegmentEntity("Demolição e terraplanagem"));
+            segmentoService.save(new SegmentEntity("Distribuidoras / Atacadistas"));
+            segmentoService.save(new SegmentEntity("Engenharia"));
+            segmentoService.save(new SegmentEntity("Esoterismo"));
+            segmentoService.save(new SegmentEntity("Eventos e Entretenimento"));
+            segmentoService.save(new SegmentEntity("Fotografia"));
+            segmentoService.save(new SegmentEntity("Gráfica"));
+            segmentoService.save(new SegmentEntity("Indústria"));
+            segmentoService.save(new SegmentEntity("Instituições Religiosas"));
+            segmentoService.save(new SegmentEntity("Músicos e Bandas"));
+            segmentoService.save(new SegmentEntity("Pessoa física"));
+            segmentoService.save(new SegmentEntity("Pet Shop"));
+            segmentoService.save(new SegmentEntity("Poder público"));
+            segmentoService.save(new SegmentEntity("Publicidade"));
+            segmentoService.save(new SegmentEntity("Serviços"));
+            segmentoService.save(new SegmentEntity("Shoppings e Feiras Comerciais"));
+            segmentoService.save(new SegmentEntity("Sindicato Patronal"));
+            segmentoService.save(new SegmentEntity("Tecnologia"));
+            segmentoService.save(new SegmentEntity("Telefonia"));
+            segmentoService.save(new SegmentEntity("Terceiro Setor"));
+            segmentoService.save(new SegmentEntity("Turismo"));
         };
     }
 }

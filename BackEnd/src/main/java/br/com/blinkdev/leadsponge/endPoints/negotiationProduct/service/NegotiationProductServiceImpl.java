@@ -1,7 +1,6 @@
 package br.com.blinkdev.leadsponge.endPoints.negotiationProduct.service;
 
 import br.com.blinkdev.leadsponge.endPoints.Product.repository.ProductRepository;
-import br.com.blinkdev.leadsponge.endPoints.customer.entity.CustomerEntity;
 import br.com.blinkdev.leadsponge.endPoints.negotiation.repository.NegotiationRepository;
 import br.com.blinkdev.leadsponge.endPoints.negotiation.service.NegotiationService;
 import br.com.blinkdev.leadsponge.endPoints.negotiationProduct.entity.NegotiationProductEntity;
@@ -12,9 +11,7 @@ import br.com.blinkdev.leadsponge.endPoints.negotiationProduct.modelAssembler.Ne
 import br.com.blinkdev.leadsponge.endPoints.negotiationProduct.repository.NegotiationProductRepository;
 import br.com.blinkdev.leadsponge.errorValidate.ErroMessage;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedModel;
@@ -49,21 +46,21 @@ public class NegotiationProductServiceImpl extends ErroMessage implements Negoti
 
     @Override
     public NegotiationProductModel getById(Long id) {
-        log.info("NegotiationProductServiceImpl - getById");
-        return repository.findById(id).map(negotiationProductModelAssembler::toModel).orElseThrow(() -> notFouldId(id, "a negociação do produto"));
+        log.info("NegotiationProductService - getById");
+        return repository.findById(id).map(negotiationProductModelAssembler::toModel).orElseThrow(() -> notFouldId(id, "[negotiation product]"));
     }
 
     @Override
     public PagedModel<NegotiationProductModel> searchWithFilters(NegotiationProductFilter negociacaoProdutoFilter, Pageable pageable) {
-        log.info("NegotiationProductServiceImpl - searchWithFilters");
+        log.info("NegotiationProductService - searchWithFilters");
         return assembler.toModel(repository.filtrar(negociacaoProdutoFilter, pageable), negotiationProductModelAssembler);
     }
 
     @Override
     public NegotiationProductModel save(NegotiationProductEntity nProduto) {
-        log.info("NegotiationProductServiceImpl - save");
-        produtoR.findById(nProduto.getProduto().getId()).orElseThrow(() -> notFouldId(nProduto.getProduto().getId(), "o produto"));
-        negociacaoR.findById(nProduto.getNegociacao().getId()).orElseThrow(() -> notFouldId(nProduto.getNegociacao().getId(), "a negociação do produto"));
+        log.info("NegotiationProductService - save");
+        produtoR.findById(nProduto.getProduto().getId()).orElseThrow(() -> notFouldId(nProduto.getProduto().getId(), "product"));
+        negociacaoR.findById(nProduto.getNegociacao().getId()).orElseThrow(() -> notFouldId(nProduto.getNegociacao().getId(), "[negotiation product]"));
         valorTotal(nProduto);
         negotiationService.calculo(nProduto.getNegociacao().getId());
         return negotiationProductModelAssembler.toModel(repository.save(nProduto));
@@ -71,8 +68,8 @@ public class NegotiationProductServiceImpl extends ErroMessage implements Negoti
 
     @Override
     public NegotiationProductModel patch(Long id, Map<Object, Object> fields) {
-        log.info("NegotiationProductServiceImpl - patch");
-        NegotiationProductEntity negotiationProductEntity = repository.findById(id).orElseThrow(() -> notFouldId(id, "a negociação do produto"));
+        log.info("NegotiationProductService - patch");
+        NegotiationProductEntity negotiationProductEntity = repository.findById(id).orElseThrow(() -> notFouldId(id, "[negotiation product]"));
         fields.forEach((key, value) -> {
             Field field = ReflectionUtils.findField(NegotiationProductEntity.class, (String) key);
             assert field != null;
@@ -84,8 +81,8 @@ public class NegotiationProductServiceImpl extends ErroMessage implements Negoti
 
     @Override
     public NegotiationProductModel delete(Long id) {
-        log.info("NegotiationProductServiceImpl - delete");
-        NegotiationProductEntity negotiationProductEntity = repository.findById(id).orElseThrow(() -> notFouldId(id, "a negociação do produto"));
+        log.info("NegotiationProductService - delete");
+        NegotiationProductEntity negotiationProductEntity = repository.findById(id).orElseThrow(() -> notFouldId(id, "[negotiation product]"));
         repository.deleteById(id);
         return negotiationProductModelAssembler.toModel(negotiationProductEntity);
     }

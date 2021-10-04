@@ -2,23 +2,25 @@ package br.com.blinkdev.leadsponge.endPoints.reasonForLoss.controller;
 
 import br.com.blinkdev.leadsponge.endPoints.reasonForLoss.entity.ReasonForLossEntity;
 import br.com.blinkdev.leadsponge.endPoints.reasonForLoss.filter.ReasonForLossFilter;
+import br.com.blinkdev.leadsponge.endPoints.reasonForLoss.model.ReasonForLossModel;
 import br.com.blinkdev.leadsponge.endPoints.reasonForLoss.service.ReasonForLossService;
 import br.com.blinkdev.leadsponge.event.ResourcesCreatedEvent;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.MediaTypes;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.Map;
 
 @RestController
 @AllArgsConstructor
@@ -32,38 +34,47 @@ class ReasonForLossController {
     @Autowired
     private final ApplicationEventPublisher publisher;
 
-    @GetMapping(value = {""})
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasAuthority('PESQUISAR_CAMPANHA') and #oauth2.hasScope('read')")
-    Page<ReasonForLossEntity> list(ReasonForLossFilter motivoPerdaFilter, Pageable pageable) {
-        return reasonForLossService.filtrar(motivoPerdaFilter, pageable);
-    }
-
-    @PostMapping(value = {""})
-    @PreAuthorize("hasAuthority('CADASTRAR_CAMPANHA') and #oauth2.hasScope('write')")
-    ResponseEntity<ReasonForLossEntity> cadastrar(@Valid @RequestBody ReasonForLossEntity motivoPerda, HttpServletResponse response) {
-        ReasonForLossEntity criarMotivoPerda = reasonForLossService.salvar(motivoPerda);
-        publisher.publishEvent(new ResourcesCreatedEvent(this, response, criarMotivoPerda.getId()));
-        return ResponseEntity.status(HttpStatus.CREATED).body(criarMotivoPerda);
-    }
-
-    @PutMapping(value = {"/{id}"})
-    @PreAuthorize("hasAuthority('CADASTRAR_CAMPANHA') and #oauth2.hasScope('write')")
-    ResponseEntity<ReasonForLossEntity> atualizar(@Valid @RequestBody ReasonForLossEntity motivoPerda, @PathVariable Long id, HttpServletResponse response) {
-        ReasonForLossEntity novoMotivoPerda = reasonForLossService.atualizar(id, motivoPerda);
-        publisher.publishEvent(new ResourcesCreatedEvent(this, response, novoMotivoPerda.getId()));
-        return ResponseEntity.status(HttpStatus.CREATED).body(novoMotivoPerda);
-    }
-
-    @DeleteMapping(value = {"/{id}"})
-    @PreAuthorize("hasAuthority('REMOVER_CAMPANHA') and #oauth2.hasScope('write')")
-    ResponseEntity<ReasonForLossEntity> deletar(@PathVariable Long id) {
-        return ResponseEntity.ok(reasonForLossService.deletar(id));
-    }
-
     @GetMapping(value = {"/{id}"})
+    @ApiOperation(value = "Get reason for the loss by ID.")
     @PreAuthorize("hasAuthority('PESQUISAR_CAMPANHA') and #oauth2.hasScope('read')")
-    ResponseEntity<ReasonForLossEntity> detalhar(@Valid @PathVariable("id") Long id) {
-        return ResponseEntity.ok(reasonForLossService.detalhar(id));
+    public ReasonForLossModel getById(@PathVariable("id") Long id) {
+        return reasonForLossService.getById(id);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping
+    @ApiOperation(value = "Search reason for the losses with a filters.")
+    @PreAuthorize("hasAuthority('PESQUISAR_CAMPANHA') and #oauth2.hasScope('read')")
+    public PagedModel<ReasonForLossModel> searchWithFilters(ReasonForLossFilter motivoPerdaFilter, Pageable pageable) {
+        return reasonForLossService.searchWithFilters(motivoPerdaFilter, pageable);
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping
+    @ApiOperation(value = "Save reason for the losses.")
+    @PreAuthorize("hasAuthority('CADASTRAR_CAMPANHA') and #oauth2.hasScope('write')")
+    public ReasonForLossModel save(@Valid @RequestBody ReasonForLossEntity motivoPerda, HttpServletResponse response) {
+        ReasonForLossModel reasonForLossModel = reasonForLossService.save(motivoPerda);
+        publisher.publishEvent(new ResourcesCreatedEvent(this, response, reasonForLossModel.getId()));
+        return reasonForLossModel;
+    }
+
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @PutMapping(value = {"/{id}"})
+    @ApiOperation(value = "Patch reason for the losses.")
+    @PreAuthorize("hasAuthority('CADASTRAR_CAMPANHA') and #oauth2.hasScope('write')")
+    public ReasonForLossModel patch(@RequestBody Map<Object, Object> fields, @PathVariable Long id, HttpServletResponse response) {
+        ReasonForLossModel reasonForLossModel = reasonForLossService.patch(id, fields);
+        publisher.publishEvent(new ResourcesCreatedEvent(this, response, reasonForLossModel.getId()));
+        return reasonForLossModel;
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping(value = {"/{id}"})
+    @ApiOperation(value = "Delete reason for the losses.")
+    @PreAuthorize("hasAuthority('REMOVER_CAMPANHA') and #oauth2.hasScope('write')")
+    public ReasonForLossModel delete(@PathVariable Long id) {
+        return reasonForLossService.delete(id);
     }
 }

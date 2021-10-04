@@ -2,7 +2,7 @@ package br.com.blinkdev.leadsponge.endPoints.negotiation.model;
 
 import br.com.blinkdev.leadsponge.endPoints.campaign.model.CampaignModel;
 import br.com.blinkdev.leadsponge.endPoints.customer.entity.CustomerEntity;
-import br.com.blinkdev.leadsponge.endPoints.historyNegotiationStyle.entity.HistoryNegotiationStyle;
+import br.com.blinkdev.leadsponge.relationship.historyNegotiationStyle.entity.HistoryNegotiationStyle;
 import br.com.blinkdev.leadsponge.endPoints.negotiation.enumeration.StatusNegotiation;
 import br.com.blinkdev.leadsponge.endPoints.negotiationProduct.model.NegotiationProductModel;
 import br.com.blinkdev.leadsponge.endPoints.negotiationSource.model.NegotiationSourceModel;

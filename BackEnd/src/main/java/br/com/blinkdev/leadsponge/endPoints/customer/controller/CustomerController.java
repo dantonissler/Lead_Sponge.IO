@@ -38,7 +38,7 @@ class CustomerController {
     @GetMapping(value = {"/{id}"})
     @ApiOperation(value = "Get custumer by ID.")
     @PreAuthorize("hasAuthority('PESQUISAR_Customer') and #oauth2.hasScope('read')")
-    CustomerModel getById(@PathVariable("id") Long id) {
+    public CustomerModel getById(@PathVariable("id") Long id) {
         return customerService.getById(id);
     }
 
@@ -46,7 +46,7 @@ class CustomerController {
     @GetMapping
     @ApiOperation(value = "Search custumers with a filters.")
     @PreAuthorize("hasAuthority('PESQUISAR_CONTATO') and #oauth2.hasScope('read')")
-    PagedModel<CustomerModel> searchWithFilters(CustomerFilter customerFilter, Pageable pageable) {
+    public PagedModel<CustomerModel> searchWithFilters(CustomerFilter customerFilter, Pageable pageable) {
         return customerService.searchWithFilters(customerFilter, pageable);
     }
 
@@ -54,7 +54,7 @@ class CustomerController {
     @PostMapping
     @ApiOperation(value = "Save custumer.")
     @PreAuthorize("hasAuthority('CADASTRAR_Customer') and #oauth2.hasScope('write')")
-    CustomerModel save(@Valid @RequestBody CustomerEntity customer, HttpServletResponse response) {
+    public CustomerModel save(@Valid @RequestBody CustomerEntity customer, HttpServletResponse response) {
         CustomerModel customerModel = customerService.save(customer);
         publisher.publishEvent(new ResourcesCreatedEvent(this, response, customerModel.getId()));
         return customerModel;
@@ -64,7 +64,7 @@ class CustomerController {
     @PatchMapping(value = {"/{id}"})
     @ApiOperation(value = "Patch custumer.")
     @PreAuthorize("hasAuthority('CADASTRAR_Customer') and #oauth2.hasScope('write')")
-    CustomerModel patch(@RequestBody Map<Object, Object> fields, @PathVariable Long id, HttpServletResponse response) {
+    public CustomerModel patch(@RequestBody Map<Object, Object> fields, @PathVariable Long id, HttpServletResponse response) {
         CustomerModel customerModel = customerService.patch(id, fields);
         publisher.publishEvent(new ResourcesCreatedEvent(this, response, customerModel.getId()));
         return customerModel;
@@ -74,9 +74,7 @@ class CustomerController {
     @DeleteMapping(value = {"/{id}"})
     @ApiOperation(value = "Delete custumer.")
     @PreAuthorize("hasAuthority('REMOVER_Customer') and #oauth2.hasScope('write')")
-    CustomerModel delete(@PathVariable Long id) {
+    public CustomerModel delete(@PathVariable Long id) {
         return customerService.delete(id);
     }
-
-
 }

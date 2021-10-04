@@ -1,7 +1,7 @@
 package br.com.blinkdev.leadsponge.endPoints.reasonForLoss.modelAssembler;
 
-import br.com.blinkdev.leadsponge.endPoints.contact.entity.ContactEntity;
-import br.com.blinkdev.leadsponge.endPoints.contact.model.ContactModel;
+import br.com.blinkdev.leadsponge.endPoints.reasonForLoss.entity.ReasonForLossEntity;
+import br.com.blinkdev.leadsponge.endPoints.reasonForLoss.model.ReasonForLossModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
@@ -9,30 +9,30 @@ import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSuppor
 import org.springframework.stereotype.Component;
 
 @Component
-public class ReasonForLossModelAssembler extends RepresentationModelAssemblerSupport<ContactEntity, ContactModel> {
+public class ReasonForLossModelAssembler extends RepresentationModelAssemblerSupport<ReasonForLossEntity, ReasonForLossModel> {
     @Autowired
     private ModelMapper modelMapper;
 
     public ReasonForLossModelAssembler() {
-        super(ContactEntity.class, ContactModel.class);
+        super(ReasonForLossEntity.class, ReasonForLossModel.class);
     }
 
     @Override
-    public ContactModel toModel(ContactEntity entity) {
-        ContactModel campanhaModel = modelMapper.map(entity, ContactModel.class);
+    public ReasonForLossModel toModel(ReasonForLossEntity entity) {
+        ReasonForLossModel reasonForLossModel = modelMapper.map(entity, ReasonForLossModel.class);
 //        campanhaModel.add(linkTo(methodOn(CampaignController.class).getById(entity.getId())).withSelfRel().withType("GET"));
 //        campanhaModel.add(linkTo(methodOn(CampaignController.class).searchWithFilters(null, Pageable.unpaged())).withRel(IanaLinkRelations.COLLECTION).withType("GET"));
 //        campanhaModel.add(linkTo(methodOn(CampaignController.class).save(null, null)).withRel("save").withType("POST"));
 //        campanhaModel.add(linkTo(methodOn(CampaignController.class).patch(null, entity.getId(), null)).withRel("updatePatch").withType("PATCH"));
 //        campanhaModel.add(linkTo(methodOn(CampaignController.class).delete(entity.getId())).withRel("delete").withType("DELETE"));
-        return campanhaModel;
+        return reasonForLossModel;
     }
 
     @Override
-    public CollectionModel<ContactModel> toCollectionModel(Iterable<? extends ContactEntity> entities) {
-        CollectionModel<ContactModel> campanhaModels = super.toCollectionModel(entities);
+    public CollectionModel<ReasonForLossModel> toCollectionModel(Iterable<? extends ReasonForLossEntity> entities) {
+        CollectionModel<ReasonForLossModel> reasonForLossModels = super.toCollectionModel(entities);
 //        campanhaModels.add(linkTo(methodOn(CampaignController.class).searchWithFilters(null, Pageable.unpaged())).withRel(IanaLinkRelations.COLLECTION).withType("GET"));
 //        campanhaModels.add(linkTo(methodOn(RootEntryPointController.class).root()).withRel("entry_Point").withType("GET"));
-        return campanhaModels;
+        return reasonForLossModels;
     }
 }
