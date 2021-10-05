@@ -1,7 +1,7 @@
-package br.com.blinkdev.leadsponge.endPoints.negotiationProduct.modelAssembler;
+package br.com.blinkdev.leadsponge.relationship.tradeProducts.modelAssembler;
 
-import br.com.blinkdev.leadsponge.endPoints.negotiationProduct.entity.NegotiationProductEntity;
-import br.com.blinkdev.leadsponge.endPoints.negotiationProduct.model.NegotiationProductModel;
+import br.com.blinkdev.leadsponge.relationship.tradeProducts.entity.TradeProductsEntity;
+import br.com.blinkdev.leadsponge.relationship.tradeProducts.model.TradeProductsModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
@@ -9,17 +9,17 @@ import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSuppor
 import org.springframework.stereotype.Component;
 
 @Component
-public class NegotiationProductModelAssembler extends RepresentationModelAssemblerSupport<NegotiationProductEntity, NegotiationProductModel> {
+public class TradeProductsModelAssembler extends RepresentationModelAssemblerSupport<TradeProductsEntity, TradeProductsModel> {
     @Autowired
     private ModelMapper modelMapper;
 
-    public NegotiationProductModelAssembler() {
-        super(NegotiationProductEntity.class, NegotiationProductModel.class);
+    public TradeProductsModelAssembler() {
+        super(TradeProductsEntity.class, TradeProductsModel.class);
     }
 
     @Override
-    public NegotiationProductModel toModel(NegotiationProductEntity entity) {
-        NegotiationProductModel negotiationProductModel = modelMapper.map(entity, NegotiationProductModel.class);
+    public TradeProductsModel toModel(TradeProductsEntity entity) {
+        TradeProductsModel negotiationProductModel = modelMapper.map(entity, TradeProductsModel.class);
 //        campanhaModel.add(linkTo(methodOn(CampaignController.class).getById(entity.getId())).withSelfRel().withType("GET"));
 //        campanhaModel.add(linkTo(methodOn(CampaignController.class).searchWithFilters(null, Pageable.unpaged())).withRel(IanaLinkRelations.COLLECTION).withType("GET"));
 //        campanhaModel.add(linkTo(methodOn(CampaignController.class).save(null, null)).withRel("save").withType("POST"));
@@ -29,8 +29,8 @@ public class NegotiationProductModelAssembler extends RepresentationModelAssembl
     }
 
     @Override
-    public CollectionModel<NegotiationProductModel> toCollectionModel(Iterable<? extends NegotiationProductEntity> entities) {
-        CollectionModel<NegotiationProductModel> negotiationProductModels = super.toCollectionModel(entities);
+    public CollectionModel<TradeProductsModel> toCollectionModel(Iterable<? extends TradeProductsEntity> entities) {
+        CollectionModel<TradeProductsModel> negotiationProductModels = super.toCollectionModel(entities);
 //        campanhaModels.add(linkTo(methodOn(CampaignController.class).searchWithFilters(null, Pageable.unpaged())).withRel(IanaLinkRelations.COLLECTION).withType("GET"));
 //        campanhaModels.add(linkTo(methodOn(RootEntryPointController.class).root()).withRel("entry_Point").withType("GET"));
         return negotiationProductModels;

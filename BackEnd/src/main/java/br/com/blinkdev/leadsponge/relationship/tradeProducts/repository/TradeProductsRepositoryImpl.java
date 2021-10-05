@@ -1,8 +1,8 @@
-package br.com.blinkdev.leadsponge.endPoints.negotiationProduct.repository;
+package br.com.blinkdev.leadsponge.relationship.tradeProducts.repository;
 
-import br.com.blinkdev.leadsponge.endPoints.negotiationProduct.entity.NegotiationProductEntity;
-import br.com.blinkdev.leadsponge.endPoints.negotiationProduct.entity.NegotiationProductEntity_;
-import br.com.blinkdev.leadsponge.endPoints.negotiationProduct.filter.NegotiationProductFilter;
+import br.com.blinkdev.leadsponge.relationship.tradeProducts.entity.TradeProductsEntity;
+import br.com.blinkdev.leadsponge.relationship.tradeProducts.entity.TradeProductsEntity_;
+import br.com.blinkdev.leadsponge.relationship.tradeProducts.filter.TradeProductsFilter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -17,33 +17,33 @@ import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NegotiationProductRepositoryImpl implements NegotiationProductRepositoryQuery {
+public class TradeProductsRepositoryImpl implements TradeProductsRepositoryQuery {
 
     @PersistenceContext
     private EntityManager manager;
 
     @Override
-    public Page<NegotiationProductEntity> filtrar(NegotiationProductFilter negociacaoFilter, Pageable pageable) {
+    public Page<TradeProductsEntity> filtrar(TradeProductsFilter negociacaoFilter, Pageable pageable) {
         CriteriaBuilder builder = manager.getCriteriaBuilder();
-        CriteriaQuery<NegotiationProductEntity> criteria = builder.createQuery(NegotiationProductEntity.class);
-        Root<NegotiationProductEntity> root = criteria.from(NegotiationProductEntity.class);
+        CriteriaQuery<TradeProductsEntity> criteria = builder.createQuery(TradeProductsEntity.class);
+        Root<TradeProductsEntity> root = criteria.from(TradeProductsEntity.class);
         Predicate[] predicates = criarRestricoes(negociacaoFilter, builder, root);
         criteria.where(predicates);
-        TypedQuery<NegotiationProductEntity> query = manager.createQuery(criteria);
+        TypedQuery<TradeProductsEntity> query = manager.createQuery(criteria);
         adicionarRestricoesDePaginacao(query, pageable);
         return new PageImpl<>(query.getResultList(), pageable, total(negociacaoFilter));
     }
 
-    private Predicate[] criarRestricoes(NegotiationProductFilter negociacaoProdutoFilter, CriteriaBuilder builder, Root<NegotiationProductEntity> root) {
+    private Predicate[] criarRestricoes(TradeProductsFilter negociacaoProdutoFilter, CriteriaBuilder builder, Root<TradeProductsEntity> root) {
         List<Predicate> predicates = new ArrayList<>();
         if (negociacaoProdutoFilter.getQuantidade() != null) {
-            predicates.add(builder.equal(root.get(NegotiationProductEntity_.quantidade), negociacaoProdutoFilter.getQuantidade()));
+            predicates.add(builder.equal(root.get(TradeProductsEntity_.quantidade), negociacaoProdutoFilter.getQuantidade()));
         }
         if (negociacaoProdutoFilter.getValor() != null) {
-            predicates.add(builder.equal(root.get(NegotiationProductEntity_.valor), negociacaoProdutoFilter.getValor()));
+            predicates.add(builder.equal(root.get(TradeProductsEntity_.valor), negociacaoProdutoFilter.getValor()));
         }
         if (negociacaoProdutoFilter.getTotal() != null) {
-            predicates.add(builder.equal(root.get(NegotiationProductEntity_.total), negociacaoProdutoFilter.getTotal()));
+            predicates.add(builder.equal(root.get(TradeProductsEntity_.total), negociacaoProdutoFilter.getTotal()));
         }
         return predicates.toArray(new Predicate[predicates.size()]);
     }
@@ -56,10 +56,10 @@ public class NegotiationProductRepositoryImpl implements NegotiationProductRepos
         query.setMaxResults(totalRegistrosPorPagina);
     }
 
-    private Long total(NegotiationProductFilter negociacaoProdutoFilter) {
+    private Long total(TradeProductsFilter negociacaoProdutoFilter) {
         CriteriaBuilder builder = manager.getCriteriaBuilder();
         CriteriaQuery<Long> criteria = builder.createQuery(Long.class);
-        Root<NegotiationProductEntity> root = criteria.from(NegotiationProductEntity.class);
+        Root<TradeProductsEntity> root = criteria.from(TradeProductsEntity.class);
         Predicate[] predicates = criarRestricoes(negociacaoProdutoFilter, builder, root);
         criteria.where(predicates);
         criteria.select(builder.count(root));

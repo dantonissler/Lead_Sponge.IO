@@ -1,15 +1,15 @@
-package br.com.blinkdev.leadsponge.endPoints.negotiationProduct.service;
+package br.com.blinkdev.leadsponge.relationship.tradeProducts.service;
 
 import br.com.blinkdev.leadsponge.endPoints.Product.repository.ProductRepository;
 import br.com.blinkdev.leadsponge.endPoints.negotiation.repository.NegotiationRepository;
 import br.com.blinkdev.leadsponge.endPoints.negotiation.service.NegotiationService;
-import br.com.blinkdev.leadsponge.endPoints.negotiationProduct.entity.NegotiationProductEntity;
-import br.com.blinkdev.leadsponge.endPoints.negotiationProduct.enumeration.DiscountType;
-import br.com.blinkdev.leadsponge.endPoints.negotiationProduct.filter.NegotiationProductFilter;
-import br.com.blinkdev.leadsponge.endPoints.negotiationProduct.model.NegotiationProductModel;
-import br.com.blinkdev.leadsponge.endPoints.negotiationProduct.modelAssembler.NegotiationProductModelAssembler;
-import br.com.blinkdev.leadsponge.endPoints.negotiationProduct.repository.NegotiationProductRepository;
 import br.com.blinkdev.leadsponge.errorValidate.ErroMessage;
+import br.com.blinkdev.leadsponge.relationship.tradeProducts.entity.TradeProductsEntity;
+import br.com.blinkdev.leadsponge.relationship.tradeProducts.enumeration.KindDiscount;
+import br.com.blinkdev.leadsponge.relationship.tradeProducts.filter.TradeProductsFilter;
+import br.com.blinkdev.leadsponge.relationship.tradeProducts.model.TradeProductsModel;
+import br.com.blinkdev.leadsponge.relationship.tradeProducts.modelAssembler.TradeProductsModelAssembler;
+import br.com.blinkdev.leadsponge.relationship.tradeProducts.repository.TradeProductsRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -24,10 +24,10 @@ import java.util.Map;
 
 @Slf4j
 @Service
-public class NegotiationProductServiceImpl extends ErroMessage implements NegotiationProductService {
+public class TradeProductsServiceImpl extends ErroMessage implements TradeProductsService {
 
     @Autowired
-    private NegotiationProductRepository repository;
+    private TradeProductsRepository repository;
 
     @Autowired
     private ProductRepository produtoR;
@@ -39,39 +39,39 @@ public class NegotiationProductServiceImpl extends ErroMessage implements Negoti
     private NegotiationService negotiationService;
 
     @Autowired
-    private NegotiationProductModelAssembler negotiationProductModelAssembler;
+    private TradeProductsModelAssembler negotiationProductModelAssembler;
 
     @Autowired
-    private PagedResourcesAssembler<NegotiationProductEntity> assembler;
+    private PagedResourcesAssembler<TradeProductsEntity> assembler;
 
     @Override
-    public NegotiationProductModel getById(Long id) {
+    public TradeProductsModel getById(Long id) {
         log.info("NegotiationProductService - getById");
         return repository.findById(id).map(negotiationProductModelAssembler::toModel).orElseThrow(() -> notFouldId(id, "[negotiation product]"));
     }
 
     @Override
-    public PagedModel<NegotiationProductModel> searchWithFilters(NegotiationProductFilter negociacaoProdutoFilter, Pageable pageable) {
+    public PagedModel<TradeProductsModel> searchWithFilters(TradeProductsFilter negociacaoProdutoFilter, Pageable pageable) {
         log.info("NegotiationProductService - searchWithFilters");
         return assembler.toModel(repository.filtrar(negociacaoProdutoFilter, pageable), negotiationProductModelAssembler);
     }
 
     @Override
-    public NegotiationProductModel save(NegotiationProductEntity nProduto) {
+    public TradeProductsModel save(TradeProductsEntity nProduto) {
         log.info("NegotiationProductService - save");
-        produtoR.findById(nProduto.getProduto().getId()).orElseThrow(() -> notFouldId(nProduto.getProduto().getId(), "product"));
-        negociacaoR.findById(nProduto.getNegociacao().getId()).orElseThrow(() -> notFouldId(nProduto.getNegociacao().getId(), "[negotiation product]"));
+        produtoR.findById(nProduto.getProduct().getId()).orElseThrow(() -> notFouldId(nProduto.getProduct().getId(), "product"));
+        negociacaoR.findById(nProduto.getNegotiation().getId()).orElseThrow(() -> notFouldId(nProduto.getNegotiation().getId(), "[negotiation product]"));
         valorTotal(nProduto);
-        negotiationService.calculo(nProduto.getNegociacao().getId());
+        negotiationService.calculateValues(nProduto.getNegotiation().getId());
         return negotiationProductModelAssembler.toModel(repository.save(nProduto));
     }
 
     @Override
-    public NegotiationProductModel patch(Long id, Map<Object, Object> fields) {
+    public TradeProductsModel patch(Long id, Map<Object, Object> fields) {
         log.info("NegotiationProductService - patch");
-        NegotiationProductEntity negotiationProductEntity = repository.findById(id).orElseThrow(() -> notFouldId(id, "[negotiation product]"));
+        TradeProductsEntity negotiationProductEntity = repository.findById(id).orElseThrow(() -> notFouldId(id, "[negotiation product]"));
         fields.forEach((key, value) -> {
-            Field field = ReflectionUtils.findField(NegotiationProductEntity.class, (String) key);
+            Field field = ReflectionUtils.findField(TradeProductsEntity.class, (String) key);
             assert field != null;
             field.setAccessible(true);
             ReflectionUtils.setField(field, negotiationProductEntity, value);
@@ -80,22 +80,22 @@ public class NegotiationProductServiceImpl extends ErroMessage implements Negoti
     }
 
     @Override
-    public NegotiationProductModel delete(Long id) {
+    public TradeProductsModel delete(Long id) {
         log.info("NegotiationProductService - delete");
-        NegotiationProductEntity negotiationProductEntity = repository.findById(id).orElseThrow(() -> notFouldId(id, "[negotiation product]"));
+        TradeProductsEntity negotiationProductEntity = repository.findById(id).orElseThrow(() -> notFouldId(id, "[negotiation product]"));
         repository.deleteById(id);
         return negotiationProductModelAssembler.toModel(negotiationProductEntity);
     }
 
-    private NegotiationProductEntity valorTotal(NegotiationProductEntity negociacaoProduto) {
+    private TradeProductsEntity valorTotal(TradeProductsEntity negociacaoProduto) {
         try {
             BigDecimal valor = negociacaoProduto.getValor();
             Integer qtd = negociacaoProduto.getQuantidade();
             BigDecimal total = valor.multiply(BigDecimal.valueOf(qtd.longValue()));
-            if (negociacaoProduto.getTipoDesconto() == DiscountType.PORCENTAGEM && negociacaoProduto.getTemDesconto()) {
+            if (negociacaoProduto.getTipoDesconto() == KindDiscount.PORCENTAGEM && negociacaoProduto.getTemDesconto()) {
                 BigDecimal desconto = BigDecimal.valueOf(1).subtract(negociacaoProduto.getDesconto().divide(BigDecimal.valueOf(100)));
                 negociacaoProduto.setTotal(total.multiply(desconto));
-            } else if (negociacaoProduto.getTipoDesconto() == DiscountType.VALOR && negociacaoProduto.getTemDesconto()) {
+            } else if (negociacaoProduto.getTipoDesconto() == KindDiscount.VALOR && negociacaoProduto.getTemDesconto()) {
                 negociacaoProduto.setTotal(total.subtract(negociacaoProduto.getDesconto()));
             } else if (!negociacaoProduto.getTemDesconto()) {
                 negociacaoProduto.setDesconto(null);

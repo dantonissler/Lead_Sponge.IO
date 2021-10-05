@@ -1,4 +1,4 @@
-package br.com.blinkdev.leadsponge.endPoints.negotiationProduct.filter;
+package br.com.blinkdev.leadsponge.relationship.tradeProducts.filter;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class NegotiationProductFilter {
+public class TradeProductsFilter {
     private Integer quantidade;
     private BigDecimal valor;
     private BigDecimal total;

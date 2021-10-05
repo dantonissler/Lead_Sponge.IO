@@ -52,6 +52,7 @@ public class DocumentationConfig {
         return result;
     }
 
+    // TODO: buscar como criar as  "Select a definition" temos somente a default
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)

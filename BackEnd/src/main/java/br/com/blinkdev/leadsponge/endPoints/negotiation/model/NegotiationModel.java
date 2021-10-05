@@ -2,13 +2,13 @@ package br.com.blinkdev.leadsponge.endPoints.negotiation.model;
 
 import br.com.blinkdev.leadsponge.endPoints.campaign.model.CampaignModel;
 import br.com.blinkdev.leadsponge.endPoints.customer.entity.CustomerEntity;
-import br.com.blinkdev.leadsponge.relationship.historyNegotiationStyle.entity.HistoryNegotiationStyle;
 import br.com.blinkdev.leadsponge.endPoints.negotiation.enumeration.StatusNegotiation;
-import br.com.blinkdev.leadsponge.endPoints.negotiationProduct.model.NegotiationProductModel;
 import br.com.blinkdev.leadsponge.endPoints.negotiationSource.model.NegotiationSourceModel;
 import br.com.blinkdev.leadsponge.endPoints.negotiationStyle.model.NegotiationStyleModel;
 import br.com.blinkdev.leadsponge.endPoints.reasonForLoss.model.ReasonForLossModel;
 import br.com.blinkdev.leadsponge.endPoints.task.model.TaskModel;
+import br.com.blinkdev.leadsponge.relationship.historyNegotiationStyle.entity.HistoryNegotiationStyleEntity;
+import br.com.blinkdev.leadsponge.relationship.tradeProducts.model.TradeProductsModel;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
@@ -46,9 +46,9 @@ public class NegotiationModel extends RepresentationModel<NegotiationModel> {
 
     private ReasonForLossModel motivoPerda;
 
-    private List<NegotiationProductModel> negociacaoProdutos;
+    private List<TradeProductsModel> negociacaoProdutos;
 
-    private List<HistoryNegotiationStyle> histEstagioNegociacoes;
+    private List<HistoryNegotiationStyleEntity> histEstagioNegociacoes;
 
     private List<TaskModel> tarefas;
 }

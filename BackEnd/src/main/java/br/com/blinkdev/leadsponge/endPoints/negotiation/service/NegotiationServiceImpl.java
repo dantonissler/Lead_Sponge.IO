@@ -1,7 +1,7 @@
 package br.com.blinkdev.leadsponge.endPoints.negotiation.service;
 
 import br.com.blinkdev.leadsponge.endPoints.negotiation.entity.NegotiationEntity;
-import br.com.blinkdev.leadsponge.endPoints.negotiation.enumeration.RecidivismType;
+import br.com.blinkdev.leadsponge.endPoints.negotiation.enumeration.KindRecidivism;
 import br.com.blinkdev.leadsponge.endPoints.negotiation.enumeration.StatusNegotiation;
 import br.com.blinkdev.leadsponge.endPoints.negotiation.filter.NegotiationFilter;
 import br.com.blinkdev.leadsponge.endPoints.negotiation.model.NegotiationModel;
@@ -10,6 +10,7 @@ import br.com.blinkdev.leadsponge.endPoints.negotiation.repository.NegotiationRe
 import br.com.blinkdev.leadsponge.endPoints.negotiationStyle.entity.NegotiationStyleEntity;
 import br.com.blinkdev.leadsponge.endPoints.reasonForLoss.entity.ReasonForLossEntity;
 import br.com.blinkdev.leadsponge.errorValidate.ErroMessage;
+import br.com.blinkdev.leadsponge.relationship.tradeProducts.entity.TradeProductsEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -76,23 +77,12 @@ public class NegotiationServiceImpl extends ErroMessage implements NegotiationSe
         return negotiationModelAssembler.toModel(negotiationEntity);
     }
 
-    /**
-     * TODO: Criar formula para calcular os valores da negociação.
-     */
-    @Override
-    public void calculo(Long id) {
-        NegotiationEntity negociacao = repository.findById(id).orElseThrow(() -> notFouldId(id, "[negotiation]"));
-        BigDecimal somaTotal = negociacao.getNegociacaoProdutos().stream().map(total -> total.getTotal()).reduce(BigDecimal.ZERO, BigDecimal::add);
-        BigDecimal somaMensal = negociacao.getNegociacaoProdutos().stream().filter(mensal -> mensal.getReincidencia().equals(RecidivismType.RECORRENTE)).map(total -> total.getTotal()).reduce(BigDecimal.ZERO, BigDecimal::add);
-        BigDecimal somaUnico = negociacao.getNegociacaoProdutos().stream().filter(mensal -> mensal.getReincidencia().equals(RecidivismType.UNICO)).map(unico -> unico.getTotal()).reduce(BigDecimal.ZERO, BigDecimal::add);
-        negociacao.setValorMensal(somaMensal);
-        negociacao.setValorUnico(somaUnico);
-        negociacao.setValorTotal(somaTotal);
-        repository.save(negociacao);
-    }
+    // TODO: criar uma negociação de produto utilizando o
+
+    // TODO:
 
     @Override
-    public void atribuirPropMP(Long id, ReasonForLossEntity motivoPerda) {
+    public void updateNegotiationRFLE(Long id, ReasonForLossEntity motivoPerda) {
         NegotiationEntity negociacaoSalva = repository.findById(id).orElseThrow(() -> notFouldId(id, "[negotiation]"));
         negociacaoSalva.setMotivoPerda(motivoPerda);
         negociacaoSalva.setEstatus(StatusNegotiation.PERDIDA);
@@ -100,11 +90,19 @@ public class NegotiationServiceImpl extends ErroMessage implements NegotiationSe
     }
 
     @Override
-    public void atualizarPropriedadeEstatus(Long id, StatusNegotiation estatus) {
+    public void updateNegotiationStatus(Long id, StatusNegotiation estatus) {
         NegotiationEntity negociacaoSalva = repository.findById(id).orElseThrow(() -> notFouldId(id, "[negotiation]"));
         if (negociacaoSalva.getEstatus() == StatusNegotiation.PERDIDA)
             negociacaoSalva.setMotivoPerda(null);
         negociacaoSalva.setEstatus(estatus);
+        repository.save(negociacaoSalva);
+    }
+
+    @Override
+    public void updateNegotiationStyle(Long id, NegotiationStyleEntity estagio) {
+        NegotiationEntity negociacaoSalva = repository.findById(id).orElseThrow(() -> notFouldId(id, "[negotiation]"));
+        // TODO: Criar o log utlizando o objeto HistoryNegotiationStyle
+        negociacaoSalva.setEstagio(estagio);
         repository.save(negociacaoSalva);
     }
 
@@ -116,16 +114,21 @@ public class NegotiationServiceImpl extends ErroMessage implements NegotiationSe
     }
 
     @Override
-    public void atualizarPropriedadeEstagio(Long id, NegotiationStyleEntity estagio) {
-        NegotiationEntity negociacaoSalva = repository.findById(id).orElseThrow(() -> notFouldId(id, "[negotiation]"));
-        negociacaoSalva.setEstagio(estagio);
-        repository.save(negociacaoSalva);
-    }
-
-    @Override
     public void atualizarPropriedadeAvaliacao(Long id, Integer avaliacao) {
         NegotiationEntity negociacaoSalva = repository.findById(id).orElseThrow(() -> notFouldId(id, "[negotiation]"));
         negociacaoSalva.setAvaliacao(avaliacao);
         repository.save(negociacaoSalva);
+    }
+
+    @Override
+    public void calculateValues(Long id) {
+        NegotiationEntity negociacao = repository.findById(id).orElseThrow(() -> notFouldId(id, "[negotiation]"));
+        BigDecimal somaTotal = negociacao.getTradeProducts().stream().map(TradeProductsEntity::getTotal).reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal somaMensal = negociacao.getTradeProducts().stream().filter(mensal -> mensal.getReincidencia().equals(KindRecidivism.RECORRENTE)).map(TradeProductsEntity::getTotal).reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal somaUnico = negociacao.getTradeProducts().stream().filter(mensal -> mensal.getReincidencia().equals(KindRecidivism.UNICO)).map(TradeProductsEntity::getTotal).reduce(BigDecimal.ZERO, BigDecimal::add);
+        negociacao.setValorMensal(somaMensal);
+        negociacao.setValorUnico(somaUnico);
+        negociacao.setValorTotal(somaTotal);
+        repository.save(negociacao);
     }
 }

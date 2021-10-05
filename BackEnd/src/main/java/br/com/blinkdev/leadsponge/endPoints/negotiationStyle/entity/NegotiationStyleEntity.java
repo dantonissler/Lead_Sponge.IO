@@ -1,24 +1,23 @@
 package br.com.blinkdev.leadsponge.endPoints.negotiationStyle.entity;
 
 import br.com.blinkdev.leadsponge.endPoints.View;
-import br.com.blinkdev.leadsponge.endPoints.negotiation.entity.NegotiationEntity;
 import br.com.blinkdev.leadsponge.utils.audit.UserDateAudit;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "negotiation_style")
@@ -32,10 +31,6 @@ public class NegotiationStyleEntity extends UserDateAudit implements Serializabl
     @JsonView(View.EstagioNegociacao.class)
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "negotiation_style_id")
     private Long id;
-    @JsonIgnoreProperties("estagio")
-    @OneToMany(mappedBy = "estagio", cascade = CascadeType.ALL, orphanRemoval = true)
-    @ToString.Exclude
-    private List<NegotiationEntity> negociacoes;
 
     @Column(name = "nome")
     @NotNull(message = "{nome.null}")

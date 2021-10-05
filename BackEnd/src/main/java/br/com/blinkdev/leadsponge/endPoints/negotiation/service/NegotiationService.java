@@ -26,15 +26,15 @@ public interface NegotiationService {
 
     NegotiationModel deletar(Long id);
 
-    void calculo(Long id);
+    void calculateValues(Long id);
 
-    void atribuirPropMP(Long id, ReasonForLossEntity motivoPerda);
+    void updateNegotiationRFLE(Long id, ReasonForLossEntity motivoPerda);
 
-    void atualizarPropriedadeEstatus(Long id, StatusNegotiation estatus);
+    void updateNegotiationStatus(Long id, StatusNegotiation estatus);
 
     void atualizarPropriedadeDataFim(Long id, LocalDateTime data);
 
-    void atualizarPropriedadeEstagio(Long id, NegotiationStyleEntity estagio);
+    void updateNegotiationStyle(Long id, NegotiationStyleEntity estagio);
 
     void atualizarPropriedadeAvaliacao(Long id, Integer avaliacao);
 }

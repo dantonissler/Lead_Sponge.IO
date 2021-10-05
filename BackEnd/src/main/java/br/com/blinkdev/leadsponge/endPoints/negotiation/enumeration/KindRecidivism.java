@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum RecidivismType {
+public enum KindRecidivism {
     UNICO("Único"), RECORRENTE("Recorrente");
 
     private final String tipo;

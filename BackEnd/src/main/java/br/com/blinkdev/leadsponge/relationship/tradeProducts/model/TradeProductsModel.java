@@ -1,9 +1,9 @@
-package br.com.blinkdev.leadsponge.endPoints.negotiationProduct.model;
+package br.com.blinkdev.leadsponge.relationship.tradeProducts.model;
 
 import br.com.blinkdev.leadsponge.endPoints.Product.model.ProductModel;
-import br.com.blinkdev.leadsponge.endPoints.negotiation.enumeration.RecidivismType;
+import br.com.blinkdev.leadsponge.endPoints.negotiation.enumeration.KindRecidivism;
 import br.com.blinkdev.leadsponge.endPoints.negotiation.model.NegotiationModel;
-import br.com.blinkdev.leadsponge.endPoints.negotiationProduct.enumeration.DiscountType;
+import br.com.blinkdev.leadsponge.relationship.tradeProducts.enumeration.KindDiscount;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
@@ -23,13 +23,13 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include;
 @EqualsAndHashCode(callSuper = false)
 @Relation(collectionRelation = "negotiatio_product", itemRelation = "negotiatios_products")
 @JsonInclude(Include.NON_NULL)
-public class NegotiationProductModel extends RepresentationModel<NegotiationProductModel> {
+public class TradeProductsModel extends RepresentationModel<TradeProductsModel> {
 
-    private RecidivismType reincidencia;
+    private KindRecidivism reincidencia;
     private Long id;
     private Integer quantidade;
     private BigDecimal valor;
-    private DiscountType tipoDesconto;
+    private KindDiscount tipoDesconto;
     private BigDecimal desconto;
     private Boolean temDesconto;
     private BigDecimal total;

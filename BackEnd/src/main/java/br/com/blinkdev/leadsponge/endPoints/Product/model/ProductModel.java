@@ -1,6 +1,6 @@
 package br.com.blinkdev.leadsponge.endPoints.Product.model;
 
-import br.com.blinkdev.leadsponge.endPoints.negotiationProduct.model.NegotiationProductModel;
+import br.com.blinkdev.leadsponge.relationship.tradeProducts.model.TradeProductsModel;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
@@ -27,5 +27,5 @@ public class ProductModel extends RepresentationModel<ProductModel> {
     private BigDecimal valor;
     private Boolean visibilidade;
 
-    private List<NegotiationProductModel> negociacaoProdutos;
+    private List<TradeProductsModel> negociacaoProdutos;
 }

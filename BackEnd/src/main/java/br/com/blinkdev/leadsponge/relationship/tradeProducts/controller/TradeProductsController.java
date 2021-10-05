@@ -1,10 +1,10 @@
-package br.com.blinkdev.leadsponge.endPoints.negotiationProduct.controller;
+package br.com.blinkdev.leadsponge.relationship.tradeProducts.controller;
 
-import br.com.blinkdev.leadsponge.endPoints.negotiationProduct.entity.NegotiationProductEntity;
-import br.com.blinkdev.leadsponge.endPoints.negotiationProduct.filter.NegotiationProductFilter;
-import br.com.blinkdev.leadsponge.endPoints.negotiationProduct.model.NegotiationProductModel;
-import br.com.blinkdev.leadsponge.endPoints.negotiationProduct.service.NegotiationProductService;
 import br.com.blinkdev.leadsponge.event.ResourcesCreatedEvent;
+import br.com.blinkdev.leadsponge.relationship.tradeProducts.entity.TradeProductsEntity;
+import br.com.blinkdev.leadsponge.relationship.tradeProducts.filter.TradeProductsFilter;
+import br.com.blinkdev.leadsponge.relationship.tradeProducts.model.TradeProductsModel;
+import br.com.blinkdev.leadsponge.relationship.tradeProducts.service.TradeProductsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -24,12 +24,12 @@ import java.util.Map;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping(value = "negotiationproducts", produces = {MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE})
+@RequestMapping(value = "TradeProductss", produces = {MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE})
 @Api(tags = "Negotiations Products")
-class NegotiationProductController {
+class TradeProductsController {
 
     @Autowired
-    private final NegotiationProductService negotiationProductService;
+    private final TradeProductsService tradeProductsService;
 
     @Autowired
     private final ApplicationEventPublisher publisher;
@@ -38,43 +38,43 @@ class NegotiationProductController {
     @GetMapping(value = {"/{id}"})
     @ApiOperation(value = "Get negotiation product by ID.")
     @PreAuthorize("hasAuthority('PESQUISAR_CAMPANHA') and #oauth2.hasScope('read')")
-    public NegotiationProductModel getById(@PathVariable("id") Long id) {
-        return negotiationProductService.getById(id);
+    public TradeProductsModel getById(@PathVariable("id") Long id) {
+        return tradeProductsService.getById(id);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
     @ApiOperation(value = "Search negotiations products with a filters.")
     @PreAuthorize("hasAuthority('PESQUISAR_CAMPANHA') and #oauth2.hasScope('read')")
-    public PagedModel<NegotiationProductModel> searchWithFilters(NegotiationProductFilter negociacaoProdutoFilter, Pageable pageable) {
-        return negotiationProductService.searchWithFilters(negociacaoProdutoFilter, pageable);
+    public PagedModel<TradeProductsModel> searchWithFilters(TradeProductsFilter negociacaoProdutoFilter, Pageable pageable) {
+        return tradeProductsService.searchWithFilters(negociacaoProdutoFilter, pageable);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     @ApiOperation(value = "Save negotiation product.")
     @PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
-    public NegotiationProductModel save(@Valid @RequestBody NegotiationProductEntity negotiationProduct, HttpServletResponse response) {
-        NegotiationProductModel negotiationProductEntity = negotiationProductService.save(negotiationProduct);
-        publisher.publishEvent(new ResourcesCreatedEvent(this, response, negotiationProductEntity.getId()));
-        return negotiationProductEntity;
+    public TradeProductsModel save(@Valid @RequestBody TradeProductsEntity TradeProducts, HttpServletResponse response) {
+        TradeProductsModel TradeProductsEntity = tradeProductsService.save(TradeProducts);
+        publisher.publishEvent(new ResourcesCreatedEvent(this, response, TradeProductsEntity.getId()));
+        return TradeProductsEntity;
     }
 
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PutMapping(value = {"/{id}"})
     @ApiOperation(value = "Patch negotiation product.")
     @PreAuthorize("hasAuthority('CADASTRAR_CLIENTE') and #oauth2.hasScope('write')")
-    public NegotiationProductModel patch(@RequestBody Map<Object, Object> fields, @PathVariable Long id, HttpServletResponse response) {
-        NegotiationProductModel negotiationProductEntity = negotiationProductService.patch(id, fields);
-        publisher.publishEvent(new ResourcesCreatedEvent(this, response, negotiationProductEntity.getId()));
-        return negotiationProductEntity;
+    public TradeProductsModel patch(@RequestBody Map<Object, Object> fields, @PathVariable Long id, HttpServletResponse response) {
+        TradeProductsModel TradeProductsEntity = tradeProductsService.patch(id, fields);
+        publisher.publishEvent(new ResourcesCreatedEvent(this, response, TradeProductsEntity.getId()));
+        return TradeProductsEntity;
     }
 
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping(value = {"/{id}"})
     @ApiOperation(value = "Delete negotiation product.")
     @PreAuthorize("hasAuthority('REMOVER_CLIENTE') and #oauth2.hasScope('write')")
-    public NegotiationProductModel delete(@PathVariable Long id) {
-        return negotiationProductService.delete(id);
+    public TradeProductsModel delete(@PathVariable Long id) {
+        return tradeProductsService.delete(id);
     }
 }

@@ -1,6 +1,6 @@
 package br.com.blinkdev.leadsponge.endPoints.Product.entity;
 
-import br.com.blinkdev.leadsponge.endPoints.negotiationProduct.entity.NegotiationProductEntity;
+import br.com.blinkdev.leadsponge.relationship.tradeProducts.entity.TradeProductsEntity;
 
 import javax.annotation.Generated;
 import javax.persistence.metamodel.ListAttribute;
@@ -15,6 +15,6 @@ public abstract class ProductEntity_ {
     public static volatile SingularAttribute<ProductEntity, String> nome;
     public static volatile SingularAttribute<ProductEntity, String> descricao;
     public static volatile SingularAttribute<ProductEntity, BigDecimal> valor;
-    public static volatile ListAttribute<ProductEntity, NegotiationProductEntity> negociacaoProdutos;
+    public static volatile ListAttribute<ProductEntity, TradeProductsEntity> negociacaoProdutos;
     public static volatile SingularAttribute<ProductEntity, Boolean> visibilidade;
 }

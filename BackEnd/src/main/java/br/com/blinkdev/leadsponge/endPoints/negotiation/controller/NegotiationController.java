@@ -8,8 +8,8 @@ import br.com.blinkdev.leadsponge.endPoints.negotiation.service.NegotiationServi
 import br.com.blinkdev.leadsponge.endPoints.negotiationStyle.entity.NegotiationStyleEntity;
 import br.com.blinkdev.leadsponge.endPoints.reasonForLoss.entity.ReasonForLossEntity;
 import br.com.blinkdev.leadsponge.event.ResourcesCreatedEvent;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -30,7 +30,7 @@ import java.util.Map;
 @RestController
 @AllArgsConstructor
 @RequestMapping(value = "negotiations", produces = {MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE})
-@Api(tags = "Negotiations")
+@Tag(name = "Negotiations", description = "To start a negotiation it is necessary to have the following objects previously created: Customer, Campaign and Negotiation Source.")
 class NegotiationController {
 
     @Autowired
@@ -94,7 +94,7 @@ class NegotiationController {
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
     public ResponseEntity<NegotiationEntity> atualizarPropriedadeEstagio(@PathVariable Long id, @RequestBody NegotiationStyleEntity estagio) {
-        negotiationService.atualizarPropriedadeEstagio(id, estagio);
+        negotiationService.updateNegotiationStyle(id, estagio);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -102,7 +102,7 @@ class NegotiationController {
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
     public ResponseEntity<NegotiationEntity> atualizarPropriedadeEstatus(@PathVariable Long id, @RequestBody StatusNegotiation estatus) {
-        negotiationService.atualizarPropriedadeEstatus(id, estatus);
+        negotiationService.updateNegotiationStatus(id, estatus);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -118,7 +118,7 @@ class NegotiationController {
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
     public ResponseEntity<NegotiationEntity> atribuirMotivoPerda(@PathVariable Long id, @RequestBody ReasonForLossEntity morivoPerda) {
-        negotiationService.atribuirPropMP(id, morivoPerda);
+        negotiationService.updateNegotiationRFLE(id, morivoPerda);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
