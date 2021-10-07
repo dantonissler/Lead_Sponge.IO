@@ -1,21 +1,20 @@
-version: '3'
+version: '2.4'
+x-database-variables: &database-variables
+  SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/blinkdev?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false&useTimezone=true&serverTimezone=UTC
+  SPRING_DATASOURCE_USERNAME: root
+  SPRING_DATASOURCE_PPASSWORD:
 services:
-  backend:
-    build:
-      context: ./
-      dockerfile: ./Dockerfile
-    image: leadsponge/api
+  leadsponge-api:
+    container_name: leadsponge-api
+    image: dantonissler/leadsponge-api
     ports:
-      - '8080:8080'
-      - '5005:5005'
+      - "8080:8080"
     environment:
-      - ADDITIONAL_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -Xmx1G -Xms128m -XX:MaxMetaspaceSize=128m
-      - PROFILE=homolog
-    links:
-      - db
+      <<: *database-variables
 
   db:
     image: mysql:8.0.26
+    container_name: mysql
     ports:
       - '3306:3306'
     environment:
@@ -34,3 +33,12 @@ services:
       - "--config.file=/etc/promitheus/prometheus.yml"
     ports:
       - "9090:9090"
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+
+volumes:
+  blinkdev:
