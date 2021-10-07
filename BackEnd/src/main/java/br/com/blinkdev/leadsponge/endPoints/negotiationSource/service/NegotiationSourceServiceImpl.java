@@ -14,6 +14,7 @@ import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
+import javax.transaction.Transactional;
 import java.lang.reflect.Field;
 import java.util.Map;
 
@@ -43,12 +44,14 @@ public class NegotiationSourceServiceImpl extends ErroMessage implements Negotia
     }
 
     @Override
+    @Transactional
     public NegotiationSourceModel save(NegotiationSourceEntity negotiationSourceEntity) {
         log.info("NegotiationSourceService - save");
         return negotiationSourceModelAssembler.toModel(negotiationSourceRepository.save(negotiationSourceEntity));
     }
 
     @Override
+    @Transactional
     public NegotiationSourceModel patch(Long id, Map<Object, Object> fields) {
         log.info("NegotiationSourceService - patch");
         NegotiationSourceEntity negotiationSourceEntity = negotiationSourceRepository.findById(id).orElseThrow(() -> notFouldId(id, "[negotiation source]"));
@@ -62,6 +65,7 @@ public class NegotiationSourceServiceImpl extends ErroMessage implements Negotia
     }
 
     @Override
+    @Transactional
     public NegotiationSourceModel delete(Long id) {
         log.info("CustomerService - delete");
         NegotiationSourceEntity fonteNegociacao = negotiationSourceRepository.findById(id).orElseThrow(() -> notFouldId(id, "[negotiation source]"));

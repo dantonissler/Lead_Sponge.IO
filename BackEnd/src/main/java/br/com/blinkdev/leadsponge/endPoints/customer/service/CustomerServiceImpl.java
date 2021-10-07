@@ -14,6 +14,7 @@ import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
+import javax.transaction.Transactional;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Map;
@@ -44,6 +45,7 @@ public class CustomerServiceImpl extends ErroMessage implements CustomerService 
     }
 
     @Override
+    @Transactional
     public CustomerModel save(CustomerEntity customerEntity) {
         log.info("CustomerService - save");
         customerEntity.setSegmentos(new ArrayList<>(customerEntity.getSegmentos()));
@@ -55,6 +57,7 @@ public class CustomerServiceImpl extends ErroMessage implements CustomerService 
     }
 
     @Override
+    @Transactional
     public CustomerModel patch(Long id, Map<Object, Object> fields) {
         log.info("CustomerService - patch");
         CustomerEntity customerEntity = customerRepository.findById(id).orElseThrow(() -> notFouldId(id, "[customer]"));
@@ -95,6 +98,7 @@ public class CustomerServiceImpl extends ErroMessage implements CustomerService 
     }
 
     @Override
+    @Transactional
     public CustomerModel delete(Long id) {
         log.info("CustomerService - delete");
         CustomerEntity customerEntity = customerRepository.findById(id).orElseThrow(() -> notFouldId(id, "[customer]"));

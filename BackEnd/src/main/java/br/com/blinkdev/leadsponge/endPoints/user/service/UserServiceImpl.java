@@ -20,6 +20,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
+import javax.transaction.Transactional;
 import java.lang.reflect.Field;
 import java.util.HashSet;
 import java.util.Map;
@@ -55,7 +56,8 @@ public class UserServiceImpl extends ErroMessage implements UserService {
 		return assembler.toModel(userRepository.searchWithFilter(userFilter, pageable), userModelAssembler);
 	}
 
-	@Override
+    @Override
+    @Transactional
 	public UserModel save(UserEntity usuario) {
 		log.info("UserServiceImpl - save");
 		if (!usuario.getConfirmarPassword().equals(usuario.getPassword()))
@@ -67,7 +69,8 @@ public class UserServiceImpl extends ErroMessage implements UserService {
 		return userModelAssembler.toModel(userRepository.save(usuario));
 	}
 
-	@Override
+    @Override
+    @Transactional
 	public UserModel patch(Long id, Map<Object, Object> fields) {
 		log.info("UserServiceImpl - patch");
 		UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> notFouldId(id, "[user]"));
@@ -80,7 +83,8 @@ public class UserServiceImpl extends ErroMessage implements UserService {
 		return save(userEntity);
 	}
 
-	@Override
+    @Override
+    @Transactional
 	public UserModel delete(Long id) {
 		log.info("UserServiceImpl - delete");
 		UserEntity usuarioSalvo = userRepository.findById(id).orElseThrow(() -> notFouldId(id, "[user]"));
@@ -89,14 +93,16 @@ public class UserServiceImpl extends ErroMessage implements UserService {
 	}
 
 
-	@Override
+    @Override
+    @Transactional
 	public void atualizarPropriedadeEnabled(Long id, Boolean enabled) {
 		UserEntity usuarioSalva = userRepository.findById(id).orElseThrow(() -> notFouldId(id, "[user]"));
 		usuarioSalva.setEnabled(enabled);
 		userRepository.save(usuarioSalva);
 	}
 
-	@Override
+    @Override
+    @Transactional
 	public String findLoggedInLogin() {
 		Object userDetails = SecurityContextHolder.getContext().getAuthentication().getDetails();
 		if (userDetails instanceof UserDetails) {
@@ -105,7 +111,8 @@ public class UserServiceImpl extends ErroMessage implements UserService {
 		return null;
 	}
 
-	@Override
+    @Override
+    @Transactional
 	public UserEntity atualizarUsuarioDTO(Long id, UsuarioTO usuario) {
 		UserEntity usuarioSalva = userRepository.findById(id).orElseThrow(() -> notFouldId(id, "[user]"));
 		usuarioSalva.getRoles().clear();
@@ -114,7 +121,8 @@ public class UserServiceImpl extends ErroMessage implements UserService {
 		return userRepository.save(usuarioSalva);
 	}
 
-	@Override
+    @Override
+    @Transactional
 	public void removerImg(Long id) {
 		UserEntity usuarioSalva = userRepository.findById(id).orElseThrow(() -> notFouldId(id, "[user]"));
 		disco.remover(usuarioSalva.getUrlFoto());
@@ -123,7 +131,8 @@ public class UserServiceImpl extends ErroMessage implements UserService {
 		userRepository.save(usuarioSalva);
 	}
 
-	@Override
+    @Override
+    @Transactional
 	public void atualizarImg(Long id, String foto) {
 		UserEntity usuarioSalva = userRepository.findById(id).orElseThrow(() -> notFouldId(id, "[user]"));
 		usuarioSalva.setFoto(foto);

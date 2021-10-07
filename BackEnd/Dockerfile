@@ -7,7 +7,7 @@ ENV PROFILE=${PROFILE}
 ENV ADDITIONAL_OPTS=${ADDITIONAL_OPTS}
 
 WORKDIR /opt/backend
-COPY /target/leadsponge.jar leadsponge.jar
+COPY /target/leadsponge-api.jar leadsponge.jar
 
 SHELL ["/bin/sh", "-c"]
 

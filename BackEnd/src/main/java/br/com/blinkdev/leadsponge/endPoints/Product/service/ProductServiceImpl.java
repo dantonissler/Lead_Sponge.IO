@@ -15,6 +15,7 @@ import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
+import javax.transaction.Transactional;
 import java.lang.reflect.Field;
 import java.util.Map;
 
@@ -44,12 +45,14 @@ public class ProductServiceImpl extends ErroMessage implements ProductService {
     }
 
     @Override
+    @Transactional
     public ProductModel save(ProductEntity produto) {
         log.info("ProductService - save");
         return productModelAssembler.toModel(productRepository.save(produto));
     }
 
     @Override
+    @Transactional
     public ProductModel patch(Long id, Map<Object, Object> fields) {
         log.info("ProductService - patch");
         ProductEntity productEntity = productRepository.findById(id).orElseThrow(() -> notFouldId(id, "[product]"));
@@ -63,6 +66,7 @@ public class ProductServiceImpl extends ErroMessage implements ProductService {
     }
 
     @Override
+    @Transactional
     public ProductModel delete(Long id) {
         log.info("ProductService - delete");
         ProductEntity productEntity = productRepository.findById(id).orElseThrow(() -> notFouldId(id, "[product]"));

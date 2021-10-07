@@ -18,6 +18,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
+import javax.transaction.Transactional;
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -57,12 +58,14 @@ public class TaskServiceImpl extends ErroMessage implements TaskService {
     }
 
     @Override
+    @Transactional
     public TaskModel save(TaskEntity tarefa) {
         log.info("CustomerService - save");
         return taskModelAssembler.toModel(repository.save(tarefa));
     }
 
     @Override
+    @Transactional
     public TaskModel patch(Long id, Map<Object, Object> fields) {
         log.info("CustomerService - patch");
         TaskEntity taskEntity = repository.findById(id).orElseThrow(() -> notFouldId(id, "[task]"));
@@ -76,6 +79,7 @@ public class TaskServiceImpl extends ErroMessage implements TaskService {
     }
 
     @Override
+    @Transactional
     public TaskModel delete(Long id) {
         log.info("CustomerService - patch");
         TaskEntity tarefaSalvo = repository.findById(id).orElseThrow(() -> notFouldId(id, "[task]"));

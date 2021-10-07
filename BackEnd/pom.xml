@@ -4,29 +4,22 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.leadsponge</groupId>
-    <artifactId>leadsponge.IO</artifactId>
+    <groupId>br-com-blinkdev</groupId>
+    <artifactId>leadsponge-api</artifactId>
     <version>0.0.1</version>
     <packaging>jar</packaging>
 
-    <name>leadsponge.IO</name>
+    <name>leadsponge-api</name>
     <description>Criação de carteira de cliente do tipo CRM</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.4.1</version>
-        <relativePath /> <!-- lookup parent from repository -->
+        <version>2.5.5</version>
     </parent>
 
     <properties>
-        <lombok.version>1.18.16</lombok.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <spring-security-jwt.version>1.0.9.RELEASE</spring-security-jwt.version>
-        <jasperreports.version>6.5.1</jasperreports.version>
-        <jasperreports-functions.version>6.5.1</jasperreports-functions.version>
-        <jasperreports-fonts.version>6.0.0</jasperreports-fonts.version>
     </properties>
 
     <dependencies>
@@ -55,6 +48,11 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
         <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
@@ -66,8 +64,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
-            <scope>runtime</scope>
-            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -129,10 +125,14 @@
     </dependencies>
 
     <build>
+        <finalName>${project.name}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludeDevtools>true</excludeDevtools>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -141,6 +141,11 @@
                     <source>11</source>
                     <target>11</target>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.1.0</version>
             </plugin>
         </plugins>
     </build>

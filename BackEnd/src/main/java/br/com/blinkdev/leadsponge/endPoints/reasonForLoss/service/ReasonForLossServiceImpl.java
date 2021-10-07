@@ -14,6 +14,7 @@ import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
+import javax.transaction.Transactional;
 import java.lang.reflect.Field;
 import java.util.Map;
 
@@ -43,13 +44,14 @@ public class ReasonForLossServiceImpl extends ErroMessage implements ReasonForLo
     }
 
     @Override
+    @Transactional
     public ReasonForLossModel save(ReasonForLossEntity motivoPerda) {
         log.info("CustomerServiceImpl - save");
         return reasonForLossModelAssembler.toModel(repository.save(motivoPerda));
     }
 
-
     @Override
+    @Transactional
     public ReasonForLossModel patch(Long id, Map<Object, Object> fields) {
         log.info("CustomerServiceImpl - patch");
         ReasonForLossEntity novomotivoPerda = repository.findById(id).orElseThrow(() -> notFouldId(id, "[reason for loss]"));
@@ -63,6 +65,7 @@ public class ReasonForLossServiceImpl extends ErroMessage implements ReasonForLo
     }
 
     @Override
+    @Transactional
     public ReasonForLossModel delete(Long id) {
         log.info("CustomerServiceImpl - delete");
         ReasonForLossEntity motivoPerda = repository.findById(id).orElseThrow(() -> notFouldId(id, "[reason for loss]"));

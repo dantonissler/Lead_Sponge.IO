@@ -25,7 +25,7 @@ import java.util.Map;
 @RestController
 @AllArgsConstructor
 @RequestMapping(value = "TradeProductss", produces = {MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE})
-@Api(tags = "Negotiations Products")
+@Api(tags = "Trade Products")
 class TradeProductsController {
 
     @Autowired
@@ -36,7 +36,7 @@ class TradeProductsController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = {"/{id}"})
-    @ApiOperation(value = "Get negotiation product by ID.")
+    @ApiOperation(value = "Get trade product by ID.")
     @PreAuthorize("hasAuthority('PESQUISAR_CAMPANHA') and #oauth2.hasScope('read')")
     public TradeProductsModel getById(@PathVariable("id") Long id) {
         return tradeProductsService.getById(id);
@@ -44,7 +44,7 @@ class TradeProductsController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
-    @ApiOperation(value = "Search negotiations products with a filters.")
+    @ApiOperation(value = "Search trades products with a filters.")
     @PreAuthorize("hasAuthority('PESQUISAR_CAMPANHA') and #oauth2.hasScope('read')")
     public PagedModel<TradeProductsModel> searchWithFilters(TradeProductsFilter negociacaoProdutoFilter, Pageable pageable) {
         return tradeProductsService.searchWithFilters(negociacaoProdutoFilter, pageable);
@@ -52,7 +52,7 @@ class TradeProductsController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    @ApiOperation(value = "Save negotiation product.")
+    @ApiOperation(value = "Save trade product.")
     @PreAuthorize("hasAuthority('CADASTRAR_NEGOCIACAO') and #oauth2.hasScope('write')")
     public TradeProductsModel save(@Valid @RequestBody TradeProductsEntity TradeProducts, HttpServletResponse response) {
         TradeProductsModel TradeProductsEntity = tradeProductsService.save(TradeProducts);
@@ -62,7 +62,7 @@ class TradeProductsController {
 
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PutMapping(value = {"/{id}"})
-    @ApiOperation(value = "Patch negotiation product.")
+    @ApiOperation(value = "Patch trade product.")
     @PreAuthorize("hasAuthority('CADASTRAR_CLIENTE') and #oauth2.hasScope('write')")
     public TradeProductsModel patch(@RequestBody Map<Object, Object> fields, @PathVariable Long id, HttpServletResponse response) {
         TradeProductsModel TradeProductsEntity = tradeProductsService.patch(id, fields);
@@ -72,7 +72,7 @@ class TradeProductsController {
 
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping(value = {"/{id}"})
-    @ApiOperation(value = "Delete negotiation product.")
+    @ApiOperation(value = "Delete trade product.")
     @PreAuthorize("hasAuthority('REMOVER_CLIENTE') and #oauth2.hasScope('write')")
     public TradeProductsModel delete(@PathVariable Long id) {
         return tradeProductsService.delete(id);

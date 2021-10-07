@@ -16,6 +16,7 @@ import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
+import javax.transaction.Transactional;
 import java.lang.reflect.Field;
 import java.util.Map;
 
@@ -45,12 +46,14 @@ public class CampaignServiceImpl extends ErroMessage implements CampaignService 
     }
 
     @Override
+    @Transactional
     public CampaignModel save(CampaignEntity campanha) {
         log.info("CampanhaService - save");
         return campanhaModelAssembler.toModel(campanhaRepository.save(campanha));
     }
 
     @Override
+    @Transactional
     public CampaignModel patch(Long id, Map<Object, Object> fields) {
         log.info("CampanhaService - patch");
         CampaignEntity campaignEntity = campanhaRepository.findById(id).orElseThrow(() -> notFouldId(id, "[campaign]"));
@@ -64,6 +67,7 @@ public class CampaignServiceImpl extends ErroMessage implements CampaignService 
     }
 
     @Override
+    @Transactional
     public CampaignModel delete(Long id) {
         log.info("CampanhaService - delete");
         CampaignEntity campaignEntity = campanhaRepository.findById(id).orElseThrow(() -> notFouldId(id, "[campaign]"));

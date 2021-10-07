@@ -29,6 +29,6 @@ public class OAuthSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
     public void configure(WebSecurity web) {
-		web.ignoring().antMatchers("/v2/api-docs", "/swagger-resources/**", "/configuration/security", "/webjars/**", "/swagger-ui/**");
+		web.ignoring().antMatchers("/v2/api-docs", "/swagger-resources/**", "/configuration/security", "/webjars/**", "/swagger-ui/**", "/actuator/**");
     }
 }

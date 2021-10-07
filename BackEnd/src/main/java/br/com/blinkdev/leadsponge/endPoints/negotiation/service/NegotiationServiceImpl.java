@@ -19,6 +19,7 @@ import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
+import javax.transaction.Transactional;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -50,12 +51,14 @@ public class NegotiationServiceImpl extends ErroMessage implements NegotiationSe
     }
 
     @Override
+    @Transactional
     public NegotiationModel save(NegotiationEntity negociacao) {
         log.info("NegotiationService - save");
         return negotiationModelAssembler.toModel(repository.save(negociacao));
     }
 
     @Override
+    @Transactional
     public NegotiationModel patch(Long id, Map<Object, Object> fields) {
         log.info("NegotiationService - patch");
         NegotiationEntity negotiationEntity = repository.findById(id).orElseThrow(() -> notFouldId(id, "[negotiation]"));
@@ -70,6 +73,7 @@ public class NegotiationServiceImpl extends ErroMessage implements NegotiationSe
     }
 
     @Override
+    @Transactional
     public NegotiationModel deletar(Long id) {
         log.info("NegotiationService - deletar");
         NegotiationEntity negotiationEntity = repository.findById(id).orElseThrow(() -> notFouldId(id, "[negotiation]"));
@@ -77,11 +81,8 @@ public class NegotiationServiceImpl extends ErroMessage implements NegotiationSe
         return negotiationModelAssembler.toModel(negotiationEntity);
     }
 
-    // TODO: criar uma negociação de produto utilizando o
-
-    // TODO:
-
     @Override
+    @Transactional
     public void updateNegotiationRFLE(Long id, ReasonForLossEntity motivoPerda) {
         NegotiationEntity negociacaoSalva = repository.findById(id).orElseThrow(() -> notFouldId(id, "[negotiation]"));
         negociacaoSalva.setMotivoPerda(motivoPerda);
@@ -90,6 +91,7 @@ public class NegotiationServiceImpl extends ErroMessage implements NegotiationSe
     }
 
     @Override
+    @Transactional
     public void updateNegotiationStatus(Long id, StatusNegotiation estatus) {
         NegotiationEntity negociacaoSalva = repository.findById(id).orElseThrow(() -> notFouldId(id, "[negotiation]"));
         if (negociacaoSalva.getEstatus() == StatusNegotiation.PERDIDA)
@@ -99,6 +101,7 @@ public class NegotiationServiceImpl extends ErroMessage implements NegotiationSe
     }
 
     @Override
+    @Transactional
     public void updateNegotiationStyle(Long id, NegotiationStyleEntity estagio) {
         NegotiationEntity negociacaoSalva = repository.findById(id).orElseThrow(() -> notFouldId(id, "[negotiation]"));
         // TODO: Criar o log utlizando o objeto HistoryNegotiationStyle
@@ -107,6 +110,7 @@ public class NegotiationServiceImpl extends ErroMessage implements NegotiationSe
     }
 
     @Override
+    @Transactional
     public void atualizarPropriedadeDataFim(Long id, LocalDateTime data) {
         NegotiationEntity negociacaoSalva = repository.findById(id).orElseThrow(() -> notFouldId(id, "[negotiation]"));
         negociacaoSalva.setDataPrevistaEncerramento(data);
@@ -114,6 +118,7 @@ public class NegotiationServiceImpl extends ErroMessage implements NegotiationSe
     }
 
     @Override
+    @Transactional
     public void atualizarPropriedadeAvaliacao(Long id, Integer avaliacao) {
         NegotiationEntity negociacaoSalva = repository.findById(id).orElseThrow(() -> notFouldId(id, "[negotiation]"));
         negociacaoSalva.setAvaliacao(avaliacao);
@@ -121,6 +126,7 @@ public class NegotiationServiceImpl extends ErroMessage implements NegotiationSe
     }
 
     @Override
+    @Transactional
     public void calculateValues(Long id) {
         NegotiationEntity negociacao = repository.findById(id).orElseThrow(() -> notFouldId(id, "[negotiation]"));
         BigDecimal somaTotal = negociacao.getTradeProducts().stream().map(TradeProductsEntity::getTotal).reduce(BigDecimal.ZERO, BigDecimal::add);

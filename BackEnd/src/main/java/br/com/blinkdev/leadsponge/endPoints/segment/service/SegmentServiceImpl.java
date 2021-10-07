@@ -13,6 +13,7 @@ import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
+import javax.transaction.Transactional;
 import java.lang.reflect.Field;
 import java.util.Map;
 
@@ -39,11 +40,13 @@ public class SegmentServiceImpl extends ErroMessage implements SegmentService {
     }
 
     @Override
+    @Transactional
     public SegmentModel save(SegmentEntity segmentEntity) {
         return segmentModelAssembler.toModel(repository.save(segmentEntity));
     }
 
     @Override
+    @Transactional
     public SegmentModel patch(Long id, Map<Object, Object> fields) {
         SegmentEntity segmentEntity = repository.findById(id).orElseThrow(() -> notFouldId(id, "[segment]"));
         fields.forEach((key, value) -> {
@@ -56,6 +59,7 @@ public class SegmentServiceImpl extends ErroMessage implements SegmentService {
     }
 
     @Override
+    @Transactional
     public SegmentModel delete(Long id) {
         SegmentEntity segmentoSalvo = repository.findById(id).orElseThrow(() -> notFouldId(id, "[segment]"));
         repository.deleteById(id);

@@ -14,6 +14,7 @@ import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
+import javax.transaction.Transactional;
 import java.lang.reflect.Field;
 import java.util.Map;
 
@@ -43,12 +44,14 @@ public class ContactServiceImpl extends ErroMessage implements ContactService {
     }
 
     @Override
+    @Transactional
     public ContactModel save(ContactEntity contato) {
         log.info("ContactService - save");
         return contactModelAssembler.toModel(contactRepository.save(contato));
     }
 
     @Override
+    @Transactional
     public ContactModel patch(Long id, Map<Object, Object> fields) {
         log.info("CampanhaService - patch");
         ContactEntity contactEntity = contactRepository.findById(id).orElseThrow(() -> notFouldId(id, "[contact]"));
@@ -62,6 +65,7 @@ public class ContactServiceImpl extends ErroMessage implements ContactService {
     }
 
     @Override
+    @Transactional
     public ContactModel delete(Long id) {
         log.info("CampanhaService - delete");
         ContactEntity contactEntity = contactRepository.findById(id).orElseThrow(() -> notFouldId(id, "[contact]"));
