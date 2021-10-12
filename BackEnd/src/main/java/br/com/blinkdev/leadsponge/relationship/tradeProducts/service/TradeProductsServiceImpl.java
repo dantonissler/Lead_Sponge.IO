@@ -1,8 +1,8 @@
 package br.com.blinkdev.leadsponge.relationship.tradeProducts.service;
 
-import br.com.blinkdev.leadsponge.endPoints.Product.repository.ProductRepository;
-import br.com.blinkdev.leadsponge.endPoints.negotiation.repository.NegotiationRepository;
-import br.com.blinkdev.leadsponge.endPoints.negotiation.service.NegotiationService;
+import br.com.blinkdev.leadsponge.endpoints.Product.repository.ProductRepository;
+import br.com.blinkdev.leadsponge.endpoints.negotiation.repository.NegotiationRepository;
+import br.com.blinkdev.leadsponge.endpoints.negotiation.service.NegotiationService;
 import br.com.blinkdev.leadsponge.errorValidate.ErroMessage;
 import br.com.blinkdev.leadsponge.relationship.tradeProducts.entity.TradeProductsEntity;
 import br.com.blinkdev.leadsponge.relationship.tradeProducts.enumeration.KindDiscount;

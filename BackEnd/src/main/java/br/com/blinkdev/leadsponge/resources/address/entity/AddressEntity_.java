@@ -1,6 +1,6 @@
 package br.com.blinkdev.leadsponge.resources.address.entity;
 
-import br.com.blinkdev.leadsponge.endPoints.contact.entity.ContactEntity;
+import br.com.blinkdev.leadsponge.endpoints.contact.entity.ContactEntity;
 
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;

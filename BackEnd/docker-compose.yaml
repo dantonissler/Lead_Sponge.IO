@@ -22,7 +22,7 @@ services:
       - MYSQL_DATABASE=blinkdev
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
     volumes:
-      - ./docker/volume_mysql:/var/lib/mysql
+      - mysql_leadspong:/var/lib/mysql
 
   prometheus:
     image: prom/prometheus:latest
@@ -41,4 +41,4 @@ services:
       - "3000:3000"
 
 volumes:
-  blinkdev:
+  mysql_leadspong:

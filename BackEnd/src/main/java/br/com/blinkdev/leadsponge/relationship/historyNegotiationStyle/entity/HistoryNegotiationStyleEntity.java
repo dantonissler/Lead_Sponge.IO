@@ -1,7 +1,7 @@
 package br.com.blinkdev.leadsponge.relationship.historyNegotiationStyle.entity;
 
-import br.com.blinkdev.leadsponge.endPoints.negotiation.entity.NegotiationEntity;
-import br.com.blinkdev.leadsponge.endPoints.negotiationStyle.entity.NegotiationStyleEntity;
+import br.com.blinkdev.leadsponge.endpoints.negotiation.entity.NegotiationEntity;
+import br.com.blinkdev.leadsponge.endpoints.negotiationStyle.entity.NegotiationStyleEntity;
 import br.com.blinkdev.leadsponge.utils.audit.UserDateAudit;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;

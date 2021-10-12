@@ -1,6 +1,6 @@
 package br.com.blinkdev.leadsponge.resources.phone.entity;
 
-import br.com.blinkdev.leadsponge.endPoints.contact.entity.ContactEntity;
+import br.com.blinkdev.leadsponge.endpoints.contact.entity.ContactEntity;
 import br.com.blinkdev.leadsponge.resources.phone.enumeration.TypePhone;
 
 import javax.annotation.Generated;

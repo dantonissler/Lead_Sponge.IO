@@ -3,7 +3,7 @@ package br.com.blinkdev.leadsponge.config.token;
 import java.util.HashMap;
 import java.util.Map;
 
-import br.com.blinkdev.leadsponge.endPoints.user.TO.UsuarioSistemaTO;
+import br.com.blinkdev.leadsponge.endpoints.user.TO.UsuarioSistemaTO;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;

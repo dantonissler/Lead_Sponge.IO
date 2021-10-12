@@ -1,8 +1,8 @@
 package br.com.blinkdev.leadsponge.relationship.tradeProducts.model;
 
-import br.com.blinkdev.leadsponge.endPoints.Product.model.ProductModel;
-import br.com.blinkdev.leadsponge.endPoints.negotiation.enumeration.KindRecidivism;
-import br.com.blinkdev.leadsponge.endPoints.negotiation.model.NegotiationModel;
+import br.com.blinkdev.leadsponge.endpoints.Product.model.ProductModel;
+import br.com.blinkdev.leadsponge.endpoints.negotiation.enumeration.KindRecidivism;
+import br.com.blinkdev.leadsponge.endpoints.negotiation.model.NegotiationModel;
 import br.com.blinkdev.leadsponge.relationship.tradeProducts.enumeration.KindDiscount;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
