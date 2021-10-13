@@ -1,7 +1,7 @@
 package br.com.blinkdev.leadsponge.resources.phone.entity;
 
-import br.com.blinkdev.leadsponge.endpoints.View;
-import br.com.blinkdev.leadsponge.endpoints.contact.entity.ContactEntity;
+import br.com.blinkdev.leadsponge.end_points.View;
+import br.com.blinkdev.leadsponge.end_points.contact.entity.ContactEntity;
 import br.com.blinkdev.leadsponge.resources.phone.enumeration.TypePhone;
 import br.com.blinkdev.leadsponge.utils.audit.UserDateAudit;
 import com.fasterxml.jackson.annotation.JsonIgnore;

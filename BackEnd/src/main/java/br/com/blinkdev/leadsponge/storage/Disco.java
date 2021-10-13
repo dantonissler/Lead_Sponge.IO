@@ -1,7 +1,7 @@
 package br.com.blinkdev.leadsponge.storage;
 
 import br.com.blinkdev.leadsponge.config.property.LeadSpongeApiProperty;
-import br.com.blinkdev.leadsponge.errorValidate.ResourceBadRequestException;
+import br.com.blinkdev.leadsponge.error_validate.ResourceBadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;

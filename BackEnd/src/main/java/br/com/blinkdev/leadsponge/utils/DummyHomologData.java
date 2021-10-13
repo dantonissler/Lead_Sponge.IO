@@ -1,19 +1,19 @@
 package br.com.blinkdev.leadsponge.utils;
 
-import br.com.blinkdev.leadsponge.endpoints.campaign.entity.CampaignEntity;
-import br.com.blinkdev.leadsponge.endpoints.campaign.repository.CampaignRepository;
-import br.com.blinkdev.leadsponge.endpoints.negotiationSource.entity.NegotiationSourceEntity;
-import br.com.blinkdev.leadsponge.endpoints.negotiationSource.repository.NegotiationSourceRepository;
-import br.com.blinkdev.leadsponge.endpoints.negotiationStyle.entity.NegotiationStyleEntity;
-import br.com.blinkdev.leadsponge.endpoints.negotiationStyle.repository.NegotiationStyleRepository;
-import br.com.blinkdev.leadsponge.endpoints.reasonForLoss.entity.ReasonForLossEntity;
-import br.com.blinkdev.leadsponge.endpoints.reasonForLoss.repository.ReasonForLossRepository;
-import br.com.blinkdev.leadsponge.endpoints.role.entity.RoleEntity;
-import br.com.blinkdev.leadsponge.endpoints.role.repository.RoleRepository;
-import br.com.blinkdev.leadsponge.endpoints.segment.entity.SegmentEntity;
-import br.com.blinkdev.leadsponge.endpoints.segment.service.SegmentService;
-import br.com.blinkdev.leadsponge.endpoints.user.entity.UserEntity;
-import br.com.blinkdev.leadsponge.endpoints.user.service.UserService;
+import br.com.blinkdev.leadsponge.end_points.campaign.entity.CampaignEntity;
+import br.com.blinkdev.leadsponge.end_points.campaign.repository.CampaignRepository;
+import br.com.blinkdev.leadsponge.end_points.negotiation_source.entity.NegotiationSourceEntity;
+import br.com.blinkdev.leadsponge.end_points.negotiation_source.repository.NegotiationSourceRepository;
+import br.com.blinkdev.leadsponge.end_points.negotiation_style.entity.NegotiationStyleEntity;
+import br.com.blinkdev.leadsponge.end_points.negotiation_style.repository.NegotiationStyleRepository;
+import br.com.blinkdev.leadsponge.end_points.reason_for_loss.entity.ReasonForLossEntity;
+import br.com.blinkdev.leadsponge.end_points.reason_for_loss.repository.ReasonForLossRepository;
+import br.com.blinkdev.leadsponge.end_points.role.entity.RoleEntity;
+import br.com.blinkdev.leadsponge.end_points.role.repository.RoleRepository;
+import br.com.blinkdev.leadsponge.end_points.segment.entity.SegmentEntity;
+import br.com.blinkdev.leadsponge.end_points.segment.service.SegmentService;
+import br.com.blinkdev.leadsponge.end_points.user.entity.UserEntity;
+import br.com.blinkdev.leadsponge.end_points.user.service.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -79,11 +79,11 @@ class DummyHomologData {
     }
 
     @Bean
-    CommandLineRunner initTableUsuario(UserService usuarioService, RoleRepository roleRepository) {
+    CommandLineRunner initTableUsuario(UserService userService, RoleRepository roleRepository) {
         return args -> {
-            usuarioService.save(new UserEntity("admin", "Danton Issler Rodrigues", "danton.issler18@gmail.com", "123321", "123321", true, "98ad18d9-d419-4099-864d-6a9317e6ec29_1.jpg", "/assets/img/perfil/98ad18d9-d419-4099-864d-6a9317e6ec29_1.jpg",
+            userService.save(new UserEntity("admin", "Danton Issler Rodrigues", "danton.issler18@gmail.com", "123321", "123321", true, "98ad18d9-d419-4099-864d-6a9317e6ec29_1.jpg", "/assets/img/perfil/98ad18d9-d419-4099-864d-6a9317e6ec29_1.jpg",
                     new HashSet<>(roleRepository.findAll())));
-            usuarioService.save(new UserEntity("user", "user", "user@gmail.com", "123321", "123321", true, null, null, new HashSet<>()));
+            userService.save(new UserEntity("user", "user", "user@gmail.com", "123321", "123321", true, null, null, new HashSet<>()));
 
         };
     }
@@ -129,37 +129,37 @@ class DummyHomologData {
     }
 
     @Bean
-    CommandLineRunner initTableSegmento(SegmentService segmentoService) {
+    CommandLineRunner initTableSegmento(SegmentService segmentService) {
         return args -> {
-            segmentoService.save(new SegmentEntity("Advocacia"));
-            segmentoService.save(new SegmentEntity("Agropecuária"));
-            segmentoService.save(new SegmentEntity("Arquitetura"));
-            segmentoService.save(new SegmentEntity("Bancos"));
-            segmentoService.save(new SegmentEntity("Blogs e Sites Pessoais"));
-            segmentoService.save(new SegmentEntity("Clinicas / Saúde"));
-            segmentoService.save(new SegmentEntity("Concessionárias de Veículos"));
-            segmentoService.save(new SegmentEntity("Contabilidade"));
-            segmentoService.save(new SegmentEntity("Demolição e terraplanagem"));
-            segmentoService.save(new SegmentEntity("Distribuidoras / Atacadistas"));
-            segmentoService.save(new SegmentEntity("Engenharia"));
-            segmentoService.save(new SegmentEntity("Esoterismo"));
-            segmentoService.save(new SegmentEntity("Eventos e Entretenimento"));
-            segmentoService.save(new SegmentEntity("Fotografia"));
-            segmentoService.save(new SegmentEntity("Gráfica"));
-            segmentoService.save(new SegmentEntity("Indústria"));
-            segmentoService.save(new SegmentEntity("Instituições Religiosas"));
-            segmentoService.save(new SegmentEntity("Músicos e Bandas"));
-            segmentoService.save(new SegmentEntity("Pessoa física"));
-            segmentoService.save(new SegmentEntity("Pet Shop"));
-            segmentoService.save(new SegmentEntity("Poder público"));
-            segmentoService.save(new SegmentEntity("Publicidade"));
-            segmentoService.save(new SegmentEntity("Serviços"));
-            segmentoService.save(new SegmentEntity("Shoppings e Feiras Comerciais"));
-            segmentoService.save(new SegmentEntity("Sindicato Patronal"));
-            segmentoService.save(new SegmentEntity("Tecnologia"));
-            segmentoService.save(new SegmentEntity("Telefonia"));
-            segmentoService.save(new SegmentEntity("Terceiro Setor"));
-            segmentoService.save(new SegmentEntity("Turismo"));
+            segmentService.save(new SegmentEntity("Advocacia"));
+            segmentService.save(new SegmentEntity("Agropecuária"));
+            segmentService.save(new SegmentEntity("Arquitetura"));
+            segmentService.save(new SegmentEntity("Bancos"));
+            segmentService.save(new SegmentEntity("Blogs e Sites Pessoais"));
+            segmentService.save(new SegmentEntity("Clinicas / Saúde"));
+            segmentService.save(new SegmentEntity("Concessionárias de Veículos"));
+            segmentService.save(new SegmentEntity("Contabilidade"));
+            segmentService.save(new SegmentEntity("Demolição e terraplanagem"));
+            segmentService.save(new SegmentEntity("Distribuidoras / Atacadistas"));
+            segmentService.save(new SegmentEntity("Engenharia"));
+            segmentService.save(new SegmentEntity("Esoterismo"));
+            segmentService.save(new SegmentEntity("Eventos e Entretenimento"));
+            segmentService.save(new SegmentEntity("Fotografia"));
+            segmentService.save(new SegmentEntity("Gráfica"));
+            segmentService.save(new SegmentEntity("Indústria"));
+            segmentService.save(new SegmentEntity("Instituições Religiosas"));
+            segmentService.save(new SegmentEntity("Músicos e Bandas"));
+            segmentService.save(new SegmentEntity("Pessoa física"));
+            segmentService.save(new SegmentEntity("Pet Shop"));
+            segmentService.save(new SegmentEntity("Poder público"));
+            segmentService.save(new SegmentEntity("Publicidade"));
+            segmentService.save(new SegmentEntity("Serviços"));
+            segmentService.save(new SegmentEntity("Shoppings e Feiras Comerciais"));
+            segmentService.save(new SegmentEntity("Sindicato Patronal"));
+            segmentService.save(new SegmentEntity("Tecnologia"));
+            segmentService.save(new SegmentEntity("Telefonia"));
+            segmentService.save(new SegmentEntity("Terceiro Setor"));
+            segmentService.save(new SegmentEntity("Turismo"));
         };
     }
 }

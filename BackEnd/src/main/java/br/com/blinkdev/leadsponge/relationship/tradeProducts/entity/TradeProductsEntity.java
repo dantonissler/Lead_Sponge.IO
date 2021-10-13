@@ -1,8 +1,8 @@
 package br.com.blinkdev.leadsponge.relationship.tradeProducts.entity;
 
-import br.com.blinkdev.leadsponge.endpoints.Product.entity.ProductEntity;
-import br.com.blinkdev.leadsponge.endpoints.negotiation.entity.NegotiationEntity;
-import br.com.blinkdev.leadsponge.endpoints.negotiation.enumeration.KindRecidivism;
+import br.com.blinkdev.leadsponge.end_points.product.entity.ProductEntity;
+import br.com.blinkdev.leadsponge.end_points.negotiation.entity.NegotiationEntity;
+import br.com.blinkdev.leadsponge.end_points.negotiation.enumeration.KindRecidivism;
 import br.com.blinkdev.leadsponge.relationship.tradeProducts.enumeration.KindDiscount;
 import br.com.blinkdev.leadsponge.utils.audit.UserDateAudit;
 import lombok.Getter;

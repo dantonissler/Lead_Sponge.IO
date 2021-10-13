@@ -1,0 +1,71 @@
+package br.com.blinkdev.leadsponge.end_points.contact.service;
+
+import br.com.blinkdev.leadsponge.end_points.contact.entity.ContactEntity;
+import br.com.blinkdev.leadsponge.end_points.contact.filter.ContactFilter;
+import br.com.blinkdev.leadsponge.end_points.contact.model.ContactModel;
+import br.com.blinkdev.leadsponge.end_points.contact.model_assembler.ContactModelAssembler;
+import br.com.blinkdev.leadsponge.end_points.contact.repository.ContactRepository;
+import br.com.blinkdev.leadsponge.error_validate.ErroMessage;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.PagedModel;
+import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
+
+import javax.transaction.Transactional;
+import java.lang.reflect.Field;
+import java.util.Map;
+
+@Slf4j
+@Service
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+public class ContactServiceImpl extends ErroMessage implements ContactService {
+    private final ContactRepository contactRepository;
+    private final ContactModelAssembler contactModelAssembler;
+    private final PagedResourcesAssembler<ContactEntity> assembler;
+
+    @Override
+    public ContactModel getById(Long id) {
+        log.info("ContactService - getById");
+        return contactRepository.findById(id).map(contactModelAssembler::toModel).orElseThrow(() -> notFouldId(id, "[contact]"));
+    }
+
+    @Override
+    public PagedModel<ContactModel> searchWithFilters(ContactFilter contactFilter, Pageable pageable) {
+        log.info("ContactService - searchWithFilters");
+        return assembler.toModel(contactRepository.searchWithFilters(contactFilter, pageable), contactModelAssembler);
+    }
+
+    @Override
+    @Transactional
+    public ContactModel save(ContactEntity contato) {
+        log.info("ContactService - save");
+        return contactModelAssembler.toModel(contactRepository.save(contato));
+    }
+
+    @Override
+    @Transactional
+    public ContactModel patch(Long id, Map<Object, Object> fields) {
+        log.info("CampanhaService - patch");
+        ContactEntity contactEntity = contactRepository.findById(id).orElseThrow(() -> notFouldId(id, "[contact]"));
+        fields.forEach((key, value) -> {
+            Field field = ReflectionUtils.findField(ContactEntity.class, (String) key);
+            assert field != null;
+            field.setAccessible(true);
+            ReflectionUtils.setField(field, contactEntity, value);
+        });
+        return save(contactEntity);
+    }
+
+    @Override
+    @Transactional
+    public ContactModel delete(Long id) {
+        log.info("CampanhaService - delete");
+        ContactEntity contactEntity = contactRepository.findById(id).orElseThrow(() -> notFouldId(id, "[contact]"));
+        contactRepository.deleteById(id);
+        return contactModelAssembler.toModel(contactEntity);
+    }
+}

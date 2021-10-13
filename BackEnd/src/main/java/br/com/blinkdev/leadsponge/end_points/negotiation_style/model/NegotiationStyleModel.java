@@ -1,0 +1,23 @@
+package br.com.blinkdev.leadsponge.end_points.negotiation_style.model;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.*;
+import org.springframework.hateoas.RepresentationModel;
+import org.springframework.hateoas.server.core.Relation;
+
+import static com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = false)
+@Relation(collectionRelation = "negotiatio_style", itemRelation = "negotiatios_styles")
+@JsonInclude(Include.NON_NULL)
+public class NegotiationStyleModel extends RepresentationModel<NegotiationStyleModel> {
+    private Long id;
+    private String name;
+    private String surname;
+    private Integer position;
+}

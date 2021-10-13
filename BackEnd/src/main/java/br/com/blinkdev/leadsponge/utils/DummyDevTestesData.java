@@ -1,9 +1,9 @@
 package br.com.blinkdev.leadsponge.utils;
 
-import br.com.blinkdev.leadsponge.endpoints.role.entity.RoleEntity;
-import br.com.blinkdev.leadsponge.endpoints.role.repository.RoleRepository;
-import br.com.blinkdev.leadsponge.endpoints.user.entity.UserEntity;
-import br.com.blinkdev.leadsponge.endpoints.user.service.UserService;
+import br.com.blinkdev.leadsponge.end_points.role.entity.RoleEntity;
+import br.com.blinkdev.leadsponge.end_points.role.repository.RoleRepository;
+import br.com.blinkdev.leadsponge.end_points.user.entity.UserEntity;
+import br.com.blinkdev.leadsponge.end_points.user.service.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

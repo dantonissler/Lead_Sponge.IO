@@ -1,7 +1,7 @@
 package br.com.blinkdev.leadsponge.utils.mail;
 
-import br.com.blinkdev.leadsponge.endpoints.task.entity.TaskEntity;
-import br.com.blinkdev.leadsponge.endpoints.user.entity.UserEntity;
+import br.com.blinkdev.leadsponge.end_points.task.entity.TaskEntity;
+import br.com.blinkdev.leadsponge.end_points.user.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
